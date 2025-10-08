@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IInteractable
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private float Rotation;
     private bool isSprinting;
     private bool isJumping;
+    private RaycastHit hit;
 
     private void Awake()
     {
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Look.canceled += ctx => cameraInput = Vector2.zero;
         inputs.Player.Sprint.performed += ctx => isSprinting = true;
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
+        inputs.Player.Interact.performed += ctx => 
         inputs.Player.Jump.performed += ctx => isJumping = true;
     }
 
@@ -45,16 +47,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; 
     }
 
     void Update()
     {
         Movement();
         Look();
-        Debug.Log(cameraInput);
+        Interact();
 
-      //  Ray ray = 
-       // Physics.Raycast(ray,10);
     }
 
     private void Movement()
@@ -91,5 +92,16 @@ public class PlayerController : MonoBehaviour
 
         cameraTransform.localRotation = Quaternion.Euler(Rotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    private void Interact()
+    {
+        Vector3 fwr = Camera.main.transform.forward;
+        if (Physics.Raycast(transform.position, fwr, 10))
+            Debug.Log("Yeah! I did it");
+
+
+
+
     }
 }
