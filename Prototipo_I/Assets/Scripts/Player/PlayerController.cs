@@ -52,6 +52,9 @@ public class PlayerController : MonoBehaviour
         Movement();
         Look();
         Debug.Log(cameraInput);
+
+      //  Ray ray = 
+       // Physics.Raycast(ray,10);
     }
 
     private void Movement()
@@ -69,6 +72,7 @@ public class PlayerController : MonoBehaviour
         {
             //Pedirle ayuda al @eauna
             //Pd: Mi objetivo es que la gravedad se aplique, es decir, que cuando llegue el Player a la altura maxima este empieze a bajar haciendo que su velocity.y sea igual a 0.
+            //Utilizar Clamp con un float que represente la velocidad maxima.
 
             isJumping = false;
         }
