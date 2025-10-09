@@ -9,7 +9,6 @@ public class Plot : MonoBehaviour
 
     private bool hasWater;
     private bool isFertilized;
-    private float MultiplierSpeed;
     private GameObject currentPlant;
 
     [SerializeField] private TextMeshProUGUI statusText;
@@ -39,6 +38,12 @@ public class Plot : MonoBehaviour
         Debug.Log($"Planta {plant.Name} plantada!");
     }
 
+    public void Fertilize()
+    {
+        if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
+        isFertilized = true;
+        plant.ApplyFertilize(isFertilized);
+    }
     private void Harvest()
     {
         if (!IsPlanted || !plant.IsFullyGrown)
@@ -71,8 +76,10 @@ public class Plot : MonoBehaviour
     private void OnPlantStageChanged(int currentStage)
     {
         hasWater = false;
+        isFertilized = false;
 
        if (currentPlant != null) { Destroy(currentPlant); }
+
         GameObject prefab = plantData.stages[currentStage];
         currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
 
@@ -99,12 +106,14 @@ public class Plot : MonoBehaviour
          if(IsPlanted && plant.IsFullyGrown) 
             {
                 Harvest();
-                Debug.Log("XD"); 
+                Debug.Log("Coshechada"); 
             }
-
+        }
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Fertilize();
+            Debug.Log("Fertilizada");
         }
         UpdateUI();
-
     }
-
 }
