@@ -97,8 +97,8 @@ public class PlayerController : MonoBehaviour, IInteractable
     private void Interact()
     {
         Vector3 fwr = Camera.main.transform.forward;
-        if (Physics.Raycast(transform.position, fwr, 10))
-            Debug.Log("Yeah! I did it");
+        if (Physics.Raycast(transform.position, fwr, 10)) ;
+           // Debug.Log("Yeah! I did it");
 
 
 
