@@ -31,7 +31,7 @@ public class Plant
     {
         Grow.AddListener(NextGrowStage);
         
-        DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.DayTime + timeToGrow);
+        DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.TotalTime + timeToGrow);
     }
 
     public void ApplyFertilize(bool isFertilized)
@@ -51,7 +51,7 @@ public class Plant
         else
         {
             Debug.Log("Sigue creciendo");
-            DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.DayTime + (timeToGrow / (isFertilize ? 1.5f : 1f)));
+            DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.TotalTime + (timeToGrow / (isFertilize ? 1.5f : 1f)));
         }
 
         isFertilize = false;
