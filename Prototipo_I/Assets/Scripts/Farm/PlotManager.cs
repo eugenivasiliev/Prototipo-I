@@ -28,6 +28,6 @@ public class PlotManager : MonoBehaviour
             plot.UpdateUI();
         }
 
-        Debug.Log(plots.Count);
+        //Debug.Log(plots.Count);
     }
 }

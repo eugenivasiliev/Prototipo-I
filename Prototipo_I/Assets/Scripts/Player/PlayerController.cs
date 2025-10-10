@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IInteractable
         inputs = new InputSystem_Actions();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         inputs.Player.Enable();
         inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
@@ -35,8 +35,11 @@ public class PlayerController : MonoBehaviour, IInteractable
         inputs.Player.Look.canceled += ctx => cameraInput = Vector2.zero;
         inputs.Player.Sprint.performed += ctx => isSprinting = true;
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-        inputs.Player.Interact.performed += ctx => 
+        inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnDisable()
@@ -44,17 +47,11 @@ public class PlayerController : MonoBehaviour, IInteractable
         inputs.Player.Disable();
     }
 
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; 
-    }
-
     void Update()
     {
         Movement();
         Look();
-        Interact();
+        //Interact();
 
     }
 
@@ -97,8 +94,7 @@ public class PlayerController : MonoBehaviour, IInteractable
     private void Interact()
     {
         Vector3 fwr = Camera.main.transform.forward;
-        if (Physics.Raycast(transform.position, fwr, 10)) ;
-           // Debug.Log("Yeah! I did it");
+        if (Physics.Raycast(transform.position, fwr, 10)) Debug.Log("Yeah! I did it");
 
 
 
