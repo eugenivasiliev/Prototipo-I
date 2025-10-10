@@ -58,7 +58,7 @@ public class Plot : MonoBehaviour
         currentPlant = null;
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
@@ -84,12 +84,8 @@ public class Plot : MonoBehaviour
         currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
 
     }
-    void Start()
-    {
-        //PlantManager.Instance.AssignPlot(this);
-    }
 
-    private void Update()
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
@@ -114,6 +110,5 @@ public class Plot : MonoBehaviour
             Fertilize();
             Debug.Log("Fertilizada");
         }
-        UpdateUI();
     }
 }
