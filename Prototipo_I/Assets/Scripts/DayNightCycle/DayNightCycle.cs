@@ -21,6 +21,8 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private int dayCount = 0;
     public int DayCount { get { return dayCount; } }
 
+    public float TotalTime { get => dayTime + dayCount * dayDuration; }
+
     [SerializeField] private PriorityQueue<TimedEvent, float> timedEvents = new PriorityQueue<TimedEvent, float>();
 
     private void Awake()
@@ -42,7 +44,7 @@ public class DayNightCycle : MonoBehaviour
             dayTime = 0;
         }
 
-        while(timedEvents.Count > 0 && dayTime >= timedEvents.PeekPriority())
+        while(timedEvents.Count > 0 && TotalTime >= timedEvents.PeekPriority())
         {
             TimedEvent nextEvent = timedEvents.Dequeue();
             nextEvent.Invoke(dayTime);
