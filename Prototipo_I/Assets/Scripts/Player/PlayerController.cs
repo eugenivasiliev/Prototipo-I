@@ -8,17 +8,24 @@ public class PlayerController : MonoBehaviour, IInteractable
     [SerializeField] private float cameraSensivility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
     [SerializeField] private float jumpHeaight = 2f;
+    [SerializeField] private Transform cameraTransform;
+    [SerializeField] public short InteractionRange { get { return 10; } }
 
-    [SerializeField]private Transform cameraTransform;
     private CharacterController characterController;
     private InputSystem_Actions inputs;
+
     private Vector2 movementInput;
     private Vector2 cameraInput;
     private Vector3 velocity;
+    private Vector3 horizontalMovement;
+
     private float Rotation;
     private bool isSprinting;
     private bool isJumping;
+
     private RaycastHit hit;
+
+    private IInteractable interactable;
 
     private void Awake()
     {
@@ -51,15 +58,15 @@ public class PlayerController : MonoBehaviour, IInteractable
     {
         Movement();
         Look();
-        //Interact();
-
     }
 
     private void Movement()
     {
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         float currentSpeed = isSprinting ? sprintSpeed : speed;
-        characterController.Move(movement *  currentSpeed * Time.deltaTime);
+
+        if (characterController.isGrounded)
+            horizontalMovement = movement * currentSpeed;
 
         if (characterController.isGrounded && velocity.y < 0)
         {
@@ -68,15 +75,15 @@ public class PlayerController : MonoBehaviour, IInteractable
 
         if(isJumping && characterController.isGrounded)
         {
-            //Pedirle ayuda al @eauna
-            //Pd: Mi objetivo es que la gravedad se aplique, es decir, que cuando llegue el Player a la altura maxima este empieze a bajar haciendo que su velocity.y sea igual a 0.
-            //Utilizar Clamp con un float que represente la velocidad maxima.
-
+            velocity.y = Mathf.Sqrt(2f * jumpHeaight * gravity);
+            Debug.Log(velocity.y);
             isJumping = false;
         }
 
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
+        velocity.y -= gravity * Time.deltaTime;
+
+        Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
+        characterController.Move(totalMovement * Time.deltaTime);
     }
 
     private void Look()
@@ -94,10 +101,11 @@ public class PlayerController : MonoBehaviour, IInteractable
     private void Interact()
     {
         Vector3 fwr = Camera.main.transform.forward;
-        if (Physics.Raycast(transform.position, fwr, 10)) Debug.Log("Yeah! I did it");
-
-
-
-
+        if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
+        {
+            Debug.Log("Yeah! I did it");
+            interactable = hit.collider.GetComponent<IInteractable>();
+            if( interactable != null ) interactable.OnInteract();
+        }
     }
 }
