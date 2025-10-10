@@ -11,6 +11,7 @@ public class TradingManager : MonoBehaviour
     private List<Tuple<ITradeable, int>> stock = new List<Tuple<ITradeable, int>>(); //Item and amount
 
     private ITradeable weeklyObjective;
+    public ITradeable WeeklyObjective { get { return weeklyObjective; } }
 
     private void Start()
     {
@@ -25,7 +26,7 @@ public class TradingManager : MonoBehaviour
     public bool TryBuy(ITradeable tradeable, int availableMoney)
     {
         foreach (var item in stock)
-            if (item.Item1 == tradeable && availableMoney > item.Item2) return true;
+            if (item.Item1 == tradeable && availableMoney >= item.Item2) return true;
         return false;
     }
 
@@ -33,7 +34,15 @@ public class TradingManager : MonoBehaviour
     {
         for (int i = 0; i < stock.Count; ++i)
             if (stock[i].Item1 == tradeable)
+            {
                 stock[i] = Tuple.Create(stock[i].Item1, stock[i].Item2 + 1);
+                return;
+            }
         stock.Add(Tuple.Create(tradeable, 1));
+    }
+
+    public ITradeable GetNewWeeklyObjective()
+    {
+        throw new NotImplementedException();
     }
 }
