@@ -15,6 +15,8 @@ public class EnemieAI : MonoBehaviour
 
     private Transform player;
 
+    private float minDistance;
+
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
@@ -29,7 +31,7 @@ public class EnemieAI : MonoBehaviour
                 Debug.Log("Buscando Plants");
                 break;
             case EnemyState.Chase:
-                Debug.Log("Planta encontrada");
+               // Debug.Log("Planta encontrada");
                 Chase();
                 break;
             case EnemyState.Attack:
@@ -42,9 +44,28 @@ public class EnemieAI : MonoBehaviour
     }
     private void Chase()
     {
-        if(Vector3.Distance(agent.destination, player.position) > 1.0f)
+        if (PlotManager.Instance == null) return;
+
+        Plot minPlot = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (var plot in PlotManager.Instance.plots)
         {
-            agent.SetDestination(player.position);
+            if(!plot.IsPlanted) continue;
+
+            float distance = Vector3.Distance(transform.position, plot.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                minPlot = plot;
+            }
+        }
+
+        if (minPlot != null)
+        {
+            agent.SetDestination(minPlot.transform.position);
+
         }
     }
 
