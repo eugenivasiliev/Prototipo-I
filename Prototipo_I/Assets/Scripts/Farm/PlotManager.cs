@@ -5,7 +5,7 @@ public class PlotManager : MonoBehaviour
 {
     
     public static PlotManager Instance;
-    private List<Plot> plots = new List<Plot>();
+    public List<Plot> plots = new List<Plot>();
 
     private void Awake()
     {
