@@ -1,22 +1,23 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PlantManager : MonoBehaviour
+public class PlotManager : MonoBehaviour
 {
     
-    public static PlantManager Instance;
+    public static PlotManager Instance;
     private List<Plot> plots = new List<Plot>();
 
     private void Awake()
     {
+        if(Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
     }
 
-    public void AssignPlot(Plot plot)
+    private void Start()
     {
-        if(!plots.Contains(plot))
+        if(plots.Count == 0)
         {
-            plots.Add(plot);
+            plots.AddRange(gameObject.GetComponentsInChildren<Plot>());
         }
     }
 
@@ -24,8 +25,9 @@ public class PlantManager : MonoBehaviour
     {
         foreach (var plot in plots)
         {
-            plot.CheckGrowth();
             plot.UpdateUI();
         }
+
+        Debug.Log(plots.Count);
     }
 }

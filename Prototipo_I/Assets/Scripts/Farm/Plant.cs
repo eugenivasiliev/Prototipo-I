@@ -1,38 +1,60 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
-
 public class Plant
 {
-    private string name;
-    public string Name { get => name; }
-
-    private int numStages;
+    private int maxStage;
     private int currentStage;
-
-    public bool IsGrown => currentStage >= numStages;
-
     private float timeToGrow;
-    public float TimeToGrow { get => timeToGrow; }
+    private bool isFertilize;
+    private bool hasWater;
 
-    private UnityEvent<float> MyEvent = new UnityEvent<float>();
+    public string Name { get; private set; }
+    public bool IsFullyGrown { get { return currentStage >= maxStage - 1; } }
+    public float TimeLeft { get { return Mathf.Max(timeToGrow - DayNightCycle.Instance.DayTime, 0f); } }
+
+    public Action <int> OnStageChanged;
+
+    private UnityEvent<float> Grow = new UnityEvent<float>();
+
+    public Plant(PlantData data)
+    {
+        Name = data.plantName;
+        maxStage = data.stages.Length;
+        timeToGrow = data.timeToGrow;
+        currentStage = 0;
+        isFertilize = false;
+        hasWater = false;
+    }
 
     public void Create()
     {
-        MyEvent.AddListener(Grow);
-
-        DayNightCycle.Instance.SubscribeTimedEvent(MyEvent, DayNightCycle.Instance.DayTime + timeToGrow);
+        Grow.AddListener(NextGrowStage);
+        
+        DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.DayTime + timeToGrow);
     }
 
-    private void Grow(float time)
+    public void ApplyFertilize(bool isFertilized)
+    {
+        isFertilize = isFertilized;
+    }
+
+    private void NextGrowStage(float time)
     {
         currentStage++;
-        if (IsGrown)
+        Debug.Log($"{IsFullyGrown}");
+        Debug.Log($"{currentStage}");
+        if (IsFullyGrown) 
         {
-            //UwU
-        } else
-        {
-            DayNightCycle.Instance.SubscribeTimedEvent(MyEvent, DayNightCycle.Instance.DayTime + timeToGrow);
+            Debug.Log("Ya no puede crecer mas");
         }
-        //Update visual
+        else
+        {
+            Debug.Log("Sigue creciendo");
+            DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.DayTime + (timeToGrow / (isFertilize ? 1.5f : 1f)));
+        }
+
+        isFertilize = false;
+        OnStageChanged?.Invoke(currentStage);
     }
 }

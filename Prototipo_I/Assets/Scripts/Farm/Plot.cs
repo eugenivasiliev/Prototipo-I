@@ -4,65 +4,111 @@ using UnityEngine;
 
 public class Plot : MonoBehaviour
 {
-    private Plant plant;
+    Plant plant;
+    PlantData plantData;
 
-    public bool IsPlanted => plant != null;
-    public bool HasWater;
-    public bool isFertilized;
-    public float MultiplierSpeed;
+    private bool hasWater;
+    private bool isFertilized;
+    private GameObject currentPlant;
 
-    public TextMeshProUGUI statusText;
+    [SerializeField] private TextMeshProUGUI statusText;
+    [SerializeField] private PlantData plantInfo;
 
-    public void Plant(Plant plant)
+    public bool IsPlanted { get { return plant != null; } }
+
+    private void Plant(PlantData data)
     {
         if (IsPlanted)
         {
-            Debug.Log("Hey! I'm already a plant");
+            Debug.Log("Ya esta plantado");
             return;
         }
 
-        this.plant = plant;
-        HasWater = true;
+        plantData = data;
+        plant = new Plant(data);
+
+        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
+
+        plant.OnStageChanged += OnPlantStageChanged;
+
+        hasWater = false;
         isFertilized = false;
 
-        Debug.Log("Calling Growth");
         this.plant.Create();
+        Debug.Log($"Planta {plant.Name} plantada!");
     }
 
-    public void Harvest()
+    public void Fertilize()
     {
-        if (!IsPlanted || !this.plant.IsGrown)
+        if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
+        isFertilized = true;
+        plant.ApplyFertilize(isFertilized);
+    }
+    private void Harvest()
+    {
+        if (!IsPlanted || !plant.IsFullyGrown)
         {
-            Debug.Log("Not today");
+            Debug.Log("Aun no esta lista");
             return;
         }
-
+        Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
-        //Spawn drop and stuff
+
         this.plant = null;
+        currentPlant = null;
     }
 
     public void UpdateUI()
     {
-        if(statusText == null)
+        if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
+        if (!IsPlanted)
         {
+            statusText.text = "Hueco";
             return;
         }
-
-        if(!IsPlanted)
-        {
-            statusText.text = "Anything :<";
-            return;
-        }
-
-        statusText.text = $"{plant.Name}\n" + 
-                          $"Tiempo: {plant.TimeToGrow:F1}s\n";
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         
-        PlantManager.Instance.AssignPlot(this);
+        statusText.text = $"{plant.Name}\n" + 
+                          $"Time to Grow: {plant.TimeLeft:F1}s\n" +
+                          $"Watered: {(hasWater ? "Sí" : "No")}\n" +
+                          $"Fertilizada: {(isFertilized ? "Sí" : "No")}\n";
     }
-    
+
+    private void OnPlantStageChanged(int currentStage)
+    {
+        hasWater = false;
+        isFertilized = false;
+
+       if (currentPlant != null) { Destroy(currentPlant); }
+
+        GameObject prefab = plantData.stages[currentStage];
+        currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+
+    }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            hasWater = true;
+            Debug.Log("Regada");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Plant(plantInfo);
+            Debug.Log("Plantada");
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+         if(IsPlanted && plant.IsFullyGrown) 
+            {
+                Harvest();
+                Debug.Log("Coshechada"); 
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Fertilize();
+            Debug.Log("Fertilizada");
+        }
+    }
 }
