@@ -27,10 +27,13 @@ public class PlayerController : MonoBehaviour, IInteractable
 
     private IInteractable interactable;
 
+    private HungerManager hungerManager;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         inputs = new InputSystem_Actions();
+        hungerManager = GetComponent<HungerManager>();
     }
 
     private void Start()
@@ -63,7 +66,7 @@ public class PlayerController : MonoBehaviour, IInteractable
     private void Movement()
     {
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
-        float currentSpeed = isSprinting ? sprintSpeed : speed;
+        float currentSpeed = (isSprinting && hungerManager.CanSprint) ? sprintSpeed : speed;
 
         if (characterController.isGrounded)
             horizontalMovement = movement * currentSpeed;
