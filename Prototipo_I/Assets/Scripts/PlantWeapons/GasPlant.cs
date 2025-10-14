@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FirePlant : PlantWeapon
+public class GasPlant : PlantWeapon
 {
     [SerializeField] private int damageDealt;
     protected override void Update()
