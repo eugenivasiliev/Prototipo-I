@@ -7,19 +7,21 @@ public class EnemieAI : MonoBehaviour
     {
         Idle,
         Chase,
-        Attack
+        Attack,
+        Return
     }
 
     [SerializeField] EnemyState _currentState = EnemyState.Idle;
+
+    public EnemyState CurrentState { get => _currentState; private set => _currentState = value; }
     private NavMeshAgent agent;
 
-    private Transform player;
+    private Plot currentTargetPlot;
 
-    private float minDistance;
+    private bool hasReturn = false;
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -29,6 +31,7 @@ public class EnemieAI : MonoBehaviour
         {
             case EnemyState.Idle:
                 Debug.Log("Buscando Plants");
+                _currentState = EnemyState.Chase;
                 break;
             case EnemyState.Chase:
                // Debug.Log("Planta encontrada");
@@ -38,9 +41,18 @@ public class EnemieAI : MonoBehaviour
                 Debug.Log("Atacando Plantas");
                 Attack();
                 break;
+            case EnemyState.Return:
+                if(!hasReturn)
+                    ReturnToSpawn();
+                break;
             default:
                 break;
         }
+    }
+
+    public void SetState(EnemyState newState)
+    {
+        _currentState = newState;
     }
     private void Chase()
     {
@@ -64,8 +76,17 @@ public class EnemieAI : MonoBehaviour
 
         if (minPlot != null)
         {
-            agent.SetDestination(minPlot.transform.position);
+            if (currentTargetPlot != minPlot)
+            {
+                currentTargetPlot = minPlot;
+                agent.SetDestination(minPlot.transform.position);
+            }
 
+            float distToTarget = Vector3.Distance(transform.position, currentTargetPlot.transform.position);
+            if (distToTarget < 1.5f)
+            {
+                _currentState = EnemyState.Attack;
+            }
         }
     }
 
@@ -73,9 +94,34 @@ public class EnemieAI : MonoBehaviour
     {
 
     }
+
+    private void ReturnToSpawn()
+    {
+        if (EnemieManager.Instance == null) return;
+
+        Transform minSpawn = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (var spawn in EnemieManager.Instance.spawnZones)
+        {
+            float distance = Vector3.Distance(transform.position, spawn.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                minSpawn = spawn;
+            }
+        }
+
+        if (minSpawn != null)
+        {
+            agent.SetDestination(minSpawn.transform.position);
+            hasReturn = true;
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _currentState = EnemyState.Chase;
+
     }
 }
