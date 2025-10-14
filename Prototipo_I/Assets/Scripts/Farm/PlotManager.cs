@@ -6,6 +6,8 @@ public class PlotManager : MonoBehaviour
     
     public static PlotManager Instance;
     private List<Plot> plots = new List<Plot>();
+    [SerializeField] private HybridationManager hybridationManager;
+    public HybridationManager HybridationManager {  get { return hybridationManager; } }
 
     private void Awake()
     {
