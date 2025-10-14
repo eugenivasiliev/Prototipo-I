@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,12 +10,14 @@ public class EnemieManager : MonoBehaviour
 
     [SerializeField] private GameObject enemie;
     [SerializeField] private short enemiesByZone;
+    [SerializeField] private short timeToSpawn;
     [SerializeField] public List<Transform> spawnZones = new List<Transform>();
 
     private List<EnemieAI> allEnemies = new List<EnemieAI>();
 
     private float halfDayTime;
-    private float endDayTime;
+    private int lastDayCount = -1;
+    private bool canSpawn = true;
 
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
@@ -23,13 +26,11 @@ public class EnemieManager : MonoBehaviour
         Instance = this;
 
         halfDayTime = DayNightCycle.Instance.DayDuration / 2;
-        endDayTime = DayNightCycle.Instance.DayDuration;
-        //Debug.Log(halfDayTime);
+
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, DayNightCycle.Instance.DayDuration - halfDayTime);
-        DayNightCycle.Instance.SubscribeTimedEvent(Return, DayNightCycle.Instance.DayDuration - endDayTime);
+        DayNightCycle.Instance.SubscribeTimedEvent(Return, 0f);
     }
 
     private void RegisterEnemy(EnemieAI enemy)
@@ -50,19 +51,20 @@ public class EnemieManager : MonoBehaviour
 
     private IEnumerator SpawnEnemyDelay (Transform zone)
     {
-               for (int i = 0; i < enemiesByZone; i++)
-                {
-                    GameObject enemyObj = Instantiate(enemie, zone.position, zone.rotation);
-                    EnemieAI enemyai = enemyObj.GetComponent<EnemieAI>();
-                    if (enemyai != null)
-                    {
-                        RegisterEnemy(enemyai);
-                    }
-                    yield return new WaitForSeconds(1);
-                }
+        for (int i = 0; i < enemiesByZone; i++)
+        {
+            GameObject enemyObject = Instantiate(enemie, zone.position, zone.rotation);
+            EnemieAI enemyAI = enemyObject.GetComponent<EnemieAI>();
+
+            if (enemyAI != null)
+            {
+                RegisterEnemy(enemyAI);
+            }
+            yield return new WaitForSeconds(timeToSpawn);
+        }
     }
 
-    private void ReturnToSpawn()
+    private void ReturnToSpawn(float useless)
     {
         foreach (var enemy in allEnemies)
         {
@@ -97,6 +99,16 @@ public class EnemieManager : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (DayNightCycle.Instance.DayTime >= halfDayTime && canSpawn)
+        {
+            DayNightCycle.Instance.SubscribeTimedEvent(Spawn, DayNightCycle.Instance.DayDuration - halfDayTime);
+            canSpawn = false;
+        }
+        if (DayNightCycle.Instance.DayTime < halfDayTime && !canSpawn)
+        {
+            canSpawn = true;
         }
     }
 }

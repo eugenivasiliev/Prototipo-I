@@ -1,24 +1,22 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemieAI : MonoBehaviour
 {
     public enum EnemyState
     {
-        Idle,
         Chase,
         Attack,
         Return
     }
 
-    [SerializeField] EnemyState _currentState = EnemyState.Idle;
+    [SerializeField] EnemyState _currentState = EnemyState.Chase;
 
     public EnemyState CurrentState { get => _currentState; private set => _currentState = value; }
     private NavMeshAgent agent;
 
     private Plot currentTargetPlot;
-
-    private bool hasReturn = false;
 
     private void Awake()
     {
@@ -29,20 +27,16 @@ public class EnemieAI : MonoBehaviour
     {
         switch(_currentState)
         {
-            case EnemyState.Idle:
-                Debug.Log("Buscando Plants");
-                _currentState = EnemyState.Chase;
-                break;
             case EnemyState.Chase:
-               // Debug.Log("Planta encontrada");
+                //Debug.Log("Planta encontrada");
                 Chase();
                 break;
             case EnemyState.Attack:
-                Debug.Log("Atacando Plantas");
+                //Debug.Log("Atacando Plantas");
                 Attack();
                 break;
             case EnemyState.Return:
-                if(!hasReturn)
+                //Debug.Log(hasReturn);
                     ReturnToSpawn();
                 break;
             default:
@@ -56,7 +50,10 @@ public class EnemieAI : MonoBehaviour
     }
     private void Chase()
     {
-        if (PlotManager.Instance == null) return;
+        if (DayNightCycle.Instance.DayTime <= 0f)
+        {
+            _currentState = EnemyState.Return;
+        }
 
         Plot minPlot = null;
         float minDistance = Mathf.Infinity;
@@ -92,7 +89,10 @@ public class EnemieAI : MonoBehaviour
 
     private void Attack()
     {
-
+       if(DayNightCycle.Instance.DayTime <= 0f) 
+       { 
+          _currentState = EnemyState.Return; 
+       }
     }
 
     private void ReturnToSpawn()
@@ -116,12 +116,6 @@ public class EnemieAI : MonoBehaviour
         if (minSpawn != null)
         {
             agent.SetDestination(minSpawn.transform.position);
-            hasReturn = true;
         }
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
     }
 }
