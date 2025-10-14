@@ -1,25 +1,25 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemieAI : MonoBehaviour
 {
     public enum EnemyState
     {
-        Idle,
         Chase,
-        Attack
+        Attack,
+        Return
     }
 
-    [SerializeField] EnemyState _currentState = EnemyState.Idle;
+    [SerializeField] EnemyState _currentState = EnemyState.Chase;
+
+    public EnemyState CurrentState { get => _currentState; private set => _currentState = value; }
     private NavMeshAgent agent;
 
-    private Transform player;
-
-    private float minDistance;
+    private Plot currentTargetPlot;
 
     private void Awake()
     {
-        player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -27,24 +27,33 @@ public class EnemieAI : MonoBehaviour
     {
         switch(_currentState)
         {
-            case EnemyState.Idle:
-                Debug.Log("Buscando Plants");
-                break;
             case EnemyState.Chase:
-               // Debug.Log("Planta encontrada");
+                //Debug.Log("Planta encontrada");
                 Chase();
                 break;
             case EnemyState.Attack:
-                Debug.Log("Atacando Plantas");
+                //Debug.Log("Atacando Plantas");
                 Attack();
+                break;
+            case EnemyState.Return:
+                //Debug.Log(hasReturn);
+                    ReturnToSpawn();
                 break;
             default:
                 break;
         }
     }
+
+    public void SetState(EnemyState newState)
+    {
+        _currentState = newState;
+    }
     private void Chase()
     {
-        if (PlotManager.Instance == null) return;
+        if (DayNightCycle.Instance.DayTime <= 0f)
+        {
+            _currentState = EnemyState.Return;
+        }
 
         Plot minPlot = null;
         float minDistance = Mathf.Infinity;
@@ -64,18 +73,49 @@ public class EnemieAI : MonoBehaviour
 
         if (minPlot != null)
         {
-            agent.SetDestination(minPlot.transform.position);
+            if (currentTargetPlot != minPlot)
+            {
+                currentTargetPlot = minPlot;
+                agent.SetDestination(minPlot.transform.position);
+            }
 
+            float distToTarget = Vector3.Distance(transform.position, currentTargetPlot.transform.position);
+            if (distToTarget < 1.5f)
+            {
+                _currentState = EnemyState.Attack;
+            }
         }
     }
 
     private void Attack()
     {
-
+       if(DayNightCycle.Instance.DayTime <= 0f) 
+       { 
+          _currentState = EnemyState.Return; 
+       }
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void ReturnToSpawn()
     {
-        _currentState = EnemyState.Chase;
+        if (EnemieManager.Instance == null) return;
+
+        Transform minSpawn = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (var spawn in EnemieManager.Instance.spawnZones)
+        {
+            float distance = Vector3.Distance(transform.position, spawn.transform.position);
+
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                minSpawn = spawn;
+            }
+        }
+
+        if (minSpawn != null)
+        {
+            agent.SetDestination(minSpawn.transform.position);
+        }
     }
 }
