@@ -30,7 +30,7 @@ public class EnemieManager : MonoBehaviour
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Return, 0f);
+        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
 
     private void RegisterEnemy(EnemieAI enemy)
@@ -43,10 +43,22 @@ public class EnemieManager : MonoBehaviour
     {
         if (enemie == null) { return; }
 
+        //if(allEnemies.Count > 0)
+        //{
+        //    foreach (var enemy in allEnemies)
+        //    {
+        //        Destroy(enemy.gameObject);
+        //    }
+        //}
+
+        //allEnemies.Clear();
+
         foreach (Transform zone in spawnZones)
         {
             StartCoroutine(SpawnEnemyDelay(zone));
         }
+
+        DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
     }
 
     private IEnumerator SpawnEnemyDelay (Transform zone)
@@ -73,6 +85,8 @@ public class EnemieManager : MonoBehaviour
                 enemy.SetState(EnemieAI.EnemyState.Return);
             }
         }
+
+        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
     // Update is called once per frame
     void Update()
@@ -99,16 +113,6 @@ public class EnemieManager : MonoBehaviour
                     }
                 }
             }
-        }
-
-        if (DayNightCycle.Instance.DayTime >= halfDayTime && canSpawn)
-        {
-            DayNightCycle.Instance.SubscribeTimedEvent(Spawn, DayNightCycle.Instance.DayDuration - halfDayTime);
-            canSpawn = false;
-        }
-        if (DayNightCycle.Instance.DayTime < halfDayTime && !canSpawn)
-        {
-            canSpawn = true;
         }
     }
 }
