@@ -29,8 +29,6 @@ public class Chase : EnemyState
         }
 
         if (targetPlot != null)
-        {
             enemy.Agent.SetDestination(targetPlot.transform.position);
-        }
     }
 }

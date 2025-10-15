@@ -6,7 +6,7 @@ public class Return : EnemyState
     private Transform targetSpawn = null;
     public override void Behaviour()
     {
-        if (EnemieManager.Instance == null) return;
+        if (EnemyManager.Instance == null) return;
 
         if(targetSpawn != null)
         {
@@ -18,7 +18,7 @@ public class Return : EnemyState
 
         float minDistance = Mathf.Infinity;
 
-        foreach (var spawn in EnemieManager.Instance.spawnZones)
+        foreach (var spawn in EnemyManager.Instance.spawnZones)
         {
             float distance = Vector3.Distance(enemy.transform.position, spawn.position);
 

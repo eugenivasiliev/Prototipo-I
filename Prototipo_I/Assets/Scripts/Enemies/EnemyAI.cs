@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
     public enum State
     {
@@ -16,8 +16,11 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
 
+    public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public int MaxHealth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
     [SerializeField] private int damage;
-    public int Damage { get => damage; }
+    public int Damage => damage;
 
     private void Awake()
     {

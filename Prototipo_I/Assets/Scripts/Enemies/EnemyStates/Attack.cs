@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class Attack : EnemyState
 {
-    private IDamageable damageable;
+    private Plot target;
     public override void Behaviour()
     {
-        if(damageable != null)
-        {
-            damageable.Damage(enemy.Damage);
-        }
+        if (target != null)
+            ((IAttacker)enemy).Attack(target.gameObject);
 
         float minDistance = Mathf.Infinity;
 
@@ -21,7 +19,7 @@ public class Attack : EnemyState
             if (distance < minDistance)
             {
                 minDistance = distance;
-                damageable = plot.GetComponent<IDamageable>();
+                target = plot;
             }
         }
     }

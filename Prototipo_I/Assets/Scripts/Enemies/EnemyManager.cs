@@ -3,29 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemieManager : MonoBehaviour
+public class EnemyManager : MonoBehaviour
 {
 
-    public static EnemieManager Instance {get; private set;}
+    public static EnemyManager Instance {get; private set;}
 
-    [SerializeField] private GameObject enemie;
+    [SerializeField] private GameObject enemy;
     [SerializeField] private short enemiesByZone;
     [SerializeField] private short timeToSpawn;
     [SerializeField] public List<Transform> spawnZones = new List<Transform>();
 
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
 
-    private float halfDayTime;
-    private int lastDayCount = -1;
-    private bool canSpawn = true;
-
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
     void Start()
     {
         Instance = this;
-
-        halfDayTime = DayNightCycle.Instance.DayDuration / 2;
 
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
@@ -39,9 +33,9 @@ public class EnemieManager : MonoBehaviour
             allEnemies.Add(enemy);
     }
 
-    private void SpawnEnemies(float usseless)
+    private void SpawnEnemies(float t)
     {
-        if (enemie == null) { return; }
+        if (enemy == null) return;
 
         if (allEnemies.Count > 0)
         {
@@ -55,9 +49,7 @@ public class EnemieManager : MonoBehaviour
         allEnemies.Clear();
 
         foreach (Transform zone in spawnZones)
-        {
             StartCoroutine(SpawnEnemyDelay(zone));
-        }
 
         DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
     }
@@ -66,27 +58,19 @@ public class EnemieManager : MonoBehaviour
     {
         for (int i = 0; i < enemiesByZone; i++)
         {
-            GameObject enemyObject = Instantiate(enemie, zone.position, Quaternion.identity, zone.transform);
+            GameObject enemyObject = Instantiate(enemy, zone.position, Quaternion.identity, zone.transform);
             EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
 
-            if (enemyAI != null)
-            {
-                RegisterEnemy(enemyAI);
-            }
+            if (enemyAI != null) RegisterEnemy(enemyAI);
+
             yield return new WaitForSeconds(timeToSpawn);
         }
     }
 
-    private void ReturnToSpawn(float useless)
+    private void ReturnToSpawn(float t)
     {
-        Debug.Log("Returning");
         foreach (var enemy in allEnemies)
-        {
-            if (enemy != null)
-            {
-                enemy.SetState(EnemyAI.State.Return);
-            }
-        }
+            if (enemy != null) enemy.SetState(EnemyAI.State.Return);
 
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
