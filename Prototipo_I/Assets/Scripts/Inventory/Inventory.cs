@@ -7,13 +7,53 @@ public class Inventory : MonoBehaviour
     private static Inventory instance;
     public static Inventory Instance { get { return instance; } }
 
-    [SerializeField] private List<Item> items;
+    [SerializeField] private int inventorySpace;
+    [SerializeField] private (Item, int)[] items = new (Item, int)[8];
 
-    public void AddItem(Item item) => items.Add(item);
+    private void Start()
+    {
+        Clear();
+    }
 
-    public void RemoveItem(Item item) => items.Remove(item);
+    public bool AddItem(Item item)
+    {
+        for (int i = 0; i < items.Length; i++)
+            if (items[i].Item1 == item)
+            {
+                items[i].Item2++;
+                return true;
+            }
 
-    public void Clear() => items.Clear();
+        for (int i = 0; i < items.Length; i++)
+            if (items[i] == default)
+            {
+                items[i] = (item, 1);
+                return true;
+            }
+
+        //Cannot add
+        return false;
+    }
+
+    public bool RemoveItem(Item item) {
+        for (int i = 0; i < items.Length; i++)
+            if (items[i].Item1 == item)
+            {
+                items[i].Item2--;
+                if (items[i].Item2 <= 0) items[i] = default;
+                return true;
+            }
+
+        //Cannot remove
+        return false;
+    } 
+
+    public void Clear() {
+        for(int i = 0; i < items.Length; i++)
+        {
+            items[i] = default;
+        }
+    }
 
     public void Save()
     {
