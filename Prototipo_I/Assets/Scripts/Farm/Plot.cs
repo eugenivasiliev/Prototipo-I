@@ -20,12 +20,22 @@ public class Plot : MonoBehaviour
     {
         if (IsPlanted)
         {
-            Debug.Log("Ya esta plantado");
-            return;
+            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
+            {
+                this.plantData = newPlant;
+                plant = new Plant(newPlant);
+            }
+            else
+            {
+                Debug.Log("Already planted");
+                return;
+            }
+        } 
+        else
+        {
+            plantData = data;
+            plant = new Plant(data);
         }
-
-        plantData = data;
-        plant = new Plant(data);
 
         currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
 
