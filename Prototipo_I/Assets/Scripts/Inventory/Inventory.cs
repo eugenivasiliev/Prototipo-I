@@ -24,16 +24,18 @@ public class Inventory : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         Clear();
+
+        AddItem(new Item1());
     }
 
     public bool AddItem(Item item)
     {
         for (int i = 0; i < items.Length; i++)
-            if (items[i].Item1 == item)
+            if (items[i] != default && items[i].Item1.GetType() == item.GetType())
             {
                 items[i].Item2++;
-                this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = item.sprite;
-                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
+                GetImage(i).sprite = item.sprite;
+                GetText(i).text = items[i].Item2.ToString();
                 return true;
             }
 
@@ -41,8 +43,8 @@ public class Inventory : MonoBehaviour
             if (items[i] == default)
             {
                 items[i] = (item, 1);
-                this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = item.sprite;
-                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
+                GetImage(i).sprite = item.sprite;
+                GetText(i).text = items[i].Item2.ToString();
                 return true;
             }
 
@@ -50,33 +52,48 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public bool AddItem(Item item, int amount)
+    {
+        for(int i = 0; i < amount; i++) if(!AddItem(item)) return false;
+        return true;
+    }
+
     public bool RemoveItem(Item item) {
         for (int i = 0; i < items.Length; i++)
-            if (items[i].Item1 == item)
+            if (items[i] != default && items[i].Item1.GetType() == item.GetType())
             {
                 items[i].Item2--;
-                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
+                GetText(i).text = items[i].Item2.ToString();
                 if (items[i].Item2 <= 0)
                 {
                     items[i] = default;
-                    this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = null;
-                    this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = "";
+                    GetImage(i).sprite = null;
+                    GetText(i).text = "";
                 }
                 return true;
             }
 
         //Cannot remove
         return false;
-    } 
+    }
+
+    public bool RemoveItem(Item item, int amount)
+    {
+        for (int i = 0; i < amount; i++) if (!RemoveItem(item)) return false;
+        return true;
+    }
 
     public void Clear() {
         for(int i = 0; i < items.Length; i++)
         {
             items[i] = default;
-            this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = null;
-            this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = "";
+            GetImage(i).sprite = null;
+            GetText(i).text = "";
         }
     }
+
+    private Image GetImage(int i) => this.transform.GetChild(0).GetChild(i).GetComponent<Image>();
+    private TMP_Text GetText(int i) => this.transform.GetChild(0).GetChild(i).GetComponentInChildren<TMP_Text>();
 
     public void Save()
     {
