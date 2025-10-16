@@ -61,6 +61,9 @@ public class Plot : MonoBehaviour
             Debug.Log("Aun no esta lista");
             return;
         }
+
+        Inventory.Instance.AddItem(new Item1(), 2);
+
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
 
@@ -104,8 +107,11 @@ public class Plot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Plant(plantInfo);
-            Debug.Log("Plantada");
+            if (Inventory.Instance.RemoveItem(new Item1()))
+            {
+                Plant(plantInfo);
+                Debug.Log("Plantada");
+            }
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
