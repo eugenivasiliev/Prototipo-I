@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour 
 {
@@ -12,6 +14,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
         Clear();
     }
 
@@ -21,6 +32,8 @@ public class Inventory : MonoBehaviour
             if (items[i].Item1 == item)
             {
                 items[i].Item2++;
+                this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = item.sprite;
+                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
                 return true;
             }
 
@@ -28,6 +41,8 @@ public class Inventory : MonoBehaviour
             if (items[i] == default)
             {
                 items[i] = (item, 1);
+                this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = item.sprite;
+                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
                 return true;
             }
 
@@ -40,7 +55,13 @@ public class Inventory : MonoBehaviour
             if (items[i].Item1 == item)
             {
                 items[i].Item2--;
-                if (items[i].Item2 <= 0) items[i] = default;
+                this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = items[i].Item2.ToString();
+                if (items[i].Item2 <= 0)
+                {
+                    items[i] = default;
+                    this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = null;
+                    this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = "";
+                }
                 return true;
             }
 
@@ -52,6 +73,8 @@ public class Inventory : MonoBehaviour
         for(int i = 0; i < items.Length; i++)
         {
             items[i] = default;
+            this.transform.GetChild(0).GetChild(i).GetComponent<Image>().sprite = null;
+            this.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<TMP_Text>().text = "";
         }
     }
 
