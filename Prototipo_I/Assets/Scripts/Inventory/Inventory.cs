@@ -2,15 +2,28 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour 
+public class Inventory : MonoBehaviour, IAutoSaving<(Item, int)[]>
 {
     private static Inventory instance;
     public static Inventory Instance { get { return instance; } }
 
     [SerializeField] private int inventorySpace;
     [SerializeField] private (Item, int)[] items = new (Item, int)[8];
+    public (Item, int)[] Items { get => items; }
+
+    #region IAutoSaving
+
+    public float AutoSaveTime => 5.0f;
+
+    public string File => "inventory.json";
+
+    public (Item, int)[] DataToSave { get => items; set => items = value; }
+    public UnityEvent<float> SaveEvent { get; set; }
+
+    #endregion
 
     private void Start()
     {
@@ -22,6 +35,8 @@ public class Inventory : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
+
+        (this as IAutoSaving<(Item, int)[]>).SetupAutoSave();
 
         Clear();
 
@@ -94,14 +109,4 @@ public class Inventory : MonoBehaviour
 
     private Image GetImage(int i) => this.transform.GetChild(0).GetChild(i).GetComponent<Image>();
     private TMP_Text GetText(int i) => this.transform.GetChild(0).GetChild(i).GetComponentInChildren<TMP_Text>();
-
-    public void Save()
-    {
-        FileManager.SaveFile(FileManager.InventoryFile, items);
-    }
-
-    public void Load()
-    {
-        FileManager.LoadFile(FileManager.InventoryFile, out items);
-    }
 }

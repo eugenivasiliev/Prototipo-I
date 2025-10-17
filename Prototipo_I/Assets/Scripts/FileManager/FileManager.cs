@@ -4,9 +4,6 @@ using System.Runtime.Serialization;
 
 public static class FileManager
 {
-    public static string InventoryFile { get => "inventory.json"; }
-
-
     public static void SaveFile<T>(string fileName, T data)
     {
         string text = JsonUtility.ToJson(data);
