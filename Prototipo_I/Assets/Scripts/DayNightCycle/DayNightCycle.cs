@@ -23,12 +23,14 @@ public class DayNightCycle : MonoBehaviour
     public int DayCount { get { return dayCount; } }
 
     public float TotalTime { get => dayTime + dayCount * dayDuration; }
+    public float DayElapsed01 { get => dayTime / dayDuration; }
 
     [SerializeField] private PriorityQueue<TimedEvent, float> timedEvents = new PriorityQueue<TimedEvent, float>();
 
-    [Header("Skyboxes")]
-    [SerializeField] private List<Material> skyboxes = new List<Material>();
-    private Material skybox;
+    [Header("Skybox")]
+    [SerializeField] private Material skybox;
+    [SerializeField] private AnimationCurve atmosphereThickness;
+    [SerializeField] private AnimationCurve exposure;
 
     private void Awake()
     {
@@ -42,9 +44,7 @@ public class DayNightCycle : MonoBehaviour
 
     private void Start()
     {
-        RenderSettings.skybox = skyboxes[0];
-        skybox = skyboxes[0];
-        foreach(string s in skyboxes[0].GetPropertyNames(MaterialPropertyType.Float)) Debug.Log(s);
+        RenderSettings.skybox = skybox;
     }
 
     private void Update()
@@ -62,14 +62,8 @@ public class DayNightCycle : MonoBehaviour
             nextEvent.Invoke(dayTime);
         }
 
-        skyboxes[0].SetFloat("_AtmosphereThickness", Mathf.Clamp(DayTime / DayDuration * 5, 0, 5));
-
-        //float curDayPhase = dayTime / dayDuration * skyboxes.Count;
-        //int curSkyboxIndex = Mathf.FloorToInt(curDayPhase);
-
-        //skybox.Lerp(skyboxes[curSkyboxIndex % skyboxes.Count], skyboxes[(curSkyboxIndex + 1) % skyboxes.Count], curDayPhase - curSkyboxIndex);
-        //RenderSettings.skybox = skybox;
-        //DynamicGI.UpdateEnvironment();
+        skybox.SetFloat("_AtmosphereThickness", atmosphereThickness.Evaluate(DayElapsed01));
+        skybox.SetFloat("_Exposure", exposure.Evaluate(DayElapsed01));
     }
 
     public void SubscribeTimedEvent(TimedEvent timedEvent, float time) => 
