@@ -20,12 +20,22 @@ public class Plot : MonoBehaviour
     {
         if (IsPlanted)
         {
-            Debug.Log("Ya esta plantado");
-            return;
+            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
+            {
+                this.plantData = newPlant;
+                plant = new Plant(newPlant);
+            }
+            else
+            {
+                Debug.Log("Already planted");
+                return;
+            }
+        } 
+        else
+        {
+            plantData = data;
+            plant = new Plant(data);
         }
-
-        plantData = data;
-        plant = new Plant(data);
 
         currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
 
@@ -51,6 +61,9 @@ public class Plot : MonoBehaviour
             Debug.Log("Aun no esta lista");
             return;
         }
+
+        Inventory.Instance.AddItem(new Item1(), 2);
+
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
 
@@ -94,8 +107,11 @@ public class Plot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Plant(plantInfo);
-            Debug.Log("Plantada");
+            if (Inventory.Instance.RemoveItem(new Item1()))
+            {
+                Plant(plantInfo);
+                Debug.Log("Plantada");
+            }
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
