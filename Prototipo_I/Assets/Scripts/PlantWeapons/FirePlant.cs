@@ -1,18 +1,41 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FirePlant : PlantWeapon
 {
     [SerializeField] private int damageDealt;
+    [SerializeField] private float damageTime;
+    private List<(IDamageable, float)> damageables;
+
     protected override void Update()
     {
-        
+        for (int i = 0; i < damageables.Count; ++i)
+        {
+            damageables[i] = (damageables[i].Item1, damageables[i].Item2 - Time.deltaTime);
+            if(damageables[i].Item2 < 0)
+            {
+                damageables[i].Item1.Damage(damageDealt);
+                damageables[i] = (damageables[i].Item1, damageTime);
+            }
+        }
     }
 
-    private void OnTriggerStay(Collider collider)
+    private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.TryGetComponent(out IDamageable damageable))
+        if(collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        if (!collider.TryGetComponent(out IDamageable damageable)) return;
+        for (int i = 0; i < damageables.Count; ++i)
         {
-            damageable.Damage(damageDealt);
+            if (damageables[i].Item1 == damageable)
+            {
+                damageables.RemoveAt(i);
+                return;
+            }
         }
     }
 }
