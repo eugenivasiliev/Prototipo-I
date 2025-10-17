@@ -12,11 +12,11 @@ public class Plot : MonoBehaviour
     private GameObject currentPlant;
 
     [SerializeField] private TextMeshProUGUI statusText;
-    [SerializeField] private PlantData plantInfo;
+    [SerializeField] public PlantData plantInfo;
 
     public bool IsPlanted { get { return plant != null; } }
 
-    private void Plant(PlantData data)
+    public void Plant(PlantData data)
     {
         if (IsPlanted)
         {
@@ -62,7 +62,7 @@ public class Plot : MonoBehaviour
             return;
         }
 
-        Inventory.Instance.AddItem(new Item1(), 2);
+        Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
 
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
@@ -107,11 +107,7 @@ public class Plot : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (Inventory.Instance.RemoveItem(new Item1()))
-            {
-                Plant(plantInfo);
-                Debug.Log("Plantada");
-            }
+            Inventory.Instance.UseCurrentItem(this.gameObject);
         }
         if (Input.GetKeyDown(KeyCode.C))
         {
