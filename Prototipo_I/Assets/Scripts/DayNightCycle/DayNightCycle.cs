@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using TimedEvent = UnityEngine.Events.UnityEvent<float>;
 
 /// <summary>
-/// Uses <b>System.Collections.Generic.PriorityQueue</b> for DayTime-dependent events
+/// Centralised manager for daytime-dependent events.
+/// Reduces comparisons each frame and eliminates corroutines/update methods.
 /// </summary>
 public class DayNightCycle : MonoBehaviour 
 {
@@ -25,6 +26,10 @@ public class DayNightCycle : MonoBehaviour
 
     [SerializeField] private PriorityQueue<TimedEvent, float> timedEvents = new PriorityQueue<TimedEvent, float>();
 
+    [Header("Skyboxes")]
+    [SerializeField] private List<Material> skyboxes = new List<Material>();
+    private Material skybox;
+
     private void Awake()
     {
         if (instance == null)
@@ -33,6 +38,13 @@ public class DayNightCycle : MonoBehaviour
             return;
         }
         Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        RenderSettings.skybox = skyboxes[0];
+        skybox = skyboxes[0];
+        foreach(string s in skyboxes[0].GetPropertyNames(MaterialPropertyType.Float)) Debug.Log(s);
     }
 
     private void Update()
@@ -49,6 +61,15 @@ public class DayNightCycle : MonoBehaviour
             TimedEvent nextEvent = timedEvents.Dequeue();
             nextEvent.Invoke(dayTime);
         }
+
+        skyboxes[0].SetFloat("_AtmosphereThickness", Mathf.Clamp(DayTime / DayDuration * 5, 0, 5));
+
+        //float curDayPhase = dayTime / dayDuration * skyboxes.Count;
+        //int curSkyboxIndex = Mathf.FloorToInt(curDayPhase);
+
+        //skybox.Lerp(skyboxes[curSkyboxIndex % skyboxes.Count], skyboxes[(curSkyboxIndex + 1) % skyboxes.Count], curDayPhase - curSkyboxIndex);
+        //RenderSettings.skybox = skybox;
+        //DynamicGI.UpdateEnvironment();
     }
 
     public void SubscribeTimedEvent(TimedEvent timedEvent, float time) => 
