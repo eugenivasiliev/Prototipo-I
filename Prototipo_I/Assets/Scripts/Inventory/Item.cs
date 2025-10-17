@@ -8,5 +8,5 @@ public class Item
     public string Description;
     public Sprite sprite;
 
-    public virtual void OnUse() {}
+    public virtual void OnUse(GameObject gameObject) {}
 }
