@@ -37,7 +37,7 @@ public interface IInteractable
                     PlayerController.Inputs.FindAction(binding.actionName).performed += binding.action;
                     break;
                 default:
-                    throw new System.Exception("Unexpected input binding ActionChange");
+                    throw new Exception("Unexpected input binding ActionChange");
             }
         }
     }
@@ -58,7 +58,7 @@ public interface IInteractable
                     PlayerController.Inputs.FindAction(binding.actionName).performed -= binding.action;
                     break;
                 default:
-                    throw new System.Exception("Unexpected input binding ActionChange");
+                    throw new Exception("Unexpected input binding ActionChange");
             }
         }
     }
