@@ -3,9 +3,12 @@ using UnityEngine;
 public class IInteractProve : MonoBehaviour, IInteractable
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+
+    [SerializeField] private GameObject fireFXPrefab;
     void Start()
     {
-        
+        GameObject fx = Instantiate(fireFXPrefab, transform.position, Quaternion.identity);
     }
 
     public void OnInteract()
