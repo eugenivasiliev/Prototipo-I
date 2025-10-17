@@ -119,6 +119,60 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &53688431
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 53688433}
+  - component: {fileID: 53688432}
+  m_Layer: 0
+  m_Name: Corral
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &53688432
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53688431}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &53688433
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53688431}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 14.728, y: 1.36, z: -16.955}
+  m_LocalScale: {x: 10.8, y: 1, z: 10.8}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 718467997}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &289645682 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6097987769715672952, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
@@ -821,6 +875,8 @@ GameObject:
   - component: {fileID: 718467995}
   - component: {fileID: 718467994}
   - component: {fileID: 718467998}
+  - component: {fileID: 718467999}
+  - component: {fileID: 718468000}
   m_Layer: 0
   m_Name: Animal
   m_TagString: Untagged
@@ -910,12 +966,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718467993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.758525, y: 1.43, z: -18.25748}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0028264083, y: 0.06999993, z: -0.12060007}
+  m_LocalScale: {x: 0.0925926, y: 1, z: 0.0925926}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 53688433}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &718467998
 MonoBehaviour:
@@ -929,6 +985,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeb4d1769d4925e4295083bf56818c7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eatInterval: 30
+  mealsForProduction: 3
+  mealsForGrow: 5
+  breedingCooldown: 300
+  maxMealsEaten: 8
+  grownPrefab: {fileID: 0}
+  corral: {fileID: 53688431}
+--- !u!114 &718467999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718467993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2442fb54371d92845b81454e846e60b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minTimeToWalk: 2
+  maxTimeToWalk: 10
+--- !u!195 &718468000
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718467993}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5000011
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &725866874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2307,14 +2406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b626fa55aff031d469cc1afe6ac51a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemie: {fileID: 1944628757844598330, guid: 03d4937ed44a7684e97e9433bbc896f9, type: 3}
-  enemiesByZone: 2
-  timeToSpawn: 2
-  spawnZones:
-  - {fileID: 1447755852}
-  - {fileID: 1027675764}
-  - {fileID: 1669793240}
-  - {fileID: 1894468608}
 --- !u!4 &1627547291
 Transform:
   m_ObjectHideFlags: 0
@@ -2936,7 +3027,7 @@ SceneRoots:
   - {fileID: 781622636}
   - {fileID: 1818831354}
   - {fileID: 465797477}
-  - {fileID: 718467997}
   - {fileID: 2057988125}
   - {fileID: 1568002083}
   - {fileID: 1627547291}
+  - {fileID: 53688433}

@@ -1,22 +1,23 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 public class Animal : MonoBehaviour
 {
     [SerializeField] private float eatInterval = 30f;
-    [SerializeField] private int mealsForProduction = 3;
-    [SerializeField] private int mealsForGrow = 5;
+    [SerializeField] private short mealsForProduction = 3;
+    [SerializeField] private short mealsForGrow = 5;
     [SerializeField] private float breedingCooldown = 300f;
-    [SerializeField] private int maxMealsEaten = 8;
+    [SerializeField] private short maxMealsEaten = 8;
     [SerializeField] private GameObject grownPrefab;
+    [SerializeField] private GameObject corral;
 
-    public bool CanBreed = false;
+    public bool canBreed { get; private set; } = false;
 
-    private int maxCaring;
-    private int caring = 0;
-    private int mealsEaten = 0;
+    private short maxCaring;
+    private short caring;
+    private short mealsEaten = 0;
 
-    private bool isHungry = false;
-    private bool isGrow = false;
+    public bool IsHungry { get; private set; } = false;
     private bool canCollet = false;
 
     private UnityEvent<float> feed = new UnityEvent<float> ();
@@ -25,7 +26,9 @@ public class Animal : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        maxCaring = mealsForGrow + mealsForProduction;
+        maxCaring = (short)(mealsForGrow + mealsForProduction); //Porque hace esta conversion?
+
+
         feed.AddListener(needFeed);
         breed.AddListener(Breeding);
 
@@ -34,14 +37,14 @@ public class Animal : MonoBehaviour
         DayNightCycle.Instance.SubscribeTimedEvent(breed,DayNightCycle.Instance.TotalTime + breedingCooldown);
     }
 
-    private void needFeed(float unused)
+    private void needFeed(float t)
     {
         Debug.Log("necesita comida");
 
-        isHungry = true;
+        IsHungry = true;
     }
 
-    private void Feeding()
+    public void Feeding()
     {
         if (mealsEaten == maxMealsEaten)
         {
@@ -54,22 +57,39 @@ public class Animal : MonoBehaviour
 
         Debug.Log("Veces comido" + mealsEaten);
 
-        if (mealsEaten >= mealsForProduction && !canCollet)
+        if (mealsEaten >= mealsForProduction)
         {
             canCollet = true;
         }
 
-        if (mealsEaten >= mealsForGrow && !isGrow)
+        if (mealsEaten >= mealsForGrow)
         {
-            isGrow = true;
             Debug.Log("Listo para crecer");
             Grow();
         }
 
-        isHungry = false;
+        IsHungry = false;
     }
 
+    public Vector3 GetRandomPositionInCorral
+    {
+        get
+        {
+            if (corral == null) return transform.position;
 
+            Collider col = corral.GetComponent<Collider>();
+
+            Vector3 min = col.bounds.min;
+            Vector3 max = col.bounds.max;
+
+            float x = Random.Range(min.x, max.x);
+            float y = transform.position.y;
+            float z = Random.Range(min.z, max.z);
+
+            return new Vector3(x, y, z);
+        }
+        
+    }
 
     private void Collect()
     {
@@ -96,9 +116,9 @@ public class Animal : MonoBehaviour
         }
     }
 
-    public void SetInitialValues(int oldCaring) { caring = oldCaring; }
+    public void SetInitialValues(short oldCaring) { caring = oldCaring; }
 
-    private void Breeding(float unused)
+    private void Breeding(float t)
     {
         if(caring >= maxCaring)
         {
@@ -110,7 +130,7 @@ public class Animal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E) && isHungry)
+        if(Input.GetKeyDown(KeyCode.E) && IsHungry)
         {
             Feeding();
         }
