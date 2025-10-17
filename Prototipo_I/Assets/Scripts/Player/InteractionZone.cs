@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class InteractionZone : MonoBehaviour, IInteractable
+public class InteractionZone : MonoBehaviour
 {
     [SerializeField] GameObject playerGameObject;
 
@@ -17,19 +17,23 @@ public class InteractionZone : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter(Collider other)
     {
-        interactable = other.GetComponent<IInteractable>();
-        if(interactable != null && other.gameObject != playerGameObject)
+        if(other.TryGetComponent(out interactable))
         {
-            list.Add(other.gameObject);
-            Debug.Log("Entro: " + other.gameObject.name);
+            //list.Add(other.gameObject);
+            //Debug.Log("Entro: " + other.gameObject.name);
+            interactable.Bind();
         }
-        Debug.Log("Objetos Interactuables: " + list.Count);
+        //Debug.Log("Objetos Interactuables: " + list.Count);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        list.Remove(other.gameObject);
-        Debug.Log("Objetos Interactuables: " + list.Count);
+        if(other.TryGetComponent(out interactable))
+        {
+            interactable.Unbind();
+        }
+        //list.Remove(other.gameObject);
+        //Debug.Log("Objetos Interactuables: " + list.Count);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

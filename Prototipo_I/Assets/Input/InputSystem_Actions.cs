@@ -168,7 +168,43 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""water"",
+                    ""type"": ""Button"",
+                    ""id"": ""859a79f5-c0e7-4496-b8f8-45368bde81a7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""plant"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f158e25-26c3-4b2c-9c27-9ae3140dd78e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""fertilize"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef6bb84f-afdb-47e2-b3a6-49ad12d1b334"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""harvest"",
+                    ""type"": ""Button"",
+                    ""id"": ""42cec2b3-79c0-45d5-9418-f8efe98e289a"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -557,6 +593,50 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41a59ad8-48ca-489f-a72a-d3fd288c6b67"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""water"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e81ff74-ab8e-4a24-b73e-cbc9eaa24336"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""plant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4731b09-5902-44b9-a319-794abba7beb3"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""fertilize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""580331c6-c736-4a74-a6ac-59f247722b5d"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""harvest"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1153,6 +1233,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_water = m_Player.FindAction("water", throwIfNotFound: true);
+        m_Player_plant = m_Player.FindAction("plant", throwIfNotFound: true);
+        m_Player_fertilize = m_Player.FindAction("fertilize", throwIfNotFound: true);
+        m_Player_harvest = m_Player.FindAction("harvest", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1255,6 +1339,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_water;
+    private readonly InputAction m_Player_plant;
+    private readonly InputAction m_Player_fertilize;
+    private readonly InputAction m_Player_harvest;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1302,6 +1390,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/water".
+        /// </summary>
+        public InputAction @water => m_Wrapper.m_Player_water;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/plant".
+        /// </summary>
+        public InputAction @plant => m_Wrapper.m_Player_plant;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/fertilize".
+        /// </summary>
+        public InputAction @fertilize => m_Wrapper.m_Player_fertilize;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/harvest".
+        /// </summary>
+        public InputAction @harvest => m_Wrapper.m_Player_harvest;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1355,6 +1459,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
+            @water.started += instance.OnWater;
+            @water.performed += instance.OnWater;
+            @water.canceled += instance.OnWater;
+            @plant.started += instance.OnPlant;
+            @plant.performed += instance.OnPlant;
+            @plant.canceled += instance.OnPlant;
+            @fertilize.started += instance.OnFertilize;
+            @fertilize.performed += instance.OnFertilize;
+            @fertilize.canceled += instance.OnFertilize;
+            @harvest.started += instance.OnHarvest;
+            @harvest.performed += instance.OnHarvest;
+            @harvest.canceled += instance.OnHarvest;
         }
 
         /// <summary>
@@ -1393,6 +1509,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
+            @water.started -= instance.OnWater;
+            @water.performed -= instance.OnWater;
+            @water.canceled -= instance.OnWater;
+            @plant.started -= instance.OnPlant;
+            @plant.performed -= instance.OnPlant;
+            @plant.canceled -= instance.OnPlant;
+            @fertilize.started -= instance.OnFertilize;
+            @fertilize.performed -= instance.OnFertilize;
+            @fertilize.canceled -= instance.OnFertilize;
+            @harvest.started -= instance.OnHarvest;
+            @harvest.performed -= instance.OnHarvest;
+            @harvest.canceled -= instance.OnHarvest;
         }
 
         /// <summary>
@@ -1756,6 +1884,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "water" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnWater(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "plant" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPlant(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "fertilize" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFertilize(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "harvest" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnHarvest(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

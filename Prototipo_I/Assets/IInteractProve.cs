@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IInteractProve : MonoBehaviour, IInteractable
+public class IInteractProve : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
