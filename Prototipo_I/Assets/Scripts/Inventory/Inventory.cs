@@ -63,6 +63,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     public static Inventory Instance { get { return instance; } }
 
     [SerializeField] private int inventorySpace;
+    public int InventorySpace { get { return inventorySpace; } }
     [SerializeField] private InventoryList items;
 
     #region IAutoSaving
@@ -76,6 +77,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     #endregion
 
+    private Indicator indicator;
+
     private void Start()
     {
         if(instance != null)
@@ -86,11 +89,13 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
         instance = this;
 
-        items = new InventoryList(8);
+        items = new InventoryList(inventorySpace);
 
         AddItem(new Item1());
 
         (this as IAutoSaving<InventoryList>).SetupAutoSave();
+        indicator = this.transform.GetChild(0).GetComponent<Indicator>();
+
     }
 
     public bool AddItem(Item item)
@@ -117,9 +122,9 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return false;
     }
 
-    public bool AddItem(Item item, int amount)
+    public bool AddItem(Item item, int amount, out int amountDone)
     {
-        for(int i = 0; i < amount; i++) if(!AddItem(item)) return false;
+        for(amountDone = 1; amountDone <= amount; amountDone++) if(!AddItem(item)) return false;
         return true;
     }
 
@@ -142,9 +147,9 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return false;
     }
 
-    public bool RemoveItem(Item item, int amount)
+    public bool RemoveItem(Item item, int amount, out int amountDone)
     {
-        for (int i = 0; i < amount; i++) if (!RemoveItem(item)) return false;
+        for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(item)) return false;
         return true;
     }
 
@@ -157,8 +162,19 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         }
     }
 
-    private Image GetImage(int i) => this.transform.GetChild(0).GetChild(i).GetComponent<Image>();
-    private TMP_Text GetText(int i) => this.transform.GetChild(0).GetChild(i).GetComponentInChildren<TMP_Text>();
+    public void UseCurrentItem(GameObject gameObject)
+    {
+        items.slots[indicator.CurrentIndex].item?.OnUse(gameObject);
+    }
+
+    public Item GetCurrentItem()
+    {
+        return items.slots[indicator.CurrentIndex].item ?? default;
+    }
+
+    public Vector2 GetItemUIPosition(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<RectTransform>().position;
+    private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
+    private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
 
     public InventoryList DataToSave()
     {

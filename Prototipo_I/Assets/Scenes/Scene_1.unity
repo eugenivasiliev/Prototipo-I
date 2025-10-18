@@ -566,6 +566,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &391376316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4534612259098971803, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+  m_PrefabInstance: {fileID: 544835256}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +813,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8dbcf4abec00694192fc255d03df748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &544835256
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5549501881239218117, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_Name
+      value: TradingHall
+      objectReference: {fileID: 0}
+    - target: {fileID: 7218082642521578748, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: tradingUI
+      value: 
+      objectReference: {fileID: 391376316}
+    - target: {fileID: 8219366511065828171, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -7.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219366511065828171, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 8219366511065828171, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
 --- !u!1001 &725866874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2186,14 +2264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b626fa55aff031d469cc1afe6ac51a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemie: {fileID: 1944628757844598330, guid: 03d4937ed44a7684e97e9433bbc896f9, type: 3}
-  enemiesByZone: 2
-  timeToSpawn: 2
-  spawnZones:
-  - {fileID: 1447755852}
-  - {fileID: 1027675764}
-  - {fileID: 1669793240}
-  - {fileID: 1894468608}
 --- !u!4 &1627547291
 Transform:
   m_ObjectHideFlags: 0
@@ -2818,3 +2888,4 @@ SceneRoots:
   - {fileID: 2057988125}
   - {fileID: 1568002083}
   - {fileID: 1627547291}
+  - {fileID: 544835256}
