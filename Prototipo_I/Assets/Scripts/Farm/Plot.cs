@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Timers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Plot : MonoBehaviour
+public class Plot : MonoBehaviour, IInteractable
 {
     Plant plant;
     PlantData plantData;
@@ -30,7 +32,7 @@ public class Plot : MonoBehaviour
                 Debug.Log("Already planted");
                 return;
             }
-        } 
+        }
         else
         {
             plantData = data;
@@ -79,8 +81,8 @@ public class Plot : MonoBehaviour
             statusText.text = "Hueco";
             return;
         }
-        
-        statusText.text = $"{plant.Name}\n" + 
+
+        statusText.text = $"{plant.Name}\n" +
                           $"Time to Grow: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
                           $"Fertilizada: {(isFertilized ? "Sí" : "No")}\n";
@@ -91,36 +93,45 @@ public class Plot : MonoBehaviour
         hasWater = false;
         isFertilized = false;
 
-       if (currentPlant != null) { Destroy(currentPlant); }
+        if (currentPlant != null) { Destroy(currentPlant); }
 
         GameObject prefab = plantData.stages[currentStage];
         currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
 
     }
 
-    public void Update()
+    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
+    new IInteractable.KeyBinding("water", InputActionChange.ActionCanceled, Action_Water),
+    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
+    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
+    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
+    };
+
+    private void Action_Water(InputAction.CallbackContext ctx)
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        hasWater = true;
+        Debug.Log("Regada");
+    }
+
+    private void Action_Plant(InputAction.CallbackContext ctx)
+    {
+        Inventory.Instance.UseCurrentItem(this.gameObject);
+    }
+
+    private void Action_Harvest(InputAction.CallbackContext ctx)
+    {
+        if (IsPlanted && plant.IsFullyGrown)
         {
-            hasWater = true;
-            Debug.Log("Regada");
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Inventory.Instance.UseCurrentItem(this.gameObject);
-        }
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-         if(IsPlanted && plant.IsFullyGrown) 
-            {
-                Harvest();
-                Debug.Log("Coshechada"); 
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            Fertilize();
-            Debug.Log("Fertilizada");
+            Harvest();
+            Debug.Log("Coshechada");
         }
     }
+
+    private void Action_Fertilize(InputAction.CallbackContext ctx)
+    {
+        Fertilize();
+        Debug.Log("Fertilizada");
+    }
+
+    public void OnInteract() {}
 }
