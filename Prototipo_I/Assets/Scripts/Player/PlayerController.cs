@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private static PlayerController instance;
+    public static PlayerController Instance { get { return instance; } }
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensivility = 7.5f;
@@ -28,8 +32,17 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable;
 
+    private int money;
+    public int Money { get => money; set => money = value; }
+
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
     }
