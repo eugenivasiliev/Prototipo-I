@@ -91,9 +91,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
         items = new InventoryList(inventorySpace);
 
-        AddItem(new Item1());
-
         (this as IAutoSaving<InventoryList>).SetupAutoSave();
+        (this as IAutoSaving<InventoryList>).Load();
         indicator = this.transform.GetChild(0).GetComponent<Indicator>();
 
     }
@@ -176,9 +175,14 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
     private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
 
-    public InventoryList DataToSave()
+    public InventoryList GetData()
     {
         Debug.Log(items.slots.Length);
         return items;
+    }
+
+    public void SetData(InventoryList data)
+    {
+        items = data;
     }
 }
