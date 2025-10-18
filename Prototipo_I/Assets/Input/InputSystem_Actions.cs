@@ -208,6 +208,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""trade"",
+                    ""type"": ""Button"",
+                    ""id"": ""7cf7b851-dd97-44cb-8d43-6a34e67336a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -637,6 +646,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""harvest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19bd609a-9829-49f6-93ef-aed212d33561"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""trade"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1237,6 +1257,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_plant = m_Player.FindAction("plant", throwIfNotFound: true);
         m_Player_fertilize = m_Player.FindAction("fertilize", throwIfNotFound: true);
         m_Player_harvest = m_Player.FindAction("harvest", throwIfNotFound: true);
+        m_Player_trade = m_Player.FindAction("trade", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1343,6 +1364,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_plant;
     private readonly InputAction m_Player_fertilize;
     private readonly InputAction m_Player_harvest;
+    private readonly InputAction m_Player_trade;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1406,6 +1428,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/harvest".
         /// </summary>
         public InputAction @harvest => m_Wrapper.m_Player_harvest;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/trade".
+        /// </summary>
+        public InputAction @trade => m_Wrapper.m_Player_trade;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1471,6 +1497,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @harvest.started += instance.OnHarvest;
             @harvest.performed += instance.OnHarvest;
             @harvest.canceled += instance.OnHarvest;
+            @trade.started += instance.OnTrade;
+            @trade.performed += instance.OnTrade;
+            @trade.canceled += instance.OnTrade;
         }
 
         /// <summary>
@@ -1521,6 +1550,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @harvest.started -= instance.OnHarvest;
             @harvest.performed -= instance.OnHarvest;
             @harvest.canceled -= instance.OnHarvest;
+            @trade.started -= instance.OnTrade;
+            @trade.performed -= instance.OnTrade;
+            @trade.canceled -= instance.OnTrade;
         }
 
         /// <summary>
@@ -1912,6 +1944,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnHarvest(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "trade" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTrade(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
