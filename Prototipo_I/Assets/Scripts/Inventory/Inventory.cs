@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [Serializable]
 public struct InventorySlot
 {
-    public Item item;
+    [SerializeReference] public Item item;
     public int amount;
 
     public InventorySlot(Item item, int amount) : this()
