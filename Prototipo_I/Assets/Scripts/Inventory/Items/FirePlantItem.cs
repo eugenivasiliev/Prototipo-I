@@ -9,12 +9,17 @@ public class FirePlantItem : Item, IInteractable
 {
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
-        new IInteractable.KeyBinding("fire", InputActionChange.ActionCanceled, Action_Use)
+        new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
     };
     public void OnInteract() {}
 
     public void Action_Use(InputAction.CallbackContext ctx)
     {
-        //TODO: Spawn FirePlant
+        GameObject.Instantiate(
+            PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FirePlant)),
+            PlayerController.Instance.transform.position,
+            Quaternion.identity
+            );
+        Inventory.Instance.RemoveItem(this);
     }
 }
