@@ -17,7 +17,7 @@ public class Indicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < Inventory.Instance.inventorySpace; i++)
+        for(int i = 0; i < Inventory.Instance.InventorySpace; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
