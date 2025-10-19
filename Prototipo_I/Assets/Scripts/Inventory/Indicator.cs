@@ -28,7 +28,7 @@ public class Indicator : MonoBehaviour
     private void UpdateIndex(int index)
     {
         Item curItem = Inventory.Instance.GetCurrentItem();
-        if (curItem is IInteractable)
+        if (curItem != null && curItem is IInteractable)
             (curItem as IInteractable).Unbind();
 
         CurrentIndex = index;

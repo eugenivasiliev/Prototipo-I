@@ -175,7 +175,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         GetText(index).text = "";
     }
 
-    public Item GetCurrentItem() => items.slots[indicator.CurrentIndex].item ?? default;
+    public Item GetCurrentItem() => (indicator.CurrentIndex == -1) ? null : items.slots[indicator.CurrentIndex].item;
     public Vector2 GetItemUIPosition(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<RectTransform>().position;
     private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
     private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
