@@ -169,6 +169,6 @@ public class Animal : MonoBehaviour
         {
             Collect();
         }
-        Debug.Log(caring);
+        //Debug.Log(caring);
     }
 }

@@ -24,10 +24,4 @@ public class SettingsMenu : MonoBehaviour
     {
         QualitySettings.vSyncCount = isVSyncOn ? 1 : 0;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

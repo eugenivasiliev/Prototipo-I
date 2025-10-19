@@ -134,6 +134,11 @@ public class Plot : MonoBehaviour, IInteractable
 
     private void Action_Plant(InputAction.CallbackContext ctx)
     {
+        if (Inventory.Instance == null)
+        {
+            Debug.LogWarning("Inventory.Instance es null al intentar plantar");
+            return;
+        }
         Inventory.Instance.UseCurrentItem(this.gameObject);
     }
 

@@ -474,6 +474,22 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: 'managedReferences[-2]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: items.slots.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: items.slots.Array.data[0].item
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: items.slots.Array.data[0].amount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9087304588203094433, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
       propertyPath: m_Name
       value: Inventory
@@ -2644,9 +2660,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1627547289}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b626fa55aff031d469cc1afe6ac51a6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemy: {fileID: 1944628757844598330, guid: 03d4937ed44a7684e97e9433bbc896f9, type: 3}
+  enemiesByZone: 4
+  timeToSpawn: 4
+  spawnZones:
+  - {fileID: 1447755852}
+  - {fileID: 1027675764}
+  - {fileID: 1669793240}
+  - {fileID: 1894468608}
 --- !u!4 &1627547291
 Transform:
   m_ObjectHideFlags: 0
