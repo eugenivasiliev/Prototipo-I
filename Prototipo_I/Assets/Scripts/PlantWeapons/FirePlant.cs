@@ -6,7 +6,9 @@ public class FirePlant : PlantWeapon
 {
     [SerializeField] private int damageDealt;
     [SerializeField] private float damageTime;
-    private List<(IDamageable, float)> damageables;
+    private List<(IDamageable, float)> damageables = new List<(IDamageable, float)>();
+
+    public override string Name => nameof(FirePlant);
 
     protected override void Update()
     {
