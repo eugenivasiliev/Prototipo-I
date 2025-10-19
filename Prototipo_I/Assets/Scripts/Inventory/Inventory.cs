@@ -163,6 +163,10 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public void UseCurrentItem(GameObject gameObject)
     {
+        Debug.Log($"items = {items}");
+        //Debug.Log($"items.slots = {items?.slots}");
+        Debug.Log($"indicator = {indicator}");
+        Debug.Log($"CurrentIndex = {indicator?.CurrentIndex}");
         items.slots[indicator.CurrentIndex].item?.OnUse(gameObject);
     }
 

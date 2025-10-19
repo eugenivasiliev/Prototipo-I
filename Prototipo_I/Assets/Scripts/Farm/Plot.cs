@@ -14,12 +14,20 @@ public class Plot : MonoBehaviour, IInteractable
     private GameObject currentPlant;
 
     [SerializeField] private TextMeshProUGUI statusText;
+    public TextMeshProUGUI StatusText => statusText;
     [SerializeField] public PlantData plantInfo;
 
     public bool IsPlanted { get { return plant != null; } }
 
+    private void Awake()
+    {
+        if(statusText != null)
+            statusText.gameObject.SetActive(false);
+    }
+
     public void Plant(PlantData data)
     {
+        AudioManager.instance.PlaySFX("Plant");
         if (IsPlanted)
         {
             if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
@@ -46,13 +54,13 @@ public class Plot : MonoBehaviour, IInteractable
         hasWater = false;
         isFertilized = false;
 
-        this.plant.Create();
         Debug.Log($"Planta {plant.Name} plantada!");
     }
 
     public void Fertilize()
     {
         if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
+        AudioManager.instance.PlaySFX("Fertilize");
         isFertilized = true;
         plant.ApplyFertilize(isFertilized);
     }
@@ -64,6 +72,7 @@ public class Plot : MonoBehaviour, IInteractable
             return;
         }
 
+        AudioManager.instance.PlaySFX("Harvesting");
         Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
 
         Destroy(currentPlant);
@@ -75,17 +84,24 @@ public class Plot : MonoBehaviour, IInteractable
 
     public void UpdateUI()
     {
+        statusText.gameObject.SetActive(true);
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
         {
             statusText.text = "Hueco";
             return;
         }
-
+        plant.UpdateGrowth(Time.deltaTime);
+        if (!hasWater && plant.TimeLeft <= 0f)
+        {
+            statusText.text = "<size=40><color=red>Necesita Agua</color></size>";
+            return;
+        }
         statusText.text = $"{plant.Name}\n" +
-                          $"Time to Grow: {plant.TimeLeft:F1}s\n" +
+                          $"Stage: {plant.CurrentStage} / {plant.MaxStage}\n" +
+                          $"Time to next stage: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
-                          $"Fertilizada: {(isFertilized ? "Sí" : "No")}\n";
+                          $"Fertilized: {(isFertilized ? "Sí" : "No")}";
     }
 
     private void OnPlantStageChanged(int currentStage)
@@ -95,6 +111,7 @@ public class Plot : MonoBehaviour, IInteractable
 
         if (currentPlant != null) { Destroy(currentPlant); }
 
+        AudioManager.instance.PlaySFX("NextStage");
         GameObject prefab = plantData.stages[currentStage];
         currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
 
@@ -109,12 +126,19 @@ public class Plot : MonoBehaviour, IInteractable
 
     private void Action_Water(InputAction.CallbackContext ctx)
     {
+        AudioManager.instance.PlaySFX("Water");
         hasWater = true;
+        plant.TryGrow(DayNightCycle.Instance.TotalTime, hasWater);
         Debug.Log("Regada");
     }
 
     private void Action_Plant(InputAction.CallbackContext ctx)
     {
+        if (Inventory.Instance == null)
+        {
+            Debug.LogWarning("Inventory.Instance es null al intentar plantar");
+            return;
+        }
         Inventory.Instance.UseCurrentItem(this.gameObject);
     }
 
