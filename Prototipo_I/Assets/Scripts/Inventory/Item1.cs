@@ -1,15 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [Serializable]
-public class Item1 : Item
+public class Item1 : Item, IPlantSeed
 {
-    public override void OnUse(GameObject gameObject)
-    {
-        if(gameObject.TryGetComponent(out Plot plot))
-        {
-            plot.Plant(plot.plantInfo);
-            Inventory.Instance.RemoveItem(this);
-        }
-    }
+    public PlantData PlantData => throw new NotImplementedException();
 }
