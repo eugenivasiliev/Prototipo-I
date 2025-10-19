@@ -1,8 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IInteractable
+public class PlayerController : MonoBehaviour
 {
+
+    private static PlayerController instance;
+    public static PlayerController Instance { get { return instance; } }
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensivility = 7.5f;
@@ -12,7 +16,8 @@ public class PlayerController : MonoBehaviour, IInteractable
     [SerializeField] public short InteractionRange { get { return 10; } }
 
     private CharacterController characterController;
-    private InputSystem_Actions inputs;
+    private static InputSystem_Actions inputs;
+    public static InputSystem_Actions Inputs { get { return inputs; } }
 
     private Vector2 movementInput;
     private Vector2 cameraInput;
@@ -27,10 +32,20 @@ public class PlayerController : MonoBehaviour, IInteractable
 
     private IInteractable interactable;
 
+    private int money;
+
+    public int Money { get => money; set => money = value; }
+
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
         characterController = GetComponent<CharacterController>();
-        inputs = new InputSystem_Actions();
+        if(inputs == null) inputs = new InputSystem_Actions();
     }
 
     private void Start()
@@ -69,12 +84,11 @@ public class PlayerController : MonoBehaviour, IInteractable
             horizontalMovement = movement * currentSpeed;
 
         if (characterController.isGrounded && velocity.y < 0)
-        {
             velocity.y = -2;
-        }
 
         if(isJumping && characterController.isGrounded)
         {
+            AudioManager.instance.PlaySFX("Jumping");
             velocity.y = Mathf.Sqrt(2f * jumpHeaight * gravity);
             Debug.Log(velocity.y);
             isJumping = false;
@@ -84,8 +98,16 @@ public class PlayerController : MonoBehaviour, IInteractable
 
         Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
         characterController.Move(totalMovement * Time.deltaTime);
-    }
+        if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            AudioManager.instance.PlaySFXLoop("Walking");
+        else
+            AudioManager.instance.StopLoop("Walking");
 
+        if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            AudioManager.instance.PlaySFXLoop("Running");
+        else
+            AudioManager.instance.StopLoop("Running");
+    }
     private void Look()
     {
         float mouseX = cameraInput.x * cameraSensivility;

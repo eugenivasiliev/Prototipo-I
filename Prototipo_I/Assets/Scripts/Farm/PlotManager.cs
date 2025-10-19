@@ -5,7 +5,7 @@ public class PlotManager : MonoBehaviour
 {
     
     public static PlotManager Instance;
-    private List<Plot> plots = new List<Plot>();
+    public List<Plot> plots = new List<Plot>();
     [SerializeField] private HybridationManager hybridationManager;
     public HybridationManager HybridationManager {  get { return hybridationManager; } }
 
@@ -27,6 +27,7 @@ public class PlotManager : MonoBehaviour
     {
         foreach (var plot in plots)
         {
+            if(plot.StatusText != null)
             plot.UpdateUI();
         }
     }
