@@ -4,17 +4,8 @@ public class Indicator : MonoBehaviour
 {
     public int CurrentIndex { get; private set; }
     private RectTransform rt;
+    [SerializeField] private float scaledToItem = 1.3f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        rt = GetComponent<RectTransform>();
-        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 90);
-        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 90);
-        rt.position = Inventory.Instance.GetItemUIPosition(0);
-    }
-
-    // Update is called once per frame
     void Update()
     {
         for(int i = 0; i < Inventory.Instance.InventorySpace; i++)
@@ -25,5 +16,14 @@ public class Indicator : MonoBehaviour
                 rt.position = Inventory.Instance.GetItemUIPosition(i);
             }
         }
+    }
+
+    public void Initialize(Vector2 itemSize)
+    {
+        rt = GetComponent<RectTransform>();
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemSize.x * scaledToItem);
+        rt.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, itemSize.y * scaledToItem);
+        rt.position = new Vector2(-Screen.width, -Screen.height);
+        CurrentIndex = -1;
     }
 }

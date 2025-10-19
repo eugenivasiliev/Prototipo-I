@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 [Serializable]
 public struct InventorySlot
@@ -93,7 +94,15 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
         (this as IAutoSaving<InventoryList>).SetupAutoSave();
         (this as IAutoSaving<InventoryList>).Load();
+
+        for (int i = 0; i < inventorySpace; ++i)
+        {
+            if (items.slots[i] == InventorySlot.Default) DefaultItem(i);
+            else RenderItem(i);
+        }
+
         indicator = this.transform.GetChild(0).GetComponent<Indicator>();
+        indicator.Initialize(this.transform.GetComponentInChildren<GridLayoutGroup>().cellSize);
 
     }
 
@@ -102,18 +111,14 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] != InventorySlot.Default && items.slots[i].item.GetType() == item.GetType())
             {
-                items.slots[i] = new InventorySlot(items.slots[i].item, items.slots[i].amount + 1);
-                GetImage(i).sprite = item.sprite;
-                GetText(i).text = items.slots[i].amount.ToString();
+                RenderItem(i);
                 return true;
             }
 
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] == InventorySlot.Default)
             {
-                items.slots[i] = new InventorySlot(item, 1);
-                GetImage(i).sprite = item.sprite;
-                GetText(i).text = items.slots[i].amount.ToString();
+                RenderItem(i);
                 return true;
             }
 
@@ -132,13 +137,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
             if (items.slots[i] != null && items.slots[i].item.GetType() == item.GetType())
             {
                 items.slots[i] = new InventorySlot(items.slots[i].item, items.slots[i].amount - 1);
-                GetText(i).text = items.slots[i].amount.ToString();
-                if (items.slots[i].amount <= 0)
-                {
-                    items.slots[i] = InventorySlot.Default;
-                    GetImage(i).sprite = null;
-                    GetText(i).text = "";
-                }
+                if (items.slots[i].amount <= 0) DefaultItem(i);
+                else RenderItem(i);
                 return true;
             }
 
@@ -161,12 +161,22 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         }
     }
 
+    private void RenderItem(int index)
+    {
+        GetImage(index).sprite = items.slots[index].item.sprite;
+        GetText(index).text = items.slots[index].amount.ToString();
+    }
+
+    private void DefaultItem(int index)
+    {
+        items.slots[index] = InventorySlot.Default;
+        GetImage(index).sprite = null;
+        GetText(index).text = "";
+    }
+
     public void UseCurrentItem(GameObject gameObject)
     {
-        Debug.Log($"items = {items}");
-        //Debug.Log($"items.slots = {items?.slots}");
-        Debug.Log($"indicator = {indicator}");
-        Debug.Log($"CurrentIndex = {indicator?.CurrentIndex}");
+        if (indicator.CurrentIndex == -1) return;
         items.slots[indicator.CurrentIndex].item?.OnUse(gameObject);
     }
 
