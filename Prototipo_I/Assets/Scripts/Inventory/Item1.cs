@@ -6,5 +6,5 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class Item1 : Item, IPlantSeed
 {
-    public PlantData PlantData => throw new NotImplementedException();
+    public PlantData PlantData => PlantDatabase.Instance.GetPlantByName("Bulbasaur");
 }
