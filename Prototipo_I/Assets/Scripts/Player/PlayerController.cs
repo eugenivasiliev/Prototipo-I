@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, IInteractable
+public class PlayerController : MonoBehaviour
 {
+
+    private static PlayerController instance;
+    public static PlayerController Instance { get { return instance; } }
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensivility = 7.5f;
@@ -12,7 +16,8 @@ public class PlayerController : MonoBehaviour, IInteractable
     [SerializeField] public short InteractionRange { get { return 10; } }
 
     private CharacterController characterController;
-    private InputSystem_Actions inputs;
+    private static InputSystem_Actions inputs;
+    public static InputSystem_Actions Inputs { get { return inputs; } }
 
     private Vector2 movementInput;
     private Vector2 cameraInput;
@@ -27,10 +32,19 @@ public class PlayerController : MonoBehaviour, IInteractable
 
     private IInteractable interactable;
 
+    private int money;
+    public int Money { get => money; set => money = value; }
+
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
         characterController = GetComponent<CharacterController>();
-        inputs = new InputSystem_Actions();
+        if(inputs == null) inputs = new InputSystem_Actions();
     }
 
     private void Start()
