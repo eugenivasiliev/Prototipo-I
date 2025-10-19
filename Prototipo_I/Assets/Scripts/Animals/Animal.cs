@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -8,7 +9,11 @@ public class Animal : MonoBehaviour
     [SerializeField] private short mealsForGrow = 5;
     [SerializeField] private float breedingCooldown = 300f;
     [SerializeField] private short maxMealsEaten = 8;
+    public short MaxMealsEaten => maxMealsEaten;
     [SerializeField] private GameObject grownPrefab;
+    [SerializeField] private GameObject childPrefab;
+    public GameObject ChildPrefab => childPrefab;
+
     [SerializeField] private GameObject corral;
 
     public bool canBreed { get; private set; } = false;
@@ -16,9 +21,11 @@ public class Animal : MonoBehaviour
     private short maxCaring;
     private short caring;
     private short mealsEaten = 0;
-
+    public short MealsEaten => mealsEaten;
     public bool IsHungry { get; private set; } = false;
     private bool canCollet = false;
+
+    public static List<Animal> allAnimals = new List<Animal>();
 
     private UnityEvent<float> feed = new UnityEvent<float> ();
     private UnityEvent<float> breed = new UnityEvent<float> ();
@@ -27,8 +34,8 @@ public class Animal : MonoBehaviour
     void Start()
     {
         maxCaring = (short)(mealsForGrow + mealsForProduction); //Porque hace esta conversion?
-
-
+        allAnimals.Add (this);
+        caring = maxCaring;
         feed.AddListener(needFeed);
         breed.AddListener(Breeding);
 
@@ -126,7 +133,30 @@ public class Animal : MonoBehaviour
             canBreed = true;
         }
     }
+    public void ResetBreedStatus()
+    {
+        canBreed = false;
+    }
+    public Animal FindMate(float maxDistance)
+    {
+        Animal closest = null;
+        float closestDist = Mathf.Infinity;
 
+        foreach (var other in allAnimals)
+        {
+            if (other == this) continue;
+            if (!other.canBreed) continue;
+
+            float dist = Vector3.Distance(transform.position, other.transform.position);
+            if (dist < closestDist && dist <= maxDistance)
+            {
+                closestDist = dist;
+                closest = other;
+            }
+        }
+
+        return closest;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -138,5 +168,6 @@ public class Animal : MonoBehaviour
         {
             Collect();
         }
+        Debug.Log(caring);
     }
 }

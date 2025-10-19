@@ -21,6 +21,7 @@ public class AnimalAI : MonoBehaviour
     private float timeToWalk;
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
+    public string CurrentStateName => animalState?.GetType().Name ?? "N/A";
 
     private UnityEvent<float> walk = new UnityEvent<float>();
 
