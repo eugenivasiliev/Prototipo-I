@@ -4,14 +4,21 @@ using UnityEngine.Events;
 public class Plant
 {
     private int maxStage;
+
+    public int MaxStage => maxStage;
+
     private int currentStage;
+
+    public int CurrentStage => currentStage;
+
     private float timeToGrow;
+    private float growthTimer;
     private bool isFertilize;
-    private bool hasWater;
+
 
     public string Name { get; private set; }
     public bool IsFullyGrown { get { return currentStage >= maxStage - 1; } }
-    public float TimeLeft { get { return Mathf.Max(timeToGrow - DayNightCycle.Instance.DayTime, 0f); } }
+    public float TimeLeft { get { return Mathf.Max(timeToGrow - growthTimer, 0f); } }
 
     public Action <int> OnStageChanged;
 
@@ -24,14 +31,7 @@ public class Plant
         timeToGrow = data.timeToGrow;
         currentStage = 0;
         isFertilize = false;
-        hasWater = false;
-    }
-
-    public void Create()
-    {
-        Grow.AddListener(NextGrowStage);
-        
-        DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.TotalTime + timeToGrow);
+        growthTimer = 0f;
     }
 
     public void ApplyFertilize(bool isFertilized)
@@ -39,22 +39,32 @@ public class Plant
         isFertilize = isFertilized;
     }
 
+    public void TryGrow(float currentTime, bool hasWater)
+    {
+        Grow.AddListener(NextGrowStage);
+        DayNightCycle.Instance.SubscribeTimedEvent(Grow, currentTime + timeToGrow / (isFertilize ? 1.5f : 1f));
+    }
+
+    public void UpdateGrowth(float deltaTime)
+    {
+        growthTimer += deltaTime;
+    }
+
     private void NextGrowStage(float time)
     {
-        currentStage++;
         Debug.Log($"{IsFullyGrown}");
         Debug.Log($"{currentStage}");
-        if (IsFullyGrown) 
+        if (IsFullyGrown)
         {
             Debug.Log("Ya no puede crecer mas");
-        }
-        else
-        {
-            Debug.Log("Sigue creciendo");
-            DayNightCycle.Instance.SubscribeTimedEvent(Grow, DayNightCycle.Instance.TotalTime + (timeToGrow / (isFertilize ? 1.5f : 1f)));
+            return;
         }
 
+        currentStage++;
+        growthTimer = 0f;
         isFertilize = false;
         OnStageChanged?.Invoke(currentStage);
+        Debug.Log("Sigue creciendo");
+
     }
 }

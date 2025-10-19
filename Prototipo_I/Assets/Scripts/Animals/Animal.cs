@@ -58,7 +58,7 @@ public class Animal : MonoBehaviour
             Debug.Log("Can't eat more");
             return;
         }
-        caring++;
+
         mealsEaten++;
         DayNightCycle.Instance.SubscribeTimedEvent(feed, DayNightCycle.Instance.TotalTime + eatInterval);
 
@@ -162,12 +162,13 @@ public class Animal : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E) && IsHungry)
         {
+            caring++;
             Feeding();
         }
         if (Input.GetKeyDown(KeyCode.R) && canCollet)
         {
             Collect();
         }
-        Debug.Log(caring);
+        //Debug.Log(caring);
     }
 }
