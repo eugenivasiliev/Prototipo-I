@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
@@ -174,29 +175,11 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         GetText(index).text = "";
     }
 
-    public void UseCurrentItem(GameObject gameObject)
-    {
-        if (indicator.CurrentIndex == -1) return;
-        items.slots[indicator.CurrentIndex].item?.OnUse(gameObject);
-    }
-
-    public Item GetCurrentItem()
-    {
-        return items.slots[indicator.CurrentIndex].item ?? default;
-    }
-
+    public Item GetCurrentItem() => items.slots[indicator.CurrentIndex].item ?? default;
     public Vector2 GetItemUIPosition(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<RectTransform>().position;
     private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
     private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
 
-    public InventoryList GetData()
-    {
-        Debug.Log(items.slots.Length);
-        return items;
-    }
-
-    public void SetData(InventoryList data)
-    {
-        items = data;
-    }
+    public InventoryList GetData() => items;
+    public void SetData(InventoryList data) => items = data;
 }

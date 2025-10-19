@@ -15,15 +15,27 @@ public class Indicator : MonoBehaviour
         CurrentIndex = -1;
 
         //Performed individually, since local variables aren't conserved as constant
-        PlayerController.Inputs.FindAction("Alpha1").canceled += ctx => { CurrentIndex = 0; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha2").canceled += ctx => { CurrentIndex = 1; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha3").canceled += ctx => { CurrentIndex = 2; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha4").canceled += ctx => { CurrentIndex = 3; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha5").canceled += ctx => { CurrentIndex = 4; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha6").canceled += ctx => { CurrentIndex = 5; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha7").canceled += ctx => { CurrentIndex = 6; MoveToCurItem(); };
-        PlayerController.Inputs.FindAction("Alpha8").canceled += ctx => { CurrentIndex = 7; MoveToCurItem(); };
+        PlayerController.Inputs.FindAction("Alpha1").canceled += ctx => { UpdateIndex(0); };
+        PlayerController.Inputs.FindAction("Alpha2").canceled += ctx => { UpdateIndex(1); };
+        PlayerController.Inputs.FindAction("Alpha3").canceled += ctx => { UpdateIndex(2); };
+        PlayerController.Inputs.FindAction("Alpha4").canceled += ctx => { UpdateIndex(3); };
+        PlayerController.Inputs.FindAction("Alpha5").canceled += ctx => { UpdateIndex(4); };
+        PlayerController.Inputs.FindAction("Alpha6").canceled += ctx => { UpdateIndex(5); };
+        PlayerController.Inputs.FindAction("Alpha7").canceled += ctx => { UpdateIndex(6); };
+        PlayerController.Inputs.FindAction("Alpha8").canceled += ctx => { UpdateIndex(7); };
     }
 
-    private void MoveToCurItem() => rt.position = Inventory.Instance.GetItemUIPosition(CurrentIndex);
+    private void UpdateIndex(int index)
+    {
+        Item curItem = Inventory.Instance.GetCurrentItem();
+        if (curItem is IInteractable)
+            (curItem as IInteractable).Unbind();
+
+        CurrentIndex = index;
+        rt.position = Inventory.Instance.GetItemUIPosition(CurrentIndex);
+
+        curItem = Inventory.Instance.GetCurrentItem();
+        if (curItem is IInteractable)
+            (curItem as IInteractable).Bind();
+    }
 }
