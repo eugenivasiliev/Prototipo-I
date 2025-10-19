@@ -3838,6 +3838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2057988125}
   - component: {fileID: 2057988124}
+  - component: {fileID: 2057988126}
   m_Layer: 0
   m_Name: PlotManager
   m_TagString: Untagged
@@ -3877,6 +3878,20 @@ Transform:
   - {fileID: 1985219839}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2057988126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057988123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6090b684f4e11d4f907bafbe0a97a06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantDatas:
+  - {fileID: 11400000, guid: 91aafc185892b5f4cb8122cef347ee20, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
