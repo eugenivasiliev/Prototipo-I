@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable;
 
-    private int money;
+    [SerializeField] private int money;
     public int Money { get => money; set => money = value; }
 
     private static bool movementLocked = false;

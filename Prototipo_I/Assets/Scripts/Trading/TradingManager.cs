@@ -42,6 +42,7 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
     public static TradingManager Instance {  get { return instance; } }
 
     private Stock stock = new Stock(0); //Item and amount
+    public Stock Stock { get { return stock; } }
 
     private ITradeable weeklyObjective;
     public ITradeable WeeklyObjective { get { return weeklyObjective; } }
@@ -74,7 +75,8 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
     public bool TryBuy(ITradeable tradeable)
     {
         for (int i = 0; i < stock.items.Count; ++i)
-            if (stock.items[i].Tradeable == tradeable && PlayerController.Instance.Money >= stock.items[i].Tradeable.Price)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType() && 
+                PlayerController.Instance.Money >= stock.items[i].Tradeable.Price)
             {
                 PlayerController.Instance.Money -= stock.items[i].Tradeable.Price;
                 if (stock.items[i].amount > 1)
@@ -89,7 +91,8 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
     public bool TryBuy(ITradeable tradeable, int amount)
     {
         for (int i = 0; i < stock.items.Count; ++i)
-            if (stock.items[i].Tradeable == tradeable && PlayerController.Instance.Money >= stock.items[i].Tradeable.Price * amount)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType() && 
+                PlayerController.Instance.Money >= stock.items[i].Tradeable.Price * amount)
             {
                 PlayerController.Instance.Money -= stock.items[i].Tradeable.Price * amount;
                 if (stock.items[i].amount > 1)
@@ -104,8 +107,9 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
     public void Sell(ITradeable tradeable)
     {
         for (int i = 0; i < stock.items.Count; ++i)
-            if (stock.items[i].Tradeable == tradeable)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType())
             {
+                PlayerController.Instance.Money += stock.items[i].Tradeable.Price;
                 stock.items[i] = new StockItem(stock.items[i].Tradeable, stock.items[i].amount + 1);
                 return;
             }
@@ -117,10 +121,7 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
         throw new NotImplementedException();
     }
 
-    public void OnInteract()
-    {
-        throw new NotImplementedException();
-    }
+    public void OnInteract() {}
 
     private void ToggleTrading(InputAction.CallbackContext ctx)
     {
@@ -128,6 +129,7 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
         Cursor.visible = tradingUI.activeSelf;
         Cursor.lockState = (tradingUI.activeSelf) ? CursorLockMode.None : CursorLockMode.Locked;
         PlayerController.MovementLocked = tradingUI.activeSelf;
+        if(tradingUI.activeSelf) tradingUI.GetComponent<TradingUI>().UpdateVisuals();
     }
 
     public Stock GetData() => stock;
