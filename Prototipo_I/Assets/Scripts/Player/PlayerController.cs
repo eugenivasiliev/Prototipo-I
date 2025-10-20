@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         float currentSpeed = isSprinting ? sprintSpeed : speed;
 
