@@ -19,11 +19,14 @@ public class FirePlantItem : Item, IInteractable, ITradeable
 
     public void Action_Use(InputAction.CallbackContext ctx)
     {
-        GameObject.Instantiate(
+        if (PlayerController.MovementLocked) return;
+        GameObject instance = GameObject.Instantiate(
             PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FirePlant)),
             PlayerController.Instance.transform.position,
             Quaternion.identity
             );
+        instance.GetComponent<FirePlant>().animationStartPosition = PlayerController.Instance.transform.position;
+        instance.GetComponent<FirePlant>().animationDirection = Camera.main.transform.forward;
         Inventory.Instance.RemoveItem(this);
     }
 }
