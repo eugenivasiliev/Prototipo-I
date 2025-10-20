@@ -4,12 +4,9 @@ using System.Runtime.Serialization;
 
 public static class FileManager
 {
-    public static string InventoryFile { get => "inventory.json"; }
-
-
     public static void SaveFile<T>(string fileName, T data)
     {
-        string text = JsonUtility.ToJson(data);
+        string text = JsonUtility.ToJson(data, true);
         string path = Application.persistentDataPath + "/" + fileName;
         File.WriteAllText(path, text);
     }

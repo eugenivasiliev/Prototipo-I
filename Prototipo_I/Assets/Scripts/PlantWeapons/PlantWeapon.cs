@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class PlantWeapon : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
-    {
-        
-    }
+    public virtual string Name { get => nameof(PlantWeapon); }
 
-    // Update is called once per frame
-    protected virtual void Update()
-    {
-        
-    }
+    protected virtual void Start() { }
+    protected virtual void Update() { }
 }
