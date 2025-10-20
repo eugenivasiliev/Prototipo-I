@@ -62,4 +62,11 @@ public interface IInteractable
             }
         }
     }
+
+    public bool HasKeybinding(string bindingName)
+    {
+        foreach(var binding in keyBindings)
+            if (binding.actionName == bindingName) return true;
+        return false;
+    }
 }
