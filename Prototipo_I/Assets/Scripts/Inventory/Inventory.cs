@@ -2,15 +2,82 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
-public class Inventory : MonoBehaviour 
+[Serializable]
+public struct InventorySlot
+{
+    [SerializeReference] public Item item;
+    public int amount;
+
+    public InventorySlot(Item item, int amount) : this()
+    {
+        this.item = item;
+        this.amount = amount;
+    }
+
+    public static InventorySlot Default = new InventorySlot(new Item(), -1);
+
+    public static bool operator== (InventorySlot l, InventorySlot r)
+    {
+        return l.item.GetType() == r.item.GetType() && l.amount == r.amount;
+    }
+
+    public static bool operator !=(InventorySlot l, InventorySlot r)
+    {
+        return !(l == r);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is InventorySlot slot &&
+               EqualityComparer<System.Type>.Default.Equals(item.GetType(), slot.item.GetType()) &&
+               amount == slot.amount;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(item, amount);
+    }
+}
+
+[Serializable]
+public struct InventoryList
+{
+    public InventorySlot[] slots;
+
+    public InventoryList(int length)
+    {
+        slots = new InventorySlot[length];
+        for(int i = 0; i < length; ++i)
+        {
+            slots[i] = InventorySlot.Default;
+        }
+    }
+}
+
+public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 {
     private static Inventory instance;
     public static Inventory Instance { get { return instance; } }
 
-    [SerializeField] public int inventorySpace { get => 8; }
-    [SerializeField] private (Item, int)[] items = new (Item, int)[8];
+    [SerializeField] private int inventorySpace;
+    public int InventorySpace { get { return inventorySpace; } }
+    [SerializeField] private InventoryList items;
+
+    #region IAutoSaving
+
+    public float AutoSaveTime => 5.0f;
+
+    public string File => "inventory.json";
+
+
+    public UnityEvent<float> SaveEvent { get; set; }
+
+    #endregion
 
     private Indicator indicator;
 
@@ -23,32 +90,36 @@ public class Inventory : MonoBehaviour
         }
 
         instance = this;
-        DontDestroyOnLoad(this.gameObject);
 
-        Clear();
+        items = new InventoryList(inventorySpace);
 
-        AddItem(new Item1());
+        (this as IAutoSaving<InventoryList>).SetupAutoSave();
+        (this as IAutoSaving<InventoryList>).Load();
+
+        for (int i = 0; i < inventorySpace; ++i)
+        {
+            if (items.slots[i] == InventorySlot.Default) DefaultItem(i);
+            else RenderItem(i);
+        }
 
         indicator = this.transform.GetChild(0).GetComponent<Indicator>();
+        indicator.Initialize(this.transform.GetComponentInChildren<GridLayoutGroup>().cellSize);
+
     }
 
     public bool AddItem(Item item)
     {
-        for (int i = 0; i < items.Length; i++)
-            if (items[i] != default && items[i].Item1.GetType() == item.GetType())
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i] != InventorySlot.Default && items.slots[i].item.GetType() == item.GetType())
             {
-                items[i].Item2++;
-                GetImage(i).sprite = item.sprite;
-                GetText(i).text = items[i].Item2.ToString();
+                RenderItem(i);
                 return true;
             }
 
-        for (int i = 0; i < items.Length; i++)
-            if (items[i] == default)
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i] == InventorySlot.Default)
             {
-                items[i] = (item, 1);
-                GetImage(i).sprite = item.sprite;
-                GetText(i).text = items[i].Item2.ToString();
+                RenderItem(i);
                 return true;
             }
 
@@ -63,17 +134,12 @@ public class Inventory : MonoBehaviour
     }
 
     public bool RemoveItem(Item item) {
-        for (int i = 0; i < items.Length; i++)
-            if (items[i] != default && items[i].Item1.GetType() == item.GetType())
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i] != null && items.slots[i].item.GetType() == item.GetType())
             {
-                items[i].Item2--;
-                GetText(i).text = items[i].Item2.ToString();
-                if (items[i].Item2 <= 0)
-                {
-                    items[i] = default;
-                    GetImage(i).sprite = null;
-                    GetText(i).text = "";
-                }
+                items.slots[i] = new InventorySlot(items.slots[i].item, items.slots[i].amount - 1);
+                if (items.slots[i].amount <= 0) DefaultItem(i);
+                else RenderItem(i);
                 return true;
             }
 
@@ -88,30 +154,32 @@ public class Inventory : MonoBehaviour
     }
 
     public void Clear() {
-        for(int i = 0; i < items.Length; i++)
+        for(int i = 0; i < items.slots.Length; i++)
         {
-            items[i] = default;
+            items.slots[i] = InventorySlot.Default;
             GetImage(i).sprite = null;
             GetText(i).text = "";
         }
     }
 
-    public void UseCurrentItem(GameObject gameObject)
+    private void RenderItem(int index)
     {
-        items[indicator.CurrentIndex].Item1?.OnUse(gameObject);
+        GetImage(index).sprite = items.slots[index].item.sprite;
+        GetText(index).text = items.slots[index].amount.ToString();
     }
 
+    private void DefaultItem(int index)
+    {
+        items.slots[index] = InventorySlot.Default;
+        GetImage(index).sprite = null;
+        GetText(index).text = "";
+    }
+
+    public Item GetCurrentItem() => (indicator.CurrentIndex == -1) ? null : items.slots[indicator.CurrentIndex].item;
     public Vector2 GetItemUIPosition(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<RectTransform>().position;
     private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
     private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
 
-    public void Save()
-    {
-        FileManager.SaveFile(FileManager.InventoryFile, items);
-    }
-
-    public void Load()
-    {
-        FileManager.LoadFile(FileManager.InventoryFile, out items);
-    }
+    public InventoryList GetData() => items;
+    public void SetData(InventoryList data) => items = data;
 }

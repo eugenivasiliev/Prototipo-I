@@ -1,8 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+
+    private static PlayerController instance;
+    public static PlayerController Instance { get { return instance; } }
+
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensivility = 7.5f;
@@ -28,8 +32,18 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable;
 
+    private int money;
+
+    public int Money { get => money; set => money = value; }
+
     private void Awake()
     {
+        if(instance != null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
     }
@@ -63,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         float currentSpeed = isSprinting ? sprintSpeed : speed;
 
@@ -70,12 +85,11 @@ public class PlayerController : MonoBehaviour
             horizontalMovement = movement * currentSpeed;
 
         if (characterController.isGrounded && velocity.y < 0)
-        {
             velocity.y = -2;
-        }
 
         if(isJumping && characterController.isGrounded)
         {
+            AudioManager.instance.PlaySFX("Jumping");
             velocity.y = Mathf.Sqrt(2f * jumpHeaight * gravity);
             Debug.Log(velocity.y);
             isJumping = false;
@@ -85,8 +99,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
         characterController.Move(totalMovement * Time.deltaTime);
-    }
+        if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            AudioManager.instance.PlaySFXLoop("Walking");
+        else
+            AudioManager.instance.StopLoop("Walking");
 
+        if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            AudioManager.instance.PlaySFXLoop("Running");
+        else
+            AudioManager.instance.StopLoop("Running");
+    }
     private void Look()
     {
         float mouseX = cameraInput.x * cameraSensivility;
