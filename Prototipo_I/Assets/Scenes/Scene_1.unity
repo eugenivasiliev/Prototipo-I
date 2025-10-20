@@ -2982,6 +2982,7 @@ MonoBehaviour:
   gravity: 9.80665
   jumpHeaight: 1.5
   cameraTransform: {fileID: 330585546}
+  money: 0
 --- !u!54 &781622639
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4874,6 +4875,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2716928091622535179, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_Spacing.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716928091622535179, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_Spacing.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716928091622535179, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_CellSize.x
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2716928091622535179, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: m_CellSize.y
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 4015663362261338291, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.128668
@@ -4918,6 +4935,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: TradingHall
       objectReference: {fileID: 0}
+    - target: {fileID: 5778386034796898665, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: price
+      value: 
+      objectReference: {fileID: 1677877505}
+    - target: {fileID: 5778386034796898665, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+      propertyPath: itemUI
+      value: 
+      objectReference: {fileID: 978990269151139277, guid: 55d38d150746b604d8c5a40f09b577ab, type: 3}
     - target: {fileID: 7218082642521578748, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
       propertyPath: tradingUI
       value: 
@@ -7114,6 +7139,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1676892157}
   m_CullTransparentMesh: 1
+--- !u!114 &1677877505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2347840498356432081, guid: c9203887328a33a4697824bd4d393ca3, type: 3}
+  m_PrefabInstance: {fileID: 1238590010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1687165234 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5691234883948764152, guid: 9c10d5537b381d94699bcd7b668b64aa, type: 3}
