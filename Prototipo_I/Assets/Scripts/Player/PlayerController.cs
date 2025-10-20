@@ -32,9 +32,11 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable;
 
-    private int money;
-
+    [SerializeField] private int money;
     public int Money { get => money; set => money = value; }
+
+    private static bool movementLocked = false;
+    public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
     private void Awake()
     {
@@ -77,6 +79,8 @@ public class PlayerController : MonoBehaviour
 
     private void Movement()
     {
+        if(movementLocked) return;
+
         Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
         float currentSpeed = isSprinting ? sprintSpeed : speed;
 
@@ -110,6 +114,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Look()
     {
+        if(movementLocked) return;
+
         float mouseX = cameraInput.x * cameraSensivility;
         float mouseY = cameraInput.y * cameraSensivility;
 
