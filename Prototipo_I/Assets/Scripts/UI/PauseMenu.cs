@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-public class PauseMenu : MonoBehaviour
+public class PauseMenu : MonoBehaviour, IInteractable
 {
     public static PauseMenu Instance { get; private set; }
 
@@ -10,6 +12,11 @@ public class PauseMenu : MonoBehaviour
 
     public bool IsPaused => isPaused;
 
+    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
+    {
+        new IInteractable.KeyBinding("pause", InputActionChange.ActionCanceled, ToggleMenu)
+    };
+
     private void Awake()
     {
         Instance = this;
@@ -18,37 +25,25 @@ public class PauseMenu : MonoBehaviour
         pauseMenuPanel.SetActive(false);
     }
 
-    private void Update()
+    private void Start()
     {
-        // Toggle pause con la tecla Escape
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            if (isPaused)
-                Resume();
-            else
-                Pause();
-        }
+        (this as IInteractable).Bind();
     }
 
-    public void Pause()
+    private void ToggleMenu(InputAction.CallbackContext ctx)
     {
-        pauseMenuPanel.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
+        isPaused = !isPaused;
+        Cursor.lockState = (isPaused) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = isPaused;
+        pauseMenuPanel.SetActive(isPaused);
+        Time.timeScale = (isPaused) ? 0f : 1f;
+        PlayerController.MovementLocked = isPaused;
     }
 
     public void Resume()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        Debug.Log("Resume llamado desde objeto: " + gameObject.name
-            + " en escena: " + gameObject.scene.name);
-        Debug.Log("Panel activo? " + (pauseMenuPanel != null && pauseMenuPanel.activeSelf));
-        pauseMenuPanel.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+        isPaused = true;
+        ToggleMenu(new InputAction.CallbackContext());
     }
 
     public void QuitGame()
@@ -61,5 +56,8 @@ public class PauseMenu : MonoBehaviour
     #endif
     }
 
-
+    public void OnInteract()
+    {
+        throw new System.NotImplementedException();
+    }
 }

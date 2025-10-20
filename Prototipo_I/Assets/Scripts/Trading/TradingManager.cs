@@ -127,6 +127,7 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
         tradingUI.SetActive(!tradingUI.activeSelf);
         Cursor.visible = tradingUI.activeSelf;
         Cursor.lockState = (tradingUI.activeSelf) ? CursorLockMode.None : CursorLockMode.Locked;
+        PlayerController.MovementLocked = tradingUI.activeSelf;
     }
 
     public Stock GetData() => stock;
