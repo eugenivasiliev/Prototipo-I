@@ -6,7 +6,7 @@ public class Item
 {
     public string Name; 
     public string Description;
-    public Sprite sprite;
+    public virtual string spriteId { get => throw new NotImplementedException(); }
 
     public virtual void OnUse(GameObject gameObject) {}
 }
