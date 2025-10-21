@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
+
 
 [Serializable]
 public struct InventorySlot
@@ -164,7 +164,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private void RenderItem(int index)
     {
-        GetImage(index).sprite = items.slots[index].item.sprite;
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
         GetText(index).text = items.slots[index].amount.ToString();
     }
 

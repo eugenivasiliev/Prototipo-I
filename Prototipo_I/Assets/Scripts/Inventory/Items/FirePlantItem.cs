@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class FirePlantItem : Item, IInteractable, ITradeable
 {
+    public override string spriteId => "FirePlant";
+
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
         new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
