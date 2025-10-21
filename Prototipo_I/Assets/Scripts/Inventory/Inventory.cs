@@ -77,6 +77,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public UnityEvent<float> SaveEvent { get; set; }
 
+    public InventoryList DefaultData => new InventoryList(inventorySpace);
+
     #endregion
 
     private Indicator indicator;

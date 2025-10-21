@@ -59,6 +59,8 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
 
     public UnityEvent<float> SaveEvent { get; set; }
 
+    public Stock DefaultData => new Stock(0);
+
     private void Start()
     {
         if (instance != null)

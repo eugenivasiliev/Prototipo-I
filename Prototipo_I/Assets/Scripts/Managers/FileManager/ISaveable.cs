@@ -7,6 +7,9 @@ public interface ISaveable<T>
     public abstract T GetData();
     public abstract void SetData(T data);
     public UnityEvent<float> SaveEvent { get; set; }
+
+    public T DefaultData { get; }
+
     public virtual void Save()
     {
         T data = GetData();
@@ -16,7 +19,7 @@ public interface ISaveable<T>
 
     public virtual void Load()
     {
-        FileManager.LoadFile(File, out T data);
-        SetData(data);
+        if(FileManager.LoadFile(File, out T data)) SetData(data);
+        else SetData(DefaultData);
     }
 }
