@@ -27,7 +27,7 @@ public class Chase : EnemyState
                 targetPlot = plot;
             }
         }
-
+        //AudioManager.instance.PlaySFXLoop("MonsterWalking");
         if (targetPlot != null)
             enemy.Agent.SetDestination(targetPlot.transform.position);
     }
