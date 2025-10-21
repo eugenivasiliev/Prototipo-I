@@ -98,7 +98,7 @@ public class Plot : MonoBehaviour, IInteractable
             return;
         }
         statusText.text = $"{plant.Name}\n" +
-                          $"Stage: {plant.CurrentStage} / {plant.MaxStage}\n" +
+                          $"Stage: {plant.CurrentStage} / 2\n" +
                           $"Time to next stage: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
                           $"Fertilized: {(isFertilized ? "Sí" : "No")}";

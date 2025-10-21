@@ -66,22 +66,30 @@ public class FirePlant : PlantWeapon
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (!animationFinished) return;
-        if (collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
-    }
+    //private void OnTriggerEnter(Collider collider)
+    //{
+    //    if (!animationFinished) return;
+    //    if (collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
+    //}
 
-    private void OnTriggerExit(Collider collider)
+    //private void OnTriggerExit(Collider collider)
+    //{
+    //    if (!animationFinished || !collider.TryGetComponent(out IDamageable damageable)) return;
+    //    for (int i = 0; i < damageables.Count; ++i)
+    //    {
+    //        if (damageables[i].Item1 == damageable)
+    //        {
+    //            damageables.RemoveAt(i);
+    //            return;
+    //        }
+    //    }
+    //}
+    private void OnTriggerStay(Collider collider)
     {
-        if (!animationFinished || !collider.TryGetComponent(out IDamageable damageable)) return;
-        for (int i = 0; i < damageables.Count; ++i)
+        if (collider.gameObject.GetComponent<EnemyAI>()) Debug.Log("Hello!");
+        if (collider.gameObject.TryGetComponent(out IDamageable damageable))
         {
-            if (damageables[i].Item1 == damageable)
-            {
-                damageables.RemoveAt(i);
-                return;
-            }
+            damageable.Damage(damageDealt);
         }
     }
 }
