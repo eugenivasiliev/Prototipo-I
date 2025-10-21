@@ -47,7 +47,7 @@ public class Plot : MonoBehaviour, IInteractable
             plant = new Plant(data);
         }
 
-        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
+        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
         plant.OnStageChanged += OnPlantStageChanged;
 
@@ -113,7 +113,7 @@ public class Plot : MonoBehaviour, IInteractable
 
         AudioManager.instance.PlaySFX("NextStage");
         GameObject prefab = plantData.stages[currentStage];
-        currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
     }
 
