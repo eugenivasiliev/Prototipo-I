@@ -73,7 +73,7 @@ public class Plot : MonoBehaviour, IInteractable
         }
 
         AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
+        Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
 
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");

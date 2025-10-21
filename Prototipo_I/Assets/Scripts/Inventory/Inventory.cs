@@ -74,7 +74,16 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public string File => "inventory.json";
 
-    public InventoryList DefaultData => new InventoryList(inventorySpace);
+    [SerializeField] private TextAsset defaultInventory;
+
+    public InventoryList DefaultData
+    {
+        get
+        {
+            InventoryList data = JsonUtility.FromJson<InventoryList>(defaultInventory.text);
+            return data;
+        }
+    }
 
     public UnityEvent<float> SaveEvent { get; set; }
 
