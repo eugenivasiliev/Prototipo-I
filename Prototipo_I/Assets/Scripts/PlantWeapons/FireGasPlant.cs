@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GasPlant : PlantWeapon
+public class FireGasPlant : PlantWeapon
 {
     [SerializeField] private int damageDealt;
     [SerializeField] private float damageTime;
@@ -12,7 +13,7 @@ public class GasPlant : PlantWeapon
         for (int i = 0; i < damageables.Count; ++i)
         {
             damageables[i] = (damageables[i].Item1, damageables[i].Item2 - Time.deltaTime);
-            if (damageables[i].Item2 < 0)
+            if(damageables[i].Item2 < 0)
             {
                 damageables[i].Item1.Damage(damageDealt);
                 damageables[i] = (damageables[i].Item1, damageTime);
@@ -22,7 +23,7 @@ public class GasPlant : PlantWeapon
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
+        if(collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
     }
 
     private void OnTriggerExit(Collider collider)

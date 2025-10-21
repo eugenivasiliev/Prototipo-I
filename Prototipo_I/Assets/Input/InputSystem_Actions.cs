@@ -289,6 +289,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""96b21317-0ce7-4e07-a8c1-a167635f1cc2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -817,6 +826,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Alpha8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d20b3ac5-14a4-4d29-a186-5fe6eb63c7de"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1426,6 +1446,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Alpha6 = m_Player.FindAction("Alpha6", throwIfNotFound: true);
         m_Player_Alpha7 = m_Player.FindAction("Alpha7", throwIfNotFound: true);
         m_Player_Alpha8 = m_Player.FindAction("Alpha8", throwIfNotFound: true);
+        m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1541,6 +1562,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Alpha6;
     private readonly InputAction m_Player_Alpha7;
     private readonly InputAction m_Player_Alpha8;
+    private readonly InputAction m_Player_pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1641,6 +1663,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Alpha8 => m_Wrapper.m_Player_Alpha8;
         /// <summary>
+        /// Provides access to the underlying input action "Player/pause".
+        /// </summary>
+        public InputAction @pause => m_Wrapper.m_Player_pause;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1732,6 +1758,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Alpha8.started += instance.OnAlpha8;
             @Alpha8.performed += instance.OnAlpha8;
             @Alpha8.canceled += instance.OnAlpha8;
+            @pause.started += instance.OnPause;
+            @pause.performed += instance.OnPause;
+            @pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -1809,6 +1838,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Alpha8.started -= instance.OnAlpha8;
             @Alpha8.performed -= instance.OnAlpha8;
             @Alpha8.canceled -= instance.OnAlpha8;
+            @pause.started -= instance.OnPause;
+            @pause.performed -= instance.OnPause;
+            @pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -2263,6 +2295,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAlpha8(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -1,15 +1,48 @@
 using System;
 using System.Collections.Generic;
 using Trading;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class TradingManager : MonoBehaviour, IInteractable
+[Serializable]
+public struct StockItem
+{
+    [SerializeReference] public ITradeable Tradeable;
+    public int amount;
+
+    public StockItem(ITradeable tradeable, int amount)
+    {
+        Tradeable = tradeable;
+        this.amount = amount;
+    }
+
+    public static StockItem Default = new StockItem(null, -1);
+}
+
+[Serializable]
+public struct Stock
+{
+    public List<StockItem> items;
+
+    public Stock(int length)
+    {
+        items = new List<StockItem>(length);
+        for (int i = 0; i < length; ++i)
+        {
+            items[i] = StockItem.Default;
+        }
+    }
+}
+
+public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
 {
     private static TradingManager instance;
     public static TradingManager Instance {  get { return instance; } }
 
-    private List<Tuple<ITradeable, int>> stock = new List<Tuple<ITradeable, int>>(); //Item and amount
+    private Stock stock = new Stock(0); //Item and amount
+    public Stock Stock { get { return stock; } }
 
     private ITradeable weeklyObjective;
     public ITradeable WeeklyObjective { get { return weeklyObjective; } }
@@ -20,26 +53,36 @@ public class TradingManager : MonoBehaviour, IInteractable
     new IInteractable.KeyBinding("trade", InputActionChange.ActionCanceled, ToggleTrading)
     };
 
+    public float AutoSaveTime => 5f;
+
+    public string File => "stock.json";
+
+    public UnityEvent<float> SaveEvent { get; set; }
+
     private void Start()
     {
-        if (instance == null)
+        if (instance != null)
         {
-            instance = this;
+            Destroy(gameObject);
             return;
         }
-        Destroy(gameObject);
+        instance = this;
+
+        (this as IAutoSaving<Stock>).SetupAutoSave();
+        (this as IAutoSaving<Stock>).Load();
     }
 
     public bool TryBuy(ITradeable tradeable)
     {
-        for (int i = 0; i < stock.Count; ++i)
-            if (stock[i].Item1 == tradeable && PlayerController.Instance.Money >= stock[i].Item1.Price)
+        for (int i = 0; i < stock.items.Count; ++i)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType() && 
+                PlayerController.Instance.Money >= stock.items[i].Tradeable.Price)
             {
-                PlayerController.Instance.Money -= stock[i].Item1.Price;
-                if (stock[i].Item2 > 1)
-                    stock[i] = Tuple.Create(stock[i].Item1, stock[i].Item2 - 1);
+                PlayerController.Instance.Money -= stock.items[i].Tradeable.Price;
+                if (stock.items[i].amount > 1)
+                    stock.items[i] = new StockItem(stock.items[i].Tradeable, stock.items[i].amount - 1);
                 else
-                    stock.RemoveAt(i);
+                    stock.items.RemoveAt(i);
                 return true;
             }
         return false;
@@ -47,14 +90,15 @@ public class TradingManager : MonoBehaviour, IInteractable
 
     public bool TryBuy(ITradeable tradeable, int amount)
     {
-        for (int i = 0; i < stock.Count; ++i)
-            if (stock[i].Item1 == tradeable && PlayerController.Instance.Money >= stock[i].Item1.Price * amount)
+        for (int i = 0; i < stock.items.Count; ++i)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType() && 
+                PlayerController.Instance.Money >= stock.items[i].Tradeable.Price * amount)
             {
-                PlayerController.Instance.Money -= stock[i].Item1.Price * amount;
-                if (stock[i].Item2 > 1)
-                    stock[i] = Tuple.Create(stock[i].Item1, stock[i].Item2 - 1);
+                PlayerController.Instance.Money -= stock.items[i].Tradeable.Price * amount;
+                if (stock.items[i].amount > 1)
+                    stock.items[i] = new StockItem(stock.items[i].Tradeable, stock.items[i].amount - 1);
                 else
-                    stock.RemoveAt(i);
+                    stock.items.RemoveAt(i);
                 return true;
             }
         return false;
@@ -62,13 +106,14 @@ public class TradingManager : MonoBehaviour, IInteractable
 
     public void Sell(ITradeable tradeable)
     {
-        for (int i = 0; i < stock.Count; ++i)
-            if (stock[i].Item1 == tradeable)
+        for (int i = 0; i < stock.items.Count; ++i)
+            if (stock.items[i].Tradeable.GetType() == tradeable.GetType())
             {
-                stock[i] = Tuple.Create(stock[i].Item1, stock[i].Item2 + 1);
+                PlayerController.Instance.Money += stock.items[i].Tradeable.Price;
+                stock.items[i] = new StockItem(stock.items[i].Tradeable, stock.items[i].amount + 1);
                 return;
             }
-        stock.Add(Tuple.Create(tradeable, 1));
+        stock.items.Add(new StockItem(tradeable, 1));
     }
 
     public ITradeable GetNewWeeklyObjective()
@@ -76,13 +121,18 @@ public class TradingManager : MonoBehaviour, IInteractable
         throw new NotImplementedException();
     }
 
-    public void OnInteract()
-    {
-        throw new NotImplementedException();
-    }
+    public void OnInteract() {}
 
     private void ToggleTrading(InputAction.CallbackContext ctx)
     {
         tradingUI.SetActive(!tradingUI.activeSelf);
+        Cursor.visible = tradingUI.activeSelf;
+        Cursor.lockState = (tradingUI.activeSelf) ? CursorLockMode.None : CursorLockMode.Locked;
+        PlayerController.MovementLocked = tradingUI.activeSelf;
+        if(tradingUI.activeSelf) tradingUI.GetComponent<TradingUI>().UpdateVisuals();
     }
+
+    public Stock GetData() => stock;
+
+    public void SetData(Stock data) => stock = data;
 }

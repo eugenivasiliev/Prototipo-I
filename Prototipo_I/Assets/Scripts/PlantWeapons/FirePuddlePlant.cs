@@ -1,22 +1,43 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FirePuddlePlant : PlantWeapon
 {
     [SerializeField] private float maxSpeed;
     [SerializeField] private int damageDealt;
+    [SerializeField] private float damageTime;
+    private List<(IDamageable, float)> damageables;
 
-    private void OnTriggerEnter(Collider other)
+    protected override void Update()
     {
-        if(other.gameObject.TryGetComponent(out Rigidbody rb)) rb.maxLinearVelocity = maxSpeed;
+        for (int i = 0; i < damageables.Count; ++i)
+        {
+            damageables[i] = (damageables[i].Item1, damageables[i].Item2 - Time.deltaTime);
+            if (damageables[i].Item2 < 0)
+            {
+                damageables[i].Item1.Damage(damageDealt);
+                damageables[i] = (damageables[i].Item1, damageTime);
+            }
+        }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (other.gameObject.TryGetComponent(out IDamageable damageable)) damageable.Damage(damageDealt);
+        if (collider.TryGetComponent(out IDamageable damageable)) damageables.Add((damageable, damageTime));
+        if (collider.gameObject.TryGetComponent(out Rigidbody rb)) rb.maxLinearVelocity = maxSpeed;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collider)
     {
-        if (other.gameObject.TryGetComponent(out Rigidbody rb)) rb.maxLinearVelocity = float.MaxValue;
+        if (collider.gameObject.TryGetComponent(out Rigidbody rb)) rb.maxLinearVelocity = float.MaxValue;
+        if (!collider.TryGetComponent(out IDamageable damageable)) return;
+        for (int i = 0; i < damageables.Count; ++i)
+        {
+            if (damageables[i].Item1 == damageable)
+            {
+                damageables.RemoveAt(i);
+                return;
+            }
+        }
     }
 }
