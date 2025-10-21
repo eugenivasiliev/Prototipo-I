@@ -217,87 +217,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha1"",
-                    ""type"": ""Button"",
-                    ""id"": ""f36c665a-658c-43bd-9036-959e895b298c"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha2"",
-                    ""type"": ""Button"",
-                    ""id"": ""17bc0374-cfb1-4e2c-866f-43af8812f35f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha3"",
-                    ""type"": ""Button"",
-                    ""id"": ""c432f73b-1448-4865-a817-1511cfd8752f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha4"",
-                    ""type"": ""Button"",
-                    ""id"": ""2f008e13-01f5-4c23-ba69-5ca575561c7d"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha5"",
-                    ""type"": ""Button"",
-                    ""id"": ""cddff8bf-1d7f-4613-95f8-cfa5440f0c3f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha6"",
-                    ""type"": ""Button"",
-                    ""id"": ""7b016a72-8900-41a5-9d49-a979b8a9dcd8"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha7"",
-                    ""type"": ""Button"",
-                    ""id"": ""ce146cba-c6ac-4add-a381-a1f59ac078fb"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Alpha8"",
-                    ""type"": ""Button"",
-                    ""id"": ""d61444f0-8398-4ba9-be1c-f3b7211139dc"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""pause"",
-                    ""type"": ""Button"",
-                    ""id"": ""96b21317-0ce7-4e07-a8c1-a167635f1cc2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -738,105 +657,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""trade"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e24d06ea-a585-436f-945c-ef338280dce7"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""81d41f6d-857e-4c3d-9a43-766eed816d24"",
-                    ""path"": ""<Keyboard>/2"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha2"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""671d6c41-b89e-4094-bc37-8fdf5a54c28f"",
-                    ""path"": ""<Keyboard>/3"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha3"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""579b72c1-ecbe-4b33-a65f-dba70bf3a975"",
-                    ""path"": ""<Keyboard>/4"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha4"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e5839b4d-c478-4d3a-a3c6-c64ffe05c275"",
-                    ""path"": ""<Keyboard>/5"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha5"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""78bc54ea-3a57-4a7f-b9e4-3396a16df811"",
-                    ""path"": ""<Keyboard>/6"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha6"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""41242574-0f51-435c-80ff-545234cdd474"",
-                    ""path"": ""<Keyboard>/7"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha7"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""aca9c852-cd2f-4471-be86-898676ebe581"",
-                    ""path"": ""<Keyboard>/8"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Alpha8"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d20b3ac5-14a4-4d29-a186-5fe6eb63c7de"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1438,15 +1258,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_fertilize = m_Player.FindAction("fertilize", throwIfNotFound: true);
         m_Player_harvest = m_Player.FindAction("harvest", throwIfNotFound: true);
         m_Player_trade = m_Player.FindAction("trade", throwIfNotFound: true);
-        m_Player_Alpha1 = m_Player.FindAction("Alpha1", throwIfNotFound: true);
-        m_Player_Alpha2 = m_Player.FindAction("Alpha2", throwIfNotFound: true);
-        m_Player_Alpha3 = m_Player.FindAction("Alpha3", throwIfNotFound: true);
-        m_Player_Alpha4 = m_Player.FindAction("Alpha4", throwIfNotFound: true);
-        m_Player_Alpha5 = m_Player.FindAction("Alpha5", throwIfNotFound: true);
-        m_Player_Alpha6 = m_Player.FindAction("Alpha6", throwIfNotFound: true);
-        m_Player_Alpha7 = m_Player.FindAction("Alpha7", throwIfNotFound: true);
-        m_Player_Alpha8 = m_Player.FindAction("Alpha8", throwIfNotFound: true);
-        m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1554,15 +1365,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_fertilize;
     private readonly InputAction m_Player_harvest;
     private readonly InputAction m_Player_trade;
-    private readonly InputAction m_Player_Alpha1;
-    private readonly InputAction m_Player_Alpha2;
-    private readonly InputAction m_Player_Alpha3;
-    private readonly InputAction m_Player_Alpha4;
-    private readonly InputAction m_Player_Alpha5;
-    private readonly InputAction m_Player_Alpha6;
-    private readonly InputAction m_Player_Alpha7;
-    private readonly InputAction m_Player_Alpha8;
-    private readonly InputAction m_Player_pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1631,42 +1433,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @trade => m_Wrapper.m_Player_trade;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha1".
-        /// </summary>
-        public InputAction @Alpha1 => m_Wrapper.m_Player_Alpha1;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha2".
-        /// </summary>
-        public InputAction @Alpha2 => m_Wrapper.m_Player_Alpha2;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha3".
-        /// </summary>
-        public InputAction @Alpha3 => m_Wrapper.m_Player_Alpha3;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha4".
-        /// </summary>
-        public InputAction @Alpha4 => m_Wrapper.m_Player_Alpha4;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha5".
-        /// </summary>
-        public InputAction @Alpha5 => m_Wrapper.m_Player_Alpha5;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha6".
-        /// </summary>
-        public InputAction @Alpha6 => m_Wrapper.m_Player_Alpha6;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha7".
-        /// </summary>
-        public InputAction @Alpha7 => m_Wrapper.m_Player_Alpha7;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Alpha8".
-        /// </summary>
-        public InputAction @Alpha8 => m_Wrapper.m_Player_Alpha8;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/pause".
-        /// </summary>
-        public InputAction @pause => m_Wrapper.m_Player_pause;
-        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1734,33 +1500,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @trade.started += instance.OnTrade;
             @trade.performed += instance.OnTrade;
             @trade.canceled += instance.OnTrade;
-            @Alpha1.started += instance.OnAlpha1;
-            @Alpha1.performed += instance.OnAlpha1;
-            @Alpha1.canceled += instance.OnAlpha1;
-            @Alpha2.started += instance.OnAlpha2;
-            @Alpha2.performed += instance.OnAlpha2;
-            @Alpha2.canceled += instance.OnAlpha2;
-            @Alpha3.started += instance.OnAlpha3;
-            @Alpha3.performed += instance.OnAlpha3;
-            @Alpha3.canceled += instance.OnAlpha3;
-            @Alpha4.started += instance.OnAlpha4;
-            @Alpha4.performed += instance.OnAlpha4;
-            @Alpha4.canceled += instance.OnAlpha4;
-            @Alpha5.started += instance.OnAlpha5;
-            @Alpha5.performed += instance.OnAlpha5;
-            @Alpha5.canceled += instance.OnAlpha5;
-            @Alpha6.started += instance.OnAlpha6;
-            @Alpha6.performed += instance.OnAlpha6;
-            @Alpha6.canceled += instance.OnAlpha6;
-            @Alpha7.started += instance.OnAlpha7;
-            @Alpha7.performed += instance.OnAlpha7;
-            @Alpha7.canceled += instance.OnAlpha7;
-            @Alpha8.started += instance.OnAlpha8;
-            @Alpha8.performed += instance.OnAlpha8;
-            @Alpha8.canceled += instance.OnAlpha8;
-            @pause.started += instance.OnPause;
-            @pause.performed += instance.OnPause;
-            @pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -1814,33 +1553,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @trade.started -= instance.OnTrade;
             @trade.performed -= instance.OnTrade;
             @trade.canceled -= instance.OnTrade;
-            @Alpha1.started -= instance.OnAlpha1;
-            @Alpha1.performed -= instance.OnAlpha1;
-            @Alpha1.canceled -= instance.OnAlpha1;
-            @Alpha2.started -= instance.OnAlpha2;
-            @Alpha2.performed -= instance.OnAlpha2;
-            @Alpha2.canceled -= instance.OnAlpha2;
-            @Alpha3.started -= instance.OnAlpha3;
-            @Alpha3.performed -= instance.OnAlpha3;
-            @Alpha3.canceled -= instance.OnAlpha3;
-            @Alpha4.started -= instance.OnAlpha4;
-            @Alpha4.performed -= instance.OnAlpha4;
-            @Alpha4.canceled -= instance.OnAlpha4;
-            @Alpha5.started -= instance.OnAlpha5;
-            @Alpha5.performed -= instance.OnAlpha5;
-            @Alpha5.canceled -= instance.OnAlpha5;
-            @Alpha6.started -= instance.OnAlpha6;
-            @Alpha6.performed -= instance.OnAlpha6;
-            @Alpha6.canceled -= instance.OnAlpha6;
-            @Alpha7.started -= instance.OnAlpha7;
-            @Alpha7.performed -= instance.OnAlpha7;
-            @Alpha7.canceled -= instance.OnAlpha7;
-            @Alpha8.started -= instance.OnAlpha8;
-            @Alpha8.performed -= instance.OnAlpha8;
-            @Alpha8.canceled -= instance.OnAlpha8;
-            @pause.started -= instance.OnPause;
-            @pause.performed -= instance.OnPause;
-            @pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -2239,69 +1951,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnTrade(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha1(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha2(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha3(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha4(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha5(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha6" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha6(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha7" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha7(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Alpha8" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAlpha8(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

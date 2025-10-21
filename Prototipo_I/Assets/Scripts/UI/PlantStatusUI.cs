@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class PlantWeapon : MonoBehaviour
+public class PlantStatusUI : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
+    void Start()
     {
         
     }
 
     // Update is called once per frame
-    protected virtual void Update()
+    void Update()
     {
-        
+       // transform.LookAt(Camera.main.transform);
+       // transform.Rotate(0, 180, 0);
     }
 }

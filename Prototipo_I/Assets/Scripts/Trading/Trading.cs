@@ -4,6 +4,6 @@ namespace Trading
 {
     public interface ITradeable
     {
-        public int Price { get; }
+        public int Price { get; set; }
     }
 }

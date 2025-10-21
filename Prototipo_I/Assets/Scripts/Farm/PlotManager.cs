@@ -27,7 +27,6 @@ public class PlotManager : MonoBehaviour
     {
         foreach (var plot in plots)
         {
-            if(plot.StatusText != null)
             plot.UpdateUI();
         }
     }
