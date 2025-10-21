@@ -21,7 +21,11 @@ public class PlantWeaponsDatabase : MonoBehaviour
     public GameObject GetPlantByName(string name)
     {
         foreach (var plantData in plantWeapons)
+        {
+            Debug.Log(plantData.GetComponent<PlantWeapon>().Name);
             if (plantData.GetComponent<PlantWeapon>().Name == name) return plantData;
+        }
+
 
         return null;
     }

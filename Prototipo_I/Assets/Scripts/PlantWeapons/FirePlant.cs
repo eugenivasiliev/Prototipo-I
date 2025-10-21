@@ -11,6 +11,7 @@ public class FirePlant : PlantWeapon
     [SerializeField] private AnimationCurve throwTrajectory;
     [SerializeField] private float animationTime = 0f;
     [SerializeField] private float animationFinishTime = 0f;
+    [SerializeField] private float animationSpeedMult = 1.5f;
     private bool animationFinished = false;
 
     public Vector3 animationStartPosition;
@@ -18,6 +19,9 @@ public class FirePlant : PlantWeapon
 
     [SerializeField] private GameObject fireParticles;
     private GameObject fireParticlesInstance;
+
+    [SerializeField] private float lifeTime = 0f;
+    [SerializeField] private float fullLifeTime = 5f;
 
     public override string Name => nameof(FirePlant);
 
@@ -31,7 +35,7 @@ public class FirePlant : PlantWeapon
     {
         if(!animationFinished)
         {
-            animationTime += Time.deltaTime;
+            animationTime += Time.deltaTime * animationSpeedMult;
             this.transform.position = 
                 animationStartPosition 
                 + animationDirection * animationTime
@@ -42,6 +46,15 @@ public class FirePlant : PlantWeapon
                 fireParticlesInstance.transform.localScale = Vector3.one;
             }
         }
+
+        lifeTime += Time.deltaTime;
+        if (lifeTime > fullLifeTime)
+        {
+            Destroy(fireParticlesInstance);
+            Destroy(this.gameObject);
+            return;
+        }
+
         for (int i = 0; i < damageables.Count; ++i)
         {
             damageables[i] = (damageables[i].Item1, damageables[i].Item2 - Time.deltaTime);

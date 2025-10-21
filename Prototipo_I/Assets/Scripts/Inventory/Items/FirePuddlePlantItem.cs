@@ -6,9 +6,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class FirePlantItem : Item, IInteractable, ITradeable
+public class FirePuddlePlantItem : Item, IInteractable, ITradeable
 {
-    public override string spriteId => "FirePlant";
+    public override string spriteId => "FirePuddlePlant";
 
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
@@ -23,12 +23,12 @@ public class FirePlantItem : Item, IInteractable, ITradeable
     {
         if (PlayerController.MovementLocked) return;
         GameObject instance = GameObject.Instantiate(
-            PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FirePlant)),
+            PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FirePuddlePlant)),
             PlayerController.Instance.transform.position,
             Quaternion.Euler(-90, 0, 0)
             );
-        instance.GetComponent<FirePlant>().animationStartPosition = PlayerController.Instance.transform.position;
-        instance.GetComponent<FirePlant>().animationDirection = PlayerController.Instance.transform.forward;
+        instance.GetComponent<FirePuddlePlant>().animationStartPosition = PlayerController.Instance.transform.position;
+        instance.GetComponent<FirePuddlePlant>().animationDirection = PlayerController.Instance.transform.forward;
         Inventory.Instance.RemoveItem(this);
     }
 }

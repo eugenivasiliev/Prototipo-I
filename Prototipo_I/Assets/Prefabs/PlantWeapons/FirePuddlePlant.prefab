@@ -121,6 +121,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daea561ed08516c44901ceba514e6001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 0
-  damageDealt: 0
-  damageTime: 0
+  maxSpeed: 3
+  damageDealt: 3
+  damageTime: 0.5
+  throwTrajectory:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.25
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3.75
+      value: -1
+      inSlope: -1.1090792
+      outSlope: -1.1090792
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04182148
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationTime: 0
+  animationFinishTime: 3.5
+  animationSpeedMult: 2.5
+  animationStartPosition: {x: 0, y: 0, z: 0}
+  animationDirection: {x: 0, y: 0, z: 0}
+  fireGasParticles: {fileID: 4451752584161468095, guid: 68ff715efb6143f49a97bee85cac47d3, type: 3}
+  lifeTime: 0
+  fullLifeTime: 5

@@ -164,8 +164,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private void RenderItem(int index)
     {
-        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
         GetText(index).text = items.slots[index].amount.ToString();
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
     }
 
     private void DefaultItem(int index)

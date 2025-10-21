@@ -4,12 +4,58 @@ using UnityEngine;
 public class FirePuddlePlant : PlantWeapon
 {
     [SerializeField] private float maxSpeed;
+
     [SerializeField] private int damageDealt;
     [SerializeField] private float damageTime;
-    private List<(IDamageable, float)> damageables;
+    private List<(IDamageable, float)> damageables = new List<(IDamageable, float)>();
+
+    [SerializeField] private AnimationCurve throwTrajectory;
+    [SerializeField] private float animationTime = 0f;
+    [SerializeField] private float animationFinishTime = 0f;
+    [SerializeField] private float animationSpeedMult = 1.5f;
+    private bool animationFinished = false;
+
+    public Vector3 animationStartPosition;
+    public Vector3 animationDirection;
+
+    [SerializeField] private GameObject fireGasParticles;
+    private GameObject fireGasParticlesInstance;
+
+    [SerializeField] private float lifeTime = 0f;
+    [SerializeField] private float fullLifeTime = 5f;
+
+    public override string Name => nameof(FirePuddlePlant);
+
+    protected override void Start()
+    {
+        fireGasParticlesInstance = Instantiate(fireGasParticles, this.transform.position, Quaternion.identity, this.transform);
+        fireGasParticlesInstance.transform.localScale = 0.2f * Vector3.one;
+    }
 
     protected override void Update()
     {
+        if (!animationFinished)
+        {
+            animationTime += Time.deltaTime * animationSpeedMult;
+            this.transform.position =
+                animationStartPosition
+                + animationDirection * animationTime
+                + Vector3.up * throwTrajectory.Evaluate(animationTime);
+            if (animationTime > animationFinishTime)
+            {
+                animationFinished = true;
+                fireGasParticlesInstance.transform.localScale = Vector3.one;
+            }
+        }
+
+        lifeTime += Time.deltaTime;
+        if (lifeTime > fullLifeTime)
+        {
+            Destroy(fireGasParticlesInstance);
+            Destroy(this.gameObject);
+            return;
+        }
+
         for (int i = 0; i < damageables.Count; ++i)
         {
             damageables[i] = (damageables[i].Item1, damageables[i].Item2 - Time.deltaTime);
