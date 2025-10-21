@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -135106745243820681}
   - component: {fileID: 4073919585079314094}
   - component: {fileID: 482730701491025820}
-  - component: {fileID: 5814674091146472424}
+  - component: {fileID: 414330102823599702}
   m_Layer: 0
   m_Name: FireGasPlant
   m_TagString: Untagged
@@ -109,7 +109,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5814674091146472424
+--- !u!114 &414330102823599702
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,8 +118,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 4898036120029814914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b29e45aefbe858f4f92530fa1fcaabc1, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ac5716ef8b6aa6489b4528206670fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageDealt: 0
-  damageTime: 0
+  damageDealt: 5
+  damageTime: 0.5
+  throwTrajectory:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.25
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3.75
+      value: -1
+      inSlope: -1.1090792
+      outSlope: -1.1090792
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04182148
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  animationTime: 0
+  animationFinishTime: 3.5
+  animationSpeedMult: 2.5
+  animationStartPosition: {x: 0, y: 0, z: 0}
+  animationDirection: {x: 0, y: 0, z: 0}
+  fireGasParticles: {fileID: 8912020973268758775, guid: 5bdcaad2fcb860e4699e84a4ea128677, type: 3}
+  lifeTime: 0
+  fullLifeTime: 5
