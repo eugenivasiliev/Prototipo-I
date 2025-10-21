@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class PuddlePlantItem : Item, IInteractable, ITradeable
+public class PuddlePlantItem : Item, IInteractable, ITradeable, IPlantSeed
 {
     public override string spriteId => "PuddlePlant";
 
@@ -14,6 +14,8 @@ public class PuddlePlantItem : Item, IInteractable, ITradeable
     {
         new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
     };
+
+    public PlantData PlantData => PlantDatabase.Instance.GetPlantByName("Water");
 
     public int Price => 25;
 

@@ -24,7 +24,7 @@ public class PuddlePlant : PlantWeapon
 
     protected override void Start()
     {
-        puddleParticlesInstance = Instantiate(puddleParticles, this.transform.position, Quaternion.identity, this.transform);
+        puddleParticlesInstance = Instantiate(puddleParticles, this.transform.position, Quaternion.Euler(-90,0,0), this.transform);
         puddleParticlesInstance.transform.localScale = 0.2f * Vector3.one;
     }
 
