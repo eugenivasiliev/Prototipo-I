@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
 using NUnit.Framework.Constraints;
+using Trading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [Serializable]
-public class FirePlantItem : Item, IInteractable
+public class FirePlantItem : Item, IInteractable, ITradeable
 {
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
         new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
     };
+
+    public int Price => 25;
+
     public void OnInteract() {}
 
     public void Action_Use(InputAction.CallbackContext ctx)
