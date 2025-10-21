@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class PlantStatusUI : MonoBehaviour
+public class TitleScreen : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        AudioManager.instance.PlayMusic("TitleScene");
     }
 
     // Update is called once per frame
     void Update()
     {
-       // transform.LookAt(Camera.main.transform);
-       // transform.Rotate(0, 180, 0);
+        
     }
 }
