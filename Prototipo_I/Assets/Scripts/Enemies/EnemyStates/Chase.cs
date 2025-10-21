@@ -8,7 +8,7 @@ public class Chase : EnemyState
         if(targetPlot != null)
         {
             float distToTarget = Vector3.Distance(enemy.transform.position, targetPlot.transform.position);
-            if (distToTarget < 1.5f)
+            if (distToTarget < 0.05f)
                 enemy.SetState(EnemyAI.State.Attack);
             return;
         }
