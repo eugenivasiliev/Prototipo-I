@@ -1,91 +1,161 @@
+using System.Collections.Generic;
 using System.Timers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Plot : MonoBehaviour
+public class Plot : MonoBehaviour, IInteractable
 {
-    private Plant plant;
-
-    public bool IsPlanted => plant != null;
+    Plant plant;
+    PlantData plantData;
 
     private bool hasWater;
-    public bool HasWater => hasWater;
     private bool isFertilized;
-    private float MultiplierSpeed;
+    private GameObject currentPlant;
 
     [SerializeField] private TextMeshProUGUI statusText;
+    public TextMeshProUGUI StatusText => statusText;
+    [SerializeField] public PlantData plantInfo;
 
-    private void Plant(Plant plant)
+    public bool IsPlanted { get { return plant != null; } }
+
+    private void Awake()
     {
+        if(statusText != null)
+            statusText.gameObject.SetActive(false);
+    }
+
+    public void Plant(PlantData data)
+    {
+        AudioManager.instance.PlaySFX("Plant");
         if (IsPlanted)
         {
-            Debug.Log("Hey! I'm already a plant");
-            return;
+            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
+            {
+                this.plantData = newPlant;
+                plant = new Plant(newPlant);
+            }
+            else
+            {
+                Debug.Log("Already planted");
+                return;
+            }
+        }
+        else
+        {
+            plantData = data;
+            plant = new Plant(data);
         }
 
-        this.plant = plant;
+        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+        plant.OnStageChanged += OnPlantStageChanged;
+
         hasWater = false;
         isFertilized = false;
 
-        this.plant.WhenFullGrow += WhenPlantIsFullGrow;
-
-        Debug.Log("Calling Growth");
-        this.plant.Create();
+        Debug.Log($"Planta {plant.Name} plantada!");
     }
 
+    public void Fertilize()
+    {
+        if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
+        AudioManager.instance.PlaySFX("Fertilize");
+        isFertilized = true;
+        plant.ApplyFertilize(isFertilized);
+    }
     private void Harvest()
     {
-        if (!IsPlanted || !this.plant.IsGrown)
+        if (!IsPlanted || !plant.IsFullyGrown)
         {
-            Debug.Log("Not today");
+            Debug.Log("Aun no esta lista");
             return;
         }
 
+        AudioManager.instance.PlaySFX("Harvesting");
+        Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
+
+        Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
-        //Spawn drop and stuff
+
         this.plant = null;
+        currentPlant = null;
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
-        if(statusText == null)
+        statusText.gameObject.SetActive(true);
+        if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
+        if (!IsPlanted)
         {
+            statusText.text = "Hueco";
             return;
         }
-
-        if(!IsPlanted)
+        plant.UpdateGrowth(Time.deltaTime);
+        if (!hasWater && plant.TimeLeft <= 0f)
         {
-            statusText.text = "Anything :<";
+            statusText.text = "<size=40><color=red>Necesita Agua</color></size>";
             return;
         }
-        
-        statusText.text = $"{plant.Name}\n" + 
-                          $"Tieme to Grow: {plant.currentTime:F1}s\n" +
+        statusText.text = $"{plant.Name}\n" +
+                          $"Stage: {plant.CurrentStage} / 2\n" +
+                          $"Time to next stage: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
-                          $"Fertilizada: {(isFertilized ? "Sí" : "No")}\n";
+                          $"Fertilized: {(isFertilized ? "Sí" : "No")}";
     }
 
-    private void WhenPlantIsFullGrow()
+    private void OnPlantStageChanged(int currentStage)
     {
         hasWater = false;
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        Plant Bulbasaur = new Plant("Bulbasaur", 3, 25f);
-        Plant(Bulbasaur);
-        //PlantManager.Instance.AssignPlot(this);
+        isFertilized = false;
+
+        if (currentPlant != null) { Destroy(currentPlant); }
+
+        AudioManager.instance.PlaySFX("NextStage");
+        GameObject prefab = plantData.stages[currentStage];
+        currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
     }
 
-    private void Update()
+    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
+    new IInteractable.KeyBinding("water", InputActionChange.ActionCanceled, Action_Water),
+    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
+    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
+    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
+    };
+
+    private void Action_Water(InputAction.CallbackContext ctx)
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        AudioManager.instance.PlaySFX("Water");
+        hasWater = true;
+        plant.TryGrow(DayNightCycle.Instance.TotalTime, hasWater);
+        Debug.Log("Regada");
+    }
+
+    private void Action_Plant(InputAction.CallbackContext ctx)
+    {
+        Item item = Inventory.Instance.GetCurrentItem();
+        if (item != null && item is IPlantSeed)
         {
-            hasWater = true;
-            Debug.Log("XD");
-        }
-        UpdateUI();
-
+            this.Plant((item as IPlantSeed).PlantData);
+            Inventory.Instance.RemoveItem(item);
+        } 
     }
 
+    private void Action_Harvest(InputAction.CallbackContext ctx)
+    {
+        if (IsPlanted && plant.IsFullyGrown)
+        {
+            Harvest();
+            Debug.Log("Coshechada");
+        }
+    }
+
+    private void Action_Fertilize(InputAction.CallbackContext ctx)
+    {
+        Fertilize();
+        Debug.Log("Fertilizada");
+    }
+
+    public void OnInteract() {}
 }
