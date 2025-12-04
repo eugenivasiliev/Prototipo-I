@@ -16,8 +16,10 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
 
-    public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public int MaxHealth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    [SerializeField] private int health;
+
+    public int Health { get => health; set => health = value; }
+    public int MaxHealth { get => 100; set { } }
 
     [SerializeField] private int damage;
     public int Damage => damage;
@@ -35,6 +37,9 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private void Update()
     {
         enemyState.Behaviour();
+
+        if(health <= 0 )
+            Destroy( gameObject );
     }
 
     public void SetState(State newState)

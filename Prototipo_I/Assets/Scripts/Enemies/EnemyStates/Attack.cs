@@ -5,6 +5,7 @@ public class Attack : EnemyState
     private Plot target;
     public override void Behaviour()
     {
+        AudioManager.instance.PlaySFX("MonsterAttack");
         if (target != null)
             ((IAttacker)enemy).Attack(target.gameObject);
 
