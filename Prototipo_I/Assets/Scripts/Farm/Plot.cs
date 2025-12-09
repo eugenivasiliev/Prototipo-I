@@ -84,7 +84,7 @@ public class Plot : MonoBehaviour, IInteractable
 
     public void UpdateUI()
     {
-        statusText.gameObject.SetActive(true);
+        statusText.gameObject.SetActive(false);
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
         {

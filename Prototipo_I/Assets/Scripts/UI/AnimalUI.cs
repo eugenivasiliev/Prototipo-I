@@ -25,9 +25,10 @@ public class AnimalUI : MonoBehaviour
         canvas.transform.LookAt(Camera.main.transform);
         canvas.transform.Rotate(0, 180f, 0);
 
-        statusText.text = $"Estado AI: {animal.GetComponent<AnimalAI>()?.CurrentStateName ?? "N/A"}\n" +
-                      $"Hambriento: {animal.IsHungry}\n" +
-                      $"Puede Reproducirse: {animal.canBreed}\n" +
-                      $"Veces Comido: {animal.MealsEaten}/{animal.MaxMealsEaten}";
+        statusText.text = "";
+        //statusText.text = $"Estado AI: {animal.GetComponent<AnimalAI>()?.CurrentStateName ?? "N/A"}\n" +
+        //              $"Hambriento: {animal.IsHungry}\n" +
+        //              $"Puede Reproducirse: {animal.canBreed}\n" +
+        //              $"Veces Comido: {animal.MealsEaten}/{animal.MaxMealsEaten}";
     }
 }
