@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -38,6 +39,10 @@ public class PlayerController : MonoBehaviour
     private static bool movementLocked = false;
     public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
+
+    private float currentTimeForNextDay = 0.0f;
+    private float maxTimeForNextDay = 3.0f;
+    private bool isReset = false;
     private void Awake()
     {
         if(instance != null)
@@ -61,6 +66,9 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
+
+        inputs.Player.Countdown.performed += ctx => StartCoroutine("NextDayCountdown");
+        inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -135,5 +143,31 @@ public class PlayerController : MonoBehaviour
             interactable = hit.collider.GetComponent<IInteractable>();
             if( interactable != null ) interactable.OnInteract();
         }
+    }
+
+    IEnumerable NextDayCountdown() {
+        Debug.Log("time is: " + currentTimeForNextDay);
+
+        currentTimeForNextDay += Time.deltaTime;
+
+        yield return null;
+
+        if (currentTimeForNextDay >= maxTimeForNextDay && isReset == false)
+        {
+            DayNightCycle.Instance.NextDay();
+            currentTimeForNextDay = 0.0f;
+        }
+        else if (isReset == false)
+            StartCoroutine("NextDayCountdown");
+        else
+            isReset = false;
+    }
+
+
+    private void ResetDayCountdown() {
+
+        Debug.Log("Cancel");
+        currentTimeForNextDay = 0.0f;
+        isReset = true;
     }
 }

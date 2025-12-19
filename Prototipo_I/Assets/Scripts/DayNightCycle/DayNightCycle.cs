@@ -49,8 +49,8 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
-        dayTime += Time.deltaTime;
-        if(dayTime > dayDuration)
+        //dayTime += Time.deltaTime;
+        if(dayTime >= dayDuration)
         {
             dayCount++;
             dayTime = 0;
@@ -71,4 +71,9 @@ public class DayNightCycle : MonoBehaviour
 
     public void UnsubscribeTimedEvent(TimedEvent timedEvent, out TimedEvent removedElement, out float priority) =>
         timedEvents.Remove(timedEvent, out removedElement, out priority);
+
+    public void NextDay() {
+
+        dayTime = dayDuration;
+    }
 }
