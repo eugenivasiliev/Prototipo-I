@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
 
-        inputs.Player.Countdown.performed += ctx => StartCoroutine("NextDayCountdown");
+        inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
         inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -145,8 +145,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerable NextDayCountdown() {
-        Debug.Log("time is: " + currentTimeForNextDay);
+    IEnumerator NextDayCountdown() {
 
         currentTimeForNextDay += Time.deltaTime;
 
@@ -158,7 +157,7 @@ public class PlayerController : MonoBehaviour
             currentTimeForNextDay = 0.0f;
         }
         else if (isReset == false)
-            StartCoroutine("NextDayCountdown");
+            StartCoroutine(NextDayCountdown());
         else
             isReset = false;
     }
@@ -166,7 +165,6 @@ public class PlayerController : MonoBehaviour
 
     private void ResetDayCountdown() {
 
-        Debug.Log("Cancel");
         currentTimeForNextDay = 0.0f;
         isReset = true;
     }
