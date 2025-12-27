@@ -118,7 +118,11 @@ public class PlayerController : MonoBehaviour
 
         float mouseX = cameraInput.x * cameraSensivility;
 
-        transform.Rotate(Vector3.up * mouseX);
+        Vector3 offset = cameraTransform.position - transform.position;
+        Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
+        cameraTransform.transform.position = transform.position + q * offset;
+
+        cameraTransform.LookAt(transform.position, Vector3.up);
     }
 
     private void Interact()
