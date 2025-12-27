@@ -117,12 +117,7 @@ public class PlayerController : MonoBehaviour
         if(movementLocked) return;
 
         float mouseX = cameraInput.x * cameraSensivility;
-        float mouseY = cameraInput.y * cameraSensivility;
 
-        Rotation -= mouseY;
-        Rotation = Mathf.Clamp(Rotation, -90, 90);
-
-        cameraTransform.localRotation = Quaternion.Euler(Rotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
 
