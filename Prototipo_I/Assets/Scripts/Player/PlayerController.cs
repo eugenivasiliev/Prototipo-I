@@ -9,10 +9,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
-    [SerializeField] private float cameraSensivility = 7.5f;
+    [SerializeField] private float cameraSensibility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
-    [SerializeField] private float jumpHeaight = 2f;
+    [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private Transform cameraTransform;
+    [SerializeField] private Transform modelTransform;
     [SerializeField] public short InteractionRange { get { return 10; } }
 
     private CharacterController characterController;
@@ -73,15 +74,18 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Movement();
         Look();
+        Movement();
     }
 
     private void Movement()
     {
         if(movementLocked) return;
 
-        Vector3 movement = transform.right * movementInput.x + transform.forward * movementInput.y;
+        Vector3 cameraForwardProjected = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
+        Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
+
+        Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
         float currentSpeed = isSprinting ? sprintSpeed : speed;
 
         if (characterController.isGrounded)
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour
         if(isJumping && characterController.isGrounded)
         {
             AudioManager.instance.PlaySFX("Jumping");
-            velocity.y = Mathf.Sqrt(2f * jumpHeaight * gravity);
+            velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
             Debug.Log(velocity.y);
             isJumping = false;
         }
@@ -102,6 +106,12 @@ public class PlayerController : MonoBehaviour
 
         Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
         characterController.Move(totalMovement * Time.deltaTime);
+
+        if(horizontalMovement.sqrMagnitude > 0.01f)
+        {
+            modelTransform.LookAt(transform.position + cameraForwardProjected);
+        }
+
         if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
             AudioManager.instance.PlaySFXLoop("Walking");
         else
@@ -116,8 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         if(movementLocked) return;
 
-        float mouseX = cameraInput.x * cameraSensivility;
-
+        float mouseX = cameraInput.x* cameraSensibility;
         Vector3 offset = cameraTransform.position - transform.position;
         Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
         cameraTransform.transform.position = transform.position + q * offset;
