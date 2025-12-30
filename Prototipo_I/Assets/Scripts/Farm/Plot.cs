@@ -156,6 +156,13 @@ public class Plot : MonoBehaviour, IInteractable
         Fertilize();
         Debug.Log("Fertilizada");
     }
+    public void FullGrow() {
+        if (plant != null)
+            plant.FullGrow();
+        else
+            return;
 
+        OnPlantStageChanged(plant.CurrentStage -1);
+    }
     public void OnInteract() {}
 }

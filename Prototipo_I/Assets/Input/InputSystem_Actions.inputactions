@@ -212,6 +212,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Countdown",
+                    "type": "Button",
+                    "id": "c2644a79-e306-4545-a0d9-449776ac5d0c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -751,6 +760,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5372c13-3e24-4a8a-9bba-9e22ae1549a7",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Countdown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
