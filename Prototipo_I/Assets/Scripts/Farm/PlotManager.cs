@@ -31,4 +31,12 @@ public class PlotManager : MonoBehaviour
             plot.UpdateUI();
         }
     }
+
+
+    public void FullGrow() {
+        foreach (var plot in plots)
+        {
+            plot.FullGrow();
+        }
+    }
 }
