@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Plot : MonoBehaviour, IInteractable
+public class Plot : MonoBehaviour, IInteractable, IDamageable
 {
     Plant plant;
     PlantData plantData;
@@ -18,6 +18,10 @@ public class Plot : MonoBehaviour, IInteractable
     [SerializeField] public PlantData plantInfo;
 
     public bool IsPlanted { get { return plant != null; } }
+
+    [SerializeField] private int health;
+    public int Health { get => health; set => health = value; }
+    public int MaxHealth { get => 100; set { } }
 
     private void Awake()
     {
@@ -80,6 +84,29 @@ public class Plot : MonoBehaviour, IInteractable
 
         this.plant = null;
         currentPlant = null;
+    }
+
+
+    public void Damage(int i)
+    {
+
+        Health = Mathf.Max(Health - i, 0);
+
+        if (Health > 0)
+            return;
+
+        Check();
+    }
+    public void Check() {
+
+        if (health > 0)
+            return;
+
+        Destroy(currentPlant);
+        this.plant = null;
+        currentPlant = null;
+
+        health = MaxHealth;
     }
 
     public void UpdateUI()
