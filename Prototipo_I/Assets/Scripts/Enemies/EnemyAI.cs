@@ -31,7 +31,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int damage;
     public int Damage => damage;
 
-    public int Difficulty { get; private set; }
+    [SerializeField] private int difficulty;
+    public int Difficulty => difficulty;
 
     private void Awake()
     {
