@@ -5,10 +5,10 @@ public class Chase : EnemyState
     private Plot targetPlot = null;
     public override void Behaviour()
     {
-        if(targetPlot != null)
+        if(targetPlot != null && targetPlot.IsPlanted)
         {
             float distToTarget = Vector3.Distance(enemy.transform.position, targetPlot.transform.position);
-            if (distToTarget < 5.05f)
+            if (distToTarget < 0.45f)
                 enemy.SetState(EnemyAI.State.Attack);
             return;
         }
