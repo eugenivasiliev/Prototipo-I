@@ -6,7 +6,7 @@ public class TowerDatabase : MonoBehaviour
     public static TowerDatabase Instance {  get { return instance; } }
 
     [SerializeField] private TowerData[] towerDatas = new TowerData[0];
-    public TowerData[] PlantDatas { get { return towerDatas; } }
+    public TowerData[] TowerDatas { get { return towerDatas; } }
 
     private void Start()
     {
