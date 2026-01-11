@@ -87,30 +87,18 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     }
 
 
-    public void Damage(int i)
-    {
 
-        Health = Mathf.Max(Health - i, 0);
 
-        if (Health > 0)
-            return;
 
-        Check();
-    }
-    public void Check() {
-
-        if (health > 0)
-            return;
-
-        Destroy(currentPlant);
-        this.plant = null;
-        currentPlant = null;
-
-        health = MaxHealth;
-    }
 
     public void UpdateUI()
     {
+        if ((this as IDamageable).IsDead())
+        {
+            Destroy(currentPlant);
+            this.plant = null;
+            currentPlant = null;
+        }
         statusText.gameObject.SetActive(false);
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
