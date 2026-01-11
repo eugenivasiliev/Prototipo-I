@@ -8,13 +8,12 @@ public class TowerSpot : MonoBehaviour, IInteractable
     TowerData towerData;
 
     private GameObject currentTower;
-    [SerializeField] public PlantData plantInfo;
 
     public bool hasTower { get { return tower != null; } }
 
-    private void Awake()
+    private void Start()
     {
-
+        (this as IInteractable).Bind();
     }
 
     public void PlaceTower(TowerData data)

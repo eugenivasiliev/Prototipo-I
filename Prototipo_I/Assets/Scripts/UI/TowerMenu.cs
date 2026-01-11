@@ -22,6 +22,17 @@ public class TowerMenu : MonoBehaviour
         towerMenuPanel.SetActive(false);
     }
 
+    private void LoadValidTowers()
+    {
+        foreach(TowerData data in TowerDatabase.Instance.TowerDatas)
+        {
+            if(Inventory.Instance.HasIngredients(data.ingredients))
+            {
+                Debug.Log(data.Name);
+            }
+        }
+    }
+
     public void ToggleMenu()
     {
         isOpen = !isOpen;
@@ -30,6 +41,8 @@ public class TowerMenu : MonoBehaviour
         towerMenuPanel.SetActive(isOpen);
         Time.timeScale = (isOpen) ? 0f : 1f;
         PlayerController.MovementLocked = isOpen;
+
+        if(isOpen) LoadValidTowers();
     }
 
     public void Exit()
