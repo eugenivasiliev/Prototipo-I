@@ -72,33 +72,5 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         }
         enemyState.Enemy = this;
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.GetComponent<Plot>())
-        {
-            target = other.gameObject.GetComponent<Plot>();
-            StartCoroutine(HurtPlot());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.GetComponent<Plot>() == target)
-        {
-            target = null;
-        }
-    }
-
-    IEnumerator HurtPlot() {
-
-        yield return new WaitForSeconds(1.0f);
-
-        if (target == null)
-            yield break;
-
-        target.Damage(20);
-
-        StartCoroutine(HurtPlot());
-    }
+    
 }
