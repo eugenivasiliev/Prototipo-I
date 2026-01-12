@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
+    public enum Difficult : int
+    {
+        Easy = 1,
+        Medium = 2,
+        Hard = 3
+    }
+
     public enum State
     {
         Chase,
@@ -16,11 +23,16 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
 
-    public int Health { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-    public int MaxHealth { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    [SerializeField] private int health;
+
+    public int Health { get => health; set => health = value; }
+    public int MaxHealth { get => 100; set { } }
 
     [SerializeField] private int damage;
     public int Damage => damage;
+
+    [SerializeField] private int difficulty;
+    public int Difficulty => difficulty;
 
     private void Awake()
     {
@@ -35,6 +47,9 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private void Update()
     {
         enemyState.Behaviour();
+
+        if(health <= 0 )
+            Destroy( gameObject );
     }
 
     public void SetState(State newState)

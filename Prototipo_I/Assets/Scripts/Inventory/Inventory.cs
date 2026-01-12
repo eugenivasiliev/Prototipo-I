@@ -21,7 +21,7 @@ public struct InventorySlot
 
     public static InventorySlot Default = new InventorySlot(new Item(), -1);
 
-    public static bool operator== (InventorySlot l, InventorySlot r)
+    public static bool operator ==(InventorySlot l, InventorySlot r)
     {
         return l.item.GetType() == r.item.GetType() && l.amount == r.amount;
     }
@@ -52,7 +52,7 @@ public struct InventoryList
     public InventoryList(int length)
     {
         slots = new InventorySlot[length];
-        for(int i = 0; i < length; ++i)
+        for (int i = 0; i < length; ++i)
         {
             slots[i] = InventorySlot.Default;
         }
@@ -74,6 +74,16 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public string File => "inventory.json";
 
+    [SerializeField] private TextAsset defaultInventory;
+
+    public InventoryList DefaultData
+    {
+        get
+        {
+            InventoryList data = JsonUtility.FromJson<InventoryList>(defaultInventory.text);
+            return data;
+        }
+    }
 
     public UnityEvent<float> SaveEvent { get; set; }
 
@@ -83,7 +93,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private void Start()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(this.gameObject);
             return;
@@ -105,6 +115,26 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         indicator = this.transform.GetChild(0).GetComponent<Indicator>();
         indicator.Initialize(this.transform.GetComponentInChildren<GridLayoutGroup>().cellSize);
 
+    }
+
+    public int GetItemCount(Item item)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.GetType() == item.GetType())
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
+    }
+
+    public int GetItemCount(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.spriteId == itemName)
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
     }
 
     public bool AddItem(Item item)
@@ -129,11 +159,12 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public bool AddItem(Item item, int amount, out int amountDone)
     {
-        for(amountDone = 1; amountDone <= amount; amountDone++) if(!AddItem(item)) return false;
+        for (amountDone = 1; amountDone <= amount; amountDone++) if (!AddItem(item)) return false;
         return true;
     }
 
-    public bool RemoveItem(Item item) {
+    public bool RemoveItem(Item item)
+    {
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] != null && items.slots[i].item.GetType() == item.GetType())
             {
@@ -153,8 +184,9 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return true;
     }
 
-    public void Clear() {
-        for(int i = 0; i < items.slots.Length; i++)
+    public void Clear()
+    {
+        for (int i = 0; i < items.slots.Length; i++)
         {
             items.slots[i] = InventorySlot.Default;
             GetImage(i).sprite = null;
@@ -164,8 +196,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private void RenderItem(int index)
     {
-        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
         GetText(index).text = items.slots[index].amount.ToString();
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
     }
 
     private void DefaultItem(int index)
@@ -182,4 +214,16 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public InventoryList GetData() => items;
     public void SetData(InventoryList data) => items = data;
+
+    public bool HasIngredients(TowerData.Ingredient[] ingredients)
+    {
+        foreach(TowerData.Ingredient ingredient in ingredients)
+        {
+            if(GetItemCount(ingredient.itemName) < ingredient.amount)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

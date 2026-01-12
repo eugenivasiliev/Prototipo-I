@@ -4,9 +4,9 @@ using UnityEngine;
 [Serializable]
 public class Item
 {
-    public string Name; 
+    public string Name => this.GetType().ToString();
     public string Description;
-    public virtual string spriteId { get => throw new NotImplementedException(); }
+    public virtual string spriteId { get => ""; }
 
     public virtual void OnUse(GameObject gameObject) {}
 }

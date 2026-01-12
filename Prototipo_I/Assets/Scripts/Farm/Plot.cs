@@ -73,7 +73,15 @@ public class Plot : MonoBehaviour, IInteractable
         }
 
         AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
+        Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
+
+        if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+        {
+            foreach(PlantsOfTypeCollected obj in objs)
+            {
+                obj.UpdateObjective(plantData.plantName);
+            }
+        }
 
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
@@ -84,7 +92,7 @@ public class Plot : MonoBehaviour, IInteractable
 
     public void UpdateUI()
     {
-        statusText.gameObject.SetActive(true);
+        statusText.gameObject.SetActive(false);
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
         {
@@ -98,7 +106,7 @@ public class Plot : MonoBehaviour, IInteractable
             return;
         }
         statusText.text = $"{plant.Name}\n" +
-                          $"Stage: {plant.CurrentStage} / {plant.MaxStage}\n" +
+                          $"Stage: {plant.CurrentStage} / 2\n" +
                           $"Time to next stage: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
                           $"Fertilized: {(isFertilized ? "Sí" : "No")}";
@@ -156,6 +164,13 @@ public class Plot : MonoBehaviour, IInteractable
         Fertilize();
         Debug.Log("Fertilizada");
     }
+    public void FullGrow() {
+        if (plant != null)
+            plant.FullGrow();
+        else
+            return;
 
+        OnPlantStageChanged(plant.CurrentStage -1);
+    }
     public void OnInteract() {}
 }
