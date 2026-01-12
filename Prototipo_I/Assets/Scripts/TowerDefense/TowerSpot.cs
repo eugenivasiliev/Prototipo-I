@@ -23,7 +23,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         towerData = data;
         tower = new Tower(data);
-        //currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
     }
