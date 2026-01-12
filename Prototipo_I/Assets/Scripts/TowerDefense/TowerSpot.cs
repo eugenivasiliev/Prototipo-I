@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Timers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +8,24 @@ public class TowerSpot : MonoBehaviour, IInteractable
     TowerData towerData;
 
     private GameObject currentTower;
-    [SerializeField] public PlantData plantInfo;
 
     public bool hasTower { get { return tower != null; } }
 
-    private void Awake()
+    private void Start()
     {
+        (this as IInteractable).Bind();
+    }
 
+    public void PlaceTower(string dataName)
+    {
+        AudioManager.instance.PlaySFX("Plant");
+        if (hasTower) return;
+
+        towerData = TowerDatabase.Instance.GetTowerByName(dataName);
+        tower = new Tower(towerData);
+        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+        Debug.Log($"Tower {tower.Name} placed!");
     }
 
     public void PlaceTower(TowerData data)
@@ -26,6 +34,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
         if (hasTower) return;
 
         towerData = data;
+        tower = new Tower(data);
         currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
