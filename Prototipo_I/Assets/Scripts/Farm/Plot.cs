@@ -79,6 +79,14 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         AudioManager.instance.PlaySFX("Harvesting");
         Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
 
+        if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+        {
+            foreach(PlantsOfTypeCollected obj in objs)
+            {
+                obj.UpdateObjective(plantData.plantName);
+            }
+        }
+
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
 
