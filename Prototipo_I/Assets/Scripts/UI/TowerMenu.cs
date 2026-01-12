@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class TowerMenu : MonoBehaviour
 {
     public static TowerMenu Instance { get; private set; }
 
     [SerializeField] private GameObject towerMenuPanel;
+    [SerializeField] private GameObject towerUI;
 
     private bool isOpen = false;
 
@@ -28,7 +30,14 @@ public class TowerMenu : MonoBehaviour
         {
             if(Inventory.Instance.HasIngredients(data.ingredients))
             {
-                Debug.Log(data.Name);
+                foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
+
+                foreach (var tower in TowerDatabase.Instance.TowerDatas)
+                {
+                    GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
+                    instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(tower.Name);
+                    instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
+                }
             }
         }
     }
