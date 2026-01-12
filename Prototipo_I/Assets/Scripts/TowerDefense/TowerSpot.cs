@@ -16,6 +16,18 @@ public class TowerSpot : MonoBehaviour, IInteractable
         (this as IInteractable).Bind();
     }
 
+    public void PlaceTower(string dataName)
+    {
+        AudioManager.instance.PlaySFX("Plant");
+        if (hasTower) return;
+
+        towerData = TowerDatabase.Instance.GetTowerByName(dataName);
+        tower = new Tower(towerData);
+        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+        Debug.Log($"Tower {tower.Name} placed!");
+    }
+
     public void PlaceTower(TowerData data)
     {
         AudioManager.instance.PlaySFX("Plant");

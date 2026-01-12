@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2364767506637235391}
-  - component: {fileID: 1849983496337010022}
   - component: {fileID: 2312738860307825253}
+  - component: {fileID: 4774537968050465030}
   m_Layer: 0
-  m_Name: DefaultTower
+  m_Name: PlantBasedTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,18 +34,6 @@ Transform:
   - {fileID: 1965311399100025874}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1849983496337010022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5947208457080571333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2651372d41172f74abb526dc627de4c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2312738860307825253
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -67,6 +55,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4774537968050465030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5947208457080571333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90706a4324f54f044bfeaa03db376ad2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7865068236738533864
 GameObject:
   m_ObjectHideFlags: 0

@@ -230,6 +230,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "refill_tower",
+                    "type": "Button",
+                    "id": "a1eea5b8-8d18-49cd-a3d1-bdec63902095",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -791,6 +800,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "place_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "refill_tower",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

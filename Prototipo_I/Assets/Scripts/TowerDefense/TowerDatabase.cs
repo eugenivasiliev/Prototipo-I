@@ -21,7 +21,7 @@ public class TowerDatabase : MonoBehaviour
     public TowerData GetTowerByName(string name)
     {
         foreach (var towerData in towerDatas)
-            if(towerData.name == name) return towerData;
+            if(towerData.Name == name) return towerData;
 
         return null;
     }

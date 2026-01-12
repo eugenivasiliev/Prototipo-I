@@ -26,18 +26,16 @@ public class TowerMenu : MonoBehaviour
 
     private void LoadValidTowers()
     {
-        foreach(TowerData data in TowerDatabase.Instance.TowerDatas)
+        foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
+
+        foreach (TowerData data in TowerDatabase.Instance.TowerDatas)
         {
             if(Inventory.Instance.HasIngredients(data.ingredients))
             {
-                foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
 
-                foreach (var tower in TowerDatabase.Instance.TowerDatas)
-                {
-                    GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
-                    instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(tower.Name);
-                    instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
-                }
+                GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
+                instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(data.Name);
+                instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
             }
         }
     }

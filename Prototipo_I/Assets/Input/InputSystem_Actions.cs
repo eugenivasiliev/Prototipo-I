@@ -316,6 +316,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""refill_tower"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1eea5b8-8d18-49cd-a3d1-bdec63902095"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -877,6 +886,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""place_tower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8312d9d4-ee92-4d79-b316-4c4e5cf157f5"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""refill_tower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1489,6 +1509,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
         m_Player_Countdown = m_Player.FindAction("Countdown", throwIfNotFound: true);
         m_Player_place_tower = m_Player.FindAction("place_tower", throwIfNotFound: true);
+        m_Player_refill_tower = m_Player.FindAction("refill_tower", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1607,6 +1628,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_pause;
     private readonly InputAction m_Player_Countdown;
     private readonly InputAction m_Player_place_tower;
+    private readonly InputAction m_Player_refill_tower;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1719,6 +1741,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @place_tower => m_Wrapper.m_Player_place_tower;
         /// <summary>
+        /// Provides access to the underlying input action "Player/refill_tower".
+        /// </summary>
+        public InputAction @refill_tower => m_Wrapper.m_Player_refill_tower;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1819,6 +1845,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @place_tower.started += instance.OnPlace_tower;
             @place_tower.performed += instance.OnPlace_tower;
             @place_tower.canceled += instance.OnPlace_tower;
+            @refill_tower.started += instance.OnRefill_tower;
+            @refill_tower.performed += instance.OnRefill_tower;
+            @refill_tower.canceled += instance.OnRefill_tower;
         }
 
         /// <summary>
@@ -1905,6 +1934,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @place_tower.started -= instance.OnPlace_tower;
             @place_tower.performed -= instance.OnPlace_tower;
             @place_tower.canceled -= instance.OnPlace_tower;
+            @refill_tower.started -= instance.OnRefill_tower;
+            @refill_tower.performed -= instance.OnRefill_tower;
+            @refill_tower.canceled -= instance.OnRefill_tower;
         }
 
         /// <summary>
@@ -2380,6 +2412,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPlace_tower(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "refill_tower" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnRefill_tower(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

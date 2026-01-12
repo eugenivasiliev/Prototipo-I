@@ -21,8 +21,8 @@ public class ObjectivesManager : MonoBehaviour
 
     void Update()
     {
-        if (AllObjectivesComplete())
-            Debug.Log("done!");
+        //if (AllObjectivesComplete())
+        //    Debug.Log("done!");
     }
 
     bool AllObjectivesComplete()
