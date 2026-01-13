@@ -142,6 +142,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] != InventorySlot.Default && items.slots[i].item.GetType() == item.GetType())
             {
+                items.slots[i].amount += 1;
                 RenderItem(i);
                 return true;
             }
@@ -149,6 +150,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] == InventorySlot.Default)
             {
+                items.slots[i] = new InventorySlot(item, 1);
                 RenderItem(i);
                 return true;
             }

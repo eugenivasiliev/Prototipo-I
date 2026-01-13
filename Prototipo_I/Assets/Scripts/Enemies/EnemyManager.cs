@@ -44,7 +44,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        if (isWaveActive && !AreEnemiesRemaining())
+        if (isWaveActive && !AreEnemiesRemaining() && enemiesToSpawn.Count == 0)
         {
             isWaveActive = false;
             currentPhaseIndex++;
