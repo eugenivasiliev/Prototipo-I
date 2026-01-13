@@ -250,5 +250,6 @@ public class PlayerController : MonoBehaviour
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             damageable.DamageMax();
+        AudioManager.instance.PlaySFX("PlayerAttack");
     }
 }
