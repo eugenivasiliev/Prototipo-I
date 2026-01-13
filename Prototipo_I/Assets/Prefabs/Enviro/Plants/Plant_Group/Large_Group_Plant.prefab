@@ -186,6 +186,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5522283567862258127, guid: c9eecf76269530440a0d1c4ade2aeeb9, type: 3}
   m_PrefabInstance: {fileID: 3342305749429066335}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6092800812290061895
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8873328320698719012}
+    m_Modifications:
+    - target: {fileID: 7379214714652693421, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_Name
+      value: arbol_champi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+--- !u!4 &4156283755247927120 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7864388872862812439, guid: 3d9b4da649efa464ebc731e149100c6f, type: 3}
+  m_PrefabInstance: {fileID: 6092800812290061895}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7031672269939102521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -488,7 +550,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d2596e033e8221f4f928628dbb8045c9, type: 2}
     - target: {fileID: 919132149155446097, guid: 4a36205269fd9a449bdc783833e7d9da, type: 3}
       propertyPath: m_Name
-      value: Tree_Group
+      value: Large_Group_Plant
       objectReference: {fileID: 0}
     - target: {fileID: 3166876034448988035, guid: 4a36205269fd9a449bdc783833e7d9da, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -520,6 +582,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4a36205269fd9a449bdc783833e7d9da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5147649577143469642}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4a36205269fd9a449bdc783833e7d9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4156283755247927120}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a36205269fd9a449bdc783833e7d9da, type: 3}
 --- !u!4 &8873328320698719012 stripped
