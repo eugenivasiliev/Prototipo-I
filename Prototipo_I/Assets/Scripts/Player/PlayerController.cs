@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private static PlayerController instance;
     public static PlayerController Instance { get { return instance; } }
 
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
@@ -213,12 +214,17 @@ public class PlayerController : MonoBehaviour
     {
         attacking = true;
 
+        float waitTime = 0.6f;
+
         while (attacking && closeEnemies.Count > 0)
         {
             if (targetedEnemy == null)
                 GetClosestEnemy();
-
-            yield return new WaitForSeconds(0.6f);
+            GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
+            p.GetComponent<Projectile>().startPos = transform.position;
+            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+            p.GetComponent<Projectile>().maxTime = waitTime;
+            yield return new WaitForSeconds(waitTime);
 
             if (targetedEnemy != null)
                 DamageTarget();

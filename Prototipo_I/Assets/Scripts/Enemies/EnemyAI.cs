@@ -34,6 +34,9 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int difficulty;
     public int Difficulty => difficulty;
 
+
+    Plot target;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -70,4 +73,5 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         }
         enemyState.Enemy = this;
     }
+    
 }

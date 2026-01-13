@@ -8,7 +8,7 @@ public abstract class DBManager<T> : MonoBehaviour
     [SerializeField] private T database;
     public T DB { get { return database; } }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         if (instance == null)
         {
