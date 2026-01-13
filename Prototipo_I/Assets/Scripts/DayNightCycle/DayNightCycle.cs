@@ -35,9 +35,14 @@ public class DayNightCycle : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        PlayerController.Inputs.Player.Countdown.performed += ctx => dayTime += dayDuration / 2.0f;
+    }
+
     private void Update()
     {
-        dayTime += Time.deltaTime;
+        //dayTime += Time.deltaTime;
         if(dayTime > dayDuration)
         {
             dayCount++;
