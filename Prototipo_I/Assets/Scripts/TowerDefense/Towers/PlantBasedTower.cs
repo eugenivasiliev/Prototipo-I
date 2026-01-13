@@ -121,6 +121,7 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
     
     void SpawnProjectile(float waitTime)
     {
+        transform.LookAt(targetedEnemy.transform.position, Vector3.up);
         AudioManager.instance.PlaySFX("TurretVAttack");
         GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
         p.GetComponent<Projectile>().startPos = transform.position;

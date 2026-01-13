@@ -86,6 +86,7 @@ public class DefaultTower : MonoBehaviour
 
     void SpawnProjectile(float waitTime)
     {
+        transform.LookAt(targetedEnemy.transform.position, Vector3.up);
         AudioManager.instance.PlaySFX("TurretAttack");
         GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
         p.GetComponent<Projectile>().startPos = transform.position;
