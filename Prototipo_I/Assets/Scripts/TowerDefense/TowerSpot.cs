@@ -30,6 +30,11 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     public void PlaceTower(TowerData data)
     {
+        foreach(var ingredient in data.ingredients)
+        {
+            Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+        }
+
         AudioManager.instance.PlaySFX("Plant");
         if (hasTower) return;
 
