@@ -29,6 +29,18 @@ public class EnemyManager : MonoBehaviour
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
 
+    private void Update()
+    {
+        if (enemiesToSpawn.Count == 0 && allEnemies.Count == 0 && 
+            ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs)) 
+        {
+            foreach (var obj in objs)
+            {
+                obj.UpdateObjective(1);
+            }
+        }
+    }
+
     private void RegisterEnemy(EnemyAI enemy)
     {
         if (!allEnemies.Contains(enemy))
