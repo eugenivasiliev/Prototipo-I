@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DefaultTower : MonoBehaviour
 {
+    [SerializeField] GameObject projectile;
     bool attacking = false;
     private List<GameObject> closeEnemies = new List<GameObject>();
     private GameObject targetedEnemy;
@@ -39,12 +40,16 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
+        float waitTime = 0.6f;
+        
         while (attacking && closeEnemies.Count > 0)
         {
             if (targetedEnemy == null)
                 GetClosestEnemy();
 
-            yield return new WaitForSeconds(0.6f);
+            SpawnProjectile(waitTime);
+
+            yield return new WaitForSeconds(waitTime);
 
             if (targetedEnemy != null)
                 DamageTarget();
@@ -77,5 +82,14 @@ public class DefaultTower : MonoBehaviour
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             damageable.DamageMax();
+    }
+
+    void SpawnProjectile(float waitTime)
+    {
+        AudioManager.instance.PlaySFX("TurretAttack");
+        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+        p.GetComponent<Projectile>().startPos = transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }

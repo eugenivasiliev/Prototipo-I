@@ -220,10 +220,9 @@ public class PlayerController : MonoBehaviour
         {
             if (targetedEnemy == null)
                 GetClosestEnemy();
-            GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
-            p.GetComponent<Projectile>().startPos = transform.position;
-            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
-            p.GetComponent<Projectile>().maxTime = waitTime;
+
+            SpawnProjectile(waitTime);
+
             yield return new WaitForSeconds(waitTime);
 
             if (targetedEnemy != null)
@@ -255,6 +254,14 @@ public class PlayerController : MonoBehaviour
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+            damageable.DamageMax();        
+    }
+
+    void SpawnProjectile(float waitTime) {
+        AudioManager.instance.PlaySFX("PlayerAttack");
+        GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
+        p.GetComponent<Projectile>().startPos = transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
