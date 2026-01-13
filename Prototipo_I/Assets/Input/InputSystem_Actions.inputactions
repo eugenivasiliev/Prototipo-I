@@ -216,7 +216,25 @@
                 {
                     "name": "Countdown",
                     "type": "Button",
-                    "id": "f99ae39f-9891-4873-8359-ac02d130c15e",
+                    "id": "c2644a79-e306-4545-a0d9-449776ac5d0c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "place_tower",
+                    "type": "Button",
+                    "id": "ebdc46d2-3dc0-44a2-8074-4bdc5f8f0ab4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "refill_tower",
+                    "type": "Button",
+                    "id": "a1eea5b8-8d18-49cd-a3d1-bdec63902095",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -765,12 +783,34 @@
                 },
                 {
                     "name": "",
-                    "id": "cd678547-d78c-4241-a8ef-7298c259d1e7",
+                    "id": "f5372c13-3e24-4a8a-9bba-9e22ae1549a7",
                     "path": "<Keyboard>/h",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Countdown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "969aaa81-0a53-4e12-8427-0fe366a85534",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "place_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "refill_tower",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

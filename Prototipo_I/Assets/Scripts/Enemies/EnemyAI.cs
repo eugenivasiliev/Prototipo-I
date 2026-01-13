@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
+    public enum Difficult : int
+    {
+        Easy = 1,
+        Medium = 2,
+        Hard = 3
+    }
+
     public enum State
     {
         Chase,
@@ -24,6 +31,12 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int damage;
     public int Damage => damage;
 
+    [SerializeField] private int difficulty;
+    public int Difficulty => difficulty;
+
+
+    Plot target;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -38,8 +51,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     {
         enemyState.Behaviour();
 
-        if(health <= 0 )
-            Destroy( gameObject );
+        if (health <= 0)
+        {
+            AudioManager.instance.PlaySFX("EnemyDeath");
+            Destroy(gameObject);
+        }
     }
 
     public void SetState(State newState)
@@ -60,4 +76,5 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         }
         enemyState.Enemy = this;
     }
+    
 }
