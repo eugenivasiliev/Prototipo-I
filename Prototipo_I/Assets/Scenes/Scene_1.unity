@@ -87914,6 +87914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectives:
   - {fileID: 11400000, guid: 5cab668862b9b4647a9d8ed5cefcbccd, type: 2}
+  - {fileID: 11400000, guid: bea83a56d408cc14f8c967019d638b75, type: 2}
 --- !u!4 &1405056556
 Transform:
   m_ObjectHideFlags: 0
@@ -111272,7 +111273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 1944628757844598330, guid: 03d4937ed44a7684e97e9433bbc896f9, type: 3}
+  currentBiomeIndex: 0
+  currentPhaseIndex: 0
+  isWaveActive: 0
   timeToSpawn: 4
   spawnZones:
   - {fileID: 373457032}
