@@ -8,12 +8,17 @@ public class ObjectivesManager : MonoBehaviour
     public static ObjectivesManager Instance { get; private set; }
 
     [SerializeField] private List<ScriptableObject> objectives = new List<ScriptableObject>();
+    public List<ScriptableObject> Objectives => objectives;
 
     void Start()
     {
         if(Instance == null)
         {
             Instance = this;
+            foreach(var obj in objectives)
+            {
+                (obj as IObjective).Init();
+            }
             return;
         }
         Destroy(this.gameObject);
@@ -25,7 +30,7 @@ public class ObjectivesManager : MonoBehaviour
         //    Debug.Log("done!");
     }
 
-    bool AllObjectivesComplete()
+    public bool AllObjectivesComplete()
     {
         foreach (ScriptableObject objective in objectives)
             if(!(objective as IObjective).IsCompleted) return false;

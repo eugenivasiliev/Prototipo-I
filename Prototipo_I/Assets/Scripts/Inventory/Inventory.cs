@@ -142,6 +142,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] != InventorySlot.Default && items.slots[i].item.GetType() == item.GetType())
             {
+                items.slots[i].amount += 1;
                 RenderItem(i);
                 return true;
             }
@@ -149,6 +150,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] == InventorySlot.Default)
             {
+                items.slots[i] = new InventorySlot(item, 1);
                 RenderItem(i);
                 return true;
             }
@@ -178,9 +180,27 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return false;
     }
 
+    public bool RemoveItem(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.spriteId == itemName)
+            {
+                return RemoveItem(items.slots[i].item);
+            }
+
+        //Cannot remove
+        return false;
+    }
+
     public bool RemoveItem(Item item, int amount, out int amountDone)
     {
         for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(item)) return false;
+        return true;
+    }
+
+    public bool RemoveItem(string itemName, int amount, out int amountDone)
+    {
+        for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(itemName)) return false;
         return true;
     }
 
