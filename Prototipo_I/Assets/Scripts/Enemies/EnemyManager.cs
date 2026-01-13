@@ -28,9 +28,39 @@ public class EnemyManager : MonoBehaviour
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
 
-        SpawnEnemies(.5f);
+        //SpawnEnemies(.5f);
 
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
+    }
+
+    private bool AreEnemiesRemaining()
+    {
+        foreach (var enemy in allEnemies)
+        {
+            if (enemy != null) return true;
+        }
+        return false;
+    }
+
+    private void Update()
+    {
+        if (isWaveActive && !AreEnemiesRemaining())
+        {
+            isWaveActive = false;
+            currentPhaseIndex++;
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, 1);
+            if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
+            {
+                foreach (var obj in objs)
+                {
+                    obj.UpdateObjective(1);
+                }
+            }
+            DayNightCycle.Instance.SubscribeTimedEvent(
+                Spawn, 
+                (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration + DayNightCycle.Instance.DayTime
+                );
+        }
     }
 
     private void RegisterEnemy(EnemyAI enemy)
@@ -62,7 +92,7 @@ public class EnemyManager : MonoBehaviour
         foreach (Transform zone in spawnZones)
             StartCoroutine(SpawnEnemyDelay(zone));
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
+        //DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
     }
 
     private IEnumerator SpawnEnemyDelay (Transform zone)
@@ -83,20 +113,6 @@ public class EnemyManager : MonoBehaviour
             enemiesToSpawn.Remove(name);
 
             yield return new WaitForSeconds(timeToSpawn);
-        }
-
-        if(isWaveActive)
-        {
-            isWaveActive = false;
-            currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, 1);
-            if(ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
-            {
-                foreach (var obj in objs)
-                {
-                    obj.UpdateObjective(1);
-                }
-            }
         }
     }
 
