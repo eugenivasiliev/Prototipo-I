@@ -51,8 +51,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     {
         enemyState.Behaviour();
 
-        if(health <= 0 )
-            Destroy( gameObject );
+        if (health <= 0)
+        {
+            AudioManager.instance.PlaySFX("EnemyDeath");
+            Destroy(gameObject);
+        }
     }
 
     public void SetState(State newState)
