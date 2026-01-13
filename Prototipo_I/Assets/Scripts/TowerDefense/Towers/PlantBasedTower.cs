@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlantBasedTower : MonoBehaviour, IInteractable
 {
+    [SerializeField] GameObject projectile;
     bool attacking = false;
     private List<GameObject> closeEnemies = new List<GameObject>();
     private GameObject targetedEnemy;
@@ -66,12 +67,16 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
     {
         attacking = true;
 
+        float waitTime = 0.6f;
+        
         while (attacking && closeEnemies.Count > 0 && CanAttack)
         {
             if (targetedEnemy == null)
                 GetClosestEnemy();
 
-            yield return new WaitForSeconds(0.6f);
+            SpawnProjectile(waitTime);
+
+            yield return new WaitForSeconds(waitTime);
 
             if (targetedEnemy != null)
                 DamageTarget();
@@ -112,5 +117,14 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
     public void OnInteract()
     {
         throw new System.NotImplementedException();
+    }
+    
+    void SpawnProjectile(float waitTime)
+    {
+        AudioManager.instance.PlaySFX("TurretVAttack");
+        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+        p.GetComponent<Projectile>().startPos = transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
