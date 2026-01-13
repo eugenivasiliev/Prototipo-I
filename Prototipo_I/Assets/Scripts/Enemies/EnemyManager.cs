@@ -90,6 +90,13 @@ public class EnemyManager : MonoBehaviour
             isWaveActive = false;
             currentPhaseIndex++;
             currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, 1);
+            if(ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
+            {
+                foreach (var obj in objs)
+                {
+                    obj.UpdateObjective(1);
+                }
+            }
         }
     }
 
