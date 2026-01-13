@@ -117,6 +117,26 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     }
 
+    public int GetItemCount(Item item)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.GetType() == item.GetType())
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
+    }
+
+    public int GetItemCount(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.spriteId == itemName)
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
+    }
+
     public bool AddItem(Item item)
     {
         for (int i = 0; i < items.slots.Length; i++)
@@ -183,7 +203,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private void DefaultItem(int index)
     {
         items.slots[index] = InventorySlot.Default;
-        GetImage(index).sprite = null;
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault("empty");
         GetText(index).text = "";
     }
 
@@ -194,4 +214,16 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public InventoryList GetData() => items;
     public void SetData(InventoryList data) => items = data;
+
+    public bool HasIngredients(TowerData.Ingredient[] ingredients)
+    {
+        foreach(TowerData.Ingredient ingredient in ingredients)
+        {
+            if(GetItemCount(ingredient.itemName) < ingredient.amount)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

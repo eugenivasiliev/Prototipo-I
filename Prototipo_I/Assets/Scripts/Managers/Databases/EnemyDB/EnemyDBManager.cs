@@ -4,9 +4,9 @@ using UnityEngine;
 public class EnemyDBManager : DBManager<EnemyDB>
 {
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
         DB.Init();
     }
 }
