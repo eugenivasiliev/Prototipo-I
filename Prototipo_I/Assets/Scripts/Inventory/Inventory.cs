@@ -203,7 +203,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private void DefaultItem(int index)
     {
         items.slots[index] = InventorySlot.Default;
-        GetImage(index).sprite = null;
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault("empty");
         GetText(index).text = "";
     }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class PlotManager : MonoBehaviour
 {
     
-    public static PlotManager Instance;
+    public static PlotManager Instance { get; private set; }
     public List<Plot> plots = new List<Plot>();
     [SerializeField] private HybridationManager hybridationManager;
     public HybridationManager HybridationManager {  get { return hybridationManager; } }
