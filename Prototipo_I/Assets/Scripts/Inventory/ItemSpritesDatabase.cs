@@ -18,7 +18,7 @@ public class ItemSpritesDatabase : MonoBehaviour
     private static Dictionary<string, Sprite> spriteDict = new Dictionary<string, Sprite>();
     public static Dictionary<string, Sprite> SpriteDict { get { return spriteDict; } }
 
-    private void Start()
+    private void Awake()
     {
         if (instance != null)
         {

@@ -67,4 +67,10 @@ public class Plant
         Debug.Log("Sigue creciendo");
 
     }
+
+    public void FullGrow() {
+
+        currentStage = maxStage;
+        Debug.Log(CurrentStage);
+    }
 }

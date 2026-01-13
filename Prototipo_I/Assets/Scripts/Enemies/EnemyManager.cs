@@ -9,11 +9,11 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager Instance {get; private set;}
 
     [SerializeField] private GameObject enemy;
-    [SerializeField] private short enemiesByZone;
     [SerializeField] private short timeToSpawn;
     [SerializeField] public List<Transform> spawnZones = new List<Transform>();
 
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
+    private List<string> enemiesToSpawn = new List<string>();
 
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
@@ -23,6 +23,8 @@ public class EnemyManager : MonoBehaviour
 
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
+
+        SpawnEnemies(.5f);
 
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
@@ -48,6 +50,9 @@ public class EnemyManager : MonoBehaviour
 
         allEnemies.Clear();
 
+        WaveDBManager.Instance.DB.ReadyNextWave(0,0);
+        enemiesToSpawn = WaveDBManager.Instance.DB.nextWave;
+
         foreach (Transform zone in spawnZones)
             StartCoroutine(SpawnEnemyDelay(zone));
 
@@ -56,8 +61,10 @@ public class EnemyManager : MonoBehaviour
 
     private IEnumerator SpawnEnemyDelay (Transform zone)
     {
-        for (int i = 0; i < enemiesByZone; i++)
+        while(enemiesToSpawn.Count > 0)
         {
+            string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
+            GameObject prefab = EnemyDBManager.Instance.DB.GetEnemyFromName(name);
             GameObject enemyObject = Instantiate(enemy, zone.position, Quaternion.identity, zone.transform);
             EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
 
