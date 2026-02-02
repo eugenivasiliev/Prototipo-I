@@ -27,6 +27,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     {
         if(statusText != null)
             statusText.gameObject.SetActive(false);
+
+        health = 1;
     }
 
     public void Plant(PlantData data)
