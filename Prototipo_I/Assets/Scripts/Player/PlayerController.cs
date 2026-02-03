@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     private static PlayerController instance;
     public static PlayerController Instance { get { return instance; } }
 
+    [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
@@ -35,6 +37,11 @@ public class PlayerController : MonoBehaviour
     private RaycastHit hit;
 
     private IInteractable interactable;
+
+    private List<GameObject> closeEnemies = new List<GameObject>();
+    private GameObject targetedEnemy;
+    int damage = 1;
+    bool attacking = false;
 
     [SerializeField] private int money;
     public int Money { get => money; set => money = value; }
@@ -66,8 +73,8 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
         
-        inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
-        inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
+        //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
+        //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -176,5 +183,85 @@ public class PlayerController : MonoBehaviour
 
         currentTimeForNextDay = 0.0f;
         isReset = true;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            
+            closeEnemies.Add(other.gameObject);
+
+            if (attacking == false)
+                StartCoroutine(AttackLoop());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            closeEnemies.Remove(other.gameObject);
+
+            if (closeEnemies.Count == 0) {
+
+                attacking = false;
+                targetedEnemy = null;
+            }
+        }
+    }
+
+    IEnumerator AttackLoop()
+    {
+        attacking = true;
+
+        float waitTime = 0.6f;
+
+        while (attacking && closeEnemies.Count > 0)
+        {
+            if (targetedEnemy == null)
+                GetClosestEnemy();
+
+            SpawnProjectile(waitTime);
+
+            yield return new WaitForSeconds(waitTime);
+
+            if (targetedEnemy != null)
+                DamageTarget();
+            else 
+            {
+                GetClosestEnemy();
+                DamageTarget();
+            }
+        }
+
+        attacking = false;
+    }
+
+    void GetClosestEnemy()
+    {
+        closeEnemies.RemoveAll(item => item == null);
+
+        if (closeEnemies.Count > 0)
+            targetedEnemy = closeEnemies[0];
+        else {
+            targetedEnemy = null;
+            attacking = false;
+        }
+    }
+
+    void DamageTarget()
+    {
+        if (targetedEnemy == null) return;
+
+        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
+            damageable.DamageMax();        
+    }
+
+    void SpawnProjectile(float waitTime) {
+        AudioManager.instance.PlaySFX("PlayerAttack");
+        GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
+        p.GetComponent<Projectile>().startPos = transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }

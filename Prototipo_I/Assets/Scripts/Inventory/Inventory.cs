@@ -117,11 +117,32 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     }
 
+    public int GetItemCount(Item item)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.GetType() == item.GetType())
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
+    }
+
+    public int GetItemCount(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.spriteId == itemName)
+            {
+                return items.slots[i].amount;
+            }
+        return 0;
+    }
+
     public bool AddItem(Item item)
     {
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] != InventorySlot.Default && items.slots[i].item.GetType() == item.GetType())
             {
+                items.slots[i].amount += 1;
                 RenderItem(i);
                 return true;
             }
@@ -129,6 +150,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         for (int i = 0; i < items.slots.Length; i++)
             if (items.slots[i] == InventorySlot.Default)
             {
+                items.slots[i] = new InventorySlot(item, 1);
                 RenderItem(i);
                 return true;
             }
@@ -158,9 +180,27 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return false;
     }
 
+    public bool RemoveItem(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.spriteId == itemName)
+            {
+                return RemoveItem(items.slots[i].item);
+            }
+
+        //Cannot remove
+        return false;
+    }
+
     public bool RemoveItem(Item item, int amount, out int amountDone)
     {
         for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(item)) return false;
+        return true;
+    }
+
+    public bool RemoveItem(string itemName, int amount, out int amountDone)
+    {
+        for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(itemName)) return false;
         return true;
     }
 
@@ -183,7 +223,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private void DefaultItem(int index)
     {
         items.slots[index] = InventorySlot.Default;
-        GetImage(index).sprite = null;
+        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault("empty");
         GetText(index).text = "";
     }
 
@@ -194,4 +234,16 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     public InventoryList GetData() => items;
     public void SetData(InventoryList data) => items = data;
+
+    public bool HasIngredients(TowerData.Ingredient[] ingredients)
+    {
+        foreach(TowerData.Ingredient ingredient in ingredients)
+        {
+            if(GetItemCount(ingredient.itemName) < ingredient.amount)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -1,7 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Timers;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,22 +8,39 @@ public class TowerSpot : MonoBehaviour, IInteractable
     TowerData towerData;
 
     private GameObject currentTower;
-    [SerializeField] public PlantData plantInfo;
 
     public bool hasTower { get { return tower != null; } }
 
-    private void Awake()
+    private void Start()
     {
-
+        (this as IInteractable).Bind();
     }
 
-    public void PlaceTower(TowerData data)
+    public void PlaceTower(string dataName)
     {
         AudioManager.instance.PlaySFX("Plant");
         if (hasTower) return;
 
+        towerData = TowerDatabase.Instance.GetTowerByName(dataName);
+        tower = new Tower(towerData);
+        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+
+        Debug.Log($"Tower {tower.Name} placed!");
+    }
+
+    public void PlaceTower(TowerData data)
+    {
+        foreach(var ingredient in data.ingredients)
+        {
+            Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+        }
+
+        AudioManager.instance.PlaySFX("Plant");
+        if (hasTower) return;
+
         towerData = data;
-        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+        tower = new Tower(data);
+        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
     }

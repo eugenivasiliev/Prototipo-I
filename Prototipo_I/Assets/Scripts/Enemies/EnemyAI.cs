@@ -31,7 +31,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int damage;
     public int Damage => damage;
 
-    public int Difficulty { get; private set; }
+    [SerializeField] private int difficulty;
+    public int Difficulty => difficulty;
+
+
+    Plot target;
 
     private void Awake()
     {
@@ -47,8 +51,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     {
         enemyState.Behaviour();
 
-        if(health <= 0 )
-            Destroy( gameObject );
+        if (health <= 0)
+        {
+            AudioManager.instance.PlaySFX("EnemyDeath");
+            Destroy(gameObject);
+        }
     }
 
     public void SetState(State newState)
@@ -69,4 +76,5 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         }
         enemyState.Enemy = this;
     }
+    
 }
