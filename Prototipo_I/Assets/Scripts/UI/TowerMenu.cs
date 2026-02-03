@@ -34,7 +34,7 @@ public class TowerMenu : MonoBehaviour
             {
 
                 GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
-                instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(data.Name);
+                instance.GetComponent<Image>().sprite = TowerSpritesDatabase.SpriteDict.GetValueOrDefault(data.Name);
                 instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
             }
         }

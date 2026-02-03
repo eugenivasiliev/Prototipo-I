@@ -23,19 +23,24 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         towerData = TowerDatabase.Instance.GetTowerByName(dataName);
         tower = new Tower(towerData);
-        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
     }
 
     public void PlaceTower(TowerData data)
     {
+        foreach(var ingredient in data.ingredients)
+        {
+            Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+        }
+
         AudioManager.instance.PlaySFX("Plant");
         if (hasTower) return;
 
         towerData = data;
         tower = new Tower(data);
-        currentTower = Instantiate(towerData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
     }

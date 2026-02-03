@@ -14,20 +14,24 @@ public class EnemyDB : ScriptableObject
         { 
             string name = enemy.name;
             Debug.Log(name);
-            Debug.Assert(!enemyPrefabsByName.ContainsKey(name));
+            //Debug.Assert(!enemyPrefabsByName.ContainsKey(name));
             enemyPrefabsByName.Add(name, enemy);
         }
     }
 
     public GameObject GetEnemyFromName(string name)
     {
-        Debug.Assert(enemyPrefabsByName.TryGetValue(name, out GameObject obj));
+        GameObject obj = null;
+        //Debug.Assert(enemyPrefabsByName.TryGetValue(name, out obj));
+        enemyPrefabsByName.TryGetValue(name, out obj);
         return obj;
     }
 
     public EnemyAI GetAIFromName(string name)
     {
-        Debug.Assert(enemyPrefabsByName.TryGetValue(name, out GameObject obj));
+        GameObject obj = null;
+        //Debug.Assert(enemyPrefabsByName.TryGetValue(name, out obj));
+        enemyPrefabsByName.TryGetValue(name, out obj);
         return obj.GetComponent<EnemyAI>();
     }
 }
