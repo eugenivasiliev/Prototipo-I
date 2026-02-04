@@ -5,10 +5,10 @@ public class Chase : EnemyState
     private Plot targetPlot = null;
     public override void Behaviour()
     {
-        if(targetPlot != null)
+        if(targetPlot != null && targetPlot.IsPlanted)
         {
             float distToTarget = Vector3.Distance(enemy.transform.position, targetPlot.transform.position);
-            if (distToTarget < 1.5f)
+            if (distToTarget < 0.45f)
                 enemy.SetState(EnemyAI.State.Attack);
             return;
         }
@@ -27,7 +27,7 @@ public class Chase : EnemyState
                 targetPlot = plot;
             }
         }
-
+        //AudioManager.instance.PlaySFXLoop("MonsterWalking");
         if (targetPlot != null)
             enemy.Agent.SetDestination(targetPlot.transform.position);
     }

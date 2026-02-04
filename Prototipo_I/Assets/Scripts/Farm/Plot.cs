@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Plot : MonoBehaviour, IInteractable
+public class Plot : MonoBehaviour, IInteractable, IDamageable
 {
     Plant plant;
     PlantData plantData;
@@ -19,10 +19,16 @@ public class Plot : MonoBehaviour, IInteractable
 
     public bool IsPlanted { get { return plant != null; } }
 
+    [SerializeField] private int health;
+    public int Health { get => health; set => health = value; }
+    public int MaxHealth { get => 100; set { } }
+
     private void Awake()
     {
         if(statusText != null)
             statusText.gameObject.SetActive(false);
+
+        health = 1;
     }
 
     public void Plant(PlantData data)
@@ -47,7 +53,7 @@ public class Plot : MonoBehaviour, IInteractable
             plant = new Plant(data);
         }
 
-        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
+        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
         plant.OnStageChanged += OnPlantStageChanged;
 
@@ -73,7 +79,16 @@ public class Plot : MonoBehaviour, IInteractable
         }
 
         AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
+        Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
+        Debug.Log("Add: " + amountDone);
+
+        if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+        {
+            foreach(PlantsOfTypeCollected obj in objs)
+            {
+                obj.UpdateObjective(plantData.plantName);
+            }
+        }
 
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
@@ -82,9 +97,20 @@ public class Plot : MonoBehaviour, IInteractable
         currentPlant = null;
     }
 
+
+
+
+
+
     public void UpdateUI()
     {
-        statusText.gameObject.SetActive(true);
+        if ((this as IDamageable).IsDead())
+        {
+            Destroy(currentPlant);
+            this.plant = null;
+            currentPlant = null;
+        }
+        statusText.gameObject.SetActive(false);
         if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
         if (!IsPlanted)
         {
@@ -98,7 +124,7 @@ public class Plot : MonoBehaviour, IInteractable
             return;
         }
         statusText.text = $"{plant.Name}\n" +
-                          $"Stage: {plant.CurrentStage} / {plant.MaxStage}\n" +
+                          $"Stage: {plant.CurrentStage} / 2\n" +
                           $"Time to next stage: {plant.TimeLeft:F1}s\n" +
                           $"Watered: {(hasWater ? "Sí" : "No")}\n" +
                           $"Fertilized: {(isFertilized ? "Sí" : "No")}";
@@ -113,7 +139,7 @@ public class Plot : MonoBehaviour, IInteractable
 
         AudioManager.instance.PlaySFX("NextStage");
         GameObject prefab = plantData.stages[currentStage];
-        currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
+        currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
     }
 
@@ -156,6 +182,13 @@ public class Plot : MonoBehaviour, IInteractable
         Fertilize();
         Debug.Log("Fertilizada");
     }
+    public void FullGrow() {
+        if (plant != null)
+            plant.FullGrow();
+        else
+            return;
 
+        OnPlantStageChanged(plant.CurrentStage -1);
+    }
     public void OnInteract() {}
 }

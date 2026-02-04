@@ -8,7 +8,7 @@ public class AudioSettings : MonoBehaviour
     [SerializeField] private AudioSource musicSource, sfxSource;
     void Start()
     {
-        sliderMusic.value = 0.5f;
+        sliderMusic.value = 0.25f;
         sliderSFX.value = 0.5f;
         SetVolumeMusic(sliderMusic.value);
         SetVolumeMusic(sliderSFX.value);

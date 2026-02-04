@@ -6,6 +6,7 @@ public class Walking : AnimalState
 
     public override void OnEnter()
     {
+        AudioManager.instance.PlaySFX("AnimalWalking");
         Vector3 target = animal.GetRandomPositionInCorral;
         animalAI.Agent.SetDestination(target);
     }
