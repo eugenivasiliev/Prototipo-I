@@ -9,4 +9,6 @@ public class PlantData : ScriptableObject
 
     public GameObject[] stages;
 
+    public GameObject plantWeapon;
+
 }
