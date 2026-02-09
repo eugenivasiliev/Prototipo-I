@@ -8,6 +8,9 @@ public class EnemyManager : MonoBehaviour
 
     public static EnemyManager Instance {get; private set;}
 
+    [SerializeField] private EnemyDB enemyDB;
+    [SerializeField] private WaveDB waveDB;
+
     [SerializeField] private int currentBiomeIndex = 0;
     [SerializeField] private int currentPhaseIndex = 0;
 
@@ -23,12 +26,12 @@ public class EnemyManager : MonoBehaviour
     private UnityEvent<float> Return = new UnityEvent<float>();
     void Start()
     {
+        enemyDB.Init();
+
         Instance = this;
 
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
-
-        //SpawnEnemies(.5f);
 
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
     }
@@ -86,13 +89,11 @@ public class EnemyManager : MonoBehaviour
 
         allEnemies.Clear();
 
-        WaveDBManager.Instance.DB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
-        enemiesToSpawn = WaveDBManager.Instance.DB.nextWave;
+        waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex, enemyDB);
+        enemiesToSpawn = waveDB.nextWave;
 
         foreach (Transform zone in spawnZones)
             StartCoroutine(SpawnEnemyDelay(zone));
-
-        //DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
     }
 
     private IEnumerator SpawnEnemyDelay (Transform zone)
@@ -104,7 +105,7 @@ public class EnemyManager : MonoBehaviour
             Debug.Log(enemiesToSpawn.Count);
 
             string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
-            GameObject prefab = EnemyDBManager.Instance.DB.GetEnemyFromName(name);
+            GameObject prefab = enemyDB.GetEnemyFromName(name);
             GameObject enemyObject = Instantiate(prefab, zone.position, Quaternion.identity, zone.transform);
             EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
 

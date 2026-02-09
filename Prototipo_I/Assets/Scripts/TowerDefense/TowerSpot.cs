@@ -21,7 +21,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
         AudioManager.instance.PlaySFX("Plant");
         if (hasTower) return;
 
-        towerData = TowerDatabase.Instance.GetTowerByName(dataName);
+        towerData = TowerDBManager.Instance.DB[dataName];
         tower = new Tower(towerData);
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 

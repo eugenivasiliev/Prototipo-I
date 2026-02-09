@@ -28,7 +28,7 @@ public class WaveDB : ScriptableObject
     public List<PhaseEnemies> Waves => waves;
     public List<string> nextWave;
 
-    public void ReadyNextWave(int biome, int phase)
+    public void ReadyNextWave(int biome, int phase, EnemyDB enemyDB)
     {
         PhaseEnemies phaseEnemies = GetPhaseEnemies(biome, phase);
 
@@ -39,17 +39,17 @@ public class WaveDB : ScriptableObject
             {
                 wave.Add(phaseEnemies.enemies[UnityEngine.Random.Range(0, phaseEnemies.enemies.Count)]);
             }
-        } while (Mathf.Abs(TotalDifficulty(wave) - phaseEnemies.difficulty) > difficultyTolerance);
+        } while (Mathf.Abs(TotalDifficulty(wave, enemyDB) - phaseEnemies.difficulty) > difficultyTolerance);
 
         nextWave = wave;
     }
 
-    private int TotalDifficulty(List<string> wave)
+    private int TotalDifficulty(List<string> wave, EnemyDB enemyDB)
     {
         int sum = 0;
         foreach(string enemy in wave)
         {
-            sum += EnemyDBManager.Instance.DB.GetAIFromName(enemy).Difficulty;
+            sum += enemyDB.GetAIFromName(enemy).Difficulty;
         }
         return sum;
     }
