@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 [Serializable]
 public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
 {
-    public override string spriteId => "FirePlant";
+    public override string Name => nameof(FirePlant);
 
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
@@ -17,7 +17,7 @@ public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
 
     public int Price => 25;
 
-    public PlantData PlantData => PlantDatabase.Instance.GetPlantByName("Fire");
+    public PlantData PlantData => PlantDBManager.Instance.DB[Name];
 
     public void OnInteract() {}
 
@@ -25,7 +25,7 @@ public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
     {
         if (PlayerController.MovementLocked) return;
         GameObject instance = GameObject.Instantiate(
-            PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FirePlant)),
+            PlantDBManager.Instance.DB[Name].plantWeapon,
             PlayerController.Instance.transform.position,
             Quaternion.Euler(-90, 0, 0)
             );
