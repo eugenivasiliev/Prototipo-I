@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
-    [SerializeField] public short InteractionRange { get { return 10; } }
+    [SerializeField] public short InteractionRange { get { return 3; } }
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
