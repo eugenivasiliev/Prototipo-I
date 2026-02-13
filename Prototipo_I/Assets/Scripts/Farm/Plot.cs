@@ -27,6 +27,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     {
         if(statusText != null)
             statusText.gameObject.SetActive(false);
+
+        health = 1;
     }
 
     public void Plant(PlantData data)
@@ -77,7 +79,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         }
 
         AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
+        Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
+        Debug.Log("Add: " + amountDone);
 
         if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
         {

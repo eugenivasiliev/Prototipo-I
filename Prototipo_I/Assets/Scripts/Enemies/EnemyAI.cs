@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
@@ -34,6 +35,25 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int difficulty;
     public int Difficulty => difficulty;
 
+    [Serializable]
+    public struct DropRateObject
+    {
+        public GameObject gameObject;
+        public float rate;
+
+        public DropRateObject(GameObject gameObject, float rate)
+        {
+            this.gameObject = gameObject;
+            this.rate = rate;
+        }
+    }
+
+    [Header("Loot")]
+    [SerializeField] private List<DropRateObject> droppableLoot;
+    [SerializeField] private int minItemsDropped;
+    [SerializeField] private int maxItemsDropped;
+    [SerializeField, Range(0, 5)] private float dropRadius;
+
 
     Plot target;
 
@@ -45,6 +65,15 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private void Start()
     {
         enemyState.Enemy = this;
+
+        //Make drop rates easily transitable later
+        float totalRate = 0;
+        foreach (DropRateObject drop in droppableLoot)
+            totalRate += drop.rate;
+
+        droppableLoot[0] = new DropRateObject(droppableLoot[0].gameObject, droppableLoot[0].rate / totalRate);
+        for (int i = 1; i < droppableLoot.Count; ++i)
+            droppableLoot[i] = new DropRateObject(droppableLoot[i].gameObject, (droppableLoot[i - 1].rate + droppableLoot[i].rate) / totalRate);
     }
 
     private void Update()
@@ -53,9 +82,33 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
         if (health <= 0)
         {
+            DropLoot();
             AudioManager.instance.PlaySFX("EnemyDeath");
             Destroy(gameObject);
         }
+    }
+
+    private void DropLoot()
+    {
+        int itemsDropped = UnityEngine.Random.Range(minItemsDropped, maxItemsDropped + 1);
+        for(int i = 0; i < itemsDropped; ++i)
+            DropLootItem();
+    }
+
+    private void DropLootItem()
+    {
+        Vector2 dropSpot = dropRadius * UnityEngine.Random.insideUnitCircle;
+        float lootDropped = UnityEngine.Random.value;
+        foreach (DropRateObject drop in droppableLoot)
+            if (drop.rate > lootDropped)
+            {
+                Instantiate(
+                    drop.gameObject, 
+                    this.transform.position + Vector3.right * dropSpot.x + Vector3.forward * dropSpot.y, 
+                    Quaternion.identity
+                    );
+                return;
+            }
     }
 
     public void SetState(State newState)
