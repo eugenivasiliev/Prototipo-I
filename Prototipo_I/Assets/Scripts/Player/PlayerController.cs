@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
-    [SerializeField] public short InteractionRange { get { return 10; } }
+    [SerializeField] public short InteractionRange { get { return 3; } }
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
@@ -49,6 +50,8 @@ public class PlayerController : MonoBehaviour
     private static bool movementLocked = false;
     public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
+    private bool waveMenuTouched = false;
+
     private void Awake()
     {
         if(instance != null)
@@ -72,10 +75,11 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
-        
+
+        inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
         //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -158,41 +162,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator NextDayCountdown()
-    {
+    void OpenWaveMenu() {
 
-        currentTimeForNextDay += Time.deltaTime;
-
-        yield return null;
-
-        if (currentTimeForNextDay >= maxTimeForNextDay && isReset == false)
-        {
-            //DayNightCycle.Instance.NextDay();
-            currentTimeForNextDay = 0.0f;
-            PlotManager.Instance.FullGrow();
-        }
-        else if (isReset == false)
-            StartCoroutine(NextDayCountdown());
-        else
-            isReset = false;
+        if (waveMenuTouched)
+            WaveManager.Instance.ToggleWaveUI();
     }
 
-
-    private void ResetDayCountdown()
-    {
-
-        currentTimeForNextDay = 0.0f;
-        isReset = true;
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
         {
-            
+
             closeEnemies.Add(other.gameObject);
 
             if (attacking == false)
                 StartCoroutine(AttackLoop());
+        }
+        else if (other.CompareTag("Console")) 
+        {
+            waveMenuTouched = true;
         }
     }
 
@@ -207,6 +195,10 @@ public class PlayerController : MonoBehaviour
                 attacking = false;
                 targetedEnemy = null;
             }
+        }
+        else if (other.CompareTag("Console"))
+        {
+            waveMenuTouched = false;
         }
     }
 

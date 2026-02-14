@@ -16,4 +16,8 @@ public class TowerData : ScriptableObject
     }
 
     public Ingredient[] ingredients;
+
+    public Sprite uiSprite;
+
+    public string Id => throw new NotImplementedException();
 }
