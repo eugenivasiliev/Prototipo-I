@@ -13,7 +13,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        (this as IInteractable).Bind();
+        //(this as IInteractable).Bind();
     }
 
     public void PlaceTower(string dataName)

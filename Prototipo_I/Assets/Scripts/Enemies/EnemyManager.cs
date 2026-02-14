@@ -17,7 +17,7 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private bool isWaveActive = false;
 
     [SerializeField] private short timeToSpawn;
-    [SerializeField] public List<Transform> spawnZones = new List<Transform>();
+    [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
     private List<string> enemiesToSpawn = new List<string>();
@@ -92,11 +92,11 @@ public class EnemyManager : MonoBehaviour
         waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex, enemyDB);
         enemiesToSpawn = waveDB.nextWave;
 
-        foreach (Transform zone in spawnZones)
-            StartCoroutine(SpawnEnemyDelay(zone));
+        foreach (SpawnZone zone in spawnZones)
+            if(zone.ValidPhases.Contains(currentPhaseIndex)) StartCoroutine(SpawnEnemyDelay(zone));
     }
 
-    private IEnumerator SpawnEnemyDelay (Transform zone)
+    private IEnumerator SpawnEnemyDelay (SpawnZone zone)
     {
 
 
@@ -106,7 +106,7 @@ public class EnemyManager : MonoBehaviour
 
             string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
             GameObject prefab = enemyDB.GetEnemyFromName(name);
-            GameObject enemyObject = Instantiate(prefab, zone.position, Quaternion.identity, zone.transform);
+            GameObject enemyObject = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
             EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
 
             if (enemyAI != null) RegisterEnemy(enemyAI);
