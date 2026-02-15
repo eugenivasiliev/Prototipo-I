@@ -23,6 +23,11 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     public int Health { get => health; set => health = value; }
     public int MaxHealth { get => 100; set { } }
 
+
+    public GameObject plantingFeedback;
+    public GameObject ripeFeedback;
+    public GameObject harvestFeedback;
+
     private void Awake()
     {
         if(statusText != null)
@@ -61,6 +66,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         isFertilized = false;
 
         Debug.Log($"Planta {plant.Name} plantada!");
+
+        Instantiate(plantingFeedback);        
     }
 
     public void Fertilize()
