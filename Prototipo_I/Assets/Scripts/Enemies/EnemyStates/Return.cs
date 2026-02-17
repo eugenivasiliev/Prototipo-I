@@ -20,12 +20,12 @@ public class Return : EnemyState
 
         foreach (var spawn in EnemyManager.Instance.spawnZones)
         {
-            float distance = Vector3.Distance(enemy.transform.position, spawn.position);
+            float distance = Vector3.Distance(enemy.transform.position, spawn.transform.position);
 
             if (distance < minDistance)
             {
                 minDistance = distance;
-                targetSpawn = spawn;
+                targetSpawn = spawn.transform;
             }
         }
 
