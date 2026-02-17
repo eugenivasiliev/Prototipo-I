@@ -5,11 +5,21 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
-    public enum Difficult : int
+    [Serializable]
+    public struct Blackboard
     {
-        Easy = 1,
-        Medium = 2,
-        Hard = 3
+        public Target target;
+        public Transform targetTransform;
+        public Transform homeTransform;
+        public PlotManager plotManager;
+        public PlayerController playerController;
+    }
+
+    public enum Target
+    {
+        Home,
+        Plots,
+        Player
     }
 
     public enum State
@@ -19,7 +29,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         Return
     }
 
-    [SerializeField] private EnemyState enemyState = new Chase();
+    [SerializeField] private EnemyState enemyState;
 
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
@@ -54,8 +64,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int maxItemsDropped;
     [SerializeField, Range(0, 5)] private float dropRadius;
 
-
-    Plot target;
+    [SerializeField] private Blackboard bb;
+    public Blackboard BB { get => bb; set => bb = value; }
 
     private void Awake()
     {
@@ -64,6 +74,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     private void Start()
     {
+        SetState(State.Chase);
         enemyState.Enemy = this;
 
         //Make drop rates easily transitable later
@@ -128,6 +139,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
                 break;
         }
         enemyState.Enemy = this;
+        enemyState.BB = this.bb;
     }
     
 }

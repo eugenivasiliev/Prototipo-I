@@ -24,6 +24,8 @@ public class EnemyManager : MonoBehaviour
 
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
+
+    [SerializeField] private EnemyAI.Blackboard bb;
     void Start()
     {
         enemyDB.Init();
@@ -69,7 +71,12 @@ public class EnemyManager : MonoBehaviour
     private void RegisterEnemy(EnemyAI enemy)
     {
         if (!allEnemies.Contains(enemy))
+        {
             allEnemies.Add(enemy);
+            EnemyAI.Blackboard enemyBB = this.bb;
+            enemyBB.target = enemy.BB.target;
+            enemy.BB = enemyBB;
+        }
     }
 
     private void SpawnEnemies(float t)
