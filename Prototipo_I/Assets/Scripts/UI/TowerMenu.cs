@@ -28,13 +28,13 @@ public class TowerMenu : MonoBehaviour
     {
         foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
 
-        foreach (TowerData data in TowerDatabase.Instance.TowerDatas)
+        foreach (TowerData data in TowerDBManager.Instance.DB.TowerDataList)
         {
             if(Inventory.Instance.HasIngredients(data.ingredients))
             {
 
                 GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
-                instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(data.Name);
+                instance.GetComponent<Image>().sprite = data.uiSprite;
                 instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
             }
         }

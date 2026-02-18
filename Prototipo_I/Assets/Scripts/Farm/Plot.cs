@@ -23,10 +23,18 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     public int Health { get => health; set => health = value; }
     public int MaxHealth { get => 100; set { } }
 
+
+    public GameObject plantingFeedback;
+    public GameObject ripeFeedback;
+    private GameObject ripeParticles;
+    public GameObject harvestFeedback;
+
     private void Awake()
     {
         if(statusText != null)
             statusText.gameObject.SetActive(false);
+
+        health = 1;
     }
 
     public void Plant(PlantData data)
@@ -59,6 +67,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         isFertilized = false;
 
         Debug.Log($"Planta {plant.Name} plantada!");
+
+        Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);        
     }
 
     public void Fertilize()
@@ -124,8 +134,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         statusText.text = $"{plant.Name}\n" +
                           $"Stage: {plant.CurrentStage} / 2\n" +
                           $"Time to next stage: {plant.TimeLeft:F1}s\n" +
-                          $"Watered: {(hasWater ? "Sí" : "No")}\n" +
-                          $"Fertilized: {(isFertilized ? "Sí" : "No")}";
+                          $"Watered: {(hasWater ? "Sï¿½" : "No")}\n" +
+                          $"Fertilized: {(isFertilized ? "Sï¿½" : "No")}";
     }
 
     private void OnPlantStageChanged(int currentStage)
@@ -173,6 +183,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
             Harvest();
             Debug.Log("Coshechada");
         }
+
+        Destroy(ripeParticles);
     }
 
     private void Action_Fertilize(InputAction.CallbackContext ctx)
@@ -187,6 +199,8 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
             return;
 
         OnPlantStageChanged(plant.CurrentStage -1);
+
+        ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
     }
     public void OnInteract() {}
 }
