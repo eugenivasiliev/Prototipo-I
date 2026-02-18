@@ -109,7 +109,7 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
         {
-            damageable.DamageMax();
+            damageable.DamagePercent(50.0f);
             currentPlant.amount -= usesPerAttack;
         }
     }

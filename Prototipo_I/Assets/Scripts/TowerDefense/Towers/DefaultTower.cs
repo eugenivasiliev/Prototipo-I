@@ -42,7 +42,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 0.6f;
+        float waitTime = 1f;
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -83,7 +83,7 @@ public class DefaultTower : MonoBehaviour
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamagePercent(50.0f);
+            damageable.DamagePercent(20.0f);
     }
 
     void Update() {
