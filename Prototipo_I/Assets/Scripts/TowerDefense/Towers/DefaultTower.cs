@@ -126,7 +126,7 @@ public class DefaultTower : MonoBehaviour
         AudioManager.instance.PlaySFX("TurretAttack");
         GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);        
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
