@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private bool isWaveActive = false;
 
-    [SerializeField] private short timeToSpawn;
+    [SerializeField] private float timeToSpawn;
     [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
@@ -53,7 +53,7 @@ public class EnemyManager : MonoBehaviour
         {
             isWaveActive = false;
             currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, 1);
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
             {
                 foreach (var obj in objs)
