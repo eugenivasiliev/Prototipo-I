@@ -83,7 +83,7 @@ public class DefaultTower : MonoBehaviour
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+            damageable.DamagePercent(50.0f);
     }
 
     void Update() {
