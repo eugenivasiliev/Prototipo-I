@@ -50,7 +50,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
         Debug.Log($"Tower {tower.Name} placed!");
 
         float r = currentTower.GetComponent<DefaultTower>().GetRange();
-        range.transform.localScale = new Vector3(r*4, r*4, r*4);
+        SetRange(r);
     }
 
     private void OnTowerUpgraded(int level)
@@ -73,13 +73,22 @@ public class TowerSpot : MonoBehaviour, IInteractable
         TowerMenu.Instance.ToggleMenu();
     }
 
+    public void SetRange(float dist)
+    {
+        range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+    }
+
+    public void ShowRange(bool bo) {
+        range.SetActive(bo);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") range.SetActive(true); 
+        if (other.tag == "Player") ShowRange(true);
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player") range.SetActive(false); 
+        if (other.tag == "Player") ShowRange(false); 
     }
 
     public void OnInteract() {}

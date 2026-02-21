@@ -16,6 +16,8 @@ public class TowerMenu : MonoBehaviour
 
     public TowerSpot spotReference = null;
 
+    private float range;
+
     private void Awake()
     {
         Instance = this;
@@ -36,6 +38,9 @@ public class TowerMenu : MonoBehaviour
                 GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
                 instance.GetComponent<Image>().sprite = data.uiSprite;
                 instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
+
+                instance.GetComponent<TurretButton>().spotReference = spotReference;
+                instance.GetComponent<TurretButton>().range = data.range;
             }
         }
     }
@@ -56,5 +61,5 @@ public class TowerMenu : MonoBehaviour
     {
         isOpen = true;
         ToggleMenu();
-    }
+    }        
 }
