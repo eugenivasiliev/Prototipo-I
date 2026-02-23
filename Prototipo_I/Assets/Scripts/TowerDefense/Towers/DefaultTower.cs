@@ -42,7 +42,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 0.6f;
+        float waitTime = 1f;
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -83,7 +83,7 @@ public class DefaultTower : MonoBehaviour
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+            damageable.DamagePercent(20.0f);
     }
 
     void Update() {
@@ -126,7 +126,7 @@ public class DefaultTower : MonoBehaviour
         AudioManager.instance.PlaySFX("TurretAttack");
         GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);        
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
