@@ -37,7 +37,11 @@ public class DayNightCycle : MonoBehaviour
 
     private void Start()
     {
-        PlayerController.Inputs.Player.Countdown.performed += ctx => dayTime += dayDuration / 2.0f;
+        //PlayerController.Inputs.Player.Countdown.performed += ctx => dayTime += dayDuration / 2.0f;
+    }
+
+    public void PassTime() {
+        dayTime += dayDuration / 2.0f;
     }
 
     private void Update()

@@ -9,6 +9,8 @@ public class DefaultTower : MonoBehaviour
     private List<GameObject> closeEnemies = new List<GameObject>();
     private GameObject targetedEnemy;
 
+    private bool tracking = true;
+    private float speed  = 4.5f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -40,7 +42,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 0.6f;
+        float waitTime = 1f;
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -81,16 +83,50 @@ public class DefaultTower : MonoBehaviour
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+            damageable.DamagePercent(20.0f);
+    }
+
+    void Update() {
+        if (!attacking)
+            return;
+
+        if (targetedEnemy == null)
+        {
+            GetClosestEnemy();
+            return;
+        }
+
+        if (!tracking)
+            return;
+
+
+        Vector3 dir = targetedEnemy.transform.position - transform.position;
+        Quaternion qt = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, speed);
+
+
+        // el giro decae exponencialmente hasta el momento de renovarse, no sirve para multitudes
+        //Vector3 dir = targetedEnemy.transform.position - transform.position;
+        //Quaternion qt = Quaternion.LookRotation(dir);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, qt, speed);
+
+        
+        //tr es el transform de aquí, no una copia
+        //Transform tr = transform;
+        //tr.LookAt(targetedEnemy.transform.position, Vector3.up);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, tr.rotation, speed);
+        
+        
+        //transform.LookAt(targetedEnemy.transform.position, Vector3.up);
     }
 
     void SpawnProjectile(float waitTime)
     {
-        transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+        
         AudioManager.instance.PlaySFX("TurretAttack");
-        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);        
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
