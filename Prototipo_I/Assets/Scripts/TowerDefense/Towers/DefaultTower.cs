@@ -11,6 +11,13 @@ public class DefaultTower : MonoBehaviour
 
     private bool tracking = true;
     private float speed  = 4.5f;
+    float waitTime = 0.6f;
+    private float range = 15;
+
+    public float GetRange() { 
+        return range;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -42,7 +49,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 1f;
+        
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -111,7 +118,7 @@ public class DefaultTower : MonoBehaviour
         //transform.rotation = Quaternion.Slerp(transform.rotation, qt, speed);
 
         
-        //tr es el transform de aquí, no una copia
+        //tr es el transform de aquï¿½, no una copia
         //Transform tr = transform;
         //tr.LookAt(targetedEnemy.transform.position, Vector3.up);
         //transform.rotation = Quaternion.Slerp(transform.rotation, tr.rotation, speed);
