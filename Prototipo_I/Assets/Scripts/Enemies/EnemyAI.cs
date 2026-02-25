@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
     [Serializable]
@@ -38,6 +39,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     public int Health { get => health; set => health = value; }
     public int MaxHealth { get => 100; set { } }
+    [SerializeField] public Image ui_health;
+
 
     [SerializeField] private int damage;
     public int Damage => damage;
@@ -141,5 +144,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         enemyState.Enemy = this;
         enemyState.BB = this.bb;
     }
-    
+
+    public void UpdateLife() {
+
+        this.transform.GetChild(1).gameObject.SetActive(true);
+        ui_health.fillAmount = Health / MaxHealth;
+    }
+
 }
