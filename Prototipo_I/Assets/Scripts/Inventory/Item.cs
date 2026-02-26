@@ -4,9 +4,13 @@ using UnityEngine;
 [Serializable]
 public class Item
 {
-    public string Name => this.GetType().ToString();
+    public readonly Sprite sprite;
+
+    public virtual string Name => this.GetType().ToString();
+
+    public string Id => Name;
+
     public string Description;
-    public virtual string spriteId { get => ""; }
 
     public virtual void OnUse(GameObject gameObject) {}
 }
