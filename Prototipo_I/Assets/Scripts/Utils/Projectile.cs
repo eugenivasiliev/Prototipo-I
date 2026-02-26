@@ -3,7 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public Vector3 startPos;
-    public Vector3 finalPos;
+    public Transform finalPos;
     
     float time = 0.0f;
     public float maxTime;
@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        this.transform.position = (time/maxTime) * finalPos + (1- (time / maxTime)) * startPos;
+        this.transform.position = (time/maxTime) * finalPos.position + (1- (time / maxTime)) * startPos;
 
         if (time > maxTime) { 
             Destroy(gameObject);
