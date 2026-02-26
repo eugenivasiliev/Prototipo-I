@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,15 +12,32 @@ public class PlayerController : MonoBehaviour
     private static PlayerController instance;
     public static PlayerController Instance { get { return instance; } }
 
+    [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+    private float currentCooldown = 0.0f;
+
+    [Header("Movement")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
     [SerializeField] private float jumpHeight = 2f;
+
+    [Header("Transforms")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
     [SerializeField] public short InteractionRange { get { return 3; } }
+
+    [Header("Camera")]
+    [SerializeField] private Vector3 farCameraOffset;
+    [SerializeField] private Vector3 nearCameraOffset;
+    private Vector3 cameraOffset;
+    private bool isCameraFar = true;
+    [SerializeField] private AnimationCurve animationCurveX;
+    [SerializeField] private AnimationCurve animationCurveY;
+    [SerializeField, Range(0, 1)] private float animationDuration;
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
@@ -80,8 +97,13 @@ public class PlayerController : MonoBehaviour
         //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
+        inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        cameraOffset = farCameraOffset;
+        isCameraFar = true;
     }
 
     private void OnDisable()
@@ -93,6 +115,7 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         Movement();
+        AttackLoop();
     }
 
     private void Movement()
@@ -144,11 +167,48 @@ public class PlayerController : MonoBehaviour
         if(movementLocked) return;
 
         float mouseX = cameraInput.x* cameraSensibility;
-        Vector3 offset = cameraTransform.position - transform.position;
         Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-        cameraTransform.transform.position = transform.position + q * offset;
+        cameraOffset = q * cameraOffset;
+        farCameraOffset = q * farCameraOffset;
+        nearCameraOffset = q * nearCameraOffset;
+
+        cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+    }
+
+    void ToggleCameraDistance(InputAction.CallbackContext ctx)
+    {
+        StartCoroutine(ToggleAnim());
+    }
+
+    private IEnumerator ToggleAnim()
+    {
+        movementLocked = true;
+
+        Vector3 startPos = (isCameraFar) ? farCameraOffset : nearCameraOffset;
+        Vector3 endPos = (isCameraFar) ? nearCameraOffset : farCameraOffset;
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationDuration;
+            float alphaX = animationCurveX.Evaluate(t);
+            float alphaY = animationCurveY.Evaluate(t);
+
+            cameraOffset.x = (1 - alphaX) * startPos.x + alphaX * endPos.x;
+            cameraOffset.y = (1 - alphaY) * startPos.y + alphaY * endPos.y;
+            cameraTransform.position = transform.position + cameraOffset;
+            cameraTransform.LookAt(transform.position, Vector3.up);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        isCameraFar = !isCameraFar;
+        movementLocked = false;
+
+        yield return null;
     }
 
     private void Interact()
@@ -172,11 +232,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Finish"))
         {
-
             closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
         }
         else if (other.CompareTag("Console")) 
         {
@@ -202,43 +258,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator AttackLoop()
+    private void AttackLoop()
     {
-        attacking = true;
 
-        float waitTime = 0.6f;
+        if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
-        while (attacking && closeEnemies.Count > 0)
-        {
-            if (targetedEnemy == null)
-                GetClosestEnemy();
+        if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+        
+        SpawnProjectile(attackCooldown);
+        DamageTarget();
 
-            SpawnProjectile(waitTime);
-
-            yield return new WaitForSeconds(waitTime);
-
-            if (targetedEnemy != null)
-                DamageTarget();
-            else 
-            {
-                GetClosestEnemy();
-                DamageTarget();
-            }
-        }
-
-        attacking = false;
+        currentCooldown = 0;
     }
 
-    void GetClosestEnemy()
+    private bool GetClosestEnemy()
     {
         closeEnemies.RemoveAll(item => item == null);
-
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else {
-            targetedEnemy = null;
-            attacking = false;
-        }
+        targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+        return targetedEnemy != null;
     }
 
     void DamageTarget()

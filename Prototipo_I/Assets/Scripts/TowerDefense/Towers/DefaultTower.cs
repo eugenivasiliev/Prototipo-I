@@ -89,8 +89,11 @@ public class DefaultTower : MonoBehaviour
     {
         if (targetedEnemy == null) return;
 
-        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamagePercent(50.0f);
+        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable)) { 
+            damageable.DamagePercent(20.0f);
+
+            targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
+        }
     }
 
     void Update() {
@@ -110,21 +113,6 @@ public class DefaultTower : MonoBehaviour
         Vector3 dir = targetedEnemy.transform.position - transform.position;
         Quaternion qt = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, speed);
-
-
-        // el giro decae exponencialmente hasta el momento de renovarse, no sirve para multitudes
-        //Vector3 dir = targetedEnemy.transform.position - transform.position;
-        //Quaternion qt = Quaternion.LookRotation(dir);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, qt, speed);
-
-        
-        //tr es el transform de aquí, no una copia
-        //Transform tr = transform;
-        //tr.LookAt(targetedEnemy.transform.position, Vector3.up);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, tr.rotation, speed);
-        
-        
-        //transform.LookAt(targetedEnemy.transform.position, Vector3.up);
     }
 
     void SpawnProjectile(float waitTime)
