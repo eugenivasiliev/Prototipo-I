@@ -11,9 +11,14 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     public bool hasTower { get { return tower != null; } }
 
+    private GameObject range;
+
     private void Start()
     {
         //(this as IInteractable).Bind();
+
+        if (this.transform.GetChild(0) != null) 
+            range = this.transform.GetChild(0).gameObject;
     }
 
     public void PlaceTower(string dataName)
@@ -43,6 +48,9 @@ public class TowerSpot : MonoBehaviour, IInteractable
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
         Debug.Log($"Tower {tower.Name} placed!");
+
+        float r = currentTower.GetComponent<DefaultTower>().GetRange();
+        SetRange(r);
     }
 
     private void OnTowerUpgraded(int level)
@@ -63,6 +71,24 @@ public class TowerSpot : MonoBehaviour, IInteractable
     {
         TowerMenu.Instance.spotReference = this;
         TowerMenu.Instance.ToggleMenu();
+    }
+
+    public void SetRange(float dist)
+    {
+        range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+    }
+
+    public void ShowRange(bool bo) {
+        range.SetActive(bo);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player") ShowRange(true);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player") ShowRange(false); 
     }
 
     public void OnInteract() {}

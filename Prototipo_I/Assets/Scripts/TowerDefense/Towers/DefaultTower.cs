@@ -11,6 +11,13 @@ public class DefaultTower : MonoBehaviour
 
     private bool tracking = true;
     private float speed  = 4.5f;
+    float waitTime = 0.6f;
+    private float range = 15;
+
+    public float GetRange() { 
+        return range;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -42,7 +49,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 1f;
+        
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -106,8 +113,6 @@ public class DefaultTower : MonoBehaviour
         Vector3 dir = targetedEnemy.transform.position - transform.position;
         Quaternion qt = Quaternion.LookRotation(dir);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, speed);
-
-
     }
 
     void SpawnProjectile(float waitTime)
