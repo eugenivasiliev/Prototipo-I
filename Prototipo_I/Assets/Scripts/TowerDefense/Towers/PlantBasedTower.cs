@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlantBasedTower : MonoBehaviour, IInteractable
+public class PlantBasedTower : Tower, IInteractable
 {
-    [SerializeField] GameObject projectile;
-    bool attacking = false;
-    private List<GameObject> closeEnemies = new List<GameObject>();
-    private GameObject targetedEnemy;
 
     [SerializeField] private (PlantData data, float amount) currentPlant = (null, 0f);
     private readonly int maxCapacity = 3;
