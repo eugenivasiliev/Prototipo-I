@@ -239,6 +239,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "objectives_toggle",
+                    "type": "Button",
+                    "id": "b5dfdb7f-ae33-4462-87a3-e25b777ac9c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -811,6 +820,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "refill_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48241e0b-2fb5-4c18-b52d-f4c1eef68827",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "objectives_toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
