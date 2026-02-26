@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,12 +11,20 @@ public class PlayerController : MonoBehaviour
     private static PlayerController instance;
     public static PlayerController Instance { get { return instance; } }
 
+    [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+    private float currentCooldown = 0.0f;
+
+    [Header("Movement")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
     [SerializeField] private float jumpHeight = 2f;
+
+    [Header("Transforms")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
     [SerializeField] public short InteractionRange { get { return 3; } }
@@ -93,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         Movement();
+        AttackLoop();
     }
 
     private void Movement()
@@ -172,11 +180,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Finish"))
         {
-
             closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
         }
         else if (other.CompareTag("Console")) 
         {
@@ -202,43 +206,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator AttackLoop()
+    private void AttackLoop()
     {
-        attacking = true;
 
-        float waitTime = 0.6f;
+        if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
-        while (attacking && closeEnemies.Count > 0)
-        {
-            if (targetedEnemy == null)
-                GetClosestEnemy();
+        if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+        
+        SpawnProjectile(attackCooldown);
+        DamageTarget();
 
-            SpawnProjectile(waitTime);
-
-            yield return new WaitForSeconds(waitTime);
-
-            if (targetedEnemy != null)
-                DamageTarget();
-            else 
-            {
-                GetClosestEnemy();
-                DamageTarget();
-            }
-        }
-
-        attacking = false;
+        currentCooldown = 0;
     }
 
-    void GetClosestEnemy()
+    private bool GetClosestEnemy()
     {
         closeEnemies.RemoveAll(item => item == null);
-
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else {
-            targetedEnemy = null;
-            attacking = false;
-        }
+        targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+        return targetedEnemy != null;
     }
 
     void DamageTarget()
