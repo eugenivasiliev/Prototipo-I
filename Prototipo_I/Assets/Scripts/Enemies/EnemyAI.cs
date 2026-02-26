@@ -39,7 +39,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     public int Health { get => health; set => health = value; }
     public int MaxHealth { get => 100; set { } }
-    [SerializeField] public Image ui_health;
+    [SerializeField] private Canvas ui_health;
 
 
     [SerializeField] private int damage;
@@ -147,8 +147,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     public void UpdateLife() {
 
-        this.transform.GetChild(1).gameObject.SetActive(true);
-        ui_health.fillAmount = Health / MaxHealth;
+        ui_health.gameObject.SetActive(true);
+        ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
 
 }
