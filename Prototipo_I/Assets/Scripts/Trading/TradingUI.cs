@@ -50,7 +50,7 @@ public class TradingUI : MonoBehaviour
         foreach(var itemInStock in TradingManager.Instance.Stock.items)
         {
             GameObject instance = Instantiate(itemUI, this.transform.GetChild(1));
-            instance.GetComponent<Image>().sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault((itemInStock.Tradeable as Item).spriteId);
+            instance.GetComponent<Image>().sprite = (itemInStock.Tradeable as Item).sprite;
             Item item = itemInStock.Tradeable as Item;
             instance.GetComponent<Button>().onClick.AddListener(() => { SetCurrentItem(item); });
             instance.transform.GetComponentInChildren<TMP_Text>().text = itemInStock.amount.ToString();

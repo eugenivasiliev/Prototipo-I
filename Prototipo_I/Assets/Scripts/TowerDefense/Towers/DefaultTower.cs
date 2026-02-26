@@ -9,6 +9,15 @@ public class DefaultTower : MonoBehaviour
     private List<GameObject> closeEnemies = new List<GameObject>();
     private GameObject targetedEnemy;
 
+    private bool tracking = true;
+    private float speed  = 4.5f;
+    float waitTime = 0.6f;
+    private float range = 15;
+
+    public float GetRange() { 
+        return range;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -40,7 +49,7 @@ public class DefaultTower : MonoBehaviour
     {
         attacking = true;
 
-        float waitTime = 0.6f;
+        
         
         while (attacking && closeEnemies.Count > 0)
         {
@@ -80,17 +89,39 @@ public class DefaultTower : MonoBehaviour
     {
         if (targetedEnemy == null) return;
 
-        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable)) { 
+            damageable.DamagePercent(20.0f);
+
+            targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
+        }
+    }
+
+    void Update() {
+        if (!attacking)
+            return;
+
+        if (targetedEnemy == null)
+        {
+            GetClosestEnemy();
+            return;
+        }
+
+        if (!tracking)
+            return;
+
+
+        Vector3 dir = targetedEnemy.transform.position - transform.position;
+        Quaternion qt = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, speed);
     }
 
     void SpawnProjectile(float waitTime)
     {
-        transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+        
         AudioManager.instance.PlaySFX("TurretAttack");
-        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);        
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }

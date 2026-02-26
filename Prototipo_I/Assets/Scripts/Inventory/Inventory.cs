@@ -91,6 +91,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private Indicator indicator;
 
+    [SerializeField] private Sprite defaultItemSprite;
+
     private void Start()
     {
         if (instance != null)
@@ -130,7 +132,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     public int GetItemCount(string itemName)
     {
         for (int i = 0; i < items.slots.Length; i++)
-            if (items.slots[i].item.spriteId == itemName)
+            if (items.slots[i].item.Id == itemName)
             {
                 return items.slots[i].amount;
             }
@@ -180,9 +182,27 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
         return false;
     }
 
+    public bool RemoveItem(string itemName)
+    {
+        for (int i = 0; i < items.slots.Length; i++)
+            if (items.slots[i].item.Id == itemName)
+            {
+                return RemoveItem(items.slots[i].item);
+            }
+
+        //Cannot remove
+        return false;
+    }
+
     public bool RemoveItem(Item item, int amount, out int amountDone)
     {
         for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(item)) return false;
+        return true;
+    }
+
+    public bool RemoveItem(string itemName, int amount, out int amountDone)
+    {
+        for (amountDone = 1; amountDone <= amount; amountDone++) if (!RemoveItem(itemName)) return false;
         return true;
     }
 
@@ -199,13 +219,13 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private void RenderItem(int index)
     {
         GetText(index).text = items.slots[index].amount.ToString();
-        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault(items.slots[index].item.spriteId);
+        GetImage(index).sprite = UISpritesDBManager.Instance.DB[items.slots[index].item.Name];
     }
 
     private void DefaultItem(int index)
     {
         items.slots[index] = InventorySlot.Default;
-        GetImage(index).sprite = ItemSpritesDatabase.SpriteDict.GetValueOrDefault("empty");
+        GetImage(index).sprite = defaultItemSprite;
         GetText(index).text = "";
     }
 
