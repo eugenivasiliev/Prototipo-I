@@ -1,26 +1,22 @@
 ﻿using System;
-using UnityEngine.Events;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Tower
+public class Tower : MonoBehaviour
 {
-    private int maxStage;
+    [SerializeField] protected GameObject projectile;
+    protected bool attacking = false;
+    protected List<GameObject> closeEnemies = new List<GameObject>();
+    protected GameObject targetedEnemy;
 
-    public int MaxStage => maxStage;
+    protected bool tracking = true;
+    protected float speed = 4.5f;
+    protected float waitTime = 0.6f;
+    [SerializeField, Range(0, 50)] protected float maxRange = 15;
+    [SerializeField, Range(0, 50)] protected float minRange = 3;
 
-    private int currentStage;
-
-    public int CurrentStage => currentStage;
-
-
-    public string Name { get; private set; }
-    public bool IsFullyUpgraded { get { return currentStage >= maxStage - 1; } }
-
-    public Action<int> OnStageChanged;
-
-    public Tower(TowerData data)
+    public float GetRange()
     {
-        Name = data.Name;
-        maxStage = data.stages.Length;
-        currentStage = 0;
+        return maxRange;
     }
 }
