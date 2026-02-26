@@ -2,26 +2,19 @@ using UnityEngine;
 
 public class Attack : EnemyState
 {
-    private Plot target;
     public override void Behaviour()
     {
-        AudioManager.instance.PlaySFX("MonsterAttack");
-        if (target != null)
-            ((IAttacker)enemy).Attack(target.gameObject);
+        if (bb.targetTransform == null) return;
 
-        float minDistance = Mathf.Infinity;
-
-        foreach (var plot in PlotManager.Instance.plots)
+        float distance = Vector3.Distance(enemy.transform.position, bb.targetTransform.transform.position);
+        if (distance < 0.45f)
         {
-            if (!plot.IsPlanted) continue;
-
-            float distance = Vector3.Distance(enemy.transform.position, plot.transform.position);
-
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                target = plot;
-            }
+            AudioManager.instance.PlaySFX("MonsterAttack");
+            ((IAttacker)enemy).Attack(bb.targetTransform.gameObject);
+            enemy.SetState(EnemyAI.State.Chase);
         }
+        else
+            enemy.SetState(EnemyAI.State.Chase);
+        
     }
 }

@@ -4,12 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Plot : MonoBehaviour, IInteractable
+public class Plot : MonoBehaviour, IInteractable, IDamageable
 {
     Plant plant;
     PlantData plantData;
 
-    private bool hasWater;
     private bool isFertilized;
     private GameObject currentPlant;
 
@@ -19,10 +18,22 @@ public class Plot : MonoBehaviour, IInteractable
 
     public bool IsPlanted { get { return plant != null; } }
 
+    [SerializeField] private int health;
+    public int Health { get => health; set => health = value; }
+    public int MaxHealth { get => 100; set { } }
+
+
+    public GameObject plantingFeedback;
+    public GameObject ripeFeedback;
+    private GameObject ripeParticles;
+    public GameObject harvestFeedback;
+
     private void Awake()
     {
         if(statusText != null)
             statusText.gameObject.SetActive(false);
+
+        health = 1;
     }
 
     public void Plant(PlantData data)
@@ -51,10 +62,11 @@ public class Plot : MonoBehaviour, IInteractable
 
         plant.OnStageChanged += OnPlantStageChanged;
 
-        hasWater = false;
         isFertilized = false;
 
         Debug.Log($"Planta {plant.Name} plantada!");
+
+        Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);        
     }
 
     public void Fertilize()
@@ -73,7 +85,16 @@ public class Plot : MonoBehaviour, IInteractable
         }
 
         AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new FirePlantItem(), 2, out int amountDone);
+        Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
+        Debug.Log("Add: " + amountDone);
+
+        if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+        {
+            foreach(PlantsOfTypeCollected obj in objs)
+            {
+                obj.UpdateObjective(plantData.plantName);
+            }
+        }
 
         Destroy(currentPlant);
         Debug.Log("Yw. Harvested");
@@ -82,31 +103,8 @@ public class Plot : MonoBehaviour, IInteractable
         currentPlant = null;
     }
 
-    public void UpdateUI()
-    {
-        statusText.gameObject.SetActive(false);
-        if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
-        if (!IsPlanted)
-        {
-            statusText.text = "Hueco";
-            return;
-        }
-        plant.UpdateGrowth(Time.deltaTime);
-        if (!hasWater && plant.TimeLeft <= 0f)
-        {
-            statusText.text = "<size=40><color=red>Necesita Agua</color></size>";
-            return;
-        }
-        statusText.text = $"{plant.Name}\n" +
-                          $"Stage: {plant.CurrentStage} / 2\n" +
-                          $"Time to next stage: {plant.TimeLeft:F1}s\n" +
-                          $"Watered: {(hasWater ? "Sí" : "No")}\n" +
-                          $"Fertilized: {(isFertilized ? "Sí" : "No")}";
-    }
-
     private void OnPlantStageChanged(int currentStage)
     {
-        hasWater = false;
         isFertilized = false;
 
         if (currentPlant != null) { Destroy(currentPlant); }
@@ -118,19 +116,10 @@ public class Plot : MonoBehaviour, IInteractable
     }
 
     public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("water", InputActionChange.ActionCanceled, Action_Water),
     new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
     new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
     new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
     };
-
-    private void Action_Water(InputAction.CallbackContext ctx)
-    {
-        AudioManager.instance.PlaySFX("Water");
-        hasWater = true;
-        plant.TryGrow(DayNightCycle.Instance.TotalTime, hasWater);
-        Debug.Log("Regada");
-    }
 
     private void Action_Plant(InputAction.CallbackContext ctx)
     {
@@ -139,6 +128,7 @@ public class Plot : MonoBehaviour, IInteractable
         {
             this.Plant((item as IPlantSeed).PlantData);
             Inventory.Instance.RemoveItem(item);
+            plant.TryGrow(DayNightCycle.Instance.TotalTime);
         } 
     }
 
@@ -149,6 +139,8 @@ public class Plot : MonoBehaviour, IInteractable
             Harvest();
             Debug.Log("Coshechada");
         }
+
+        Destroy(ripeParticles);
     }
 
     private void Action_Fertilize(InputAction.CallbackContext ctx)
@@ -163,6 +155,8 @@ public class Plot : MonoBehaviour, IInteractable
             return;
 
         OnPlantStageChanged(plant.CurrentStage -1);
+
+        ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
     }
     public void OnInteract() {}
 }

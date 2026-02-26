@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class PlotManager : MonoBehaviour
 {
     
-    public static PlotManager Instance;
+    public static PlotManager Instance { get; private set; }
     public List<Plot> plots = new List<Plot>();
     [SerializeField] private HybridationManager hybridationManager;
     public HybridationManager HybridationManager {  get { return hybridationManager; } }
@@ -25,11 +25,7 @@ public class PlotManager : MonoBehaviour
 
     private void Update()
     {
-        foreach (var plot in plots)
-        {
-            if(plot.StatusText != null)
-            plot.UpdateUI();
-        }
+
     }
 
 

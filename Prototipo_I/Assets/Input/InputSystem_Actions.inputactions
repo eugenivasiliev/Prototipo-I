@@ -221,6 +221,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "place_tower",
+                    "type": "Button",
+                    "id": "ebdc46d2-3dc0-44a2-8074-4bdc5f8f0ab4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "refill_tower",
+                    "type": "Button",
+                    "id": "a1eea5b8-8d18-49cd-a3d1-bdec63902095",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "objectives_toggle",
+                    "type": "Button",
+                    "id": "b5dfdb7f-ae33-4462-87a3-e25b777ac9c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -623,7 +650,7 @@
                 {
                     "name": "",
                     "id": "0e81ff74-ab8e-4a24-b73e-cbc9eaa24336",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -645,7 +672,7 @@
                 {
                     "name": "",
                     "id": "580331c6-c736-4a74-a6ac-59f247722b5d",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -656,7 +683,7 @@
                 {
                     "name": "",
                     "id": "19bd609a-9829-49f6-93ef-aed212d33561",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -766,11 +793,44 @@
                 {
                     "name": "",
                     "id": "f5372c13-3e24-4a8a-9bba-9e22ae1549a7",
-                    "path": "<Keyboard>/h",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Countdown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "969aaa81-0a53-4e12-8427-0fe366a85534",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "place_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "refill_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48241e0b-2fb5-4c18-b52d-f4c1eef68827",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "objectives_toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

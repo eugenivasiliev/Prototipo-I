@@ -7,7 +7,7 @@ public class InteractionZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out IInteractable interactable))
+        if (other.TryGetComponent(out IInteractable interactable))
             interactable.Bind();
     }
 

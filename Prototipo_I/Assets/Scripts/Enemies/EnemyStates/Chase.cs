@@ -1,34 +1,52 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Chase : EnemyState
 {
-    private Plot targetPlot = null;
+    private float distanceThreshold => .45f;
+
     public override void Behaviour()
     {
-        if(targetPlot != null)
+        if(bb.targetTransform == null)
         {
-            float distToTarget = Vector3.Distance(enemy.transform.position, targetPlot.transform.position);
-            if (distToTarget < 0.05f)
-                enemy.SetState(EnemyAI.State.Attack);
-            return;
-        }
-
-        float minDistance = Mathf.Infinity;
-
-        foreach (var plot in PlotManager.Instance.plots)
-        {
-            if (!plot.IsPlanted) continue;
-
-            float distance = Vector3.Distance(enemy.transform.position, plot.transform.position);
-
-            if (distance < minDistance)
+            switch (bb.target)
             {
-                minDistance = distance;
-                targetPlot = plot;
+                case EnemyAI.Target.Plots:
+                    float minDistance = Mathf.Infinity;
+
+                    foreach (var plot in bb.plotManager.plots)
+                    {
+                        if (!plot.IsPlanted) continue;
+
+                        float d = Vector3.Distance(enemy.transform.position, plot.transform.position);
+
+                        if (d < minDistance)
+                        {
+                            minDistance = d;
+                            bb.targetTransform = plot.transform;
+                        }
+                    }
+                    break;
+                case EnemyAI.Target.Home:
+                    bb.targetTransform = bb.homeTransform;
+                    break;
+                case EnemyAI.Target.Player:
+                    bb.targetTransform = bb.playerController.transform;
+                    break;
             }
+
+            enemy.BB = this.bb;
         }
-        //AudioManager.instance.PlaySFXLoop("MonsterWalking");
-        if (targetPlot != null)
-            enemy.Agent.SetDestination(targetPlot.transform.position);
+
+        if (bb.targetTransform == null) return;
+
+
+        NavMeshPath path = new NavMeshPath();
+        enemy.Agent.CalculatePath(bb.targetTransform.position, path);
+        enemy.Agent.SetPath(path);
+
+        float distToTarget = Vector3.Distance(enemy.transform.position, bb.targetTransform.position);
+        if (distToTarget < distanceThreshold) enemy.SetState(EnemyAI.State.Attack);
+        
     }
 }

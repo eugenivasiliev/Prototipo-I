@@ -1,4 +1,5 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,14 +11,23 @@ public class PlayerController : MonoBehaviour
     private static PlayerController instance;
     public static PlayerController Instance { get { return instance; } }
 
+    [Header("Attack")]
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+    private float currentCooldown = 0.0f;
+
+    [Header("Movement")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
     [SerializeField] private float jumpHeight = 2f;
+
+    [Header("Transforms")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
-    [SerializeField] public short InteractionRange { get { return 10; } }
+    [SerializeField] public short InteractionRange { get { return 3; } }
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
@@ -36,11 +46,18 @@ public class PlayerController : MonoBehaviour
 
     private IInteractable interactable;
 
+    private List<GameObject> closeEnemies = new List<GameObject>();
+    private GameObject targetedEnemy;
+    int damage = 1;
+    bool attacking = false;
+
     [SerializeField] private int money;
     public int Money { get => money; set => money = value; }
 
     private static bool movementLocked = false;
     public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
+
+    private bool waveMenuTouched = false;
 
     private void Awake()
     {
@@ -65,10 +82,11 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
-        
-        inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
-        inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
-        
+
+        inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
+        //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
+        //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -82,6 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         Movement();
+        AttackLoop();
     }
 
     private void Movement()
@@ -151,30 +170,75 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator NextDayCountdown()
-    {
+    void OpenWaveMenu() {
 
-        currentTimeForNextDay += Time.deltaTime;
-
-        yield return null;
-
-        if (currentTimeForNextDay >= maxTimeForNextDay && isReset == false)
-        {
-            //DayNightCycle.Instance.NextDay();
-            currentTimeForNextDay = 0.0f;
-            PlotManager.Instance.FullGrow();
-        }
-        else if (isReset == false)
-            StartCoroutine(NextDayCountdown());
-        else
-            isReset = false;
+        if (waveMenuTouched)
+            WaveManager.Instance.ToggleWaveUI();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            closeEnemies.Add(other.gameObject);
+        }
+        else if (other.CompareTag("Console")) 
+        {
+            waveMenuTouched = true;
+        }
+    }
 
-    private void ResetDayCountdown()
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            closeEnemies.Remove(other.gameObject);
+
+            if (closeEnemies.Count == 0) {
+
+                attacking = false;
+                targetedEnemy = null;
+            }
+        }
+        else if (other.CompareTag("Console"))
+        {
+            waveMenuTouched = false;
+        }
+    }
+
+    private void AttackLoop()
     {
 
-        currentTimeForNextDay = 0.0f;
-        isReset = true;
+        if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
+
+        if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+        
+        SpawnProjectile(attackCooldown);
+        DamageTarget();
+
+        currentCooldown = 0;
+    }
+
+    private bool GetClosestEnemy()
+    {
+        closeEnemies.RemoveAll(item => item == null);
+        targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+        return targetedEnemy != null;
+    }
+
+    void DamageTarget()
+    {
+        if (targetedEnemy == null) return;
+
+        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
+            damageable.DamageMax();        
+    }
+
+    void SpawnProjectile(float waitTime) {
+        AudioManager.instance.PlaySFX("PlayerAttack");
+        GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
+        p.GetComponent<Projectile>().startPos = transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
+        p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }
