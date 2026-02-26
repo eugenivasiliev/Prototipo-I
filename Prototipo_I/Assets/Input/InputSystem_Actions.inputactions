@@ -248,6 +248,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "camera_zoom",
+                    "type": "Button",
+                    "id": "94d18918-facb-41ec-b9a9-627e118bf2dc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -831,6 +840,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "objectives_toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a939f15-0652-4ece-87c9-7961686c0685",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "camera_zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

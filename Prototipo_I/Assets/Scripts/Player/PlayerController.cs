@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
     [SerializeField] public short InteractionRange { get { return 3; } }
+
+    [Header("Camera")]
+    [SerializeField] private Vector3 farCameraOffset;
+    [SerializeField] private Vector3 nearCameraOffset;
+    private Vector3 cameraOffset;
+    private bool isCameraFar = true;
+    [SerializeField] private AnimationCurve animationCurveX;
+    [SerializeField] private AnimationCurve animationCurveY;
+    [SerializeField, Range(0, 1)] private float animationDuration;
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
@@ -87,8 +97,13 @@ public class PlayerController : MonoBehaviour
         //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
+        inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        cameraOffset = farCameraOffset;
+        isCameraFar = true;
     }
 
     private void OnDisable()
@@ -152,11 +167,48 @@ public class PlayerController : MonoBehaviour
         if(movementLocked) return;
 
         float mouseX = cameraInput.x* cameraSensibility;
-        Vector3 offset = cameraTransform.position - transform.position;
         Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-        cameraTransform.transform.position = transform.position + q * offset;
+        cameraOffset = q * cameraOffset;
+        farCameraOffset = q * farCameraOffset;
+        nearCameraOffset = q * nearCameraOffset;
+
+        cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+    }
+
+    void ToggleCameraDistance(InputAction.CallbackContext ctx)
+    {
+        StartCoroutine(ToggleAnim());
+    }
+
+    private IEnumerator ToggleAnim()
+    {
+        movementLocked = true;
+
+        Vector3 startPos = (isCameraFar) ? farCameraOffset : nearCameraOffset;
+        Vector3 endPos = (isCameraFar) ? nearCameraOffset : farCameraOffset;
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationDuration;
+            float alphaX = animationCurveX.Evaluate(t);
+            float alphaY = animationCurveY.Evaluate(t);
+
+            cameraOffset.x = (1 - alphaX) * startPos.x + alphaX * endPos.x;
+            cameraOffset.y = (1 - alphaY) * startPos.y + alphaY * endPos.y;
+            cameraTransform.position = transform.position + cameraOffset;
+            cameraTransform.LookAt(transform.position, Vector3.up);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        isCameraFar = !isCameraFar;
+        movementLocked = false;
+
+        yield return null;
     }
 
     private void Interact()
