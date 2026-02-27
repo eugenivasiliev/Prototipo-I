@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlotParticles : MonoBehaviour
+public class InstantaneousParticles : MonoBehaviour
 {
     [SerializeField] private float time;
     void Start()

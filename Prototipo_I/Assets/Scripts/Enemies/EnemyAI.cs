@@ -70,6 +70,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private Blackboard bb;
     public Blackboard BB { get => bb; set => bb = value; }
 
+    
+    bool frozen = false;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -151,4 +153,19 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
 
+
+    public void GetFrozen() {
+
+        if (frozen)
+            StartCoroutine(Freeze());
+    }
+
+    IEnumerator Freeze() {
+
+        frozen = true;
+
+        yield return new WaitForSeconds(1.0f);
+
+        frozen = false;
+    }
 }
