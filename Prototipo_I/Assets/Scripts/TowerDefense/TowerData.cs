@@ -5,7 +5,7 @@ using UnityEngine;
 public class TowerData : ScriptableObject
 {
     public string Name;
-
+    public float range = 15.0f;
     public GameObject[] stages;
 
     [Serializable]

@@ -39,7 +39,7 @@ public class Plant
         isFertilize = isFertilized;
     }
 
-    public void TryGrow(float currentTime, bool hasWater)
+    public void TryGrow(float currentTime)
     {
         Grow.AddListener(NextGrowStage);
         DayNightCycle.Instance.SubscribeTimedEvent(Grow, currentTime + timeToGrow / (isFertilize ? 1.5f : 1f));
@@ -64,6 +64,7 @@ public class Plant
         growthTimer = 0f;
         isFertilize = false;
         OnStageChanged?.Invoke(currentStage);
+        TryGrow(DayNightCycle.Instance.TotalTime);
         Debug.Log("Sigue creciendo");
 
     }
