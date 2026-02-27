@@ -48,6 +48,8 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         float r = currentTower.GetComponent<DefaultTower>().GetRange();
         SetRange(r);
+
+        TowerMenu.Instance.ToggleMenu();
     }
 
     private void OnTowerUpgraded(int level)
