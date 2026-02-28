@@ -16,7 +16,11 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        this.transform.position = (time/maxTime) * finalPos.position + (1- (time / maxTime)) * startPos;
+        if (finalPos != null)
+        {
+            this.transform.position = (time / maxTime) * finalPos.position + (1 - (time / maxTime)) * startPos;
+        }
+        
 
         if (time > maxTime) { 
             Destroy(gameObject);
