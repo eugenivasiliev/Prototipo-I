@@ -16,8 +16,7 @@ public class TurretButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        spotReference.SetRange(0.0f);
-        spotReference.ShowRange(false);
+        ResetRange();
 
 
         tm.EraseValidIngredients();
@@ -29,5 +28,20 @@ public class TurretButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         spotReference.ShowRange(true);
 
         tm.LoadValidIngredients(td);
+    }
+
+    private void OnDisable()
+    {
+        ResetRange();
+    }
+
+
+    private void ResetRange()
+    {
+        if (spotReference != null)
+        {
+            spotReference.SetRange(0.0f);
+            spotReference.ShowRange(false);
+        }
     }
 }
