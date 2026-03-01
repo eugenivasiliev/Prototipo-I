@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurveY;
     [SerializeField, Range(0, 1)] private float animationDuration;
 
+    [Header("VFX")]
+    [SerializeField] private GameObject stunParticles;
+
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
     public static InputSystem_Actions Inputs { get { return inputs; } }
@@ -98,6 +101,8 @@ public class PlayerController : MonoBehaviour
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
         inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+
+        inputs.Player.debug.performed += ctx => Stun(1);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -292,5 +297,23 @@ public class PlayerController : MonoBehaviour
         p.GetComponent<Projectile>().startPos = transform.position;
         p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
+    }
+
+    public void Stun(float seconds)
+    {
+        //TODO: Add proper VFX/SFX
+
+        Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+        //AudioManager.instance.PlaySFX("Stun");
+
+        StartCoroutine(StunCorroutine(seconds));
+    }
+
+    private IEnumerator StunCorroutine(float seconds) {
+        movementLocked = true;
+
+        yield return new WaitForSeconds(seconds);
+
+        movementLocked = false;
     }
 }
