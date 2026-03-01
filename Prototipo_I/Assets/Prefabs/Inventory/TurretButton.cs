@@ -32,7 +32,10 @@ public class TurretButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     private void OnDisable()
     {
-        ResetRange();
+        if (spotReference != null)
+        {
+            spotReference.ShowRange(false);
+        }
     }
 
 
