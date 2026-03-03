@@ -72,6 +72,8 @@ public class PlayerController : MonoBehaviour
 
     private bool waveMenuTouched = false;
 
+
+    private Camera cam;
     private void Awake()
     {
         if(instance != null)
@@ -82,6 +84,8 @@ public class PlayerController : MonoBehaviour
         instance = this;
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
+
+        cam = Camera.main;
     }
 
     private void Start()
@@ -180,6 +184,8 @@ public class PlayerController : MonoBehaviour
         cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+
+        cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
     }
 
     void ToggleCameraDistance(InputAction.CallbackContext ctx)
