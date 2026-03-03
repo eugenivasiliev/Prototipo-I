@@ -2,22 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DefaultTower : MonoBehaviour
+public class DefaultTower : Tower
 {
-    [SerializeField] GameObject projectile;
-    bool attacking = false;
-    private List<GameObject> closeEnemies = new List<GameObject>();
-    private GameObject targetedEnemy;
-
-    private bool tracking = true;
-    private float speed  = 4.5f;
-    float waitTime = 0.6f;
-    private float range = 15;
-
-    public float GetRange() { 
-        return range;
-    }
-
+        
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -48,13 +35,11 @@ public class DefaultTower : MonoBehaviour
     IEnumerator AttackLoop()
     {
         attacking = true;
-
-        
         
         while (attacking && closeEnemies.Count > 0)
         {
             if (targetedEnemy == null)
-                GetClosestEnemy();
+                GetClosestValidEnemy();
 
             SpawnProjectile(waitTime);
 
@@ -64,7 +49,7 @@ public class DefaultTower : MonoBehaviour
                 DamageTarget();
             else
             {
-                GetClosestEnemy();
+                GetClosestValidEnemy();
                 DamageTarget();
             }
         }
@@ -72,16 +57,23 @@ public class DefaultTower : MonoBehaviour
         attacking = false;
     }
 
-    void GetClosestEnemy()
+    void GetClosestValidEnemy()
     {
         closeEnemies.RemoveAll(item => item == null);
 
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else
+        targetedEnemy = null;
+        attacking = false;
+
+        if (closeEnemies.Count == 0) return;
+
+        foreach (var e in closeEnemies)
         {
-            targetedEnemy = null;
-            attacking = false;
+            if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+            {
+                targetedEnemy = e;
+                attacking = true;
+                return;
+            }
         }
     }
 
@@ -102,7 +94,7 @@ public class DefaultTower : MonoBehaviour
 
         if (targetedEnemy == null)
         {
-            GetClosestEnemy();
+            GetClosestValidEnemy();
             return;
         }
 

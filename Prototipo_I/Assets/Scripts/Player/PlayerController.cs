@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurveY;
     [SerializeField, Range(0, 1)] private float animationDuration;
 
+    [Header("VFX")]
+    [SerializeField] private GameObject stunParticles;
+
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
     public static InputSystem_Actions Inputs { get { return inputs; } }
@@ -69,6 +72,8 @@ public class PlayerController : MonoBehaviour
 
     private bool waveMenuTouched = false;
 
+
+    private Camera cam;
     private void Awake()
     {
         if(instance != null)
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour
         instance = this;
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
+
+        cam = Camera.main;
     }
 
     private void Start()
@@ -98,6 +105,8 @@ public class PlayerController : MonoBehaviour
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
         inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+
+        inputs.Player.debug.performed += ctx => Stun(1);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -175,6 +184,8 @@ public class PlayerController : MonoBehaviour
         cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+
+        cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
     }
 
     void ToggleCameraDistance(InputAction.CallbackContext ctx)
@@ -292,5 +303,23 @@ public class PlayerController : MonoBehaviour
         p.GetComponent<Projectile>().startPos = transform.position;
         p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
+    }
+
+    public void Stun(float seconds)
+    {
+        //TODO: Add proper VFX/SFX
+
+        Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+        //AudioManager.instance.PlaySFX("Stun");
+
+        StartCoroutine(StunCorroutine(seconds));
+    }
+
+    private IEnumerator StunCorroutine(float seconds) {
+        movementLocked = true;
+
+        yield return new WaitForSeconds(seconds);
+
+        movementLocked = false;
     }
 }
