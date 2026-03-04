@@ -91,6 +91,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private Indicator indicator;
 
+    [Header("UI Sprites")]
+    [SerializeField] private UISpritesDB uiSpritesDB;
     [SerializeField] private Sprite defaultItemSprite;
 
     private void Start()
@@ -219,7 +221,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
     private void RenderItem(int index)
     {
         GetText(index).text = items.slots[index].amount.ToString();
-        GetImage(index).sprite = UISpritesDBManager.Instance.DB[items.slots[index].item.Name];
+        GetImage(index).sprite = uiSpritesDB[items.slots[index].item.Name];
     }
 
     private void DefaultItem(int index)
