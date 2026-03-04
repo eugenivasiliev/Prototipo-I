@@ -43,7 +43,6 @@ public class AnimalAI : MonoBehaviour
     private void Update()
     {
         animalState.Behaviour();
-        //Debug.Log(animalState);
     }
 
     public void SetState(State newState)

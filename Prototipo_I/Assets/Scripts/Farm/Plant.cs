@@ -52,26 +52,18 @@ public class Plant
 
     private void NextGrowStage(float time)
     {
-        Debug.Log($"{IsFullyGrown}");
-        Debug.Log($"{currentStage}");
-        if (IsFullyGrown)
-        {
-            Debug.Log("Ya no puede crecer mas");
-            return;
-        }
+        if (IsFullyGrown) return;
 
         currentStage++;
         growthTimer = 0f;
         isFertilize = false;
         OnStageChanged?.Invoke(currentStage);
         TryGrow(DayNightCycle.Instance.TotalTime);
-        Debug.Log("Sigue creciendo");
 
     }
 
     public void FullGrow() {
 
         currentStage = maxStage;
-        Debug.Log(CurrentStage);
     }
 }
