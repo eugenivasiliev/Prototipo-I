@@ -79,8 +79,6 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         isWaveActive = true;
 
-        Debug.Log("Spawning");
-
         if (allEnemies.Count > 0)
         {
             foreach (var enemy in allEnemies)
@@ -105,8 +103,6 @@ public class EnemyManager : Singleton<EnemyManager>
 
         while(enemiesToSpawn.Count > 0)
         {
-            Debug.Log(enemiesToSpawn.Count);
-
             string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
             GameObject prefab = enemyDB.GetEnemyFromName(name);
             GameObject enemyObject = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);

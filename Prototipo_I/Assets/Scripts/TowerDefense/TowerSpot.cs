@@ -30,8 +30,6 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         towerData = DBManager.Instance.TowerDB[dataName];
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
-
-        Debug.Log($"Tower {towerData.Name} placed!");
     }
 
     public void PlaceTower(TowerData data)
@@ -46,8 +44,6 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         towerData = data;
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
-
-        Debug.Log($"Tower {towerData.Name} placed!");
 
         float r = currentTower.GetComponent<DefaultTower>().GetRange();
         SetRange(r);

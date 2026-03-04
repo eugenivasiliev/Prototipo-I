@@ -37,7 +37,7 @@ public class TowerMenu : MonoBehaviour
 
                 GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
                 instance.GetComponent<Image>().sprite = data.uiSprite;
-                instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
+                instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
 
                 instance.GetComponent<TurretButton>().spotReference = spotReference;
                 instance.GetComponent<TurretButton>().range = data.range;

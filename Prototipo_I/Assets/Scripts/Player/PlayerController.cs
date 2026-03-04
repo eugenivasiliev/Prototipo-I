@@ -141,7 +141,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             AudioManager.instance.PlaySFX("Jumping");
             velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
-            Debug.Log(velocity.y);
             isJumping = false;
         }
 
@@ -221,7 +220,6 @@ public class PlayerController : Singleton<PlayerController>
         Vector3 fwr = Camera.main.transform.forward;
         if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
         {
-            Debug.Log("Yeah! I did it");
             interactable = hit.collider.GetComponent<IInteractable>();
             if( interactable != null ) interactable.OnInteract();
         }
