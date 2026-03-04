@@ -59,10 +59,8 @@ public struct InventoryList
     }
 }
 
-public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
+public class Inventory : Singleton<Inventory>, IAutoSaving<InventoryList>
 {
-    private static Inventory instance;
-    public static Inventory Instance { get { return instance; } }
 
     [SerializeField] private int inventorySpace;
     public int InventorySpace { get { return inventorySpace; } }
@@ -97,14 +95,7 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
     private void Start()
     {
-        if (instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-
-        instance = this;
-
+        Init();
         uiSpritesDB.Init();
 
         items = new InventoryList(inventorySpace);

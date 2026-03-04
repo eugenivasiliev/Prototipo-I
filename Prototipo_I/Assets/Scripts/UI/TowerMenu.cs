@@ -3,10 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerMenu : MonoBehaviour
+public class TowerMenu : Singleton<TowerMenu>
 {
-    public static TowerMenu Instance { get; private set; }
-
     [SerializeField] private GameObject towerMenuPanel;
     [SerializeField] private GameObject towerMenuIngredients;
     [SerializeField] private GameObject towerUI;
@@ -24,8 +22,7 @@ public class TowerMenu : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        Init();
 
         towerMenuPanel.SetActive(false);
         towerMenuIngredients.SetActive(false);
@@ -52,7 +49,6 @@ public class TowerMenu : MonoBehaviour
         }
     }
 
-    //UISpritesDBManager
     public void LoadValidIngredients(TowerData td)
     {
         foreach (Transform child in this.transform.GetChild(1)) Destroy(child.gameObject);

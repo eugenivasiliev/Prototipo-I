@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     private bool isReset = false;
     private float currentTimeForNextDay = 0.0f;
     private float maxTimeForNextDay = 2.0f;
-    private static PlayerController instance;
-    public static PlayerController Instance { get { return instance; } }
 
     [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
@@ -76,12 +74,8 @@ public class PlayerController : MonoBehaviour
     private Camera cam;
     private void Awake()
     {
-        if(instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
+        Init();
+
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
 

@@ -1,18 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PlotManager : MonoBehaviour
+public class PlotManager : Singleton<PlotManager>
 {
-    
-    public static PlotManager Instance { get; private set; }
     public List<Plot> plots = new List<Plot>();
     [SerializeField] private HybridationManager hybridationManager;
     public HybridationManager HybridationManager {  get { return hybridationManager; } }
 
     private void Awake()
     {
-        if(Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
+        Init();
     }
 
     private void Start()
