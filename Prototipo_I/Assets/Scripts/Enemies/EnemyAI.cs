@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         public Target target;
         public Transform targetTransform;
         public Transform homeTransform;
-        public PlotManager plotManager;
+        public List<Plot> plots;
         public PlayerController playerController;
     }
 

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Plot : MonoBehaviour, IInteractable, IDamageable
 {
+    [SerializeField] private HybridationManager hybridationManager;
+
     Plant plant;
     PlantData plantData;
 
@@ -41,16 +43,12 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         AudioManager.instance.PlaySFX("Plant");
         if (IsPlanted)
         {
-            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
+            if (hybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
             {
                 this.plantData = newPlant;
                 plant = new Plant(newPlant);
             }
-            else
-            {
-                Debug.Log("Already planted");
-                return;
-            }
+            else return;
         }
         else
         {
@@ -64,29 +62,22 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
 
         isFertilized = false;
 
-        Debug.Log($"Planta {plant.Name} plantada!");
-
         Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);        
     }
 
     public void Fertilize()
     {
-        if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
+        if (!IsPlanted || isFertilized) return;
         AudioManager.instance.PlaySFX("Fertilize");
         isFertilized = true;
         plant.ApplyFertilize(isFertilized);
     }
     private void Harvest()
     {
-        if (!IsPlanted || !plant.IsFullyGrown)
-        {
-            Debug.Log("Aun no esta lista");
-            return;
-        }
+        if (!IsPlanted || !plant.IsFullyGrown) return;
 
         AudioManager.instance.PlaySFX("Harvesting");
         Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
-        Debug.Log("Add: " + amountDone);
 
         if(ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
         {
@@ -97,7 +88,6 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         }
 
         Destroy(currentPlant);
-        Debug.Log("Yw. Harvested");
 
         this.plant = null;
         currentPlant = null;
@@ -135,10 +125,7 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     private void Action_Harvest(InputAction.CallbackContext ctx)
     {
         if (IsPlanted && plant.IsFullyGrown)
-        {
             Harvest();
-            Debug.Log("Coshechada");
-        }
 
         Destroy(ripeParticles);
     }
@@ -146,7 +133,6 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
     private void Action_Fertilize(InputAction.CallbackContext ctx)
     {
         Fertilize();
-        Debug.Log("Fertilizada");
     }
     public void FullGrow() {
         if (plant != null)

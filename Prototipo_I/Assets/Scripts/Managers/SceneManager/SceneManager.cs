@@ -1,19 +1,10 @@
 using UnityEngine;
 
-public class SceneManager : MonoBehaviour
+public class SceneManager : Singleton<SceneManager>
 {
-    private SceneManager instance;
-    public SceneManager Instance { get { return instance; } }
-
     private void Awake()
     {
-        if(instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
-        DontDestroyOnLoad(gameObject);
+        Init();
     }
 
     public static void LoadScene(string sceneName)

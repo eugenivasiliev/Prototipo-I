@@ -14,7 +14,6 @@ public interface ISaveable<T>
     {
         T data = GetData();
         FileManager.SaveFile(File, data);
-        Debug.Log("Saving to " + Application.persistentDataPath + "/" + File);
     }
 
     public virtual void Load()

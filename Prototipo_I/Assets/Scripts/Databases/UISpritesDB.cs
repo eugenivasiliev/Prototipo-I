@@ -9,13 +9,7 @@ public class UISpritesDB : ScriptableObject
 
     public Dictionary<string, Sprite> spritesWithName { get; private set; }
 
-    public Sprite this[string s]
-    {
-        get {
-            Debug.Log(s);
-            return spritesWithName.GetValueOrDefault<string, Sprite>(s); 
-        }
-    }
+    public Sprite this[string s] => spritesWithName.GetValueOrDefault<string, Sprite>(s); 
 
     public void Init()
     {

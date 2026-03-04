@@ -2,32 +2,17 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectivesManager : MonoBehaviour
+public class ObjectivesManager : Singleton<ObjectivesManager>
 {
-
-    public static ObjectivesManager Instance { get; private set; }
 
     [SerializeField] private List<ScriptableObject> objectives = new List<ScriptableObject>();
     public List<ScriptableObject> Objectives => objectives;
 
     void Start()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-            foreach(var obj in objectives)
-            {
-                (obj as IObjective).Init();
-            }
-            return;
-        }
-        Destroy(this.gameObject);
-    }
-
-    void Update()
-    {
-        //if (AllObjectivesComplete())
-        //    Debug.Log("done!");
+        Init();
+        foreach (var obj in objectives)
+            (obj as IObjective).Init();
     }
 
     public bool AllObjectivesComplete()

@@ -13,8 +13,6 @@ public class EnemyDB : ScriptableObject
         foreach(var enemy in enemyPrefabs)
         { 
             string name = enemy.name;
-            Debug.Log(name);
-            //Debug.Assert(!enemyPrefabsByName.ContainsKey(name));
             enemyPrefabsByName.Add(name, enemy);
         }
     }
@@ -22,7 +20,6 @@ public class EnemyDB : ScriptableObject
     public GameObject GetEnemyFromName(string name)
     {
         GameObject obj = null;
-        //Debug.Assert(enemyPrefabsByName.TryGetValue(name, out obj));
         enemyPrefabsByName.TryGetValue(name, out obj);
         return obj;
     }
@@ -30,7 +27,6 @@ public class EnemyDB : ScriptableObject
     public EnemyAI GetAIFromName(string name)
     {
         GameObject obj = null;
-        //Debug.Assert(enemyPrefabsByName.TryGetValue(name, out obj));
         enemyPrefabsByName.TryGetValue(name, out obj);
         return obj.GetComponent<EnemyAI>();
     }

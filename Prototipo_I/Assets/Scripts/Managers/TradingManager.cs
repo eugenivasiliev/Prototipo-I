@@ -36,11 +36,8 @@ public struct Stock
     }
 }
 
-public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
+public class TradingManager : Singleton<TradingManager>, IInteractable, IAutoSaving<Stock>
 {
-    private static TradingManager instance;
-    public static TradingManager Instance { get { return instance; } }
-
     private Stock stock = new Stock(0); //Item and amount
     public Stock Stock { get { return stock; } }
 
@@ -63,12 +60,7 @@ public class TradingManager : MonoBehaviour, IInteractable, IAutoSaving<Stock>
 
     private void Start()
     {
-        if (instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        instance = this;
+        Init();
 
         (this as IAutoSaving<Stock>).SetupAutoSave();
         (this as IAutoSaving<Stock>).Load();

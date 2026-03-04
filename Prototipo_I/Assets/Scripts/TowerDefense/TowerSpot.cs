@@ -12,6 +12,9 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private GameObject range;
 
+    [SerializeField] private TowerMenu tm;
+
+
     private void Start()
     {
         //(this as IInteractable).Bind();
@@ -27,8 +30,6 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
         towerData = DBManager.Instance.TowerDB[dataName];
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
-
-        Debug.Log($"Tower {towerData.Name} placed!");
     }
 
     public void PlaceTower(TowerData data)
@@ -44,12 +45,10 @@ public class TowerSpot : MonoBehaviour, IInteractable
         towerData = data;
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-        Debug.Log($"Tower {towerData.Name} placed!");
-
         float r = currentTower.GetComponent<DefaultTower>().GetRange();
         SetRange(r);
 
-        TowerMenu.Instance.ToggleMenu();
+        tm.ToggleMenu();
     }
 
     private void OnTowerUpgraded(int level)
@@ -68,8 +67,8 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private void Action_PlaceTower(InputAction.CallbackContext context)
     {
-        TowerMenu.Instance.spotReference = this;
-        TowerMenu.Instance.ToggleMenu();
+        tm.spotReference = this;
+        tm.ToggleMenu();
     }
 
     public void SetRange(float dist)
