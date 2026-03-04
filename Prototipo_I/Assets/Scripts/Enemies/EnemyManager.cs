@@ -16,14 +16,16 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private bool isWaveActive = false;
 
-    [SerializeField] private short timeToSpawn;
-    [SerializeField] public List<Transform> spawnZones = new List<Transform>();
+    [SerializeField] private float timeToSpawn;
+    [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
     private List<string> enemiesToSpawn = new List<string>();
 
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
+
+    [SerializeField] private EnemyAI.Blackboard bb;
     void Start()
     {
         enemyDB.Init();
@@ -51,7 +53,7 @@ public class EnemyManager : MonoBehaviour
         {
             isWaveActive = false;
             currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, 1);
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
             {
                 foreach (var obj in objs)
@@ -69,7 +71,12 @@ public class EnemyManager : MonoBehaviour
     private void RegisterEnemy(EnemyAI enemy)
     {
         if (!allEnemies.Contains(enemy))
+        {
             allEnemies.Add(enemy);
+            EnemyAI.Blackboard enemyBB = this.bb;
+            enemyBB.target = enemy.BB.target;
+            enemy.BB = enemyBB;
+        }
     }
 
     private void SpawnEnemies(float t)
@@ -92,11 +99,11 @@ public class EnemyManager : MonoBehaviour
         waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex, enemyDB);
         enemiesToSpawn = waveDB.nextWave;
 
-        foreach (Transform zone in spawnZones)
-            StartCoroutine(SpawnEnemyDelay(zone));
+        foreach (SpawnZone zone in spawnZones)
+            if(zone.ValidPhases.Contains(currentPhaseIndex)) StartCoroutine(SpawnEnemyDelay(zone));
     }
 
-    private IEnumerator SpawnEnemyDelay (Transform zone)
+    private IEnumerator SpawnEnemyDelay (SpawnZone zone)
     {
 
 
@@ -106,7 +113,7 @@ public class EnemyManager : MonoBehaviour
 
             string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
             GameObject prefab = enemyDB.GetEnemyFromName(name);
-            GameObject enemyObject = Instantiate(prefab, zone.position, Quaternion.identity, zone.transform);
+            GameObject enemyObject = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
             EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
 
             if (enemyAI != null) RegisterEnemy(enemyAI);

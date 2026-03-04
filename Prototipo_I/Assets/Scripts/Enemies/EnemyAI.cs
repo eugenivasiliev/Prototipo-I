@@ -3,13 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 {
-    public enum Difficult : int
+    [Serializable]
+    public struct Blackboard
     {
-        Easy = 1,
-        Medium = 2,
-        Hard = 3
+        public Target target;
+        public Transform targetTransform;
+        public Transform homeTransform;
+        public PlotManager plotManager;
+        public PlayerController playerController;
+    }
+
+    public enum Target
+    {
+        Home,
+        Plots,
+        Player
     }
 
     public enum State
@@ -19,7 +30,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
         Return
     }
 
-    [SerializeField] private EnemyState enemyState = new Chase();
+    [SerializeField] private EnemyState enemyState;
 
     private NavMeshAgent agent;
     public NavMeshAgent Agent { get => agent; }
@@ -28,6 +39,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     public int Health { get => health; set => health = value; }
     public int MaxHealth { get => 100; set { } }
+    [SerializeField] private Canvas ui_health;
+
 
     [SerializeField] private int damage;
     public int Damage => damage;
@@ -54,9 +67,11 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     [SerializeField] private int maxItemsDropped;
     [SerializeField, Range(0, 5)] private float dropRadius;
 
+    [SerializeField] private Blackboard bb;
+    public Blackboard BB { get => bb; set => bb = value; }
 
-    Plot target;
-
+    
+    bool frozen = false;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -64,6 +79,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     private void Start()
     {
+        SetState(State.Chase);
         enemyState.Enemy = this;
 
         //Make drop rates easily transitable later
@@ -128,6 +144,28 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
                 break;
         }
         enemyState.Enemy = this;
+        enemyState.BB = this.bb;
     }
-    
+
+    public void UpdateLife() {
+
+        ui_health.gameObject.SetActive(true);
+        ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
+    }
+
+
+    public void GetFrozen() {
+
+        if (frozen)
+            StartCoroutine(Freeze());
+    }
+
+    IEnumerator Freeze() {
+
+        frozen = true;
+
+        yield return new WaitForSeconds(1.0f);
+
+        frozen = false;
+    }
 }

@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlantBasedTower : MonoBehaviour, IInteractable
+public class PlantBasedTower : Tower, IInteractable
 {
-    [SerializeField] GameObject projectile;
-    bool attacking = false;
-    private List<GameObject> closeEnemies = new List<GameObject>();
-    private GameObject targetedEnemy;
 
     [SerializeField] private (PlantData data, float amount) currentPlant = (null, 0f);
     private readonly int maxCapacity = 3;
@@ -109,7 +105,7 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
         {
-            damageable.DamageMax();
+            damageable.DamagePercent(50.0f);
             currentPlant.amount -= usesPerAttack;
         }
     }
@@ -126,7 +122,7 @@ public class PlantBasedTower : MonoBehaviour, IInteractable
         GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
         p.transform.rotation = Quaternion.Euler(180, p.transform.rotation.eulerAngles.y, p.transform.rotation.eulerAngles.z);
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
     }
 }

@@ -5,6 +5,8 @@ public interface IDamageable
     public int Health { get; set; }
     public int MaxHealth { get; set; }
 
+    public float HealthRatio => (float)Health / (float)MaxHealth;
+
     public void Heal(int amount) => Health = Mathf.Min(Health + amount, MaxHealth);
     public void HealPercent(float percent) => Heal((int)(MaxHealth * percent / 100.0f));
     public void HealMax() => Health = MaxHealth;
