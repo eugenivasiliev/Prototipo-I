@@ -12,6 +12,9 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private GameObject range;
 
+    [SerializeField] private TowerMenu tm;
+
+
     private void Start()
     {
         //(this as IInteractable).Bind();
@@ -49,7 +52,7 @@ public class TowerSpot : MonoBehaviour, IInteractable
         float r = currentTower.GetComponent<DefaultTower>().GetRange();
         SetRange(r);
 
-        TowerMenu.Instance.ToggleMenu();
+        tm.ToggleMenu();
     }
 
     private void OnTowerUpgraded(int level)
@@ -68,8 +71,8 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private void Action_PlaceTower(InputAction.CallbackContext context)
     {
-        TowerMenu.Instance.spotReference = this;
-        TowerMenu.Instance.ToggleMenu();
+        tm.spotReference = this;
+        tm.ToggleMenu();
     }
 
     public void SetRange(float dist)

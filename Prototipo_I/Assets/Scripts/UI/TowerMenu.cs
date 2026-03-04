@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TowerMenu : Singleton<TowerMenu>
+public class TowerMenu : MonoBehaviour
 {
     [SerializeField] private GameObject towerMenuPanel;
     [SerializeField] private GameObject towerMenuIngredients;
@@ -22,8 +22,6 @@ public class TowerMenu : Singleton<TowerMenu>
 
     private void Awake()
     {
-        Init();
-
         towerMenuPanel.SetActive(false);
         towerMenuIngredients.SetActive(false);
     }
