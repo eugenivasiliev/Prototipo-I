@@ -35,7 +35,7 @@ public class TowerMenu : MonoBehaviour
     {
         foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
 
-        foreach (TowerData data in TowerDBManager.Instance.DB.TowerDataList)
+        foreach (TowerData data in DBManager.Instance.TowerDB.TowerDataList)
         {
             if(Inventory.Instance.HasIngredients(data.ingredients))
             {

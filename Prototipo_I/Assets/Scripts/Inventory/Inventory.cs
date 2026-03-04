@@ -105,6 +105,8 @@ public class Inventory : MonoBehaviour, IAutoSaving<InventoryList>
 
         instance = this;
 
+        uiSpritesDB.Init();
+
         items = new InventoryList(inventorySpace);
 
         (this as IAutoSaving<InventoryList>).SetupAutoSave();
