@@ -35,7 +35,7 @@ public class EnemyManager : MonoBehaviour
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
+        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
     }
 
     private bool AreEnemiesRemaining()
@@ -49,23 +49,18 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        if (isWaveActive && !AreEnemiesRemaining() && enemiesToSpawn.Count == 0)
-        {
-            isWaveActive = false;
-            currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
-            if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
-            {
-                foreach (var obj in objs)
-                {
-                    obj.UpdateObjective(1);
-                }
-            }
-            DayNightCycle.Instance.SubscribeTimedEvent(
-                Spawn, 
-                (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration + DayNightCycle.Instance.DayTime
-                );
-        }
+        if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
+
+        isWaveActive = false;
+        currentPhaseIndex++;
+        currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
+
+        if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
+            foreach (var obj in objs)
+                obj.UpdateObjective(1);
+
+        DayNightCycle.Instance.PassTime();
+        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
     }
 
     private void RegisterEnemy(EnemyAI enemy)
@@ -129,6 +124,7 @@ public class EnemyManager : MonoBehaviour
         foreach (var enemy in allEnemies)
             if (enemy != null) enemy.SetState(EnemyAI.State.Return);
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
+        DayNightCycle.Instance.PassTime();
+        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
     }
 }

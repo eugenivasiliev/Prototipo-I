@@ -15,7 +15,7 @@ public class PuddlePlantItem : Item, IInteractable, ITradeable, IPlantSeed
         new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
     };
 
-    public PlantData PlantData => PlantDBManager.Instance.DB[Name];
+    public PlantData PlantData => DBManager.Instance.PlantDB[Name];
 
     public int Price => 25;
 
@@ -25,7 +25,7 @@ public class PuddlePlantItem : Item, IInteractable, ITradeable, IPlantSeed
     {
         if (PlayerController.MovementLocked) return;
         GameObject instance = GameObject.Instantiate(
-            PlantDBManager.Instance.DB[Name].plantWeapon,
+            DBManager.Instance.PlantDB[Name].plantWeapon,
             PlayerController.Instance.transform.position,
             Quaternion.Euler(-90, 0, 0)
             );

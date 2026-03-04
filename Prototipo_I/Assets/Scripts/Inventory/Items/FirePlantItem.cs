@@ -17,7 +17,7 @@ public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
 
     public int Price => 25;
 
-    public PlantData PlantData => PlantDBManager.Instance.DB[Name];
+    public PlantData PlantData => DBManager.Instance.PlantDB[Name];
 
     public void OnInteract() {}
 
@@ -25,7 +25,7 @@ public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
     {
         if (PlayerController.MovementLocked) return;
         GameObject instance = GameObject.Instantiate(
-            PlantDBManager.Instance.DB[Name].plantWeapon,
+            DBManager.Instance.PlantDB[Name].plantWeapon,
             PlayerController.Instance.transform.position,
             Quaternion.Euler(-90, 0, 0)
             );
