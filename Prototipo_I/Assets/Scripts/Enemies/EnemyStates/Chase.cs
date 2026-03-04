@@ -14,7 +14,7 @@ public class Chase : EnemyState
                 case EnemyAI.Target.Plots:
                     float minDistance = Mathf.Infinity;
 
-                    foreach (var plot in bb.plotManager.plots)
+                    foreach (var plot in bb.plots)
                     {
                         if (!plot.IsPlanted) continue;
 

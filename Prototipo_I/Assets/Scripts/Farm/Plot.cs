@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Plot : MonoBehaviour, IInteractable, IDamageable
 {
+    [SerializeField] private HybridationManager hybridationManager;
+
     Plant plant;
     PlantData plantData;
 
@@ -41,7 +43,7 @@ public class Plot : MonoBehaviour, IInteractable, IDamageable
         AudioManager.instance.PlaySFX("Plant");
         if (IsPlanted)
         {
-            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
+            if (hybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
             {
                 this.plantData = newPlant;
                 plant = new Plant(newPlant);

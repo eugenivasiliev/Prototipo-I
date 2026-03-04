@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EnemyManager : MonoBehaviour
+public class EnemyManager : Singleton<EnemyManager>
 {
-
-    public static EnemyManager Instance {get; private set;}
-
     [SerializeField] private EnemyDB enemyDB;
     [SerializeField] private WaveDB waveDB;
 
@@ -22,15 +19,21 @@ public class EnemyManager : MonoBehaviour
     private List<EnemyAI> allEnemies = new List<EnemyAI>();
     private List<string> enemiesToSpawn = new List<string>();
 
+    [SerializeField] private GameObject plotManager;
+    private List<Plot> allPlots = new List<Plot>();
+
     private UnityEvent<float> Spawn = new UnityEvent<float>();
     private UnityEvent<float> Return = new UnityEvent<float>();
 
     [SerializeField] private EnemyAI.Blackboard bb;
     void Start()
     {
+        Init();
         enemyDB.Init();
 
-        Instance = this;
+        allPlots.Clear();
+        allPlots.AddRange(plotManager.GetComponentsInChildren<Plot>());
+        this.bb.plots = allPlots;
 
         Spawn.AddListener(SpawnEnemies);
         Return.AddListener(ReturnToSpawn);
@@ -41,9 +44,7 @@ public class EnemyManager : MonoBehaviour
     private bool AreEnemiesRemaining()
     {
         foreach (var enemy in allEnemies)
-        {
             if (enemy != null) return true;
-        }
         return false;
     }
 
