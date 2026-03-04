@@ -40,8 +40,8 @@ public class Animal : MonoBehaviour
         breed.AddListener(Breeding);
 
 
-        DayNightCycle.Instance.SubscribeTimedEvent(feed,DayNightCycle.Instance.TotalTime + eatInterval);
-        DayNightCycle.Instance.SubscribeTimedEvent(breed,DayNightCycle.Instance.TotalTime + breedingCooldown);
+        //DayNightCycle.Instance.SubscribeTimedEvent(feed, eatInterval);
+        //DayNightCycle.Instance.SubscribeTimedEvent(breed, breedingCooldown);
     }
 
     private void needFeed(float t)
@@ -60,7 +60,7 @@ public class Animal : MonoBehaviour
         }
 
         mealsEaten++;
-        DayNightCycle.Instance.SubscribeTimedEvent(feed, DayNightCycle.Instance.TotalTime + eatInterval);
+        //DayNightCycle.Instance.SubscribeTimedEvent(feed, DayNightCycle.Instance.TotalTime + eatInterval);
 
         Debug.Log("Veces comido" + mealsEaten);
 

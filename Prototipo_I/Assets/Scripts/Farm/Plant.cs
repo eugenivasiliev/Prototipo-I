@@ -11,7 +11,7 @@ public class Plant
 
     public int CurrentStage => currentStage;
 
-    private float timeToGrow;
+    private int timeToGrow;
     private float growthTimer;
     private bool isFertilize;
 
@@ -39,10 +39,10 @@ public class Plant
         isFertilize = isFertilized;
     }
 
-    public void TryGrow(float currentTime)
+    public void TryGrow(int currentTime)
     {
         Grow.AddListener(NextGrowStage);
-        DayNightCycle.Instance.SubscribeTimedEvent(Grow, currentTime + timeToGrow / (isFertilize ? 1.5f : 1f));
+        DayNightCycle.Instance.SubscribeTimedEvent(Grow, timeToGrow);
     }
 
     public void UpdateGrowth(float deltaTime)
