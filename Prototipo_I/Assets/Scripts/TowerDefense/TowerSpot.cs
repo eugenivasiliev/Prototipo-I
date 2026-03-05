@@ -4,16 +4,23 @@ using UnityEngine.InputSystem;
 
 public class TowerSpot : MonoBehaviour, IInteractable
 {
-    Tower tower;
     TowerData towerData;
 
     private GameObject currentTower;
 
-    public bool hasTower { get { return tower != null; } }
+    public bool hasTower { get { return towerData != null; } }
+
+    private GameObject range;
+
+    [SerializeField] private TowerMenu tm;
+
 
     private void Start()
     {
-        (this as IInteractable).Bind();
+        //(this as IInteractable).Bind();
+
+        if (this.transform.GetChild(0) != null) 
+            range = this.transform.GetChild(0).gameObject;
     }
 
     public void PlaceTower(string dataName)
@@ -21,11 +28,8 @@ public class TowerSpot : MonoBehaviour, IInteractable
         AudioManager.instance.PlaySFX("Plant");
         if (hasTower) return;
 
-        towerData = TowerDatabase.Instance.GetTowerByName(dataName);
-        tower = new Tower(towerData);
+        towerData = DBManager.Instance.TowerDB[dataName];
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
-
-        Debug.Log($"Tower {tower.Name} placed!");
     }
 
     public void PlaceTower(TowerData data)
@@ -39,10 +43,12 @@ public class TowerSpot : MonoBehaviour, IInteractable
         if (hasTower) return;
 
         towerData = data;
-        tower = new Tower(data);
         currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-        Debug.Log($"Tower {tower.Name} placed!");
+        float r = currentTower.GetComponent<DefaultTower>().GetRange();
+        SetRange(r);
+
+        tm.ToggleMenu();
     }
 
     private void OnTowerUpgraded(int level)
@@ -61,8 +67,26 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     private void Action_PlaceTower(InputAction.CallbackContext context)
     {
-        TowerMenu.Instance.spotReference = this;
-        TowerMenu.Instance.ToggleMenu();
+        tm.spotReference = this;
+        tm.ToggleMenu();
+    }
+
+    public void SetRange(float dist)
+    {
+        range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+    }
+
+    public void ShowRange(bool bo) {
+        range.SetActive(bo);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player") ShowRange(true);
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player") ShowRange(false); 
     }
 
     public void OnInteract() {}

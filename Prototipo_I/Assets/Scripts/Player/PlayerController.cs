@@ -2,24 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     private bool isReset = false;
     private float currentTimeForNextDay = 0.0f;
     private float maxTimeForNextDay = 2.0f;
-    private static PlayerController instance;
-    public static PlayerController Instance { get { return instance; } }
 
+    [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private KeyCode attackKey;
+    [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+    private float currentCooldown = 0.0f;
+
+    [Header("Movement")]
     [SerializeField] private float speed = 5f;
     [SerializeField] private float sprintSpeed = 7.5f;
     [SerializeField] private float cameraSensibility = 7.5f;
     [SerializeField] private float gravity = 9.80665f;
     [SerializeField] private float jumpHeight = 2f;
+
+    [Header("Transforms")]
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private Transform modelTransform;
-    [SerializeField] public short InteractionRange { get { return 10; } }
+    [SerializeField] public short InteractionRange { get { return 3; } }
+
+    [Header("Camera")]
+    [SerializeField] private Vector3 farCameraOffset;
+    [SerializeField] private Vector3 nearCameraOffset;
+    private Vector3 cameraOffset;
+    private bool isCameraFar = true;
+    [SerializeField] private AnimationCurve animationCurveX;
+    [SerializeField] private AnimationCurve animationCurveY;
+    [SerializeField, Range(0, 1)] private float animationDuration;
+
+    [Header("VFX")]
+    [SerializeField] private GameObject stunParticles;
 
     private CharacterController characterController;
     private static InputSystem_Actions inputs;
@@ -49,16 +68,18 @@ public class PlayerController : MonoBehaviour
     private static bool movementLocked = false;
     public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
+    private bool waveMenuTouched = false;
+
+
+    private Camera cam;
     private void Awake()
     {
-        if(instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
+        Init();
+
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
+
+        cam = Camera.main;
     }
 
     private void Start()
@@ -72,12 +93,20 @@ public class PlayerController : MonoBehaviour
         inputs.Player.Sprint.canceled += ctx => isSprinting = false;
         inputs.Player.Interact.canceled += ctx => Interact();
         inputs.Player.Jump.performed += ctx => isJumping = true;
-        
+
+        inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
         //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
         //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
-        
+
+        inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+
+        inputs.Player.debug.performed += ctx => Stun(1);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        cameraOffset = farCameraOffset;
+        isCameraFar = true;
     }
 
     private void OnDisable()
@@ -89,6 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         Look();
         Movement();
+        AttackLoop();
     }
 
     private void Movement()
@@ -111,7 +141,6 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.instance.PlaySFX("Jumping");
             velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
-            Debug.Log(velocity.y);
             isJumping = false;
         }
 
@@ -140,11 +169,50 @@ public class PlayerController : MonoBehaviour
         if(movementLocked) return;
 
         float mouseX = cameraInput.x* cameraSensibility;
-        Vector3 offset = cameraTransform.position - transform.position;
         Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-        cameraTransform.transform.position = transform.position + q * offset;
+        cameraOffset = q * cameraOffset;
+        farCameraOffset = q * farCameraOffset;
+        nearCameraOffset = q * nearCameraOffset;
+
+        cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+
+        cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
+    }
+
+    void ToggleCameraDistance(InputAction.CallbackContext ctx)
+    {
+        StartCoroutine(ToggleAnim());
+    }
+
+    private IEnumerator ToggleAnim()
+    {
+        movementLocked = true;
+
+        Vector3 startPos = (isCameraFar) ? farCameraOffset : nearCameraOffset;
+        Vector3 endPos = (isCameraFar) ? nearCameraOffset : farCameraOffset;
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime / animationDuration;
+            float alphaX = animationCurveX.Evaluate(t);
+            float alphaY = animationCurveY.Evaluate(t);
+
+            cameraOffset.x = (1 - alphaX) * startPos.x + alphaX * endPos.x;
+            cameraOffset.y = (1 - alphaY) * startPos.y + alphaY * endPos.y;
+            cameraTransform.position = transform.position + cameraOffset;
+            cameraTransform.LookAt(transform.position, Vector3.up);
+
+            yield return new WaitForEndOfFrame();
+        }
+
+        isCameraFar = !isCameraFar;
+        movementLocked = false;
+
+        yield return null;
     }
 
     private void Interact()
@@ -152,47 +220,26 @@ public class PlayerController : MonoBehaviour
         Vector3 fwr = Camera.main.transform.forward;
         if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
         {
-            Debug.Log("Yeah! I did it");
             interactable = hit.collider.GetComponent<IInteractable>();
             if( interactable != null ) interactable.OnInteract();
         }
     }
 
-    IEnumerator NextDayCountdown()
-    {
+    void OpenWaveMenu() {
 
-        currentTimeForNextDay += Time.deltaTime;
-
-        yield return null;
-
-        if (currentTimeForNextDay >= maxTimeForNextDay && isReset == false)
-        {
-            //DayNightCycle.Instance.NextDay();
-            currentTimeForNextDay = 0.0f;
-            PlotManager.Instance.FullGrow();
-        }
-        else if (isReset == false)
-            StartCoroutine(NextDayCountdown());
-        else
-            isReset = false;
+        if (waveMenuTouched)
+            WaveManager.Instance.ToggleWaveUI();
     }
 
-
-    private void ResetDayCountdown()
-    {
-
-        currentTimeForNextDay = 0.0f;
-        isReset = true;
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
         {
-            
             closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
+        }
+        else if (other.CompareTag("Console")) 
+        {
+            waveMenuTouched = true;
         }
     }
 
@@ -208,45 +255,30 @@ public class PlayerController : MonoBehaviour
                 targetedEnemy = null;
             }
         }
-    }
-
-    IEnumerator AttackLoop()
-    {
-        attacking = true;
-
-        float waitTime = 0.6f;
-
-        while (attacking && closeEnemies.Count > 0)
+        else if (other.CompareTag("Console"))
         {
-            if (targetedEnemy == null)
-                GetClosestEnemy();
-
-            SpawnProjectile(waitTime);
-
-            yield return new WaitForSeconds(waitTime);
-
-            if (targetedEnemy != null)
-                DamageTarget();
-            else 
-            {
-                GetClosestEnemy();
-                DamageTarget();
-            }
+            waveMenuTouched = false;
         }
-
-        attacking = false;
     }
 
-    void GetClosestEnemy()
+    private void AttackLoop()
+    {
+
+        if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
+
+        if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+        
+        SpawnProjectile(attackCooldown);
+        DamageTarget();
+
+        currentCooldown = 0;
+    }
+
+    private bool GetClosestEnemy()
     {
         closeEnemies.RemoveAll(item => item == null);
-
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else {
-            targetedEnemy = null;
-            attacking = false;
-        }
+        targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+        return targetedEnemy != null;
     }
 
     void DamageTarget()
@@ -261,7 +293,25 @@ public class PlayerController : MonoBehaviour
         AudioManager.instance.PlaySFX("PlayerAttack");
         GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
         p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform.position;
+        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
         p.GetComponent<Projectile>().maxTime = waitTime;
+    }
+
+    public void Stun(float seconds)
+    {
+        //TODO: Add proper VFX/SFX
+
+        Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+        //AudioManager.instance.PlaySFX("Stun");
+
+        StartCoroutine(StunCorroutine(seconds));
+    }
+
+    private IEnumerator StunCorroutine(float seconds) {
+        movementLocked = true;
+
+        yield return new WaitForSeconds(seconds);
+
+        movementLocked = false;
     }
 }

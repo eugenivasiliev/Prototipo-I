@@ -11,7 +11,7 @@ public class Plant
 
     public int CurrentStage => currentStage;
 
-    private float timeToGrow;
+    private int timeToGrow;
     private float growthTimer;
     private bool isFertilize;
 
@@ -39,10 +39,10 @@ public class Plant
         isFertilize = isFertilized;
     }
 
-    public void TryGrow(float currentTime, bool hasWater)
+    public void TryGrow(int currentTime)
     {
         Grow.AddListener(NextGrowStage);
-        DayNightCycle.Instance.SubscribeTimedEvent(Grow, currentTime + timeToGrow / (isFertilize ? 1.5f : 1f));
+        DayNightCycle.Instance.SubscribeTimedEvent(Grow, timeToGrow);
     }
 
     public void UpdateGrowth(float deltaTime)
@@ -52,25 +52,18 @@ public class Plant
 
     private void NextGrowStage(float time)
     {
-        Debug.Log($"{IsFullyGrown}");
-        Debug.Log($"{currentStage}");
-        if (IsFullyGrown)
-        {
-            Debug.Log("Ya no puede crecer mas");
-            return;
-        }
+        if (IsFullyGrown) return;
 
         currentStage++;
         growthTimer = 0f;
         isFertilize = false;
         OnStageChanged?.Invoke(currentStage);
-        Debug.Log("Sigue creciendo");
+        TryGrow(DayNightCycle.Instance.TotalTime);
 
     }
 
     public void FullGrow() {
 
         currentStage = maxStage;
-        Debug.Log(CurrentStage);
     }
 }

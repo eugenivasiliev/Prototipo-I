@@ -86,7 +86,6 @@ public class FirePlant : PlantWeapon
     //}
     private void OnTriggerStay(Collider collider)
     {
-        if (collider.gameObject.GetComponent<EnemyAI>()) Debug.Log("Hello!");
         if (collider.gameObject.TryGetComponent(out IDamageable damageable))
         {
             damageable.Damage(damageDealt);
