@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     private bool isReset = false;
     private float currentTimeForNextDay = 0.0f;
     private float maxTimeForNextDay = 2.0f;
-    private static PlayerController instance;
-    public static PlayerController Instance { get { return instance; } }
 
     [Header("Attack")]
     [SerializeField] private GameObject projectilePrefab;
@@ -72,16 +70,16 @@ public class PlayerController : MonoBehaviour
 
     private bool waveMenuTouched = false;
 
+
+    private Camera cam;
     private void Awake()
     {
-        if(instance != null)
-        {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
+        Init();
+
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
+
+        cam = Camera.main;
     }
 
     private void Start()
@@ -143,7 +141,6 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.instance.PlaySFX("Jumping");
             velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
-            Debug.Log(velocity.y);
             isJumping = false;
         }
 
@@ -180,6 +177,8 @@ public class PlayerController : MonoBehaviour
         cameraTransform.transform.position = transform.position + cameraOffset;
 
         cameraTransform.LookAt(transform.position, Vector3.up);
+
+        cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
     }
 
     void ToggleCameraDistance(InputAction.CallbackContext ctx)
@@ -221,7 +220,6 @@ public class PlayerController : MonoBehaviour
         Vector3 fwr = Camera.main.transform.forward;
         if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
         {
-            Debug.Log("Yeah! I did it");
             interactable = hit.collider.GetComponent<IInteractable>();
             if( interactable != null ) interactable.OnInteract();
         }

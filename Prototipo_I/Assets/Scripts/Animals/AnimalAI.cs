@@ -37,13 +37,12 @@ public class AnimalAI : MonoBehaviour
 
         walk.AddListener(Walking);
 
-        DayNightCycle.Instance.SubscribeTimedEvent(walk, DayNightCycle.Instance.TotalTime + timeToWalk);
+        //DayNightCycle.Instance.SubscribeTimedEvent(walk, DayNightCycle.Instance.TotalTime + timeToWalk);
     }
 
     private void Update()
     {
         animalState.Behaviour();
-        //Debug.Log(animalState);
     }
 
     public void SetState(State newState)
@@ -74,7 +73,7 @@ public class AnimalAI : MonoBehaviour
         SetState(State.WALKING);
 
         timeToWalk = Random.Range(minTimeToWalk, maxTimeToWalk);
-        DayNightCycle.Instance.SubscribeTimedEvent(walk, DayNightCycle.Instance.TotalTime + timeToWalk);
+        //DayNightCycle.Instance.SubscribeTimedEvent(walk, DayNightCycle.Instance.TotalTime + timeToWalk);
     }
 
 }

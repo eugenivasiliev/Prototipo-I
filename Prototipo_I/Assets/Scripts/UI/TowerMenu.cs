@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class TowerMenu : MonoBehaviour
 {
-    public static TowerMenu Instance { get; private set; }
-
     [SerializeField] private GameObject towerMenuPanel;
     [SerializeField] private GameObject towerMenuIngredients;
     [SerializeField] private GameObject towerUI;
@@ -19,11 +17,11 @@ public class TowerMenu : MonoBehaviour
 
     private float range;
 
+    [Header("UI Sprites")]
+    [SerializeField] private UISpritesDB uiSpritesDB;
+
     private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
         towerMenuPanel.SetActive(false);
         towerMenuIngredients.SetActive(false);
     }
@@ -32,14 +30,14 @@ public class TowerMenu : MonoBehaviour
     {
         foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
 
-        foreach (TowerData data in TowerDBManager.Instance.DB.TowerDataList)
+        foreach (TowerData data in DBManager.Instance.TowerDB.TowerDataList)
         {
             if(Inventory.Instance.HasIngredients(data.ingredients))
             {
 
                 GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
                 instance.GetComponent<Image>().sprite = data.uiSprite;
-                instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
+                instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
 
                 instance.GetComponent<TurretButton>().spotReference = spotReference;
                 instance.GetComponent<TurretButton>().range = data.range;
@@ -49,7 +47,6 @@ public class TowerMenu : MonoBehaviour
         }
     }
 
-    //UISpritesDBManager
     public void LoadValidIngredients(TowerData td)
     {
         foreach (Transform child in this.transform.GetChild(1)) Destroy(child.gameObject);
@@ -57,7 +54,7 @@ public class TowerMenu : MonoBehaviour
         
         GameObject instance = Instantiate(towerUI, this.transform.GetChild(1));
 
-        instance.GetComponent<Image>().sprite = UISpritesDBManager.Instance.DB[td.ingredients[0].itemName];
+        instance.GetComponent<Image>().sprite = uiSpritesDB[td.ingredients[0].itemName];
         instance.GetComponentInChildren<TMP_Text>().text = td.ingredients[0].amount.ToString();
     }
     

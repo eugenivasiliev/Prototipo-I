@@ -40,13 +40,12 @@ public class Animal : MonoBehaviour
         breed.AddListener(Breeding);
 
 
-        DayNightCycle.Instance.SubscribeTimedEvent(feed,DayNightCycle.Instance.TotalTime + eatInterval);
-        DayNightCycle.Instance.SubscribeTimedEvent(breed,DayNightCycle.Instance.TotalTime + breedingCooldown);
+        //DayNightCycle.Instance.SubscribeTimedEvent(feed, eatInterval);
+        //DayNightCycle.Instance.SubscribeTimedEvent(breed, breedingCooldown);
     }
 
     private void needFeed(float t)
     {
-        Debug.Log("necesita comida");
 
         IsHungry = true;
     }
@@ -55,14 +54,12 @@ public class Animal : MonoBehaviour
     {
         if (mealsEaten == maxMealsEaten)
         {
-            Debug.Log("Can't eat more");
             return;
         }
 
         mealsEaten++;
-        DayNightCycle.Instance.SubscribeTimedEvent(feed, DayNightCycle.Instance.TotalTime + eatInterval);
+        //DayNightCycle.Instance.SubscribeTimedEvent(feed, DayNightCycle.Instance.TotalTime + eatInterval);
 
-        Debug.Log("Veces comido" + mealsEaten);
 
         if (mealsEaten >= mealsForProduction)
         {
@@ -71,7 +68,6 @@ public class Animal : MonoBehaviour
 
         if (mealsEaten >= mealsForGrow)
         {
-            Debug.Log("Listo para crecer");
             Grow();
         }
 
@@ -101,7 +97,6 @@ public class Animal : MonoBehaviour
     private void Collect()
     {
         caring++;
-        Debug.Log("Ya estoy listo para recolectar");
         mealsEaten = 0;
         canCollet = false;
     }
@@ -129,7 +124,6 @@ public class Animal : MonoBehaviour
     {
         if(caring >= maxCaring)
         {
-            Debug.Log("Pueden tener babies");
             canBreed = true;
         }
     }
@@ -169,6 +163,5 @@ public class Animal : MonoBehaviour
         {
             Collect();
         }
-        //Debug.Log(caring);
     }
 }
