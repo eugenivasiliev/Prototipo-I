@@ -17,7 +17,7 @@ public class PauseMenu : Singleton<PauseMenu>, IInteractable
 
     private void Awake()
     {
-        Init();
+        InitSingleton();
 
         pauseMenuPanel.SetActive(false);
     }
