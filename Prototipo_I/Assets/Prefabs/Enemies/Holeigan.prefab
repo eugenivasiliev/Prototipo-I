@@ -70,9 +70,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  ui_health: {fileID: 3064831801713183341}
+  ui_health: {fileID: 0}
   damage: 0
   difficulty: 1
+  speed: 15
+  slowSpeed: 2
   droppableLoot:
   - gameObject: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
     rate: 1
@@ -83,7 +85,7 @@ MonoBehaviour:
     target: 1
     targetTransform: {fileID: 0}
     homeTransform: {fileID: 0}
-    plotManager: {fileID: 0}
+    plots: []
     playerController: {fileID: 0}
 --- !u!195 &7620956390719517439
 NavMeshAgent:
