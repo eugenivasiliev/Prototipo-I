@@ -28,7 +28,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] private EnemyAI.Blackboard bb;
     void Start()
     {
-        Init();
+        InitSingleton();
         enemyDB.Init();
 
         allPlots.Clear();

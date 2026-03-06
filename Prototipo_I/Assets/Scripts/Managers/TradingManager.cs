@@ -60,7 +60,7 @@ public class TradingManager : Singleton<TradingManager>, IInteractable, IAutoSav
 
     private void Start()
     {
-        Init();
+        InitSingleton();
 
         (this as IAutoSaving<Stock>).SetupAutoSave();
         (this as IAutoSaving<Stock>).Load();

@@ -4,7 +4,7 @@ public class SceneManager : Singleton<SceneManager>
 {
     private void Awake()
     {
-        Init();
+        InitSingleton();
     }
 
     public static void LoadScene(string sceneName)

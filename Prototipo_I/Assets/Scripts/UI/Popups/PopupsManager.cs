@@ -14,7 +14,7 @@ public class PopupsManager : Singleton<PopupsManager>
 
     private void Awake()
     {
-        Init();
+        InitSingleton();
         DontDestroyOnLoad(gameObject);
 
         canvasGroup = popupPanel.GetComponent<CanvasGroup>();

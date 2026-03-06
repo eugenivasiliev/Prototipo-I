@@ -10,7 +10,7 @@ public class DBManager : Singleton<DBManager>
 
     private void Start()
     {
-        Init();
+        InitSingleton();
         plantDB.Init();
         towerDB.Init();
     }
