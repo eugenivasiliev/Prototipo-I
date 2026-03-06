@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-public class PauseMenu : MonoBehaviour, IInteractable
+public class PauseMenu : Singleton<PauseMenu>, IInteractable
 {
-    public static PauseMenu Instance { get; private set; }
-
     [SerializeField] private GameObject pauseMenuPanel;
 
     private bool isPaused = false;
@@ -19,8 +17,7 @@ public class PauseMenu : MonoBehaviour, IInteractable
 
     private void Awake()
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        InitSingleton();
 
         pauseMenuPanel.SetActive(false);
     }

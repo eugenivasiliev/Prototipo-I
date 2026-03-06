@@ -2,9 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class PopupsManager : MonoBehaviour
+public class PopupsManager : Singleton<PopupsManager>
 {
-    public static PopupsManager Instance { get; private set; }
 
     [SerializeField] private GameObject popupPanel;
     [SerializeField] private TextMeshProUGUI messageText;
@@ -15,7 +14,7 @@ public class PopupsManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        InitSingleton();
         DontDestroyOnLoad(gameObject);
 
         canvasGroup = popupPanel.GetComponent<CanvasGroup>();

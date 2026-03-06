@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData : ScriptableObject
 {
     public string plantName;
-    public float timeToGrow;
+    public int timeToGrow;
 
     public GameObject[] stages;
 
