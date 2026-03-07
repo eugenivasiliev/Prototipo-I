@@ -9,8 +9,6 @@ public class ContextKey : MonoBehaviour
         {
 
             transform.GetChild(0).gameObject.SetActive(true);
-
-            CompanionDialogueUI.Instance.DisplayTextById("Context Key");
         }
     }
     private void OnTriggerExit(Collider other)
