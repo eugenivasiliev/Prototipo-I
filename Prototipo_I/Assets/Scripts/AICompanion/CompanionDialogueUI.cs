@@ -4,37 +4,22 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[Serializable]
-public struct OneTimeDialogue
-{
-    [SerializeField] private string id;
-    public string Id { get { return id; } }
-    [SerializeField] private string text;
-    public string Text { get { return text; } }
-    public bool hasTriggered;
-}
 
 public class CompanionDialogueUI : Singleton<CompanionDialogueUI>
 {
-    [SerializeField, Range(0, 10)] private float textShowTime;
-
     [SerializeField] private RectTransform dialogueUI;
     [SerializeField] private TMP_Text dialogueText;
 
     [SerializeField] private Tween<Vector2> textPosTween;
 
-    [SerializeField] private List<OneTimeDialogue> dialogueList;
-    public Dictionary<string, OneTimeDialogue> DialogueList { get; private set; }
+    [SerializeField] private DialogueDB dialogueDB;
 
     private void Start()
     {
         InitSingleton();
+        dialogueDB.Init();
         textPosTween.Reset();
         dialogueUI.anchoredPosition = textPosTween.value;
-
-        DialogueList = new Dictionary<string, OneTimeDialogue>();
-        foreach (var dialogue in dialogueList) 
-            DialogueList.Add(dialogue.Id, dialogue);
     }
 
     private void Update()
@@ -51,16 +36,16 @@ public class CompanionDialogueUI : Singleton<CompanionDialogueUI>
         dialogue.hasTriggered = true;
         textPosTween.SetActive(true);
 
-        StartCoroutine(HideTextIn(textShowTime));
+        StartCoroutine(HideTextIn(dialogue.lifeTime));
     }
 
     public bool DisplayTextById(string id)
     {
-        if(!DialogueList.ContainsKey(id)) return false;
+        if(!dialogueDB.ContainsKey(id)) return false;
 
-        OneTimeDialogue dialogue = DialogueList[id];
+        OneTimeDialogue dialogue = dialogueDB[id];
         DisplayText(ref dialogue);
-        DialogueList[id] = dialogue;
+        dialogueDB[id] = dialogue;
         return true;
     }
 
