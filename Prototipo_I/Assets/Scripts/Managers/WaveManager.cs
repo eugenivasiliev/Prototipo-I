@@ -22,12 +22,6 @@ public class WaveManager : MonoBehaviour
 
     public void ToggleWaveUI()
     {
-        /*
-        waveUI.SetActive(!waveUI.activeSelf);
-        Cursor.visible = waveUI.activeSelf;
-        Cursor.lockState = (waveUI.activeSelf) ? CursorLockMode.None : CursorLockMode.Locked;
-        PlayerController.MovementLocked = waveUI.activeSelf;
-        */
         isOpen = !isOpen;
         Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = isOpen;

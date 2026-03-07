@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Chase : EnemyState
 {
-    private float distanceThreshold => .45f;
+    private float distanceThreshold => 10.45f;
 
     public override void Behaviour()
     {
@@ -28,7 +28,22 @@ public class Chase : EnemyState
                     }
                     break;
                 case EnemyAI.Target.Home:
-                    bb.targetTransform = bb.homeTransform;
+                    //bb.targetTransform = bb.homeTransform;
+                    bb.targetTransform = Base.instance.transform;
+                    float _minDistance = 5.0f;
+
+                    foreach (var plot in bb.plots)
+                    {
+                        if (!plot.IsPlanted) continue;
+
+                        float d = Vector3.Distance(enemy.transform.position, plot.transform.position);
+
+                        if (d < _minDistance)
+                        {
+                            minDistance = d;
+                            bb.targetTransform = plot.transform;
+                        }
+                    }
                     break;
                 case EnemyAI.Target.Player:
                     bb.targetTransform = bb.playerController.transform;
