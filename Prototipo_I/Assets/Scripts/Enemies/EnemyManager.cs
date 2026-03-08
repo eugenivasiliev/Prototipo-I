@@ -28,7 +28,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] private EnemyAI.Blackboard bb;
     void Start()
     {
-        Init();
+        InitSingleton();
         enemyDB.Init();
 
         allPlots.Clear();
@@ -116,11 +116,11 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
-    private void ReturnToSpawn(float t)
+    public void ReturnToSpawn(float t)
     {
         foreach (var enemy in allEnemies)
             if (enemy != null) enemy.SetState(EnemyAI.State.Return);
-
+        isWaveActive = false;
         DayNightCycle.Instance.PassTime();
         DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
     }

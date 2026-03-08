@@ -10,7 +10,7 @@ public class ObjectivesManager : Singleton<ObjectivesManager>
 
     void Start()
     {
-        Init();
+        InitSingleton();
         foreach (var obj in objectives)
             (obj as IObjective).Init();
     }

@@ -24,7 +24,7 @@ public class DayNightCycle : Singleton<DayNightCycle>
 
     private void Awake()
     {
-        Init();
+        InitSingleton();
     }
 
     public void PassTime()

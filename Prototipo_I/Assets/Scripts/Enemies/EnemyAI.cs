@@ -46,6 +46,12 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     public int Damage => damage;
 
     [SerializeField] private int difficulty;
+
+
+    [SerializeField] private float speed;
+    [SerializeField] private float slowSpeed;
+
+
     public int Difficulty => difficulty;
 
     [Serializable]
@@ -75,6 +81,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
     }
 
     private void Start()
@@ -154,18 +161,14 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     }
 
 
-    public void GetFrozen() {
+    public void Slow() {
 
-        if (frozen)
-            StartCoroutine(Freeze());
+        agent.speed = slowSpeed;
+    }
+    
+    public void UnSlow() {
+
+        agent.speed = speed;
     }
 
-    IEnumerator Freeze() {
-
-        frozen = true;
-
-        yield return new WaitForSeconds(1.0f);
-
-        frozen = false;
-    }
 }

@@ -95,7 +95,7 @@ public class Inventory : Singleton<Inventory>, IAutoSaving<InventoryList>
 
     private void Start()
     {
-        Init();
+        InitSingleton();
         uiSpritesDB.Init();
 
         items = new InventoryList(inventorySpace);

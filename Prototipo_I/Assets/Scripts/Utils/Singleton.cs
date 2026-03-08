@@ -5,7 +5,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     protected static T instance;
     public static T Instance { get { return instance; } }
 
-    protected void Init()
+    protected void InitSingleton()
     {
         if (instance != null)
         {

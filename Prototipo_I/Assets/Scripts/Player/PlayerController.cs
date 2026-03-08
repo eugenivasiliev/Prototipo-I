@@ -74,7 +74,7 @@ public class PlayerController : Singleton<PlayerController>
     private Camera cam;
     private void Awake()
     {
-        Init();
+        InitSingleton();
 
         characterController = GetComponent<CharacterController>();
         if(inputs == null) inputs = new InputSystem_Actions();
