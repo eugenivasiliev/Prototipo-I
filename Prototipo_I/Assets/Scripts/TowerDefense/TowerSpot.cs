@@ -14,11 +14,12 @@ public class TowerSpot : MonoBehaviour, IInteractable
 
     [SerializeField] private TowerMenu tm;
 
+    [SerializeField] private TowerData.TowerType towerType;
+    public TowerData.TowerType TowerType { get { return towerType; } }
+
 
     private void Start()
     {
-        //(this as IInteractable).Bind();
-
         if (this.transform.GetChild(0) != null) 
             range = this.transform.GetChild(0).gameObject;
     }

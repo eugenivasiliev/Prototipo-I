@@ -19,5 +19,15 @@ public class TowerData : ScriptableObject
 
     public Sprite uiSprite;
 
+    public TowerType towerType;
+
     public string Id => throw new NotImplementedException();
+
+    public enum TowerType : int
+    {
+        ATTACK,
+        DEFENSE,
+        UTILITY,
+        COUNT
+    }
 }
