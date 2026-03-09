@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DefaultTower : Tower
 {
-        
+    private float damage = 20.0f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
@@ -82,7 +82,7 @@ public class DefaultTower : Tower
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable)) { 
-            damageable.DamagePercent(20.0f);
+            damageable.DamagePercent(damage);
 
             targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
         }
