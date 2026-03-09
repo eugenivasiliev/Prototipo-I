@@ -14,6 +14,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private KeyCode attackKey;
     [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+    [SerializeField] private int damage = 3;
     private float currentCooldown = 0.0f;
 
     [Header("Movement")]
@@ -59,7 +60,6 @@ public class PlayerController : Singleton<PlayerController>
 
     private List<GameObject> closeEnemies = new List<GameObject>();
     private GameObject targetedEnemy;
-    int damage = 1;
     bool attacking = false;
 
     [SerializeField] private int money;
@@ -286,7 +286,7 @@ public class PlayerController : Singleton<PlayerController>
         if (targetedEnemy == null) return;
 
         if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();        
+            damageable.Damage(damage);        
     }
 
     void SpawnProjectile(float waitTime) {

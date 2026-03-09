@@ -81,7 +81,7 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed;
+        agent.speed = speed * 2;
     }
 
     private void Start()
@@ -156,8 +156,8 @@ public class EnemyAI : MonoBehaviour, IAttacker, IDamageable
 
     public void UpdateLife() {
 
-        ui_health.gameObject.SetActive(true);
-        ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
+        //ui_health.gameObject.SetActive(true);
+        //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
 
 
