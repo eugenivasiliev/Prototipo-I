@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class Windmill : MonoBehaviour
 {
+    int amount = 1;
     private UnityEvent<float> Give = new UnityEvent<float>();
     private void Start()
     {
@@ -13,6 +14,6 @@ public class Windmill : MonoBehaviour
     void AddSeeds(float ff)
     {
         Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
-        DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+        DayNightCycle.Instance.SubscribeTimedEvent(Give, amount);
     }
 }

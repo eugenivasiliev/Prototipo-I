@@ -9,7 +9,7 @@ public class Bomb : MonoBehaviour
     float time = 0.0f;
     public float maxTime;
     public float maxHeight;
-    private float height;
+    private float height = 4;
 
     public GameObject explotion;
     void Start()
@@ -25,7 +25,7 @@ public class Bomb : MonoBehaviour
         {
 
             float t = time / maxTime; 
-            float curveCurrentHeight = 4 * maxHeight * t * (1 - t);
+            float curveCurrentHeight = height * maxHeight * t * (1 - t);
 
             this.transform.position = t * finalPos.position + (1 - t) * startPos;
             this.transform.position = new Vector3(
