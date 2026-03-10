@@ -1,19 +1,29 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlantsOfTypeCollected", menuName = "Scriptable Objects/Objectives/PlantsOfTypeCollected")]
-public class PlantsOfTypeCollected : Objective<string>
+namespace Objectives
 {
-    [SerializeField] private string plantName;
-    [SerializeField] private int plantsToCollect;
-    [SerializeField] private int plantsCollected = 0;
-
-    public override bool CheckObjective()
+    [CreateAssetMenu(fileName = "PlantsOfTypeCollected", menuName = "Scriptable Objects/Objectives/PlantsOfTypeCollected")]
+    public class PlantsOfTypeCollected : Objective<string>
     {
-        return plantsCollected >= plantsToCollect;
-    }
+        [SerializeField] private string plantName;
+        [SerializeField] private int plantsToCollect;
+        [SerializeField] private int plantsCollected = 0;
 
-    public override void UpdateObjective(string plantName)
-    {
-        if(plantName == this.plantName) plantsCollected++;
+        public override string Text => "Collect " + plantName + ": " + plantsCollected + "/" + plantsToCollect + "\n";
+
+        public override bool CheckObjective()
+        {
+            return plantsCollected >= plantsToCollect;
+        }
+
+        public override void Init()
+        {
+            plantsCollected = 0;
+        }
+
+        public override void UpdateObjective(string plantName)
+        {
+            if (plantName == this.plantName) plantsCollected++;
+        }
     }
 }

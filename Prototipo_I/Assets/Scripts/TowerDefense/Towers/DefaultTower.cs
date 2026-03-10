@@ -1,81 +1,127 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
+using Combat;
+using Enemies;
 using UnityEngine;
 
-public class DefaultTower : MonoBehaviour
+namespace TowerDefense
 {
-    bool attacking = false;
-    private List<GameObject> closeEnemies = new List<GameObject>();
-    private GameObject targetedEnemy;
-
-    private void OnTriggerEnter(Collider other)
+    public class DefaultTower : Tower
     {
-        if (other.CompareTag("Finish"))
+        private float damage = 20.0f;
+        private void OnTriggerEnter(Collider other)
         {
-
-            closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Finish"))
-        {
-            closeEnemies.Remove(other.gameObject);
-
-            if (closeEnemies.Count == 0)
+            if (other.CompareTag("Finish"))
             {
 
-                attacking = false;
-                targetedEnemy = null;
-            }
-        }
-    }
+                closeEnemies.Add(other.gameObject);
 
-    IEnumerator AttackLoop()
-    {
-        attacking = true;
-
-        while (attacking && closeEnemies.Count > 0)
-        {
-            if (targetedEnemy == null)
-                GetClosestEnemy();
-
-            yield return new WaitForSeconds(0.6f);
-
-            if (targetedEnemy != null)
-                DamageTarget();
-            else
-            {
-                GetClosestEnemy();
-                DamageTarget();
+                if (attacking == false)
+                    StartCoroutine(AttackLoop());
             }
         }
 
-        attacking = false;
-    }
-
-    void GetClosestEnemy()
-    {
-        closeEnemies.RemoveAll(item => item == null);
-
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else
+        private void OnTriggerExit(Collider other)
         {
-            targetedEnemy = null;
+            if (other.CompareTag("Finish"))
+            {
+                closeEnemies.Remove(other.gameObject);
+
+                if (closeEnemies.Count == 0)
+                {
+
+                    attacking = false;
+                    targetedEnemy = null;
+                }
+            }
+        }
+
+        IEnumerator AttackLoop()
+        {
+            attacking = true;
+
+            while (attacking && closeEnemies.Count > 0)
+            {
+                if (targetedEnemy == null)
+                    GetClosestValidEnemy();
+
+                SpawnProjectile(waitTime);
+
+                yield return new WaitForSeconds(waitTime);
+
+                if (targetedEnemy != null)
+                    DamageTarget();
+                else
+                {
+                    GetClosestValidEnemy();
+                    DamageTarget();
+                }
+            }
+
             attacking = false;
         }
-    }
 
-    void DamageTarget()
-    {
-        if (targetedEnemy == null) return;
+        void GetClosestValidEnemy()
+        {
+            closeEnemies.RemoveAll(item => item == null);
 
-        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();
+            targetedEnemy = null;
+            attacking = false;
+
+            if (closeEnemies.Count == 0) return;
+
+            foreach (var e in closeEnemies)
+            {
+                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                {
+                    targetedEnemy = e;
+                    attacking = true;
+                    return;
+                }
+            }
+        }
+
+        void DamageTarget()
+        {
+            if (targetedEnemy == null) return;
+
+            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
+            {
+                damageable.DamagePercent(20.0f);
+
+                targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
+            }
+        }
+
+        void Update()
+        {
+            if (!attacking)
+                return;
+
+            if (targetedEnemy == null)
+            {
+                GetClosestValidEnemy();
+                return;
+            }
+
+            if (!tracking)
+                return;
+
+
+            Vector3 dir = targetedEnemy.transform.position - transform.position;
+            Quaternion qt = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, qt, speed);
+        }
+
+        void SpawnProjectile(float waitTime)
+        {
+
+            AudioManager.Instance.PlaySFX("TurretAttack");
+            GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+            p.GetComponent<Projectile>().startPos = transform.position;
+            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
+            p.GetComponent<Projectile>().maxTime = waitTime;
+        }
     }
 }

@@ -1,35 +1,43 @@
 using System;
 using System.Collections.Generic;
+using Combat;
+using Farm;
+using Inventory;
 using NUnit.Framework.Constraints;
+using Player;
 using Trading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
-[Serializable]
-public class FireGasPlantItem : Item, IInteractable, ITradeable, IPlantSeed
+namespace Items
 {
-    public override string spriteId => "FireGasPlant";
-
-    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
+    [Serializable]
+    public class FireGasPlantItem : Item, IInteractable, ITradeable, IPlantSeed
     {
-        new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
-    };
+        public override string Name => nameof(FireGasPlant);
 
-    public PlantData PlantData => PlantDatabase.Instance.GetPlantByName("FireGas");
-    public int Price => 25;
+        public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
+        {
+            new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
+        };
 
-    public void OnInteract() {}
+        public PlantData PlantData => DBManager.Instance.PlantDB[Name];
+        public int Price => 25;
 
-    public void Action_Use(InputAction.CallbackContext ctx)
-    {
-        if (PlayerController.MovementLocked) return;
-        GameObject instance = GameObject.Instantiate(
-            PlantWeaponsDatabase.Instance.GetPlantByName(nameof(FireGasPlant)),
-            PlayerController.Instance.transform.position,
-            Quaternion.Euler(-90, 0, 0)
-            );
-        instance.GetComponent<FireGasPlant>().animationStartPosition = PlayerController.Instance.transform.position;
-        instance.GetComponent<FireGasPlant>().animationDirection = PlayerController.Instance.transform.forward;
-        Inventory.Instance.RemoveItem(this);
+        public void OnInteract() { }
+
+        public void Action_Use(InputAction.CallbackContext ctx)
+        {
+            if (PlayerController.MovementLocked) return;
+            GameObject instance = GameObject.Instantiate(
+                DBManager.Instance.PlantDB[Name].plantWeapon,
+                PlayerController.Instance.transform.position,
+                Quaternion.Euler(-90, 0, 0)
+                );
+            instance.GetComponent<FireGasPlant>().animationStartPosition = PlayerController.Instance.transform.position;
+            instance.GetComponent<FireGasPlant>().animationDirection = PlayerController.Instance.transform.forward;
+            Inventory.Inventory.Instance.RemoveItem(this);
+        }
     }
 }

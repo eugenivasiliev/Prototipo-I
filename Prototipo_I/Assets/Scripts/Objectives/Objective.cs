@@ -1,16 +1,29 @@
 using System;
 using UnityEngine;
 
-public interface IObjective
+namespace Objectives
 {
-    public bool IsCompleted { get; }
-}
+    public interface IObjective
+    {
+        void Init();
 
-public abstract class Objective<T> : ScriptableObject, IObjective
-{
-    public bool IsCompleted => CheckObjective();
+        public bool IsCompleted { get; }
 
-    public abstract void UpdateObjective(T param);
+        public string Text();
+    }
 
-    public abstract bool CheckObjective();
+    public abstract class Objective<T> : ScriptableObject, IObjective
+    {
+        public bool IsCompleted => CheckObjective();
+
+        public abstract void UpdateObjective(T param);
+
+        public abstract bool CheckObjective();
+
+        string IObjective.Text() => Text;
+
+        public abstract void Init();
+
+        public abstract string Text { get; }
+    }
 }
