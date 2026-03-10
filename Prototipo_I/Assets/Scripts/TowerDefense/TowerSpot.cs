@@ -39,10 +39,12 @@ namespace TowerDefense
 
         public void PlaceTower(TowerData data)
         {
-            foreach (var ingredient in data.ingredients)
-            {
-                Inventory.Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
-            }
+            //foreach (var ingredient in data.ingredients)
+            //{
+            //    Inventory.Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+            //}
+
+            Inventory.Inventory.Instance.RemoveSeeds(data.cost);
 
             AudioManager.Instance.PlaySFX("Plant");
             if (hasTower) return;

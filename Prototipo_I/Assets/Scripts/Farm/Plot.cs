@@ -114,18 +114,25 @@ namespace Farm
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
-    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
-    };
+            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
+            new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
+            //new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
+        };
 
         private void Action_Plant(InputAction.CallbackContext ctx)
         {
-            Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            if (item != null && item is IPlantSeed)
+            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
+            //if (item != null && item is IPlantSeed)
+            //{
+            //    this.Plant((item as IPlantSeed).PlantData);
+            //    Inventory.Inventory.Instance.RemoveItem(item);
+            //    plant.TryGrow(DayNightCycle.Instance.TotalTime);
+            //}
+
+            if (Inventory.Inventory.Instance.GetSeedCount() > 0)
             {
-                this.Plant((item as IPlantSeed).PlantData);
-                Inventory.Inventory.Instance.RemoveItem(item);
+                this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
+                Inventory.Inventory.Instance.RemoveSeeds(1);
                 plant.TryGrow(DayNightCycle.Instance.TotalTime);
             }
         }
