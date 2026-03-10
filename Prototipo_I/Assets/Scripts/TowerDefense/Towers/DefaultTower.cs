@@ -9,7 +9,7 @@ namespace TowerDefense
 {
     public class DefaultTower : Tower
     {
-
+        private float damage = 20.0f;
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Finish"))
