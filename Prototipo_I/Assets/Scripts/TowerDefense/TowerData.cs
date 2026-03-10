@@ -10,14 +10,16 @@ namespace TowerDefense
         public float range = 15.0f;
         public GameObject[] stages;
 
-        [Serializable]
-        public struct Ingredient
-        {
-            public string itemName;
-            public int amount;
-        }
+        //[Serializable]
+        //public struct Ingredient
+        //{
+        //    public string itemName;
+        //    public int amount;
+        //}
 
-        public Ingredient[] ingredients;
+        //public Ingredient[] ingredients;
+
+        public int cost;
 
         public Sprite uiSprite;
 

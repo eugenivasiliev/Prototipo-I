@@ -87,11 +87,11 @@ namespace Farm
             AudioManager.Instance.PlaySFX("Harvesting");
             Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
 
-            if (ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
             {
-                foreach (PlantsOfTypeCollected obj in objs)
+                foreach (PlantsCollected obj in objs)
                 {
-                    obj.UpdateObjective(plantData.plantName);
+                    obj.UpdateObjective(3);
                 }
             }
 
@@ -111,21 +111,31 @@ namespace Farm
             GameObject prefab = plantData.stages[currentStage];
             currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
+            Inventory.Inventory.Instance.AddSeeds(plantData.seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                objs[0].UpdateObjective(plantData.seedsPerRound);
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
-    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
-    };
+            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
+            //new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
+            //new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
+        };
 
         private void Action_Plant(InputAction.CallbackContext ctx)
         {
-            Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            if (item != null && item is IPlantSeed)
+            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
+            //if (item != null && item is IPlantSeed)
+            //{
+            //    this.Plant((item as IPlantSeed).PlantData);
+            //    Inventory.Inventory.Instance.RemoveItem(item);
+            //    plant.TryGrow(DayNightCycle.Instance.TotalTime);
+            //}
+
+            if (Inventory.Inventory.Instance.GetSeedCount() > 0)
             {
-                this.Plant((item as IPlantSeed).PlantData);
-                Inventory.Inventory.Instance.RemoveItem(item);
+                this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
+                Inventory.Inventory.Instance.RemoveSeeds(1);
                 plant.TryGrow(DayNightCycle.Instance.TotalTime);
             }
         }

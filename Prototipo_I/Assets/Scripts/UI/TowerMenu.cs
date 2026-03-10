@@ -37,7 +37,7 @@ namespace UI
 
             foreach (TowerData data in DBManager.Instance.TowerDB.TowerDataList)
             {
-                if (Inventory.Inventory.Instance.HasIngredients(data.ingredients))
+                if (Inventory.Inventory.Instance.HasSeeds(data.cost))
                 {
 
                     GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
@@ -59,8 +59,8 @@ namespace UI
 
             GameObject instance = Instantiate(towerUI, this.transform.GetChild(1));
 
-            instance.GetComponent<Image>().sprite = uiSpritesDB[td.ingredients[0].itemName];
-            instance.GetComponentInChildren<TMP_Text>().text = td.ingredients[0].amount.ToString();
+            //instance.GetComponent<Image>().sprite = uiSpritesDB[td.ingredients[0].itemName];
+            //instance.GetComponentInChildren<TMP_Text>().text = td.ingredients[0].amount.ToString();
         }
 
         public void EraseValidIngredients()
