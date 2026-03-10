@@ -13,5 +13,7 @@ namespace Farm
 
         public GameObject plantWeapon;
 
+        public int seedsPerRound;
+
     }
 }

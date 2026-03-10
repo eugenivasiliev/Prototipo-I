@@ -111,6 +111,9 @@ namespace Farm
             GameObject prefab = plantData.stages[currentStage];
             currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
+            Inventory.Inventory.Instance.AddSeeds(plantData.seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                objs[0].UpdateObjective(plantData.seedsPerRound);
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
