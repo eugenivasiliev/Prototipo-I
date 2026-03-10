@@ -32,8 +32,8 @@ public class Base : MonoBehaviour, IDamageable
 
     void AddSeeds(float ff)
     {
-        //Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
-        Inventory.Instance.RemoveItem(new FirePlantItem());
+        Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
+        //Inventory.Instance.RemoveItem(new FirePlantItem());
         DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
     }
 
