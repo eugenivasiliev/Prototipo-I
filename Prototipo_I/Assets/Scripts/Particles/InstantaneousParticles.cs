@@ -1,18 +1,22 @@
 using System.Collections;
 using UnityEngine;
 
-public class InstantaneousParticles : MonoBehaviour
+namespace VFX
 {
-    [SerializeField] private float time;
-    void Start()
+    public class InstantaneousParticles : MonoBehaviour
     {
-        StartCoroutine(SelfDestruct());
-    }
+        [SerializeField] private float time;
+        void Start()
+        {
+            StartCoroutine(SelfDestruct());
+        }
 
-    private IEnumerator SelfDestruct() { 
-        
-        yield return new WaitForSeconds(time);
+        private IEnumerator SelfDestruct()
+        {
 
-        Destroy(gameObject);
+            yield return new WaitForSeconds(time);
+
+            Destroy(gameObject);
+        }
     }
 }

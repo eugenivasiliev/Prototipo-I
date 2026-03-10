@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class Billboard : MonoBehaviour
+namespace Utils
 {
-    private Camera mainCamera;
-
-    void Start()
+    public class Billboard : MonoBehaviour
     {
-        mainCamera = Camera.main;
-    }
+        private Camera mainCamera;
 
-    void Update()
-    {
-        this.transform.rotation = mainCamera.transform.rotation;
+        void Start()
+        {
+            mainCamera = Camera.main;
+        }
+
+        void Update()
+        {
+            this.transform.rotation = mainCamera.transform.rotation;
+        }
     }
 }

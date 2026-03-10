@@ -1,23 +1,26 @@
 ﻿using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TowerData", menuName = "Scriptable Objects/TowerData")]
-public class TowerData : ScriptableObject
+namespace TowerDefense
 {
-    public string Name;
-    public float range = 15.0f;
-    public GameObject[] stages;
-
-    [Serializable]
-    public struct Ingredient
+    [CreateAssetMenu(fileName = "TowerData", menuName = "Scriptable Objects/TowerData")]
+    public class TowerData : ScriptableObject
     {
-        public string itemName;
-        public int amount;
+        public string Name;
+        public float range = 15.0f;
+        public GameObject[] stages;
+
+        [Serializable]
+        public struct Ingredient
+        {
+            public string itemName;
+            public int amount;
+        }
+
+        public Ingredient[] ingredients;
+
+        public Sprite uiSprite;
+
+        public string Id => throw new NotImplementedException();
     }
-
-    public Ingredient[] ingredients;
-
-    public Sprite uiSprite;
-
-    public string Id => throw new NotImplementedException();
 }

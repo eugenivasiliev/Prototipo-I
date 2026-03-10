@@ -1,21 +1,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class DamageArea : MonoBehaviour
+namespace Combat
 {
-    private void Awake()
+    public class DamageArea : MonoBehaviour
     {
-        StartCoroutine(SelfDestruct());
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.TryGetComponent<IDamageable>(out var enemy))
-            enemy.DamageMax();
-    }
+        private void Awake()
+        {
+            StartCoroutine(SelfDestruct());
+        }
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.TryGetComponent<IDamageable>(out var enemy))
+                enemy.DamageMax();
+        }
 
-    IEnumerator SelfDestruct() {
+        IEnumerator SelfDestruct()
+        {
 
-        yield return new WaitForSeconds(0.1f) ;
-        Destroy(gameObject);
+            yield return new WaitForSeconds(0.1f);
+            Destroy(gameObject);
+        }
     }
 }
