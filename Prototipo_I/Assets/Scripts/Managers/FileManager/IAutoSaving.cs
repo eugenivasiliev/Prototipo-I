@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Utils;
 
-public interface IAutoSaving<T> : ISaveable<T>
+namespace Saving
 {
-    public void SetupAutoSave()
+    public interface IAutoSaving<T> : ISaveable<T>
     {
-        SaveEvent = new UnityEvent<float>();
-        SaveEvent.AddListener(Save);
-        DayNightCycle.Instance.SubscribeTimedEvent(SaveEvent, 1);
-    }
+        public void SetupAutoSave()
+        {
+            SaveEvent = new UnityEvent<float>();
+            SaveEvent.AddListener(Save);
+            DayNightCycle.Instance.SubscribeTimedEvent(SaveEvent, 1);
+        }
 
-    public void Save(float t)
-    {
-        Save();
-        DayNightCycle.Instance.SubscribeTimedEvent(SaveEvent, 1);
+        public void Save(float t)
+        {
+            Save();
+            DayNightCycle.Instance.SubscribeTimedEvent(SaveEvent, 1);
+        }
     }
 }

@@ -1,17 +1,23 @@
+using Enemies;
 using UnityEngine;
 
-public class Vines : MonoBehaviour
+namespace TowerDefense
 {
-    private void OnTriggerEnter(Collider other)
+    public class Vines : MonoBehaviour
     {
-        if (other.GetComponent<EnemyAI>() != null) {
-            other.GetComponent<EnemyAI>().Slow();
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<EnemyAI>() != null)
+            {
+                other.GetComponent<EnemyAI>().Slow();
+            }
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<EnemyAI>() != null) {
-            other.GetComponent<EnemyAI>().UnSlow();
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.GetComponent<EnemyAI>() != null)
+            {
+                other.GetComponent<EnemyAI>().UnSlow();
+            }
         }
     }
 }

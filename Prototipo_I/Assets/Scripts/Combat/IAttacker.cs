@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public interface IAttacker
+namespace Combat
 {
-
-    /// <summary>
-    /// Real damage dealt after calculations, if applicable
-    /// </summary>
-    public int Damage { get; }
-
-    public void Attack(GameObject target)
+    public interface IAttacker
     {
-        if (!target.TryGetComponent<IDamageable>(out IDamageable hp)) return;
-        hp.Damage(Damage);
+
+        /// <summary>
+        /// Real damage dealt after calculations, if applicable
+        /// </summary>
+        public int Damage { get; }
+
+        public void Attack(GameObject target)
+        {
+            if (!target.TryGetComponent<IDamageable>(out IDamageable hp)) return;
+            hp.Damage(Damage);
+        }
     }
 }

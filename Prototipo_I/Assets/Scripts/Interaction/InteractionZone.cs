@@ -1,24 +1,28 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Player;
 
-public class InteractionZone : MonoBehaviour
+namespace Utils
 {
-    [SerializeField] GameObject playerGameObject;
-
-    private void OnTriggerEnter(Collider other)
+    public class InteractionZone : MonoBehaviour
     {
-        if (other.TryGetComponent(out IInteractable interactable))
-            interactable.Bind();
-    }
+        [SerializeField] GameObject playerGameObject;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.TryGetComponent(out IInteractable interactable))
-            interactable.Unbind();
-    }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent(out IInteractable interactable))
+                interactable.Bind();
+        }
 
-    void Start()
-    {
-        this.GetComponent<SphereCollider>().radius = playerGameObject.GetComponent<PlayerController>().InteractionRange;
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent(out IInteractable interactable))
+                interactable.Unbind();
+        }
+
+        void Start()
+        {
+            this.GetComponent<SphereCollider>().radius = playerGameObject.GetComponent<PlayerController>().InteractionRange;
+        }
     }
 }

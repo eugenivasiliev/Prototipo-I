@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class DialogueTrigger : MonoBehaviour
+namespace AICompanion
 {
-    [SerializeField] private string dialogueId;
-
-    private void OnTriggerEnter(Collider other)
+    public class DialogueTrigger : MonoBehaviour
     {
-        if (other.tag == "Player")
-            CompanionDialogueUI.Instance.DisplayTextById(dialogueId);
+        [SerializeField] private string dialogueId;
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player")
+                AICompanionDialogueUI.Instance.DisplayTextById(dialogueId);
+        }
     }
 }

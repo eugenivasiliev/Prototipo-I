@@ -2,83 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Utils;
 
-public class AudioManager : MonoBehaviour
+namespace Audio
 {
-    public static AudioManager instance;
-
-    public Sound[] musicSounds, sfxSounds;
-    public AudioSource musicSource, sfxSource;
-
-    private Dictionary<string, float> soundCooldowns = new Dictionary<string, float>();
-    private Dictionary<string, AudioSource> loopingSources = new Dictionary<string, AudioSource>();
-    private float cooldownTime = 0.15f;
-    private void Awake()
+    public class AudioManager : Singleton<AudioManager>
     {
-        if (instance == null)
+
+        public Sound[] musicSounds, sfxSounds;
+        public AudioSource musicSource, sfxSource;
+
+        private Dictionary<string, float> soundCooldowns = new Dictionary<string, float>();
+        private Dictionary<string, AudioSource> loopingSources = new Dictionary<string, AudioSource>();
+        private float cooldownTime = 0.15f;
+        private void Awake()
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            InitSingleton();
         }
-        else
+
+        public void PlayMusic(string name)
         {
-            Destroy(gameObject);
+            Sound s = Array.Find(musicSounds, x => x.name == name);
+
+            if (s != null)
+            {
+                musicSource.clip = s.clip;
+                musicSource.Play();
+            }
         }
-    }
 
-    public void PlayMusic(string name)
-    {
-        Sound s = Array.Find(musicSounds, x => x.name == name);
-
-        if (s != null)
+        public void PlaySFX(string name)
         {
-            musicSource.clip = s.clip;
-            musicSource.Play();
+            Sound s = Array.Find(sfxSounds, x => x.name == name);
+
+            if (s != null)
+            {
+                if (soundCooldowns.ContainsKey(name) && Time.time - soundCooldowns[name] < cooldownTime) return; // Avoids saturating
+                soundCooldowns[name] = Time.time;
+                sfxSource.PlayOneShot(s.clip);
+            }
         }
-    }
 
-    public void PlaySFX(string name)
-    {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
-
-        if (s != null)
+        public void PlaySFXLoop(string name)
         {
-            if (soundCooldowns.ContainsKey(name) && Time.time - soundCooldowns[name] < cooldownTime) return; // Avoids saturating
-            soundCooldowns[name] = Time.time;
-            sfxSource.PlayOneShot(s.clip);
+            Sound s = Array.Find(sfxSounds, x => x.name == name);
+
+            if (s != null)
+            {
+                if (loopingSources.ContainsKey(name)) return;
+                AudioSource newSource = gameObject.AddComponent<AudioSource>();
+                newSource.clip = s.clip;
+                newSource.loop = true;
+                newSource.volume = sfxSource.volume;
+                newSource.Play();
+
+                loopingSources[name] = newSource;
+            }
         }
-    }
-
-    public void PlaySFXLoop(string name)
-    {
-        Sound s = Array.Find(sfxSounds, x => x.name == name);
-
-        if (s != null)
+        public void StopLoop(string name)
         {
-            if (loopingSources.ContainsKey(name)) return;
-            AudioSource newSource = gameObject.AddComponent<AudioSource>();
-            newSource.clip = s.clip;
-            newSource.loop = true;
-            newSource.volume = sfxSource.volume;
-            newSource.Play();
+            if (!loopingSources.ContainsKey(name)) return;
 
-            loopingSources[name] = newSource;
+            loopingSources[name].Stop();
+            Destroy(loopingSources[name]);
+            loopingSources.Remove(name);
         }
-    }
-    public void StopLoop(string name)
-    {
-        if (!loopingSources.ContainsKey(name)) return;
-
-        loopingSources[name].Stop();
-        Destroy(loopingSources[name]);
-        loopingSources.Remove(name);
-    }
-    public void StopMusic()
-    {
-        if (musicSource.isPlaying) musicSource.Stop();
-    }
-    public void StopSFX()
-    {
-        sfxSource.Stop();
+        public void StopMusic()
+        {
+            if (musicSource.isPlaying) musicSource.Stop();
+        }
+        public void StopSFX()
+        {
+            sfxSource.Stop();
+        }
     }
 }

@@ -2,34 +2,37 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "HybridationManager", menuName = "Scriptable Objects/HybridationManager")]
-public class HybridationManager : ScriptableObject
+namespace Farm
 {
-    [Serializable]
-    public struct HybridTuple
+    [CreateAssetMenu(fileName = "HybridationManager", menuName = "Scriptable Objects/HybridationManager")]
+    public class HybridationManager : ScriptableObject
     {
-        [SerializeField] public string Name;
-        [SerializeReference] public PlantData parent1; 
-        [SerializeReference] public PlantData parent2;
-        [SerializeReference] public PlantData child;
-
-        public readonly bool Equals((PlantData, PlantData) pair)
+        [Serializable]
+        public struct HybridTuple
         {
-            return (pair.Item1 == parent1 && pair.Item2 == parent2) || (pair.Item1 == parent2 && pair.Item2 == parent1);
-        }
-    }
+            [SerializeField] public string Name;
+            [SerializeReference] public PlantData parent1;
+            [SerializeReference] public PlantData parent2;
+            [SerializeReference] public PlantData child;
 
-    public List<HybridTuple> hybridList = new List<HybridTuple>();
-
-    public bool TryFindHybrid((PlantData, PlantData) pair, out PlantData plantData)
-    {
-        plantData = null;
-        foreach (var hybrid in hybridList)
-            if (hybrid.Equals(pair))
+            public readonly bool Equals(PlantData p1, PlantData p2)
             {
-                plantData = hybrid.child;
-                return true;
+                return (p1 == parent1 && p2 == parent2) || (p1 == parent2 && p2 == parent1);
             }
-        return false;
+        }
+
+        public List<HybridTuple> hybridList = new List<HybridTuple>();
+
+        public bool TryFindHybrid(PlantData p1, PlantData p2, out Farm.PlantData plantData)
+        {
+            plantData = null;
+            foreach (var hybrid in hybridList)
+                if (hybrid.Equals(p1, p2))
+                {
+                    plantData = hybrid.child;
+                    return true;
+                }
+            return false;
+        }
     }
 }
