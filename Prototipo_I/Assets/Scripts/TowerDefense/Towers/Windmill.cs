@@ -17,7 +17,7 @@ namespace TowerDefense
 
         void AddSeeds(float ff)
         {
-            Inventory.Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
+            Inventory.Inventory.Instance.AddSeeds(3);
             DayNightCycle.Instance.SubscribeTimedEvent(Give, amount);
         }
     }

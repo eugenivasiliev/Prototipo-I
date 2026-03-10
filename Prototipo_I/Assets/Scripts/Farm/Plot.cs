@@ -87,11 +87,11 @@ namespace Farm
             AudioManager.Instance.PlaySFX("Harvesting");
             Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
 
-            if (ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
             {
-                foreach (PlantsOfTypeCollected obj in objs)
+                foreach (PlantsCollected obj in objs)
                 {
-                    obj.UpdateObjective(plantData.plantName);
+                    obj.UpdateObjective(3);
                 }
             }
 
@@ -115,7 +115,7 @@ namespace Farm
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
             new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-            new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
+            //new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
             //new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
         };
 
