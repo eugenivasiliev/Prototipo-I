@@ -85,18 +85,12 @@ namespace Enemies
 
     
     bool frozen = false;
-    private void Awake()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = speed * 2;
-    }
-
-        bool frozen = false;
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            agent.speed = speed;
+            agent.speed = speed * 2;
         }
+
 
         private void Start()
         {
@@ -180,14 +174,4 @@ namespace Enemies
         //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
 
-            agent.speed = slowSpeed;
-        }
-
-        public void UnSlow()
-        {
-
-            agent.speed = speed;
-        }
-
-    }
 }
