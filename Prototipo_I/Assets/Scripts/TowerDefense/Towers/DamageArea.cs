@@ -5,7 +5,7 @@ public class DamageArea : MonoBehaviour
 {
     private void Awake()
     {
-        StartCoroutine();
+        //StartCoroutine();
     }
     private void OnTriggerStay(Collider other)
     {
