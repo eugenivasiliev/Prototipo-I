@@ -682,17 +682,20 @@ MonoBehaviour:
   ui_health: {fileID: 0}
   damage: 0
   difficulty: 1
+  speed: 0
+  slowSpeed: 0
   droppableLoot:
   - gameObject: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
     rate: 1
   minItemsDropped: 1
   maxItemsDropped: 1
   dropRadius: 2
+  dropHeight: 2
   bb:
     target: 1
     targetTransform: {fileID: 0}
     homeTransform: {fileID: 0}
-    plotManager: {fileID: 0}
+    plots: []
     playerController: {fileID: 0}
 --- !u!195 &6956086674888791588
 NavMeshAgent:

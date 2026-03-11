@@ -8,6 +8,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using Utils;
 
 namespace Enemies
 {
@@ -79,6 +80,7 @@ namespace Enemies
         [SerializeField] private int minItemsDropped;
         [SerializeField] private int maxItemsDropped;
         [SerializeField, Range(0, 5)] private float dropRadius;
+        [SerializeField, Range(0, 5)] private float dropHeight = 2;
 
         [SerializeField] private Blackboard bb;
         public Blackboard BB { get => bb; set => bb = value; }
@@ -132,11 +134,14 @@ namespace Enemies
             foreach (DropRateObject drop in droppableLoot)
                 if (drop.rate > lootDropped)
                 {
-                    Instantiate(
-                        drop.gameObject,
-                        this.transform.position + Vector3.right * dropSpot.x + Vector3.forward * dropSpot.y,
-                        Quaternion.identity
-                        );
+                    GameObject loot = Instantiate(drop.gameObject, this.transform.position, Quaternion.identity);
+                    TweenMovement lootMovement = loot.GetComponent<TweenMovement>();
+                    lootMovement.xAxis.startValue = this.transform.position.x;
+                    lootMovement.xAxis.endValue = this.transform.position.x + dropSpot.x;
+                    lootMovement.yAxis.startValue = this.transform.position.y;
+                    lootMovement.yAxis.endValue = this.transform.position.y + dropHeight;
+                    lootMovement.zAxis.startValue = this.transform.position.z;
+                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;
                     return;
                 }
         }

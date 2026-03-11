@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8862212700818423879}
   - component: {fileID: 8938515319653508955}
   - component: {fileID: 3607236864622438959}
+  - component: {fileID: 5579047391090210116}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -102,12 +103,24 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5579047391090210116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842800942774472353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be829fa389e62b040b40e79fcb053033, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4694494138638134153
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,8 +130,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 252742664067782761}
+  - component: {fileID: 7068248714908192521}
   m_Layer: 0
-  m_Name: Loot1
+  m_Name: Seed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,3 +154,120 @@ Transform:
   - {fileID: 1969895181025528128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7068248714908192521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694494138638134153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6458dc93a2f4b84ebee10a9b32b5699, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xAxis:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 1
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+  yAxis:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2.0147722
+        outSlope: 2.0147722
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 1
+      - serializedVersion: 3
+        time: 0.5
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.9979836
+        value: 0.0033007911
+        inSlope: -2.0081441
+        outSlope: -2.0081441
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 1
+        outWeight: 0
+      m_PreInfinity: 0
+      m_PostInfinity: 0
+      m_RotationOrder: 4
+    t: 0
+    duration: 1
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+  zAxis:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 1
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
