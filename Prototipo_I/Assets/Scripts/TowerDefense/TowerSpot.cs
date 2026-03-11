@@ -1,94 +1,102 @@
 using System.Collections.Generic;
+using Audio;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
-public class TowerSpot : MonoBehaviour, IInteractable
+namespace TowerDefense
 {
-    TowerData towerData;
-
-    private GameObject currentTower;
-
-    public bool hasTower { get { return towerData != null; } }
-
-    private GameObject range;
-
-    private void Start()
+    public class TowerSpot : MonoBehaviour, IInteractable
     {
-        //(this as IInteractable).Bind();
+        TowerData towerData;
 
-        if (this.transform.GetChild(0) != null) 
-            range = this.transform.GetChild(0).gameObject;
-    }
+        private GameObject currentTower;
 
-    public void PlaceTower(string dataName)
-    {
-        AudioManager.instance.PlaySFX("Plant");
-        if (hasTower) return;
+        public bool hasTower { get { return towerData != null; } }
 
-        towerData = TowerDBManager.Instance.DB[dataName];
-        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+        private GameObject range;
 
-        Debug.Log($"Tower {towerData.Name} placed!");
-    }
+        [SerializeField] private TowerMenu tm;
 
-    public void PlaceTower(TowerData data)
-    {
-        foreach(var ingredient in data.ingredients)
+
+        private void Start()
         {
-            Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+            //(this as IInteractable).Bind();
+
+            if (this.transform.GetChild(0) != null)
+                range = this.transform.GetChild(0).gameObject;
         }
 
-        AudioManager.instance.PlaySFX("Plant");
-        if (hasTower) return;
+        public void PlaceTower(string dataName)
+        {
+            AudioManager.Instance.PlaySFX("Plant");
+            if (hasTower) return;
 
-        towerData = data;
-        currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+            towerData = DBManager.Instance.TowerDB[dataName];
+            currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+        }
 
-        Debug.Log($"Tower {towerData.Name} placed!");
+        public void PlaceTower(TowerData data)
+        {
+            //foreach (var ingredient in data.ingredients)
+            //{
+            //    Inventory.Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
+            //}
 
-        float r = currentTower.GetComponent<DefaultTower>().GetRange();
-        SetRange(r);
+            Inventory.Inventory.Instance.RemoveSeeds(data.cost);
 
-        TowerMenu.Instance.ToggleMenu();
-    }
+            AudioManager.Instance.PlaySFX("Plant");
+            if (hasTower) return;
 
-    private void OnTowerUpgraded(int level)
-    {
-        if (currentTower != null) { Destroy(currentTower); }
+            towerData = data;
+            currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-        AudioManager.instance.PlaySFX("NextStage");
-        GameObject prefab = towerData.stages[level];
-        currentTower = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
+            float r = currentTower.GetComponent<DefaultTower>().GetRange();
+            SetRange(r);
 
-    }
+            tm.ToggleMenu();
+        }
 
-    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
+        private void OnTowerUpgraded(int level)
+        {
+            if (currentTower != null) { Destroy(currentTower); }
+
+            AudioManager.Instance.PlaySFX("NextStage");
+            GameObject prefab = towerData.stages[level];
+            currentTower = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+        }
+
+        public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
     new IInteractable.KeyBinding("place_tower", InputActionChange.ActionCanceled, Action_PlaceTower)
     };
 
-    private void Action_PlaceTower(InputAction.CallbackContext context)
-    {
-        TowerMenu.Instance.spotReference = this;
-        TowerMenu.Instance.ToggleMenu();
-    }
+        private void Action_PlaceTower(InputAction.CallbackContext context)
+        {
+            tm.spotReference = this;
+            tm.ToggleMenu();
+        }
 
-    public void SetRange(float dist)
-    {
-        range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
-    }
+        public void SetRange(float dist)
+        {
+            range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+        }
 
-    public void ShowRange(bool bo) {
-        range.SetActive(bo);
-    }
+        public void ShowRange(bool bo)
+        {
+            range.SetActive(bo);
+        }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player") ShowRange(true);
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player") ShowRange(false); 
-    }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player") ShowRange(true);
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "Player") ShowRange(false);
+        }
 
-    public void OnInteract() {}
+        public void OnInteract() { }
+    }
 }
