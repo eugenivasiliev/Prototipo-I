@@ -114,6 +114,9 @@ namespace Inventory
         [SerializeField] private UISpritesDB uiSpritesDB;
         [SerializeField] private Sprite defaultItemSprite;
 
+        [Header("Seed Counter UI")]
+        [SerializeField] private TMP_Text seedCounterUI;
+
         private void Start()
         {
             InitSingleton();
@@ -123,6 +126,8 @@ namespace Inventory
 
             (this as IAutoSaving<SeedCountWrapper>).SetupAutoSave();
             (this as IAutoSaving<SeedCountWrapper>).Load();
+
+            seedCounterUI.text = seedCount.ToString();
 
             //for (int i = 0; i < inventorySpace; ++i)
             //{
@@ -137,12 +142,17 @@ namespace Inventory
 
         public int GetSeedCount() => seedCount;
 
-        public void AddSeeds(int amount) => seedCount += amount;
+        public void AddSeeds(int amount)
+        {
+            seedCount += amount;
+            seedCounterUI.text = seedCount.ToString();
+        }
 
         public bool RemoveSeeds(int amount) {
             if(seedCount < amount) return false;
 
             seedCount -= amount;
+            seedCounterUI.text = seedCount.ToString();
             return true;
         }
 
