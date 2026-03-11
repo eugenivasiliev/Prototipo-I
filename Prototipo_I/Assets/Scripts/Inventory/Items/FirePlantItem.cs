@@ -1,36 +1,44 @@
 using System;
 using System.Collections.Generic;
+using Combat;
+using Farm;
+using Inventory;
 using NUnit.Framework.Constraints;
+using Player;
 using Trading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
-[Serializable]
-public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
+namespace Items
 {
-    public override string Name => nameof(FirePlant);
+    [Serializable]
+    public class FirePlantItem : Item, IInteractable, ITradeable, IPlantSeed
+    {
+        public override string Name => nameof(FirePlant);
 
-    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
+        public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>
     {
         new IInteractable.KeyBinding("Attack", InputActionChange.ActionCanceled, Action_Use)
     };
 
-    public int Price => 25;
+        public int Price => 25;
 
-    public PlantData PlantData => PlantDBManager.Instance.DB[Name];
+        public PlantData PlantData => DBManager.Instance.PlantDB[Name];
 
-    public void OnInteract() {}
+        public void OnInteract() { }
 
-    public void Action_Use(InputAction.CallbackContext ctx)
-    {
-        if (PlayerController.MovementLocked) return;
-        GameObject instance = GameObject.Instantiate(
-            PlantDBManager.Instance.DB[Name].plantWeapon,
-            PlayerController.Instance.transform.position,
-            Quaternion.Euler(-90, 0, 0)
-            );
-        instance.GetComponent<FirePlant>().animationStartPosition = PlayerController.Instance.transform.position;
-        instance.GetComponent<FirePlant>().animationDirection = PlayerController.Instance.transform.forward;
-        Inventory.Instance.RemoveItem(this);
+        public void Action_Use(InputAction.CallbackContext ctx)
+        {
+            if (PlayerController.MovementLocked) return;
+            GameObject instance = GameObject.Instantiate(
+                DBManager.Instance.PlantDB[Name].plantWeapon,
+                PlayerController.Instance.transform.position,
+                Quaternion.Euler(-90, 0, 0)
+                );
+            instance.GetComponent<FirePlant>().animationStartPosition = PlayerController.Instance.transform.position;
+            instance.GetComponent<FirePlant>().animationDirection = PlayerController.Instance.transform.forward;
+            Inventory.Inventory.Instance.RemoveItem(this);
+        }
     }
 }
