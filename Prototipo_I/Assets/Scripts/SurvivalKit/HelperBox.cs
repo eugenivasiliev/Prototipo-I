@@ -1,21 +1,27 @@
+using Items;
 using UnityEngine;
 
-public class HelperBox : MonoBehaviour
+namespace HelperBox
 {
-    private void OnTriggerEnter(Collider other)
+    public class HelperBox : MonoBehaviour
     {
-        if (other.tag == "Player")
+        private void OnTriggerEnter(Collider other)
         {
-            Fire();
-            Gas();
-            Destroy(gameObject);
+            if (other.tag == "Player")
+            {
+                Fire();
+                Gas();
+                Destroy(gameObject);
+            }
         }
-    }
 
-    private void Gas() {
-        Inventory.Instance.AddItem(new GasPlantItem(), 30, out int amountDone);
-    }
-    private void Fire() {
-        Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
+        private void Gas()
+        {
+            Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 30, out int amountDone);
+        }
+        private void Fire()
+        {
+            Inventory.Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
+        }
     }
 }

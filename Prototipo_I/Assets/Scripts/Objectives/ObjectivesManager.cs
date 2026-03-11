@@ -1,32 +1,36 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
-public class ObjectivesManager : Singleton<ObjectivesManager>
+namespace Objectives
 {
-
-    [SerializeField] private List<ScriptableObject> objectives = new List<ScriptableObject>();
-    public List<ScriptableObject> Objectives => objectives;
-
-    void Start()
+    public class ObjectivesManager : Singleton<ObjectivesManager>
     {
-        InitSingleton();
-        foreach (var obj in objectives)
-            (obj as IObjective).Init();
-    }
 
-    public bool AllObjectivesComplete()
-    {
-        foreach (ScriptableObject objective in objectives)
-            if(!(objective as IObjective).IsCompleted) return false;
-        return true;
-    }
+        [SerializeField] private List<ScriptableObject> objectives = new List<ScriptableObject>();
+        public List<ScriptableObject> Objectives => objectives;
 
-    public bool TryGetObjective<Obj, T>(out List<Obj> obj) where Obj : Objective<T> 
-    {
-        obj = new List<Obj>();
-        foreach(ScriptableObject objective in objectives)
-            if (objective is Obj) obj.Add(objective as Obj);
-        return obj.Count > 0;
+        void Start()
+        {
+            InitSingleton();
+            foreach (var obj in objectives)
+                (obj as IObjective).Init();
+        }
+
+        public bool AllObjectivesComplete()
+        {
+            foreach (ScriptableObject objective in objectives)
+                if (!(objective as IObjective).IsCompleted) return false;
+            return true;
+        }
+
+        public bool TryGetObjective<Obj, T>(out List<Obj> obj) where Obj : Objective<T>
+        {
+            obj = new List<Obj>();
+            foreach (ScriptableObject objective in objectives)
+                if (objective is Obj) obj.Add(objective as Obj);
+            return obj.Count > 0;
+        }
     }
 }

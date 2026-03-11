@@ -1,13 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+namespace TowerDefense
 {
-    [SerializeField] protected GameObject projectile;
-    protected bool attacking = false;
-    protected List<GameObject> closeEnemies = new List<GameObject>();
-    protected GameObject targetedEnemy;
+    public class Tower : MonoBehaviour
+    {
+        [SerializeField] protected GameObject projectile;
+        protected bool attacking = false;
+        protected List<GameObject> closeEnemies = new List<GameObject>();
+        protected GameObject targetedEnemy;
 
     protected bool tracking = true;
     protected float speed = 4.5f;
@@ -15,8 +17,9 @@ public class Tower : MonoBehaviour
     [SerializeField, Range(0, 50)] protected float maxRange = 15;
     [SerializeField, Range(0, 50)] protected float minRange = 3;
 
-    public float GetRange()
-    {
-        return maxRange;
+        public float GetRange()
+        {
+            return maxRange;
+        }
     }
 }

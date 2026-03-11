@@ -1,25 +1,29 @@
 using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
-public class AICompanionWavePrediction : MonoBehaviour
+namespace AICompanion
 {
-    WaveDB wM;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class AICompanionWavePrediction : MonoBehaviour
     {
-        
-    }
+        WaveDB wM;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
 
-    void OpenMenu()
-    {
-        //TODO: Activate all elements
-        List<string> nextWave = wM.nextWave;
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+
+        void OpenMenu()
+        {
+            //TODO: Activate all elements
+            List<string> nextWave = wM.nextWave;
+        }
     }
 }
