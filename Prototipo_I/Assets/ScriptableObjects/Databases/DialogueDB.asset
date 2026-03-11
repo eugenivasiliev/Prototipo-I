@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a98a5c3d57d6b499ae5e4c386c2c8f, type: 3}
+  m_Name: DialogueDB
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - id: plotInteraction
+    text: You can plant seeds and decide what plant to grow! Every plant gives back
+      a certain quanitity of seeds. But beware! Enemies will try to destroy your
+      plots
+    hasTriggered: 0
+    lifeTime: 5
+  - id: turretInteraction
+    text: You can build turrets and cannons to defend your plots and your base
+    hasTriggered: 0
+    lifeTime: 5
+  - id: houseInteraction
+    text: You must protect your home. If you base's life reaches 0, it's game over!
+      After each round, you will get some seeds. Seed profit can be expanded by placing
+      windmills
+    hasTriggered: 0
+    lifeTime: 5
+  - id: defenseInteraction
+    text: You can build up your defense by placing barricades and vines. But beware!
+      Some enemies might be invulnerable to these
+    hasTriggered: 0
+    lifeTime: 5
+  - id: windmillInteraction
+    text: Build a windmill to multiply your seed profit each round!
+    hasTriggered: 0
+    lifeTime: 5
