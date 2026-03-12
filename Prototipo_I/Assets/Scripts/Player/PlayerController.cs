@@ -99,13 +99,13 @@ namespace Player
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             inputs.Player.Interact.canceled += ctx => Interact();
-            inputs.Player.Jump.performed += ctx => isJumping = true;
+            //inputs.Player.Jump.performed += ctx => isJumping = true;
 
             inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
             //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
             //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
-            inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+            //inputs.Player.camera_zoom.performed += ToggleCameraDistance;
 
             inputs.Player.debug.performed += ctx => Stun(1);
 

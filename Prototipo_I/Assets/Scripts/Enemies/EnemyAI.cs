@@ -85,13 +85,14 @@ namespace Enemies
         [SerializeField] private Blackboard bb;
         public Blackboard BB { get => bb; set => bb = value; }
 
-
-        bool frozen = false;
+    
+    bool frozen = false;
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            agent.speed = speed;
+            agent.speed = speed * 2;
         }
+
 
         private void Start()
         {
@@ -174,17 +175,8 @@ namespace Enemies
         }
 
 
-        public void Slow()
-        {
-
-            agent.speed = slowSpeed;
-        }
-
-        public void UnSlow()
-        {
-
-            agent.speed = speed;
-        }
-
+        //ui_health.gameObject.SetActive(true);
+        //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
+
 }
