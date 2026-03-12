@@ -88,7 +88,7 @@ namespace TowerDefense
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.DamagePercent(20.0f);
+                damageable.Damage(1);
 
                 targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
             }
