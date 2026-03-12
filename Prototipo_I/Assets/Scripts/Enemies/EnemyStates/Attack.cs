@@ -1,26 +1,25 @@
+using Audio;
+using Combat;
 using UnityEngine;
 
-public class Attack : EnemyState
+namespace Enemies
 {
-    private Plot target;
-    public override void Behaviour()
+    public class Attack : EnemyState
     {
-        if (target != null)
-            ((IAttacker)enemy).Attack(target.gameObject);
-
-        float minDistance = Mathf.Infinity;
-
-        foreach (var plot in PlotManager.Instance.plots)
+        public override void Behaviour()
         {
-            if (!plot.IsPlanted) continue;
+            if (bb.targetTransform == null) return;
 
-            float distance = Vector3.Distance(enemy.transform.position, plot.transform.position);
-
-            if (distance < minDistance)
+            float distance = Vector3.Distance(enemy.transform.position, bb.targetTransform.transform.position);
+            if (distance < 10.45f)
             {
-                minDistance = distance;
-                target = plot;
+                AudioManager.Instance.PlaySFX("MonsterAttack");
+                ((IAttacker)enemy).Attack(bb.targetTransform.gameObject);
+                enemy.SetState(EnemyAI.State.Chase);
             }
+            else
+                enemy.SetState(EnemyAI.State.Chase);
+
         }
     }
 }
