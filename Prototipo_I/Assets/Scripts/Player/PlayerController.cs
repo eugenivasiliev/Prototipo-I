@@ -27,6 +27,7 @@ namespace Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
         [SerializeField] private float cameraSensibility = 7.5f;
+        [SerializeField] private float scrollSensibility = 20.0f;
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private float jumpHeight = 2f;
 
@@ -185,7 +186,7 @@ namespace Player
 
             cameraTransform.LookAt(transform.position, Vector3.up);
 
-            cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
+            cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * scrollSensibility);
         }
 
         void ToggleCameraDistance(InputAction.CallbackContext ctx)
