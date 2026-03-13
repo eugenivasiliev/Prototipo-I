@@ -17,6 +17,7 @@ namespace Enemies
         [SerializeField] private int currentPhaseIndex = 0;
 
         [SerializeField] private bool isWaveActive = false;
+        public bool IsWaveActive { get { return isWaveActive; } }
 
         [SerializeField] private float timeToSpawn;
         [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
