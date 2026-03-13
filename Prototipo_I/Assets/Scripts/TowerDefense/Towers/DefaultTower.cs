@@ -10,7 +10,7 @@ namespace TowerDefense
 {
     public class DefaultTower : Tower
     {
-        private float damage = 20.0f;
+        [SerializeField] private int damage = 1;
 
         [SerializeField] private Canvas healthHolder;
         private void OnTriggerEnter(Collider other)
@@ -91,7 +91,7 @@ namespace TowerDefense
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.Damage(1);
+                damageable.Damage(damage);
 
                 targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
             }
