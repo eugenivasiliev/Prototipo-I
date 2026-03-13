@@ -1,43 +1,43 @@
+using Player;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using Utils;
 
-public class WaveManager : MonoBehaviour
+namespace Enemies
 {
-    public static WaveManager Instance;
-    [SerializeField] private GameObject waveUI;
-
-    private bool isOpen = false;
-
-    private void Start()
+    public class WaveManager : MonoBehaviour
     {
-        if (Instance != null)
+        public static WaveManager Instance;
+        [SerializeField] private GameObject waveUI;
+
+        private bool isOpen = false;
+
+        private void Start()
         {
-            Destroy(gameObject);
-            return;
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
         }
-        Instance = this;        
-    }
 
-    public void ToggleWaveUI()
-    {
-        /*
-        waveUI.SetActive(!waveUI.activeSelf);
-        Cursor.visible = waveUI.activeSelf;
-        Cursor.lockState = (waveUI.activeSelf) ? CursorLockMode.None : CursorLockMode.Locked;
-        PlayerController.MovementLocked = waveUI.activeSelf;
-        */
-        isOpen = !isOpen;
-        Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isOpen;
-        waveUI.SetActive(isOpen);
-        Time.timeScale = (isOpen) ? 0f : 1f;
-        PlayerController.MovementLocked = isOpen;
-    }
+        public void ToggleWaveUI()
+        {
+            isOpen = !isOpen;
+            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOpen;
+            waveUI.SetActive(isOpen);
+            Time.timeScale = (isOpen) ? 0f : 1f;
+            PlayerController.MovementLocked = isOpen;
+        }
 
-    public void StartWave() {
+        public void StartWave()
+        {
 
-        DayNightCycle.Instance.PassTime();
+            DayNightCycle.Instance.PassTime();
+        }
     }
 }

@@ -1,72 +1,76 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System;
+using Player;
 
-public interface IInteractable
+namespace Utils
 {
-
-    public struct KeyBinding
+    public interface IInteractable
     {
-        public string actionName;
-        public InputActionChange actionChange;
-        public Action<InputAction.CallbackContext> action;
 
-        public KeyBinding(string actionName, InputActionChange actionChange, Action<InputAction.CallbackContext> action)
+        public struct KeyBinding
         {
-            this.actionName = actionName;
-            this.actionChange = actionChange;
-            this.action = action;
-        }
-    }
+            public string actionName;
+            public InputActionChange actionChange;
+            public Action<InputAction.CallbackContext> action;
 
-    public List<KeyBinding> keyBindings { get; }
-    public abstract void OnInteract();
-    public void Bind()
-    {
-        foreach (var binding in keyBindings)
-        {
-            switch(binding.actionChange)
+            public KeyBinding(string actionName, InputActionChange actionChange, Action<InputAction.CallbackContext> action)
             {
-                case InputActionChange.ActionStarted:
-                    PlayerController.Inputs.FindAction(binding.actionName).started += binding.action;
-                    break;
-                case InputActionChange.ActionCanceled:
-                    PlayerController.Inputs.FindAction(binding.actionName).canceled += binding.action;
-                    break;
-                case InputActionChange.ActionPerformed:
-                    PlayerController.Inputs.FindAction(binding.actionName).performed += binding.action;
-                    break;
-                default:
-                    throw new Exception("Unexpected input binding ActionChange");
+                this.actionName = actionName;
+                this.actionChange = actionChange;
+                this.action = action;
             }
         }
-    }
 
-    public void Unbind()
-    {
-        foreach (var binding in keyBindings)
+        public List<KeyBinding> keyBindings { get; }
+        public abstract void OnInteract();
+        public void Bind()
         {
-            switch (binding.actionChange)
+            foreach (var binding in keyBindings)
             {
-                case InputActionChange.ActionStarted:
-                    PlayerController.Inputs.FindAction(binding.actionName).started -= binding.action;
-                    break;
-                case InputActionChange.ActionCanceled:
-                    PlayerController.Inputs.FindAction(binding.actionName).canceled -= binding.action;
-                    break;
-                case InputActionChange.ActionPerformed:
-                    PlayerController.Inputs.FindAction(binding.actionName).performed -= binding.action;
-                    break;
-                default:
-                    throw new Exception("Unexpected input binding ActionChange");
+                switch (binding.actionChange)
+                {
+                    case InputActionChange.ActionStarted:
+                        PlayerController.Inputs.FindAction(binding.actionName).started += binding.action;
+                        break;
+                    case InputActionChange.ActionCanceled:
+                        PlayerController.Inputs.FindAction(binding.actionName).canceled += binding.action;
+                        break;
+                    case InputActionChange.ActionPerformed:
+                        PlayerController.Inputs.FindAction(binding.actionName).performed += binding.action;
+                        break;
+                    default:
+                        throw new Exception("Unexpected input binding ActionChange");
+                }
             }
         }
-    }
 
-    public bool HasKeybinding(string bindingName)
-    {
-        foreach(var binding in keyBindings)
-            if (binding.actionName == bindingName) return true;
-        return false;
+        public void Unbind()
+        {
+            foreach (var binding in keyBindings)
+            {
+                switch (binding.actionChange)
+                {
+                    case InputActionChange.ActionStarted:
+                        PlayerController.Inputs.FindAction(binding.actionName).started -= binding.action;
+                        break;
+                    case InputActionChange.ActionCanceled:
+                        PlayerController.Inputs.FindAction(binding.actionName).canceled -= binding.action;
+                        break;
+                    case InputActionChange.ActionPerformed:
+                        PlayerController.Inputs.FindAction(binding.actionName).performed -= binding.action;
+                        break;
+                    default:
+                        throw new Exception("Unexpected input binding ActionChange");
+                }
+            }
+        }
+
+        public bool HasKeybinding(string bindingName)
+        {
+            foreach (var binding in keyBindings)
+                if (binding.actionName == bindingName) return true;
+            return false;
+        }
     }
 }

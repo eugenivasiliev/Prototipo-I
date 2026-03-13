@@ -1,14 +1,19 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlantData", menuName = "Scriptable Objects/PlantData")]
-public class PlantData : ScriptableObject
+namespace Farm
 {
-    public string plantName;
-    public int timeToGrow;
+    [CreateAssetMenu(fileName = "PlantData", menuName = "Scriptable Objects/PlantData")]
+    public class PlantData : ScriptableObject
+    {
+        public string plantName;
+        public int timeToGrow;
 
-    public GameObject[] stages;
+        public GameObject[] stages;
 
-    public GameObject plantWeapon;
+        public GameObject plantWeapon;
 
+        public int seedsPerRound;
+
+    }
 }

@@ -1,17 +1,21 @@
+using Enemies;
 using Trading;
 using UnityEngine;
 
-public class WaveUI : MonoBehaviour
+namespace UI
 {
-    public void Start()
+    public class WaveUI : MonoBehaviour
     {
-        this.gameObject.SetActive(false);
-    }
+        public void Start()
+        {
+            this.gameObject.SetActive(false);
+        }
 
-    public void ClickWave()
-    {
-        WaveManager.Instance.StartWave();
-        WaveManager.Instance.ToggleWaveUI();
-    }
+        public void ClickWave()
+        {
+            WaveManager.Instance.StartWave();
+            WaveManager.Instance.ToggleWaveUI();
+        }
 
+    }
 }

@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
+namespace Utils
 {
-    protected static T instance;
-    public static T Instance { get { return instance; } }
-
-    protected void InitSingleton()
+    public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        if (instance != null)
+        protected static T instance;
+        public static T Instance { get { return instance; } }
+
+        protected void InitSingleton()
         {
-            Destroy(gameObject);
-            return;
+            if (instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            instance = this as T;
         }
-        instance = this as T;
     }
 }
