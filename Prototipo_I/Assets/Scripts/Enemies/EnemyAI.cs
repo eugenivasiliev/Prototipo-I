@@ -161,10 +161,8 @@ namespace Enemies
             AudioManager.Instance.PlaySFX("EnemyDeath");
             animator.SetBool("IsDying", true);
             while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
-            {
-                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).fullPathHash);
                 yield return new WaitForEndOfFrame();
-            }
+
             DropLoot();
             Destroy(gameObject);
         }
