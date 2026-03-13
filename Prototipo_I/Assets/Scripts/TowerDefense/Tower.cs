@@ -17,6 +17,9 @@ namespace TowerDefense
         [SerializeField, Range(0, 50)] protected float maxRange = 15;
         [SerializeField, Range(0, 50)] protected float minRange = 3;
 
+        [Header("Animation")]
+        [SerializeField] protected Animator animator;
+
         public float GetRange()
         {
             return maxRange;

@@ -29,13 +29,18 @@ namespace TowerDefense
 
         void Action_Refill(InputAction.CallbackContext context)
         {
-            Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            if (item != null && item is IPlantSeed)
+            if(Inventory.Inventory.Instance.GetSeedCount() > maxCapacity - (int)Mathf.Floor(currentPlant.amount))
             {
-                if (currentPlant.data != (item as IPlantSeed).PlantData) currentPlant = (null, 0);
-                Inventory.Inventory.Instance.RemoveItem(item, maxCapacity - (int)Mathf.Floor(currentPlant.amount), out int amountDone);
-                currentPlant = ((item as IPlantSeed).PlantData, (int)Mathf.Floor(currentPlant.amount) + amountDone);
+                Inventory.Inventory.Instance.RemoveSeeds(maxCapacity - (int)Mathf.Floor(currentPlant.amount));
+                currentPlant = (null, maxCapacity);
             }
+            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
+            //if (item != null && item is IPlantSeed)
+            //{
+            //    if (currentPlant.data != (item as IPlantSeed).PlantData) currentPlant = (null, 0);
+            //    Inventory.Inventory.Instance.RemoveItem(item, maxCapacity - (int)Mathf.Floor(currentPlant.amount), out int amountDone);
+            //    currentPlant = ((item as IPlantSeed).PlantData, (int)Mathf.Floor(currentPlant.amount) + amountDone);
+            //}
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,6 +75,8 @@ namespace TowerDefense
         {
             attacking = true;
 
+            animator.SetBool("Shooting", true);
+
             float waitTime = 0.6f;
 
             while (attacking && closeEnemies.Count > 0 && CanAttack)
@@ -91,6 +98,8 @@ namespace TowerDefense
             }
 
             attacking = false;
+
+            animator.SetBool("Shooting", false);
         }
 
         void GetClosestEnemy()
