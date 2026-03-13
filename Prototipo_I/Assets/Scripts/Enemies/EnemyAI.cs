@@ -7,6 +7,7 @@ using Farm;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Formats.Alembic.Importer;
 using UnityEngine.UI;
 using Utils;
 
@@ -85,6 +86,18 @@ namespace Enemies
         [SerializeField] private Blackboard bb;
         public Blackboard BB { get => bb; set => bb = value; }
 
+        public enum AnimationType
+        {
+            ALEMBIC,
+            FBX
+        }
+
+        [Header("Animation")]
+        [SerializeField] private AnimationType animationType;
+        [SerializeField] private AlembicStreamPlayer alembicStreamPlayer;
+        [SerializeField] private Animator animator;
+        [SerializeField] private bool isDying = false;
+
     
     bool frozen = false;
         private void Awake()
@@ -111,14 +124,47 @@ namespace Enemies
 
         private void Update()
         {
-            enemyState.Behaviour();
+            if (isDying) return;
 
             if (health <= 0)
             {
-                DropLoot();
-                AudioManager.Instance.PlaySFX("EnemyDeath");
-                Destroy(gameObject);
+                isDying = true;
+
+                if (animationType == AnimationType.ALEMBIC)
+                    StartCoroutine(AlembicDeathAnim());
+                else if (animationType == AnimationType.FBX)
+                    StartCoroutine(FBXDeathAnim());
+                return;
             }
+
+            enemyState.Behaviour();
+
+            
+        }
+
+        private IEnumerator AlembicDeathAnim()
+        {
+            AudioManager.Instance.PlaySFX("EnemyDeath");
+            while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
+            {
+                alembicStreamPlayer.CurrentTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            DropLoot();
+            Destroy(gameObject);
+        }
+
+        private IEnumerator FBXDeathAnim()
+        {
+            AudioManager.Instance.PlaySFX("EnemyDeath");
+            animator.SetBool("IsDying", true);
+            while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
+            {
+                Debug.Log(animator.GetCurrentAnimatorStateInfo(0).fullPathHash);
+                yield return new WaitForEndOfFrame();
+            }
+            DropLoot();
+            Destroy(gameObject);
         }
 
         private void DropLoot()
