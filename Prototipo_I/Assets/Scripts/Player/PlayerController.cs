@@ -5,6 +5,7 @@ using Combat;
 using Enemies;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Utils;
 using static UnityEngine.Rendering.DebugUI;
@@ -27,6 +28,7 @@ namespace Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
         [SerializeField] private float cameraSensibility = 7.5f;
+        [SerializeField] private float scrollSensibility = 20.0f;
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private float jumpHeight = 2f;
 
@@ -79,6 +81,8 @@ namespace Player
 
 
         private Camera cam;
+
+        [SerializeField] private Image gunRecharge;
         private void Awake()
         {
             InitSingleton();
@@ -185,7 +189,7 @@ namespace Player
 
             cameraTransform.LookAt(transform.position, Vector3.up);
 
-            cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
+            cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * scrollSensibility);
         }
 
         void ToggleCameraDistance(InputAction.CallbackContext ctx)
@@ -275,6 +279,8 @@ namespace Player
 
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
+            gunRecharge.fillAmount = currentCooldown / attackCooldown;
+
             if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
@@ -296,6 +302,8 @@ namespace Player
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
                 damageable.DamageMax();
+
+            gunRecharge.fillAmount = 0.0f;
         }
 
         void SpawnProjectile(float waitTime)
