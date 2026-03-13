@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8835608909821828725}
@@ -71,7 +71,7 @@ MonoBehaviour:
   waitTime: 0.6
   maxRange: 15
   minRange: 3
-  animator: {fileID: 0}
+  animator: {fileID: 1187477770584843829}
 --- !u!1001 &5514006414054874465
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87,6 +87,26 @@ PrefabInstance:
     - target: {fileID: 3875052369414134548, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7770986340360247256, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
       propertyPath: m_LocalPosition.x
