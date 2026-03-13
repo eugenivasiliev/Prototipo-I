@@ -464,6 +464,7 @@ MonoBehaviour:
   animationDuration: 0.5
   stunParticles: {fileID: 0}
   money: 0
+  gunRecharge: {fileID: 501428651752200825}
 --- !u!54 &5561588000844362421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1081,6 +1082,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+--- !u!114 &501428651752200825 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 817302964084469289, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+  m_PrefabInstance: {fileID: 982569789593777232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6413879678570869544 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6097987769715672952, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}

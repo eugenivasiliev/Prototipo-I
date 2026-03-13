@@ -5,6 +5,7 @@ using Combat;
 using Enemies;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Utils;
 using static UnityEngine.Rendering.DebugUI;
@@ -80,6 +81,8 @@ namespace Player
 
 
         private Camera cam;
+
+        [SerializeField] private Image gunRecharge;
         private void Awake()
         {
             InitSingleton();
@@ -276,6 +279,8 @@ namespace Player
 
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
+            gunRecharge.fillAmount = currentCooldown / attackCooldown;
+
             if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
@@ -297,6 +302,8 @@ namespace Player
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
                 damageable.DamageMax();
+
+            gunRecharge.fillAmount = 0.0f;
         }
 
         void SpawnProjectile(float waitTime)
