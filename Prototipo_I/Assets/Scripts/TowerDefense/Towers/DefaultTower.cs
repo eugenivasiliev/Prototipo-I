@@ -41,6 +41,8 @@ namespace TowerDefense
         {
             attacking = true;
 
+            animator.SetBool("Shooting", true);
+
             while (attacking && closeEnemies.Count > 0)
             {
                 if (targetedEnemy == null)
@@ -60,6 +62,8 @@ namespace TowerDefense
             }
 
             attacking = false;
+
+            animator.SetBool("Shooting", false);
         }
 
         void GetClosestValidEnemy()
