@@ -133,7 +133,16 @@ namespace TowerDefense
 
         void SpawnProjectile(float waitTime)
         {
-            transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+            //transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+
+            Vector3 fwd = new Vector3(this.transform.forward.x, 0, this.transform.forward.z);
+            Vector3 enemyFwd = (targetedEnemy.transform.position - this.transform.position).normalized;
+            Vector3 targetFwd = new Vector3(enemyFwd.x, 0, enemyFwd.z);
+
+            Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
+
+            this.transform.rotation *= qt;
+
             AudioManager.Instance.PlaySFX("TurretVAttack");
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
             p.transform.rotation = Quaternion.Euler(180, p.transform.rotation.eulerAngles.y, p.transform.rotation.eulerAngles.z);
