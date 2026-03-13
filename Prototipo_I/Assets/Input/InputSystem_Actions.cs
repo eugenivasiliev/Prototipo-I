@@ -334,6 +334,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""camera_zoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""94d18918-facb-41ec-b9a9-627e118bf2dc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""debug"",
+                    ""type"": ""Button"",
+                    ""id"": ""bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -917,6 +935,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""objectives_toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a939f15-0652-4ece-87c9-7961686c0685"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""camera_zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""18e384b7-c24b-4649-8207-ca9d1a4a0218"",
+                    ""path"": ""<Keyboard>/#(º)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""debug"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1531,6 +1571,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_place_tower = m_Player.FindAction("place_tower", throwIfNotFound: true);
         m_Player_refill_tower = m_Player.FindAction("refill_tower", throwIfNotFound: true);
         m_Player_objectives_toggle = m_Player.FindAction("objectives_toggle", throwIfNotFound: true);
+        m_Player_camera_zoom = m_Player.FindAction("camera_zoom", throwIfNotFound: true);
+        m_Player_debug = m_Player.FindAction("debug", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1651,6 +1693,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_place_tower;
     private readonly InputAction m_Player_refill_tower;
     private readonly InputAction m_Player_objectives_toggle;
+    private readonly InputAction m_Player_camera_zoom;
+    private readonly InputAction m_Player_debug;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1771,6 +1815,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @objectives_toggle => m_Wrapper.m_Player_objectives_toggle;
         /// <summary>
+        /// Provides access to the underlying input action "Player/camera_zoom".
+        /// </summary>
+        public InputAction @camera_zoom => m_Wrapper.m_Player_camera_zoom;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/debug".
+        /// </summary>
+        public InputAction @debug => m_Wrapper.m_Player_debug;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1877,6 +1929,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @objectives_toggle.started += instance.OnObjectives_toggle;
             @objectives_toggle.performed += instance.OnObjectives_toggle;
             @objectives_toggle.canceled += instance.OnObjectives_toggle;
+            @camera_zoom.started += instance.OnCamera_zoom;
+            @camera_zoom.performed += instance.OnCamera_zoom;
+            @camera_zoom.canceled += instance.OnCamera_zoom;
+            @debug.started += instance.OnDebug;
+            @debug.performed += instance.OnDebug;
+            @debug.canceled += instance.OnDebug;
         }
 
         /// <summary>
@@ -1969,6 +2027,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @objectives_toggle.started -= instance.OnObjectives_toggle;
             @objectives_toggle.performed -= instance.OnObjectives_toggle;
             @objectives_toggle.canceled -= instance.OnObjectives_toggle;
+            @camera_zoom.started -= instance.OnCamera_zoom;
+            @camera_zoom.performed -= instance.OnCamera_zoom;
+            @camera_zoom.canceled -= instance.OnCamera_zoom;
+            @debug.started -= instance.OnDebug;
+            @debug.performed -= instance.OnDebug;
+            @debug.canceled -= instance.OnDebug;
         }
 
         /// <summary>
@@ -2458,6 +2522,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnObjectives_toggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "camera_zoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCamera_zoom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "debug" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDebug(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

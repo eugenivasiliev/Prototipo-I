@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class PlantWeapon : MonoBehaviour
+namespace Combat
 {
-    public virtual string Name { get => nameof(PlantWeapon); }
+    public class PlantWeapon : MonoBehaviour
+    {
+        public virtual string Name { get => nameof(PlantWeapon); }
 
-    protected virtual void Start() { }
-    protected virtual void Update() { }
+        protected virtual void Start() { }
+        protected virtual void Update() { }
+    }
 }
