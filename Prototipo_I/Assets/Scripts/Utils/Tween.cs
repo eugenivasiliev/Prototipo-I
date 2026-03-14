@@ -18,6 +18,7 @@ namespace Utils
         public T endValue;
         public bool isActive;
         public bool isReversing;
+        public bool isLooping;
 
         public bool SetActive(bool state) => isActive = state;
         public void Reset()
@@ -42,6 +43,12 @@ namespace Utils
         {
             if (!tween.isActive) return false;
 
+            if(tween.isLooping && tween.t + delta > tween.duration)
+            {
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
+            }
+
             tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
@@ -54,6 +61,12 @@ namespace Utils
         {
             if (!tween.isActive) return false;
 
+            if (tween.isLooping && tween.t + delta > tween.duration)
+            {
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
+            }
+
             tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
@@ -65,6 +78,12 @@ namespace Utils
         public static bool Update(float delta, ref Tween<Vector3> tween)
         {
             if (!tween.isActive) return false;
+
+            if (tween.isLooping && tween.t + delta > tween.duration)
+            {
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
+            }
 
             tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);

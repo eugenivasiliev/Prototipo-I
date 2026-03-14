@@ -11206,7 +11206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1001 &359214489
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18551,7 +18554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1001 &618658689
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21785,13 +21791,113 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: separation
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: circlingSpeed
       value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.duration
+      value: 2.186
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.endValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.duration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.endValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: forwardMovement
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 742273700362349958}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.isLooping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.isLooping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: soaringAmplitude
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.startValue
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_PostInfinity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_Curve.Array.data[2].time
+      value: 0.9970548
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: yAxis.curve.m_Curve.Array.data[2].value
+      value: 0.00035618866
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[1].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[1].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525225853933290825, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+      propertyPath: zAxis.curve.m_Curve.Array.data[1].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26784,7 +26890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1 &909120539
 GameObject:
   m_ObjectHideFlags: 0
@@ -27899,6 +28008,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
   m_PrefabInstance: {fileID: 503792487}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &958460661
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 764554216873610310, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_Name
+      value: ----------------------------PlotRange
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 100.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 110.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7070964
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7070964
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.003839112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.003839112
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.622
+      objectReference: {fileID: 0}
+    - target: {fileID: 3564796950445619516, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: tm
+      value: 
+      objectReference: {fileID: 134422675}
+    - target: {fileID: 3564796950445619516, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
+      propertyPath: towerType
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
 --- !u!1001 &958471985
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31477,6 +31651,7 @@ MonoBehaviour:
     endValue: {x: 500, y: -200}
     isActive: 0
     isReversing: 0
+    isLooping: 0
   dialogueDB: {fileID: 11400000, guid: ad2bfe2758e1de943a2a17a9797bc2e7, type: 2}
 --- !u!4 &1125187495
 Transform:
@@ -32909,7 +33084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1001 &1203998792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34091,7 +34269,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1 &1232577997
 GameObject:
   m_ObjectHideFlags: 0
@@ -43458,7 +43639,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7887a18b0c6667c468af4f756a7c0c4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerData: {fileID: 0}
+  currentTower: {fileID: 0}
   tm: {fileID: 134422675}
+  towerType: 0
 --- !u!1001 &1536382163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44408,6 +44592,7 @@ MonoBehaviour:
     endValue: 1
     isActive: 0
     isReversing: 0
+    isLooping: 0
 --- !u!114 &1565657954 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1603490510913852279, guid: db68d625ee0789c4db18646013156f5d, type: 3}
@@ -60653,6 +60838,7 @@ MonoBehaviour:
     endValue: 1
     isActive: 0
     isReversing: 0
+    isLooping: 0
   yAxis:
     curve:
       serializedVersion: 2
@@ -60685,6 +60871,7 @@ MonoBehaviour:
     endValue: 1
     isActive: 0
     isReversing: 0
+    isLooping: 0
   zAxis:
     curve:
       serializedVersion: 2
@@ -60717,9 +60904,10 @@ MonoBehaviour:
     endValue: 1
     isActive: 0
     isReversing: 0
+    isLooping: 0
   player: {fileID: 9017860080823449519}
-  nearOffset: {x: 0, y: 25, z: -30}
-  farOffset: {x: 0, y: 80, z: -40}
+  nearOffset: {x: 2.5, y: 1, z: -5}
+  farOffset: {x: 0, y: 25, z: -30}
   currentOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   lookInput: {x: 0, y: 0}
@@ -61020,6 +61208,7 @@ SceneRoots:
   - {fileID: 1537870238}
   - {fileID: 305112750}
   - {fileID: 893383468}
+  - {fileID: 958460661}
   - {fileID: 2013965275}
   - {fileID: 1062043299}
   - {fileID: 943793426}
