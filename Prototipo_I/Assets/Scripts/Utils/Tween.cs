@@ -40,13 +40,9 @@ namespace Utils
     {
         public static bool Update(float delta, ref Tween<float> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive)
-            {
-                tween.SetActive(false);
-                return false;
-            }
+            if (!tween.isActive) return false;
 
-            tween.t += delta;
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 
@@ -56,9 +52,9 @@ namespace Utils
 
         public static bool Update(float delta, ref Tween<Vector2> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive) return false;
+            if (!tween.isActive) return false;
 
-            tween.t += delta;
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 
@@ -68,9 +64,9 @@ namespace Utils
 
         public static bool Update(float delta, ref Tween<Vector3> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive) return false;
+            if (!tween.isActive) return false;
 
-            tween.t += delta;
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 
