@@ -1,23 +1,26 @@
 using UnityEngine;
 
-public class PuddlePartycle : MonoBehaviour
+namespace VFX
 {
-    public GameObject modelToShow;
-    private ParticleSystem ps;
-
-    void Start()
+    public class PuddlePartycle : MonoBehaviour
     {
-        ps = GetComponent<ParticleSystem>();
+        public GameObject modelToShow;
+        private ParticleSystem ps;
 
-        if (modelToShow != null)
-            modelToShow.SetActive(false);
-    }
+        void Start()
+        {
+            ps = GetComponent<ParticleSystem>();
 
-    private void Update()
-    {
-        if (ps.isPlaying)
-            modelToShow.SetActive(true);
-        else
-            modelToShow.SetActive(false);
+            if (modelToShow != null)
+                modelToShow.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (ps.isPlaying)
+                modelToShow.SetActive(true);
+            else
+                modelToShow.SetActive(false);
+        }
     }
 }

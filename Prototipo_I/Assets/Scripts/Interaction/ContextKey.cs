@@ -1,21 +1,24 @@
 using UnityEngine;
 using UnityEngine.ProBuilder;
 
-public class ContextKey : MonoBehaviour
+namespace Utils
 {
-    private void OnTriggerEnter(Collider other)
+    public class ContextKey : MonoBehaviour
     {
-        if (other.tag == "Player")
+        private void OnTriggerEnter(Collider other)
         {
+            if (other.tag == "Player")
+            {
 
-            transform.GetChild(0).gameObject.SetActive(true);
+                transform.GetChild(0).gameObject.SetActive(true);
+            }
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
+        private void OnTriggerExit(Collider other)
         {
-            transform.GetChild(0).gameObject.SetActive(false);
+            if (other.tag == "Player")
+            {
+                transform.GetChild(0).gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -1,17 +1,32 @@
+using Enemies;
+using System.Collections.Generic;
 using Trading;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utils;
 
-public class WaveUI : MonoBehaviour
+namespace UI
 {
-    public void Start()
+    public class WaveUI : MonoBehaviour
     {
-        this.gameObject.SetActive(false);
-    }
+        public void Start()
+        {
+            this.gameObject.SetActive(false);
+            
+        }
 
-    public void ClickWave()
-    {
-        WaveManager.Instance.StartWave();
-        WaveManager.Instance.ToggleWaveUI();
-    }
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                WaveManager.Instance.ToggleWaveUI();
+            }
+        }
 
+        public void ClickWave()
+        {
+            WaveManager.Instance.StartWave();
+            WaveManager.Instance.ToggleWaveUI();
+        }
+
+    }
 }
