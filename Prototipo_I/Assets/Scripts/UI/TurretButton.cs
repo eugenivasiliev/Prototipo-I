@@ -22,7 +22,7 @@ namespace UI
             ResetRange();
 
 
-            tm.EraseValidIngredients();
+            tm.EraseTowerDescription();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -30,7 +30,7 @@ namespace UI
             spotReference.SetRange(15.0f);
             spotReference.ShowRange(true);
 
-            tm.LoadValidIngredients(td);
+            tm.LoadTowerDescription(td);
         }
 
         private void OnDisable()
