@@ -9,9 +9,10 @@ namespace TowerDefense
 {
     public class TowerSpot : MonoBehaviour, IInteractable
     {
-        TowerData towerData;
 
-        private GameObject currentTower;
+        [SerializeField] private TowerData towerData;
+
+        [SerializeField] private GameObject currentTower;
 
         public bool hasTower { get { return towerData != null; } }
 
@@ -19,6 +20,8 @@ namespace TowerDefense
 
         [SerializeField] private TowerMenu tm;
 
+        [SerializeField] private TowerData.TowerType towerType;
+        public TowerData.TowerType TowerType { get { return towerType; } }
 
         private void Start()
         {

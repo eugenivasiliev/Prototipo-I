@@ -21,8 +21,18 @@ namespace TowerDefense
 
         public int cost;
 
+        public string Id => throw new NotImplementedException();
+
         public Sprite uiSprite;
 
-        public string Id => throw new NotImplementedException();
+        public TowerType towerType;
+
+        public enum TowerType : int
+        {
+            ATTACK,
+            DEFENSE,
+            UTILITY,
+            COUNT
+        }
     }
 }
