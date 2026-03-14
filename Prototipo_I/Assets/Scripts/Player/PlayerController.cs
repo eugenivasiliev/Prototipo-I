@@ -303,6 +303,9 @@ namespace Player
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
                 damageable.DamageMax();
 
+            if (targetedEnemy.TryGetComponent<EnemyAI>(out var enemy))
+                enemy.UpdateLife();
+
             gunRecharge.fillAmount = 0.0f;
         }
 
