@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Utils;
 
@@ -10,14 +11,19 @@ namespace GameMode
         void Start()
         {
             popupTween.SetActive(true);
+            StartCoroutine(Leave());
         }
 
         void Update()
         {
             if (TweenUtil.Update(Time.deltaTime, ref popupTween))
                 this.transform.localScale = popupTween.value * Vector3.one;
-            else
-                SceneManager.LoadScene("MainMenu");
+            
+        }
+        public IEnumerator Leave()
+        {
+            yield return new WaitForSeconds(2.5f);
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
