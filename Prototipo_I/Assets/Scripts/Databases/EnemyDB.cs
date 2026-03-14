@@ -14,8 +14,8 @@ namespace Enemies
         {
             foreach (var enemy in enemyPrefabs)
             {
-                string name = enemy.name;
-                enemyPrefabsByName.Add(name, enemy);
+                if(!enemyPrefabsByName.ContainsKey(enemy.name))
+                    enemyPrefabsByName.Add(enemy.name, enemy);
             }
         }
 

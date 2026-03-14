@@ -15,7 +15,6 @@ namespace UI
         [SerializeField] private GameObject towerUI;
 
         private bool isOpen = false;
-
         public bool IsOpen => isOpen;
 
         public TowerSpot spotReference = null;
@@ -35,7 +34,7 @@ namespace UI
         {
             foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
 
-            foreach (TowerData data in DBManager.Instance.TowerDB.TowerDataList)
+            foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
             {
                 if (Inventory.Inventory.Instance.HasSeeds(data.cost))
                 {

@@ -34,6 +34,9 @@ namespace AICompanion
         {
             if (dialogue.hasTriggered) return;
 
+            textPosTween.Reset();
+            StopAllCoroutines();
+
             dialogueText.text = dialogue.Text;
             dialogue.hasTriggered = true;
             textPosTween.SetActive(true);
