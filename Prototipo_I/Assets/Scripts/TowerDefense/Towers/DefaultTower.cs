@@ -4,12 +4,15 @@ using Audio;
 using Combat;
 using Enemies;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TowerDefense
 {
     public class DefaultTower : Tower
     {
-        private float damage = 20.0f;
+        [SerializeField] private int damage = 1;
+
+        [SerializeField] private Canvas healthHolder;
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Finish"))
@@ -92,7 +95,7 @@ namespace TowerDefense
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.DamagePercent(20.0f);
+                damageable.Damage(damage);
 
                 targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
             }
@@ -127,5 +130,12 @@ namespace TowerDefense
             p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
             p.GetComponent<Projectile>().maxTime = waitTime;
         }
+
+        void UpdateLife() {
+
+            healthHolder.gameObject.SetActive(true);
+            healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+        }
+
     }
 }

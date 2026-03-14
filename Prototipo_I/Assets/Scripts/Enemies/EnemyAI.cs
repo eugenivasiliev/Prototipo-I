@@ -47,7 +47,8 @@ namespace Enemies
         [SerializeField] private int health;
 
         public int Health { get => health; set => health = value; }
-        public int MaxHealth { get => 100; set { } }
+        private int maxHealth;
+        public int MaxHealth { get => maxHealth; set { } }
         [SerializeField] private Canvas ui_health;
 
 
@@ -104,6 +105,7 @@ namespace Enemies
         {
             agent = GetComponent<NavMeshAgent>();
             agent.speed = speed * 2;
+            maxHealth = health;
         }
 
 
@@ -215,7 +217,7 @@ namespace Enemies
         {
 
             ui_health.gameObject.SetActive(true);
-            ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
+            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
 
 
