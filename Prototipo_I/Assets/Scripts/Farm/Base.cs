@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Combat;
 using Enemies;
-using Items;
 using Objectives;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,6 +36,8 @@ namespace TowerDefense
 
                 EnemyManager.Instance.ReturnToSpawn(0.0f);
                 health = MaxHealth;
+
+                WaveManager.Instance.ActivateAgain();
             }
         }
 
@@ -48,6 +49,6 @@ namespace TowerDefense
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
-
+        public void OnDamage() { }
     }
 }
