@@ -54,6 +54,9 @@ namespace TowerDefense
             SetRange(r);
 
             tm.ToggleMenu();
+        
+            Destroy(contextButton);
+            Destroy(range);
         }
 
         private void OnTowerUpgraded(int level)
@@ -75,7 +78,6 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
-            Destroy(contextButton);
         }
 
         public void SetRange(float dist)
