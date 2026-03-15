@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Combat;
 using Enemies;
-using Items;
 using Objectives;
 using UnityEngine;
 using UnityEngine.Events;
