@@ -80,7 +80,7 @@ namespace TowerDefense
 
         public void SetRange(float dist)
         {
-            range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+            range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
         }
 
         public void ShowRange(bool bo)
