@@ -1,6 +1,5 @@
 using Enemies;
 using System.Collections.Generic;
-using Trading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
