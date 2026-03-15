@@ -24,8 +24,8 @@ namespace UI
 
         public void ClickWave()
         {
-            WaveManager.Instance.StartWave();
             WaveManager.Instance.ToggleWaveUI();
+            WaveManager.Instance.StartWave();
         }
 
     }
