@@ -110,5 +110,7 @@ namespace Farm
             healthHolder.gameObject.SetActive(true);
             healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
+
+        public void OnDamage() {}
     }
 }
