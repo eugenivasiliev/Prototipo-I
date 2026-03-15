@@ -29,13 +29,18 @@ namespace TowerDefense
 
         void Action_Refill(InputAction.CallbackContext context)
         {
-            Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            if (item != null && item is IPlantSeed)
+            if(Inventory.Inventory.Instance.GetSeedCount() > maxCapacity - (int)Mathf.Floor(currentPlant.amount))
             {
-                if (currentPlant.data != (item as IPlantSeed).PlantData) currentPlant = (null, 0);
-                Inventory.Inventory.Instance.RemoveItem(item, maxCapacity - (int)Mathf.Floor(currentPlant.amount), out int amountDone);
-                currentPlant = ((item as IPlantSeed).PlantData, (int)Mathf.Floor(currentPlant.amount) + amountDone);
+                Inventory.Inventory.Instance.RemoveSeeds(maxCapacity - (int)Mathf.Floor(currentPlant.amount));
+                currentPlant = (null, maxCapacity);
             }
+            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
+            //if (item != null && item is IPlantSeed)
+            //{
+            //    if (currentPlant.data != (item as IPlantSeed).PlantData) currentPlant = (null, 0);
+            //    Inventory.Inventory.Instance.RemoveItem(item, maxCapacity - (int)Mathf.Floor(currentPlant.amount), out int amountDone);
+            //    currentPlant = ((item as IPlantSeed).PlantData, (int)Mathf.Floor(currentPlant.amount) + amountDone);
+            //}
         }
 
         private void OnTriggerEnter(Collider other)
@@ -70,6 +75,8 @@ namespace TowerDefense
         {
             attacking = true;
 
+            animator.SetBool("Shooting", true);
+
             float waitTime = 0.6f;
 
             while (attacking && closeEnemies.Count > 0 && CanAttack)
@@ -91,6 +98,8 @@ namespace TowerDefense
             }
 
             attacking = false;
+
+            animator.SetBool("Shooting", false);
         }
 
         void GetClosestEnemy()
@@ -124,7 +133,13 @@ namespace TowerDefense
 
         void SpawnProjectile(float waitTime)
         {
-            transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+            Vector3 fwd = new Vector3(this.transform.forward.x, 0, this.transform.forward.z);
+            Vector3 enemyFwd = (targetedEnemy.transform.position - this.transform.position).normalized;
+            Vector3 targetFwd = new Vector3(enemyFwd.x, 0, enemyFwd.z);
+
+            Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
+            transform.rotation *= qt;
+
             AudioManager.Instance.PlaySFX("TurretVAttack");
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
             p.transform.rotation = Quaternion.Euler(180, p.transform.rotation.eulerAngles.y, p.transform.rotation.eulerAngles.z);

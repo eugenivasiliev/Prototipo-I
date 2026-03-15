@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Combat;
 using Enemies;
-using Items;
+using Objectives;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -17,6 +18,7 @@ namespace TowerDefense
         public int MaxHealth { get => 100; set { } }
         [SerializeField] private Canvas ui_health;
 
+        [SerializeField] private int seedsPerRound;
 
         private UnityEvent<float> BaseProduction = new UnityEvent<float>();
         private void Start()
@@ -39,8 +41,9 @@ namespace TowerDefense
 
         void AddSeeds(float ff)
         {
-            //Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
-            Inventory.Inventory.Instance.RemoveItem(new FirePlantItem());
+            Inventory.Inventory.Instance.AddSeeds(seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                foreach (PlantsCollected obj in objs) obj.UpdateObjective(seedsPerRound);
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 

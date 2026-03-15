@@ -5,6 +5,7 @@ using Combat;
 using Enemies;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using Utils;
 using static UnityEngine.Rendering.DebugUI;
@@ -27,6 +28,7 @@ namespace Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
         [SerializeField] private float cameraSensibility = 7.5f;
+        [SerializeField] private float scrollSensibility = 20.0f;
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private float jumpHeight = 2f;
 
@@ -34,15 +36,6 @@ namespace Player
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private Transform modelTransform;
         [SerializeField] public short InteractionRange { get { return 3; } }
-
-        [Header("Camera")]
-        [SerializeField] private Vector3 farCameraOffset;
-        [SerializeField] private Vector3 nearCameraOffset;
-        private Vector3 cameraOffset;
-        private bool isCameraFar = true;
-        [SerializeField] private AnimationCurve animationCurveX;
-        [SerializeField] private AnimationCurve animationCurveY;
-        [SerializeField, Range(0, 1)] private float animationDuration;
 
         [Header("VFX")]
         [SerializeField] private GameObject stunParticles;
@@ -79,6 +72,8 @@ namespace Player
 
 
         private Camera cam;
+
+        [SerializeField] private Image gunRecharge;
         private void Awake()
         {
             InitSingleton();
@@ -94,26 +89,21 @@ namespace Player
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            inputs.Player.Look.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
-            inputs.Player.Look.canceled += ctx => cameraInput = Vector2.zero;
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             inputs.Player.Interact.canceled += ctx => Interact();
-            inputs.Player.Jump.performed += ctx => isJumping = true;
+            //inputs.Player.Jump.performed += ctx => isJumping = true;
 
             inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
             //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
             //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
 
-            inputs.Player.camera_zoom.performed += ToggleCameraDistance;
+            //inputs.Player.camera_zoom.performed += ToggleCameraDistance;
 
             inputs.Player.debug.performed += ctx => Stun(1);
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-
-            cameraOffset = farCameraOffset;
-            isCameraFar = true;
         }
 
         private void OnDisable()
@@ -123,7 +113,6 @@ namespace Player
 
         void Update()
         {
-            Look();
             Movement();
             AttackLoop();
         }
@@ -170,56 +159,6 @@ namespace Player
                 AudioManager.Instance.PlaySFXLoop("Running");
             else
                 AudioManager.Instance.StopLoop("Running");
-        }
-        private void Look()
-        {
-            if (movementLocked) return;
-
-            float mouseX = cameraInput.x * cameraSensibility;
-            Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-            cameraOffset = q * cameraOffset;
-            farCameraOffset = q * farCameraOffset;
-            nearCameraOffset = q * nearCameraOffset;
-
-            cameraTransform.transform.position = transform.position + cameraOffset;
-
-            cameraTransform.LookAt(transform.position, Vector3.up);
-
-            cameraOffset -= new Vector3(0.0f, Input.GetAxisRaw("Mouse ScrollWheel") * 20, 0.0f);
-        }
-
-        void ToggleCameraDistance(InputAction.CallbackContext ctx)
-        {
-            StartCoroutine(ToggleAnim());
-        }
-
-        private IEnumerator ToggleAnim()
-        {
-            movementLocked = true;
-
-            Vector3 startPos = (isCameraFar) ? farCameraOffset : nearCameraOffset;
-            Vector3 endPos = (isCameraFar) ? nearCameraOffset : farCameraOffset;
-
-            float t = 0;
-
-            while (t < 1)
-            {
-                t += Time.deltaTime / animationDuration;
-                float alphaX = animationCurveX.Evaluate(t);
-                float alphaY = animationCurveY.Evaluate(t);
-
-                cameraOffset.x = (1 - alphaX) * startPos.x + alphaX * endPos.x;
-                cameraOffset.y = (1 - alphaY) * startPos.y + alphaY * endPos.y;
-                cameraTransform.position = transform.position + cameraOffset;
-                cameraTransform.LookAt(transform.position, Vector3.up);
-
-                yield return new WaitForEndOfFrame();
-            }
-
-            isCameraFar = !isCameraFar;
-            movementLocked = false;
-
-            yield return null;
         }
 
         private void Interact()
@@ -275,6 +214,8 @@ namespace Player
 
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
+            gunRecharge.fillAmount = currentCooldown / attackCooldown;
+
             if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
@@ -296,6 +237,11 @@ namespace Player
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
                 damageable.DamageMax();
+
+            if (targetedEnemy.TryGetComponent<EnemyAI>(out var enemy))
+                enemy.UpdateLife();
+
+            gunRecharge.fillAmount = 0.0f;
         }
 
         void SpawnProjectile(float waitTime)

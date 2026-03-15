@@ -3,11 +3,11 @@ using System.Timers;
 using Audio;
 using Combat;
 using Inventory;
-using Items;
 using Objectives;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Utils;
 
 namespace Farm
@@ -38,6 +38,7 @@ namespace Farm
         private GameObject ripeParticles;
         public GameObject harvestFeedback;
 
+        [SerializeField] private Canvas healthHolder;
         private void Awake()
         {
             if (statusText != null)
@@ -49,20 +50,9 @@ namespace Farm
         public void Plant(PlantData data)
         {
             AudioManager.Instance.PlaySFX("Plant");
-            if (IsPlanted)
-            {
-                if (hybridationManager.TryFindHybrid(plantData, data, out PlantData newPlant))
-                {
-                    this.plantData = newPlant;
-                    plant = new Plant(newPlant);
-                }
-                else return;
-            }
-            else
-            {
-                plantData = data;
-                plant = new Plant(data);
-            }
+            
+            plantData = data;
+            plant = new Plant(data);
 
             currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
@@ -71,34 +61,6 @@ namespace Farm
             isFertilized = false;
 
             Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);
-        }
-
-        public void Fertilize()
-        {
-            if (!IsPlanted || isFertilized) return;
-            AudioManager.Instance.PlaySFX("Fertilize");
-            isFertilized = true;
-            plant.ApplyFertilize(isFertilized);
-        }
-        private void Harvest()
-        {
-            if (!IsPlanted || !plant.IsFullyGrown) return;
-
-            AudioManager.Instance.PlaySFX("Harvesting");
-            Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
-
-            if (ObjectivesManager.Instance.TryGetObjective<PlantsOfTypeCollected, string>(out List<PlantsOfTypeCollected> objs))
-            {
-                foreach (PlantsOfTypeCollected obj in objs)
-                {
-                    obj.UpdateObjective(plantData.plantName);
-                }
-            }
-
-            Destroy(currentPlant);
-
-            this.plant = null;
-            currentPlant = null;
         }
 
         private void OnPlantStageChanged(int currentStage)
@@ -111,37 +73,24 @@ namespace Farm
             GameObject prefab = plantData.stages[currentStage];
             currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
+            Inventory.Inventory.Instance.AddSeeds(plantData.seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                objs[0].UpdateObjective(plantData.seedsPerRound);
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
-    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
-    };
+            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant)
+        };
 
         private void Action_Plant(InputAction.CallbackContext ctx)
         {
-            Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            if (item != null && item is IPlantSeed)
-            {
-                this.Plant((item as IPlantSeed).PlantData);
-                Inventory.Inventory.Instance.RemoveItem(item);
-                plant.TryGrow(DayNightCycle.Instance.TotalTime);
-            }
+            if (IsPlanted || Inventory.Inventory.Instance.GetSeedCount() == 0) return;
+
+            this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
+            Inventory.Inventory.Instance.RemoveSeeds(1);
+            plant.TryGrow(DayNightCycle.Instance.TotalTime);
         }
 
-        private void Action_Harvest(InputAction.CallbackContext ctx)
-        {
-            if (IsPlanted && plant.IsFullyGrown)
-                Harvest();
-
-            Destroy(ripeParticles);
-        }
-
-        private void Action_Fertilize(InputAction.CallbackContext ctx)
-        {
-            Fertilize();
-        }
         public void FullGrow()
         {
             if (plant != null)
@@ -154,5 +103,12 @@ namespace Farm
             ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
         }
         public void OnInteract() { }
+
+        void UpdateLife()
+        {
+
+            healthHolder.gameObject.SetActive(true);
+            healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+        }
     }
 }

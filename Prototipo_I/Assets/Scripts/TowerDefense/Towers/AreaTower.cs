@@ -12,6 +12,7 @@ namespace TowerDefense
         {
             waitTime = 1.5f;
         }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Finish"))
@@ -43,6 +44,8 @@ namespace TowerDefense
         {
             attacking = true;
 
+            animator.SetBool("Shooting", true);
+
             while (attacking && closeEnemies.Count > 0)
             {
                 if (targetedEnemy == null)
@@ -55,6 +58,8 @@ namespace TowerDefense
             }
 
             attacking = false;
+
+            animator.SetBool("Shooting", false);
         }
 
         void GetClosestValidEnemy()
@@ -91,6 +96,13 @@ namespace TowerDefense
 
             if (!tracking)
                 return;
+
+            Vector3 fwd = new Vector3(this.transform.forward.x, 0, this.transform.forward.z);
+            Vector3 enemyFwd = (targetedEnemy.transform.position - this.transform.position).normalized;
+            Vector3 targetFwd = new Vector3(enemyFwd.x, 0, enemyFwd.z);
+
+            Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
+            transform.rotation *= qt;
         }
 
         void SpawnProjectile(float waitTime)

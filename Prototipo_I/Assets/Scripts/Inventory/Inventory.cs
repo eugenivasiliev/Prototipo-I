@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utils;
+using static Inventory.Inventory;
 
 namespace Inventory
 {
@@ -64,7 +65,7 @@ namespace Inventory
         }
     }
 
-    public class Inventory : Singleton<Inventory>, IAutoSaving<InventoryList>
+    public class Inventory : Singleton<Inventory>, IAutoSaving<SeedCountWrapper>
     {
 
         [SerializeField] private int inventorySpace;
@@ -79,24 +80,42 @@ namespace Inventory
 
         [SerializeField] private TextAsset defaultInventory;
 
-        public InventoryList DefaultData
+        public SeedCountWrapper DefaultData
         {
             get
             {
-                InventoryList data = JsonUtility.FromJson<InventoryList>(defaultInventory.text);
+                SeedCountWrapper data = JsonUtility.FromJson<SeedCountWrapper>(defaultInventory.text);
                 return data;
             }
         }
 
         public UnityEvent<float> SaveEvent { get; set; }
 
+        public SeedCountWrapper GetData() => new SeedCountWrapper(seedCount);
+        public void SetData(SeedCountWrapper data) => seedCount = data.seedCount;
+
+        public struct SeedCountWrapper
+        {
+            public int seedCount;
+
+            public SeedCountWrapper(int seedCount)
+            {
+                this.seedCount = seedCount;
+            }
+        }
+
         #endregion
 
         private Indicator indicator;
 
+        [SerializeField] private int seedCount;
+
         [Header("UI Sprites")]
         [SerializeField] private UISpritesDB uiSpritesDB;
         [SerializeField] private Sprite defaultItemSprite;
+
+        [Header("Seed Counter UI")]
+        [SerializeField] private TMP_Text seedCounterUI;
 
         private void Start()
         {
@@ -105,21 +124,39 @@ namespace Inventory
 
             items = new InventoryList(inventorySpace);
 
-            (this as IAutoSaving<InventoryList>).SetupAutoSave();
-            //(this as IAutoSaving<InventoryList>).Load();
+            (this as IAutoSaving<SeedCountWrapper>).SetupAutoSave();
+            (this as IAutoSaving<SeedCountWrapper>).Load();
 
-            AddItem(new Items.GasPlantItem(), 7000, out int amountDone);
+            seedCounterUI.text = seedCount.ToString();
 
-            for (int i = 0; i < inventorySpace; ++i)
-            {
-                if (items.slots[i] == InventorySlot.Default) DefaultItem(i);
-                else RenderItem(i);
-            }
+            //for (int i = 0; i < inventorySpace; ++i)
+            //{
+            //    if (items.slots[i] == InventorySlot.Default) DefaultItem(i);
+            //    else RenderItem(i);
+            //}
 
-            indicator = this.transform.GetChild(0).GetComponent<Indicator>();
-            indicator.Initialize(this.transform.GetComponentInChildren<GridLayoutGroup>().cellSize);
+            //indicator = this.transform.GetChild(0).GetComponent<Indicator>();
+            //indicator.Initialize(this.transform.GetComponentInChildren<GridLayoutGroup>().cellSize);
 
         }
+
+        public int GetSeedCount() => seedCount;
+
+        public void AddSeeds(int amount)
+        {
+            seedCount += amount;
+            seedCounterUI.text = seedCount.ToString();
+        }
+
+        public bool RemoveSeeds(int amount) {
+            if(seedCount < amount) return false;
+
+            seedCount -= amount;
+            seedCounterUI.text = seedCount.ToString();
+            return true;
+        }
+
+        public bool HasSeeds(int amount) => seedCount >= amount;
 
         public int GetItemCount(Item item)
         {
@@ -236,19 +273,16 @@ namespace Inventory
         private Image GetImage(int i) => this.transform.GetChild(1).GetChild(i).GetComponent<Image>();
         private TMP_Text GetText(int i) => this.transform.GetChild(1).GetChild(i).GetComponentInChildren<TMP_Text>();
 
-        public InventoryList GetData() => items;
-        public void SetData(InventoryList data) => items = data;
-
-        public bool HasIngredients(TowerData.Ingredient[] ingredients)
-        {
-            foreach (TowerData.Ingredient ingredient in ingredients)
-            {
-                if (GetItemCount(ingredient.itemName) < ingredient.amount)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+        //public bool HasIngredients(TowerData.Ingredient[] ingredients)
+        //{
+        //    foreach (TowerData.Ingredient ingredient in ingredients)
+        //    {
+        //        if (GetItemCount(ingredient.itemName) < ingredient.amount)
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
     }
 }
