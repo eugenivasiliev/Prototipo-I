@@ -45,7 +45,6 @@ namespace Enemies
         public void ActivateAgain()
         {
             collision.enabled = true;
-            collision.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         private void Action_OpenMenu(InputAction.CallbackContext context)
