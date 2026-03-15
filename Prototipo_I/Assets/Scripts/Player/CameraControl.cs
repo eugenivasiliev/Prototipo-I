@@ -39,7 +39,7 @@ namespace Player
 
         void Update()
         {
-            //if (movementLocked) return;
+            if (PlayerController.MovementLocked) return;
 
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
