@@ -25,8 +25,6 @@ namespace TowerDefense
 
         private void Start()
         {
-            //(this as IInteractable).Bind();
-
             if (this.transform.GetChild(0) != null)
                 range = this.transform.GetChild(0).gameObject;
         }
@@ -42,11 +40,6 @@ namespace TowerDefense
 
         public void PlaceTower(TowerData data)
         {
-            //foreach (var ingredient in data.ingredients)
-            //{
-            //    Inventory.Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
-            //}
-
             Inventory.Inventory.Instance.RemoveSeeds(data.cost);
 
             AudioManager.Instance.PlaySFX("Plant");
@@ -72,11 +65,12 @@ namespace TowerDefense
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("place_tower", InputActionChange.ActionCanceled, Action_PlaceTower)
-    };
+            new IInteractable.KeyBinding("place_tower", InputActionChange.ActionCanceled, Action_PlaceTower)
+        };
 
         private void Action_PlaceTower(InputAction.CallbackContext context)
         {
+            if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
         }

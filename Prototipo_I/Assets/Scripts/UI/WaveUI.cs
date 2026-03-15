@@ -1,6 +1,5 @@
 using Enemies;
 using System.Collections.Generic;
-using Trading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -24,8 +23,8 @@ namespace UI
 
         public void ClickWave()
         {
-            WaveManager.Instance.StartWave();
             WaveManager.Instance.ToggleWaveUI();
+            WaveManager.Instance.StartWave();
         }
 
     }

@@ -300,7 +300,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Countdown"",
+                    ""name"": ""wave_console"",
                     ""type"": ""Button"",
                     ""id"": ""c2644a79-e306-4545-a0d9-449776ac5d0c"",
                     ""expectedControlType"": """",
@@ -901,7 +901,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Countdown"",
+                    ""action"": ""wave_console"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1567,7 +1567,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Alpha7 = m_Player.FindAction("Alpha7", throwIfNotFound: true);
         m_Player_Alpha8 = m_Player.FindAction("Alpha8", throwIfNotFound: true);
         m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
-        m_Player_Countdown = m_Player.FindAction("Countdown", throwIfNotFound: true);
+        m_Player_wave_console = m_Player.FindAction("wave_console", throwIfNotFound: true);
         m_Player_place_tower = m_Player.FindAction("place_tower", throwIfNotFound: true);
         m_Player_refill_tower = m_Player.FindAction("refill_tower", throwIfNotFound: true);
         m_Player_objectives_toggle = m_Player.FindAction("objectives_toggle", throwIfNotFound: true);
@@ -1689,7 +1689,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Alpha7;
     private readonly InputAction m_Player_Alpha8;
     private readonly InputAction m_Player_pause;
-    private readonly InputAction m_Player_Countdown;
+    private readonly InputAction m_Player_wave_console;
     private readonly InputAction m_Player_place_tower;
     private readonly InputAction m_Player_refill_tower;
     private readonly InputAction m_Player_objectives_toggle;
@@ -1799,9 +1799,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @pause => m_Wrapper.m_Player_pause;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Countdown".
+        /// Provides access to the underlying input action "Player/wave_console".
         /// </summary>
-        public InputAction @Countdown => m_Wrapper.m_Player_Countdown;
+        public InputAction @wave_console => m_Wrapper.m_Player_wave_console;
         /// <summary>
         /// Provides access to the underlying input action "Player/place_tower".
         /// </summary>
@@ -1917,9 +1917,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started += instance.OnPause;
             @pause.performed += instance.OnPause;
             @pause.canceled += instance.OnPause;
-            @Countdown.started += instance.OnCountdown;
-            @Countdown.performed += instance.OnCountdown;
-            @Countdown.canceled += instance.OnCountdown;
+            @wave_console.started += instance.OnWave_console;
+            @wave_console.performed += instance.OnWave_console;
+            @wave_console.canceled += instance.OnWave_console;
             @place_tower.started += instance.OnPlace_tower;
             @place_tower.performed += instance.OnPlace_tower;
             @place_tower.canceled += instance.OnPlace_tower;
@@ -2015,9 +2015,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started -= instance.OnPause;
             @pause.performed -= instance.OnPause;
             @pause.canceled -= instance.OnPause;
-            @Countdown.started -= instance.OnCountdown;
-            @Countdown.performed -= instance.OnCountdown;
-            @Countdown.canceled -= instance.OnCountdown;
+            @wave_console.started -= instance.OnWave_console;
+            @wave_console.performed -= instance.OnWave_console;
+            @wave_console.canceled -= instance.OnWave_console;
             @place_tower.started -= instance.OnPlace_tower;
             @place_tower.performed -= instance.OnPlace_tower;
             @place_tower.canceled -= instance.OnPlace_tower;
@@ -2495,12 +2495,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Countdown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "wave_console" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCountdown(InputAction.CallbackContext context);
+        void OnWave_console(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "place_tower" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
