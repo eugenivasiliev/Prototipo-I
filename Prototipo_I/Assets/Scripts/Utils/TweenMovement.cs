@@ -8,7 +8,7 @@ namespace Utils
         public Tween<float> yAxis;
         public Tween<float> zAxis;
 
-        void Start()
+        virtual protected void Start()
         {
             xAxis.SetActive(true);
             yAxis.SetActive(true);

@@ -300,7 +300,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Countdown"",
+                    ""name"": ""wave_console"",
                     ""type"": ""Button"",
                     ""id"": ""c2644a79-e306-4545-a0d9-449776ac5d0c"",
                     ""expectedControlType"": """",
@@ -348,6 +348,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""debug"",
                     ""type"": ""Button"",
                     ""id"": ""bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Show_Wave_UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""cead5d57-2115-4840-8096-251d879438d8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -901,7 +910,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Countdown"",
+                    ""action"": ""wave_console"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -919,7 +928,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8312d9d4-ee92-4d79-b316-4c4e5cf157f5"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -957,6 +966,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""debug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b984788f-dad0-4eb8-9433-bc9bc9a91bfc"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Show_Wave_UI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1567,12 +1587,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Alpha7 = m_Player.FindAction("Alpha7", throwIfNotFound: true);
         m_Player_Alpha8 = m_Player.FindAction("Alpha8", throwIfNotFound: true);
         m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
-        m_Player_Countdown = m_Player.FindAction("Countdown", throwIfNotFound: true);
+        m_Player_wave_console = m_Player.FindAction("wave_console", throwIfNotFound: true);
         m_Player_place_tower = m_Player.FindAction("place_tower", throwIfNotFound: true);
         m_Player_refill_tower = m_Player.FindAction("refill_tower", throwIfNotFound: true);
         m_Player_objectives_toggle = m_Player.FindAction("objectives_toggle", throwIfNotFound: true);
         m_Player_camera_zoom = m_Player.FindAction("camera_zoom", throwIfNotFound: true);
         m_Player_debug = m_Player.FindAction("debug", throwIfNotFound: true);
+        m_Player_Show_Wave_UI = m_Player.FindAction("Show_Wave_UI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1689,12 +1710,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Alpha7;
     private readonly InputAction m_Player_Alpha8;
     private readonly InputAction m_Player_pause;
-    private readonly InputAction m_Player_Countdown;
+    private readonly InputAction m_Player_wave_console;
     private readonly InputAction m_Player_place_tower;
     private readonly InputAction m_Player_refill_tower;
     private readonly InputAction m_Player_objectives_toggle;
     private readonly InputAction m_Player_camera_zoom;
     private readonly InputAction m_Player_debug;
+    private readonly InputAction m_Player_Show_Wave_UI;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1799,9 +1821,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @pause => m_Wrapper.m_Player_pause;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Countdown".
+        /// Provides access to the underlying input action "Player/wave_console".
         /// </summary>
-        public InputAction @Countdown => m_Wrapper.m_Player_Countdown;
+        public InputAction @wave_console => m_Wrapper.m_Player_wave_console;
         /// <summary>
         /// Provides access to the underlying input action "Player/place_tower".
         /// </summary>
@@ -1822,6 +1844,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/debug".
         /// </summary>
         public InputAction @debug => m_Wrapper.m_Player_debug;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Show_Wave_UI".
+        /// </summary>
+        public InputAction @Show_Wave_UI => m_Wrapper.m_Player_Show_Wave_UI;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1917,9 +1943,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started += instance.OnPause;
             @pause.performed += instance.OnPause;
             @pause.canceled += instance.OnPause;
-            @Countdown.started += instance.OnCountdown;
-            @Countdown.performed += instance.OnCountdown;
-            @Countdown.canceled += instance.OnCountdown;
+            @wave_console.started += instance.OnWave_console;
+            @wave_console.performed += instance.OnWave_console;
+            @wave_console.canceled += instance.OnWave_console;
             @place_tower.started += instance.OnPlace_tower;
             @place_tower.performed += instance.OnPlace_tower;
             @place_tower.canceled += instance.OnPlace_tower;
@@ -1935,6 +1961,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @debug.started += instance.OnDebug;
             @debug.performed += instance.OnDebug;
             @debug.canceled += instance.OnDebug;
+            @Show_Wave_UI.started += instance.OnShow_Wave_UI;
+            @Show_Wave_UI.performed += instance.OnShow_Wave_UI;
+            @Show_Wave_UI.canceled += instance.OnShow_Wave_UI;
         }
 
         /// <summary>
@@ -2015,9 +2044,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started -= instance.OnPause;
             @pause.performed -= instance.OnPause;
             @pause.canceled -= instance.OnPause;
-            @Countdown.started -= instance.OnCountdown;
-            @Countdown.performed -= instance.OnCountdown;
-            @Countdown.canceled -= instance.OnCountdown;
+            @wave_console.started -= instance.OnWave_console;
+            @wave_console.performed -= instance.OnWave_console;
+            @wave_console.canceled -= instance.OnWave_console;
             @place_tower.started -= instance.OnPlace_tower;
             @place_tower.performed -= instance.OnPlace_tower;
             @place_tower.canceled -= instance.OnPlace_tower;
@@ -2033,6 +2062,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @debug.started -= instance.OnDebug;
             @debug.performed -= instance.OnDebug;
             @debug.canceled -= instance.OnDebug;
+            @Show_Wave_UI.started -= instance.OnShow_Wave_UI;
+            @Show_Wave_UI.performed -= instance.OnShow_Wave_UI;
+            @Show_Wave_UI.canceled -= instance.OnShow_Wave_UI;
         }
 
         /// <summary>
@@ -2495,12 +2527,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Countdown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "wave_console" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCountdown(InputAction.CallbackContext context);
+        void OnWave_console(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "place_tower" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2536,6 +2568,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDebug(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Show_Wave_UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShow_Wave_UI(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

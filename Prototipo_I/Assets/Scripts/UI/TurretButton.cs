@@ -22,15 +22,15 @@ namespace UI
             ResetRange();
 
 
-            tm.EraseValidIngredients();
+            tm.EraseTowerDescription();
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            spotReference.SetRange(15.0f);
+            spotReference.SetRange(td.range);
             spotReference.ShowRange(true);
 
-            tm.LoadValidIngredients(td);
+            tm.LoadTowerDescription(td);
         }
 
         private void OnDisable()

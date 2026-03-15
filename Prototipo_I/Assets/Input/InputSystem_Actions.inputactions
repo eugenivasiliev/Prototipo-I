@@ -214,7 +214,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Countdown",
+                    "name": "wave_console",
                     "type": "Button",
                     "id": "c2644a79-e306-4545-a0d9-449776ac5d0c",
                     "expectedControlType": "",
@@ -262,6 +262,15 @@
                     "name": "debug",
                     "type": "Button",
                     "id": "bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Show_Wave_UI",
+                    "type": "Button",
+                    "id": "cead5d57-2115-4840-8096-251d879438d8",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -815,7 +824,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Countdown",
+                    "action": "wave_console",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -833,7 +842,7 @@
                 {
                     "name": "",
                     "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -871,6 +880,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b984788f-dad0-4eb8-9433-bc9bc9a91bfc",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Show_Wave_UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

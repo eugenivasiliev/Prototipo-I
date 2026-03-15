@@ -10,9 +10,10 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class PlantBasedTower : Tower, IInteractable
+    public class PlantBasedTower : Tower, IInteractable, IContexted
     {
 
+        [SerializeField] private int damage;
         [SerializeField] private (PlantData data, float amount) currentPlant = (null, 0f);
         private readonly int maxCapacity = 3;
         private readonly float usesPerAttack = .2f;
@@ -121,7 +122,7 @@ namespace TowerDefense
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.DamagePercent(50.0f);
+                damageable.Damage(damage);
                 currentPlant.amount -= usesPerAttack;
             }
         }
@@ -133,7 +134,13 @@ namespace TowerDefense
 
         void SpawnProjectile(float waitTime)
         {
-            transform.LookAt(targetedEnemy.transform.position, Vector3.up);
+            Vector3 fwd = new Vector3(this.transform.forward.x, 0, this.transform.forward.z);
+            Vector3 enemyFwd = (targetedEnemy.transform.position - this.transform.position).normalized;
+            Vector3 targetFwd = new Vector3(enemyFwd.x, 0, enemyFwd.z);
+
+            Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
+            transform.rotation *= qt;
+
             AudioManager.Instance.PlaySFX("TurretVAttack");
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
             p.transform.rotation = Quaternion.Euler(180, p.transform.rotation.eulerAngles.y, p.transform.rotation.eulerAngles.z);
@@ -141,5 +148,7 @@ namespace TowerDefense
             p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
             p.GetComponent<Projectile>().maxTime = waitTime;
         }
+
+        public bool ContextKeyActive() => !CanAttack;
     }
 }
