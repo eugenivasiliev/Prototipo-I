@@ -1,16 +1,19 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public class Item
+namespace Inventory
 {
-    public readonly Sprite sprite;
+    [Serializable]
+    public class Item
+    {
+        public readonly Sprite sprite;
 
-    public virtual string Name => this.GetType().ToString();
+        public virtual string Name => this.GetType().ToString();
 
-    public string Id => Name;
+        public string Id => Name;
 
-    public string Description;
+        public string Description;
 
-    public virtual void OnUse(GameObject gameObject) {}
+        public virtual void OnUse(GameObject gameObject) { }
+    }
 }

@@ -239,6 +239,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "objectives_toggle",
+                    "type": "Button",
+                    "id": "b5dfdb7f-ae33-4462-87a3-e25b777ac9c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "camera_zoom",
+                    "type": "Button",
+                    "id": "94d18918-facb-41ec-b9a9-627e118bf2dc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "debug",
+                    "type": "Button",
+                    "id": "bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -811,6 +838,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "refill_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "48241e0b-2fb5-4c18-b52d-f4c1eef68827",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "objectives_toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a939f15-0652-4ece-87c9-7961686c0685",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "camera_zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18e384b7-c24b-4649-8207-ca9d1a4a0218",
+                    "path": "<Keyboard>/#(º)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "debug",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
