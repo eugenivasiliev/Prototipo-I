@@ -11,6 +11,7 @@ namespace Enemies
     {
         public static WaveManager Instance;
         [SerializeField] private GameObject waveUI;
+        [SerializeField] private GameObject collision;
 
         private bool isOpen = false;
 
@@ -26,18 +27,29 @@ namespace Enemies
 
         public void ToggleWaveUI()
         {
-            isOpen = !isOpen;
-            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = isOpen;
-            waveUI.SetActive(isOpen);
-            Time.timeScale = (isOpen) ? 0f : 1f;
-            PlayerController.MovementLocked = isOpen;
+            if (!EnemyManager.Instance.IsWaveActive)
+            {
+                isOpen = !isOpen;
+                Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+                Cursor.visible = isOpen;
+                waveUI.SetActive(isOpen);
+                Time.timeScale = (isOpen) ? 0f : 1f;
+                PlayerController.MovementLocked = isOpen;
+            }
+            
         }
 
         public void StartWave()
         {
 
             DayNightCycle.Instance.PassTime();
+            collision.SetActive(false);
+        }
+        public void ActivateAgain()
+        {
+
+            collision.SetActive(true);
+            collision.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

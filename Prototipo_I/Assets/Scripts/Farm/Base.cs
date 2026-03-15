@@ -36,6 +36,8 @@ namespace TowerDefense
 
                 EnemyManager.Instance.ReturnToSpawn(0.0f);
                 health = MaxHealth;
+
+                WaveManager.Instance.ActivateAgain();
             }
         }
 

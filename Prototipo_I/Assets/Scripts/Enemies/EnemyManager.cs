@@ -58,6 +58,8 @@ namespace Enemies
         {
             if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
 
+            WaveManager.Instance.ActivateAgain();
+
             isWaveActive = false;
             currentPhaseIndex++;
             currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
