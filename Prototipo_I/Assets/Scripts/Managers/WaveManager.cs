@@ -8,11 +8,13 @@ using Utils;
 
 namespace Enemies
 {
-    public class WaveManager : Singleton<WaveManager>, IInteractable
+    public class WaveManager : Singleton<WaveManager>, IInteractable, IContexted
     {
         [SerializeField] private GameObject waveUI;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private SphereCollider collision;
+
+        private bool isInteractable = true;
 
         private bool isOpen = false;
 
@@ -40,11 +42,13 @@ namespace Enemies
         public void StartWave()
         { 
             DayNightCycle.Instance.PassTime();
-            collision.enabled = false;
+            isInteractable = false;
+            collision.enabled = isInteractable;
         }
         public void ActivateAgain()
         {
-            collision.enabled = true;
+            isInteractable = true;
+            collision.enabled = isInteractable;
         }
 
         private void Action_OpenMenu(InputAction.CallbackContext context)
@@ -56,5 +60,7 @@ namespace Enemies
         {
             throw new System.NotImplementedException();
         }
+
+        public bool ContextKeyActive() => isInteractable;
     }
 }

@@ -7,12 +7,14 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class TowerSpot : MonoBehaviour, IInteractable
+    public class TowerSpot : MonoBehaviour, IInteractable, IContexted
     {
 
         [SerializeField] private TowerData towerData;
 
         [SerializeField] private GameObject currentTower;
+        
+        [SerializeField] private GameObject contextButton;
 
         public bool hasTower { get { return towerData != null; } }
 
@@ -73,11 +75,12 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
+            Destroy(contextButton);
         }
 
         public void SetRange(float dist)
         {
-            range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+            range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
         }
 
         public void ShowRange(bool bo)
@@ -95,5 +98,7 @@ namespace TowerDefense
         }
 
         public void OnInteract() { }
+
+        public bool ContextKeyActive() => !hasTower;
     }
 }

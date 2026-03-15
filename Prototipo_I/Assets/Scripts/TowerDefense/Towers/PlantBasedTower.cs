@@ -10,7 +10,7 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class PlantBasedTower : Tower, IInteractable
+    public class PlantBasedTower : Tower, IInteractable, IContexted
     {
 
         [SerializeField] private (PlantData data, float amount) currentPlant = (null, 0f);
@@ -147,5 +147,7 @@ namespace TowerDefense
             p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
             p.GetComponent<Projectile>().maxTime = waitTime;
         }
+
+        public bool ContextKeyActive() => !CanAttack;
     }
 }
