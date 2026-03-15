@@ -13,6 +13,8 @@ namespace TowerDefense
         [SerializeField] private TowerData towerData;
 
         [SerializeField] private GameObject currentTower;
+        
+        [SerializeField] private GameObject contextButton;
 
         public bool hasTower { get { return towerData != null; } }
 
@@ -73,6 +75,7 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
+            Destroy(contextButton);
         }
 
         public void SetRange(float dist)
