@@ -12,6 +12,8 @@ namespace Enemies
     {
         [SerializeField] private GameObject waveUI;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private SphereCollider collision;
+
         private bool isOpen = false;
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
@@ -25,6 +27,8 @@ namespace Enemies
 
         public void ToggleWaveUI()
         {
+            if (EnemyManager.Instance.IsWaveActive) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
@@ -36,6 +40,12 @@ namespace Enemies
         public void StartWave()
         { 
             DayNightCycle.Instance.PassTime();
+            collision.enabled = false;
+        }
+        public void ActivateAgain()
+        {
+            collision.enabled = true;
+            collision.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         private void Action_OpenMenu(InputAction.CallbackContext context)
