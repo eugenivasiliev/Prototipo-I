@@ -22,7 +22,7 @@ namespace Player
 
         override protected void Start()
         {
-            inputs = PlayerController.Inputs;
+            inputs = player.Inputs;
 
             this.transform.position = player.transform.position + farOffset;
             currentOffset = farOffset;
@@ -39,7 +39,7 @@ namespace Player
 
         void Update()
         {
-            //if (movementLocked) return;
+            if (player.MovementLocked) return;
 
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);

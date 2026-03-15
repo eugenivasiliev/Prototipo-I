@@ -14,6 +14,8 @@ namespace UI
         [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
 
+        [SerializeField] private PlayerController playerController;
+
         private bool isOpen = false;
         public bool IsOpen => isOpen;
 
@@ -71,7 +73,7 @@ namespace UI
             Cursor.visible = isOpen;
             towerMenuPanel.SetActive(isOpen);
             Time.timeScale = (isOpen) ? 0f : 1f;
-            PlayerController.MovementLocked = isOpen;
+            playerController.MovementLocked = isOpen;
 
             EraseTowerDescription();
 
