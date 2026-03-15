@@ -7,7 +7,9 @@ using Farm;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Formats.Alembic.Importer;
 using UnityEngine.UI;
+using Utils;
 
 namespace Enemies
 {
@@ -45,7 +47,8 @@ namespace Enemies
         [SerializeField] private int health;
 
         public int Health { get => health; set => health = value; }
-        public int MaxHealth { get => 100; set { } }
+        private int maxHealth;
+        public int MaxHealth { get => maxHealth; set { } }
         [SerializeField] private Canvas ui_health;
 
 
@@ -79,17 +82,32 @@ namespace Enemies
         [SerializeField] private int minItemsDropped;
         [SerializeField] private int maxItemsDropped;
         [SerializeField, Range(0, 5)] private float dropRadius;
+        [SerializeField, Range(0, 5)] private float dropHeight = 2;
 
         [SerializeField] private Blackboard bb;
         public Blackboard BB { get => bb; set => bb = value; }
 
+        public enum AnimationType
+        {
+            ALEMBIC,
+            FBX
+        }
 
-        bool frozen = false;
+        [Header("Animation")]
+        [SerializeField] private AnimationType animationType;
+        [SerializeField] private AlembicStreamPlayer alembicStreamPlayer;
+        [SerializeField] private Animator animator;
+        [SerializeField] private bool isDying = false;
+
+    
+    bool frozen = false;
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            agent.speed = speed;
+            agent.speed = speed * 2;
+            maxHealth = health;
         }
+
 
         private void Start()
         {
@@ -108,14 +126,45 @@ namespace Enemies
 
         private void Update()
         {
-            enemyState.Behaviour();
+            if (isDying) return;
 
             if (health <= 0)
             {
-                DropLoot();
-                AudioManager.Instance.PlaySFX("EnemyDeath");
-                Destroy(gameObject);
+                isDying = true;
+
+                if (animationType == AnimationType.ALEMBIC)
+                    StartCoroutine(AlembicDeathAnim());
+                else if (animationType == AnimationType.FBX)
+                    StartCoroutine(FBXDeathAnim());
+                return;
             }
+
+            enemyState.Behaviour();
+
+            
+        }
+
+        private IEnumerator AlembicDeathAnim()
+        {
+            AudioManager.Instance.PlaySFX("EnemyDeath");
+            while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
+            {
+                alembicStreamPlayer.CurrentTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+            DropLoot();
+            Destroy(gameObject);
+        }
+
+        private IEnumerator FBXDeathAnim()
+        {
+            AudioManager.Instance.PlaySFX("EnemyDeath");
+            animator.SetBool("IsDying", true);
+            while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
+                yield return new WaitForEndOfFrame();
+
+            DropLoot();
+            Destroy(gameObject);
         }
 
         private void DropLoot()
@@ -132,11 +181,14 @@ namespace Enemies
             foreach (DropRateObject drop in droppableLoot)
                 if (drop.rate > lootDropped)
                 {
-                    Instantiate(
-                        drop.gameObject,
-                        this.transform.position + Vector3.right * dropSpot.x + Vector3.forward * dropSpot.y,
-                        Quaternion.identity
-                        );
+                    GameObject loot = Instantiate(drop.gameObject, this.transform.position, Quaternion.identity);
+                    TweenMovement lootMovement = loot.GetComponent<TweenMovement>();
+                    lootMovement.xAxis.startValue = this.transform.position.x;
+                    lootMovement.xAxis.endValue = this.transform.position.x + dropSpot.x;
+                    lootMovement.yAxis.startValue = this.transform.position.y;
+                    lootMovement.yAxis.endValue = this.transform.position.y + dropHeight;
+                    lootMovement.zAxis.startValue = this.transform.position.z;
+                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;
                     return;
                 }
         }
@@ -165,21 +217,17 @@ namespace Enemies
         {
 
             ui_health.gameObject.SetActive(true);
-            ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
+            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
 
-
-        public void Slow()
+        public void OnDamage()
         {
-
-            agent.speed = slowSpeed;
+            UpdateLife();
         }
 
-        public void UnSlow()
-        {
 
-            agent.speed = speed;
-        }
-
+        //ui_health.gameObject.SetActive(true);
+        //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }
+
 }

@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using Combat;
 using Enemies;
-using Items;
+using Objectives;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -35,15 +36,19 @@ namespace TowerDefense
 
                 EnemyManager.Instance.ReturnToSpawn(0.0f);
                 health = MaxHealth;
+
+                WaveManager.Instance.ActivateAgain();
             }
         }
 
         void AddSeeds(float ff)
         {
             Inventory.Inventory.Instance.AddSeeds(seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                foreach (PlantsCollected obj in objs) obj.UpdateObjective(seedsPerRound);
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
-
+        public void OnDamage() { }
     }
 }

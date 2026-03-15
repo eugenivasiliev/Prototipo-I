@@ -1,6 +1,8 @@
 using Enemies;
-using Trading;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utils;
 
 namespace UI
 {
@@ -9,12 +11,20 @@ namespace UI
         public void Start()
         {
             this.gameObject.SetActive(false);
+            
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                WaveManager.Instance.ToggleWaveUI();
+            }
         }
 
         public void ClickWave()
         {
-            WaveManager.Instance.StartWave();
             WaveManager.Instance.ToggleWaveUI();
+            WaveManager.Instance.StartWave();
         }
 
     }
