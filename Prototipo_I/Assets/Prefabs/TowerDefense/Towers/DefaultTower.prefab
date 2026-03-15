@@ -174,7 +174,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6142086731624048488}
-  - {fileID: 1253067945376806534}
   m_Father: {fileID: 2364767506637235391}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -306,10 +305,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
+  waitTime: 0.6
   maxRange: 15
   minRange: 3
   animator: {fileID: 892220739819826156}
-  animationRotationCorrection: {x: 0, y: -90, z: 0}
+  damage: 1
+  healthHolder: {fileID: 0}
 --- !u!135 &2312738860307825253
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -329,7 +330,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 15
+  m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6472302125353931987
 GameObject:

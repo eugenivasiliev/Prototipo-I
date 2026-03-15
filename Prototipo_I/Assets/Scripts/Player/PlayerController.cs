@@ -63,6 +63,8 @@ namespace Player
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
 
+            inputs.Player.Show_Wave_UI.performed += ctx => WaveManager.Instance.ToggleWaveUI();
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
