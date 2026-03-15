@@ -49,6 +49,6 @@ namespace TowerDefense
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
-
+        public void OnDamage() { }
     }
 }

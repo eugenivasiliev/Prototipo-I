@@ -13,10 +13,16 @@ namespace Combat
         public void HealPercent(float percent) => Heal((int)(MaxHealth * percent / 100.0f));
         public void HealMax() => Health = MaxHealth;
 
-        public void Damage(int amount) => Health = Mathf.Max(Health - amount, 0);
+        public void Damage(int amount)
+        {
+            Health = Mathf.Max(Health - amount, 0);
+            OnDamage();
+        }
         public void DamagePercent(float percent) => Damage((int)(MaxHealth * percent / 100.0f));
-        public void DamageMax() => Health = 0;
+        public void DamageMax() => Damage(MaxHealth);
 
         public bool IsDead() => Health <= 0;
+
+        public void OnDamage();
     }
 }
