@@ -11,8 +11,6 @@ namespace Farm
 
         public GameObject[] stages;
 
-        public GameObject plantWeapon;
-
         public int seedsPerRound;
 
     }
