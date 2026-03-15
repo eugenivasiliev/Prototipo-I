@@ -51,20 +51,9 @@ namespace Farm
         public void Plant(PlantData data)
         {
             AudioManager.Instance.PlaySFX("Plant");
-            if (IsPlanted)
-            {
-                if (hybridationManager.TryFindHybrid(plantData, data, out PlantData newPlant))
-                {
-                    this.plantData = newPlant;
-                    plant = new Plant(newPlant);
-                }
-                else return;
-            }
-            else
-            {
-                plantData = data;
-                plant = new Plant(data);
-            }
+            
+            plantData = data;
+            plant = new Plant(data);
 
             currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
@@ -73,34 +62,6 @@ namespace Farm
             isFertilized = false;
 
             Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);
-        }
-
-        public void Fertilize()
-        {
-            if (!IsPlanted || isFertilized) return;
-            AudioManager.Instance.PlaySFX("Fertilize");
-            isFertilized = true;
-            plant.ApplyFertilize(isFertilized);
-        }
-        private void Harvest()
-        {
-            if (!IsPlanted || !plant.IsFullyGrown) return;
-
-            AudioManager.Instance.PlaySFX("Harvesting");
-            Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 3, out int amountDone);
-
-            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
-            {
-                foreach (PlantsCollected obj in objs)
-                {
-                    obj.UpdateObjective(3);
-                }
-            }
-
-            Destroy(currentPlant);
-
-            this.plant = null;
-            currentPlant = null;
         }
 
         private void OnPlantStageChanged(int currentStage)
@@ -119,41 +80,18 @@ namespace Farm
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-            //new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
-            //new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
+            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant)
         };
 
         private void Action_Plant(InputAction.CallbackContext ctx)
         {
-            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            //if (item != null && item is IPlantSeed)
-            //{
-            //    this.Plant((item as IPlantSeed).PlantData);
-            //    Inventory.Inventory.Instance.RemoveItem(item);
-            //    plant.TryGrow(DayNightCycle.Instance.TotalTime);
-            //}
+            if (IsPlanted || Inventory.Inventory.Instance.GetSeedCount() == 0) return;
 
-            if (Inventory.Inventory.Instance.GetSeedCount() > 0)
-            {
-                this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
-                Inventory.Inventory.Instance.RemoveSeeds(1);
-                plant.TryGrow(DayNightCycle.Instance.TotalTime);
-            }
+            this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
+            Inventory.Inventory.Instance.RemoveSeeds(1);
+            plant.TryGrow(DayNightCycle.Instance.TotalTime);
         }
 
-        private void Action_Harvest(InputAction.CallbackContext ctx)
-        {
-            if (IsPlanted && plant.IsFullyGrown)
-                Harvest();
-
-            Destroy(ripeParticles);
-        }
-
-        private void Action_Fertilize(InputAction.CallbackContext ctx)
-        {
-            Fertilize();
-        }
         public void FullGrow()
         {
             if (plant != null)
