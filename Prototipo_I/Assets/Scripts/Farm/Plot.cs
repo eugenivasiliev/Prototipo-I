@@ -8,6 +8,7 @@ using Objectives;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using Utils;
 
 namespace Farm
@@ -38,6 +39,7 @@ namespace Farm
         private GameObject ripeParticles;
         public GameObject harvestFeedback;
 
+        [SerializeField] private Canvas healthHolder;
         private void Awake()
         {
             if (statusText != null)
@@ -164,5 +166,12 @@ namespace Farm
             ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
         }
         public void OnInteract() { }
+
+        void UpdateLife()
+        {
+
+            healthHolder.gameObject.SetActive(true);
+            healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+        }
     }
 }
