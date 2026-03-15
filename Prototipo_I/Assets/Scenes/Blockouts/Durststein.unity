@@ -4015,6 +4015,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2410354202282725211, guid: e6d580d723d926a458c99b61979e4d73, type: 3}
   m_PrefabInstance: {fileID: 117333850}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &120194444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2560748757139810769, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+  m_PrefabInstance: {fileID: 744376451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &126629775
 GameObject:
   m_ObjectHideFlags: 0
@@ -10819,6 +10824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1001 &359214489
@@ -18137,6 +18143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1001 &618658689
@@ -21489,6 +21496,14 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 8993157470479781375, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 120194444}
+    - target: {fileID: 8993157470479781375, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: contexted
+      value: 
+      objectReference: {fileID: 312680781}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26348,6 +26363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1 &909120539
@@ -32415,6 +32431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1 &1207715405
@@ -33387,6 +33404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1 &1232577997
@@ -42573,6 +42591,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
+  contextButton: {fileID: 0}
   tm: {fileID: 134422675}
   towerType: 0
 --- !u!1001 &1536382163
@@ -59037,6 +59056,10 @@ PrefabInstance:
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: InitialModule.gravitySource
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: ExternalForcesModule.enabled

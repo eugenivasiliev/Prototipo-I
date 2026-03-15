@@ -266,6 +266,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Show_Wave_UI",
+                    "type": "Button",
+                    "id": "cead5d57-2115-4840-8096-251d879438d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -833,7 +842,7 @@
                 {
                     "name": "",
                     "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -871,6 +880,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b984788f-dad0-4eb8-9433-bc9bc9a91bfc",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Show_Wave_UI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
