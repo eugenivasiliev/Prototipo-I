@@ -1,29 +1,33 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace TowerDefense
 {
-    public Vector3 startPos;
-    public Transform finalPos;
-    
-    float time = 0.0f;
-    public float maxTime;
-    void Start()
+    public class Projectile : MonoBehaviour
     {
-        
-    }
+        public Vector3 startPos;
+        public Transform finalPos;
 
-    // Update is called once per frame
-    void Update()
-    {
-        time += Time.deltaTime;
-        if (finalPos != null)
+        float time = 0.0f;
+        public float maxTime;
+        void Start()
         {
-            this.transform.position = (time / maxTime) * finalPos.position + (1 - (time / maxTime)) * startPos;
-        }
-        
 
-        if (time > maxTime) { 
-            Destroy(gameObject);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            time += Time.deltaTime;
+            if (finalPos != null)
+            {
+                this.transform.position = (time / maxTime) * finalPos.position + (1 - (time / maxTime)) * startPos;
+            }
+
+
+            if (time > maxTime)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

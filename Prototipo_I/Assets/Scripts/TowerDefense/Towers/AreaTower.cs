@@ -3,99 +3,114 @@ using UnityEngine.ProBuilder;
 using System.Collections.Generic;
 using System.Collections;
 
-public class AreaTower : Tower
+namespace TowerDefense
 {
+    public class AreaTower : Tower
+    {
 
-    private void Start()
-    {
-        waitTime = 1.5f;
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Finish"))
+        private void Start()
         {
-
-            closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
+            waitTime = 1.5f;
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Finish"))
+        private void OnTriggerEnter(Collider other)
         {
-            closeEnemies.Remove(other.gameObject);
-
-            if (closeEnemies.Count == 0)
+            if (other.CompareTag("Finish"))
             {
 
-                attacking = false;
-                targetedEnemy = null;
+                closeEnemies.Add(other.gameObject);
+
+                if (attacking == false)
+                    StartCoroutine(AttackLoop());
             }
         }
-    }
 
-    IEnumerator AttackLoop()
-    {
-        attacking = true;
-
-        while (attacking && closeEnemies.Count > 0)
+        private void OnTriggerExit(Collider other)
         {
-            if (targetedEnemy == null)
-                GetClosestValidEnemy();
+            if (other.CompareTag("Finish"))
+            {
+                closeEnemies.Remove(other.gameObject);
 
-            SpawnProjectile(waitTime);
+                if (closeEnemies.Count == 0)
+                {
 
-            yield return new WaitForSeconds(waitTime);
-            
+                    attacking = false;
+                    targetedEnemy = null;
+                }
+            }
         }
 
-        attacking = false;
-    }
-
-    void GetClosestValidEnemy()
-    {
-        closeEnemies.RemoveAll(item => item == null);
-
-        targetedEnemy = null;
-        attacking = false;
-
-        if (closeEnemies.Count == 0) return;
-
-        foreach (var e in closeEnemies)
+        IEnumerator AttackLoop()
         {
-            if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+            attacking = true;
+
+            animator.SetBool("Shooting", true);
+
+            while (attacking && closeEnemies.Count > 0)
             {
-                targetedEnemy = e;
-                attacking = true;
+                if (targetedEnemy == null)
+                    GetClosestValidEnemy();
+
+                SpawnProjectile(waitTime);
+
+                yield return new WaitForSeconds(waitTime);
+
+            }
+
+            attacking = false;
+
+            animator.SetBool("Shooting", false);
+        }
+
+        void GetClosestValidEnemy()
+        {
+            closeEnemies.RemoveAll(item => item == null);
+
+            targetedEnemy = null;
+            attacking = false;
+
+            if (closeEnemies.Count == 0) return;
+
+            foreach (var e in closeEnemies)
+            {
+                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                {
+                    targetedEnemy = e;
+                    attacking = true;
+                    return;
+                }
+            }
+        }
+
+
+        void Update()
+        {
+            if (!attacking)
+                return;
+
+            if (targetedEnemy == null)
+            {
+                GetClosestValidEnemy();
                 return;
             }
+
+            if (!tracking)
+                return;
+
+            Vector3 fwd = new Vector3(this.transform.forward.x, 0, this.transform.forward.z);
+            Vector3 enemyFwd = (targetedEnemy.transform.position - this.transform.position).normalized;
+            Vector3 targetFwd = new Vector3(enemyFwd.x, 0, enemyFwd.z);
+
+            Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
+            transform.rotation *= qt;
         }
-    }
 
-
-    void Update()
-    {
-        if (!attacking)
-            return;
-
-        if (targetedEnemy == null)
+        void SpawnProjectile(float waitTime)
         {
-            GetClosestValidEnemy();
-            return;
+            GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
+            p.GetComponent<Bomb>().startPos = transform.position;
+            p.GetComponent<Bomb>().finalPos = targetedEnemy.transform;
+            p.GetComponent<Bomb>().maxTime = waitTime;
         }
-
-        if (!tracking)
-            return;
-    }
-
-    void SpawnProjectile(float waitTime)
-    {
-        GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
-        p.GetComponent<Bomb>().startPos = transform.position;
-        p.GetComponent<Bomb>().finalPos = targetedEnemy.transform;
-        p.GetComponent<Bomb>().maxTime = waitTime;
     }
 }
