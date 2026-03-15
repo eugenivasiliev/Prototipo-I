@@ -3,7 +3,6 @@ using System.Timers;
 using Audio;
 using Combat;
 using Inventory;
-using Items;
 using Objectives;
 using TMPro;
 using UnityEngine;

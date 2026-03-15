@@ -1,27 +1,18 @@
-using Items;
 using UnityEngine;
 
 namespace HelperBox
 {
     public class HelperBox : MonoBehaviour
     {
+        [SerializeField] private int seedsAdded = 60;
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag == "Player")
             {
-                Fire();
-                Gas();
+                Inventory.Inventory.Instance.AddSeeds(seedsAdded);
                 Destroy(gameObject);
             }
-        }
-
-        private void Gas()
-        {
-            Inventory.Inventory.Instance.AddItem(new GasPlantItem(), 30, out int amountDone);
-        }
-        private void Fire()
-        {
-            Inventory.Inventory.Instance.AddItem(new FirePlantItem(), 30, out int amountDone);
         }
     }
 }
