@@ -7,7 +7,7 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class TowerSpot : MonoBehaviour, IInteractable
+    public class TowerSpot : MonoBehaviour, IInteractable, IContexted
     {
 
         [SerializeField] private TowerData towerData;
@@ -95,5 +95,7 @@ namespace TowerDefense
         }
 
         public void OnInteract() { }
+
+        public bool ContextKeyActive() => !hasTower;
     }
 }
