@@ -18,10 +18,10 @@ MonoBehaviour:
     m_Value: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 0.86
+    m_Value: 0.25
   intensity:
     m_OverrideState: 1
-    m_Value: 1.73
+    m_Value: 0.18
   scatter:
     m_OverrideState: 1
     m_Value: 0.167
@@ -30,7 +30,7 @@ MonoBehaviour:
     m_Value: 65468.54
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.9320468, b: 0, a: 1}
+    m_Value: {r: 0.023050921, g: 0.46803457, b: 0.6981132, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
   active: 1
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.59
+    m_Value: 0.43
   contrast:
     m_OverrideState: 1
     m_Value: 0.13
@@ -74,7 +74,7 @@ MonoBehaviour:
     m_Value: 89
   saturation:
     m_OverrideState: 1
-    m_Value: 24
+    m_Value: 24.44
 --- !u!114 &-6948098606708723844
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -225,22 +225,22 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.84047985, z: 0.9786155, w: 0.044024978}
+    m_Value: {x: 0.95104104, y: 0.7344954, z: 1, w: 0.044024978}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.6441926, y: 0.6549514, z: 1, w: 0.21356782}
+    m_Value: {x: 0.6268726, y: 0.52310014, z: 1, w: 0.21356782}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.61648345, z: 0.09212965, w: 0.6329161}
+    m_Value: {x: 1, y: 0.5214596, z: 0, w: 0.6329161}
   shadowsStart:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.1
   shadowsEnd:
     m_OverrideState: 1
     m_Value: 0.21
   highlightsStart:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 0.09
   highlightsEnd:
     m_OverrideState: 1
     m_Value: 0.55
@@ -256,15 +256,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   mode:
     m_OverrideState: 1
     m_Value: 2
   gaussianStart:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 10
   gaussianEnd:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 30
   gaussianMaxRadius:
     m_OverrideState: 0
@@ -277,10 +277,10 @@ MonoBehaviour:
     m_Value: 2.25
   aperture:
     m_OverrideState: 1
-    m_Value: 5.5
+    m_Value: 3.9
   focalLength:
     m_OverrideState: 1
-    m_Value: 52.73
+    m_Value: 42
   bladeCount:
     m_OverrideState: 0
     m_Value: 5
@@ -330,7 +330,7 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 24.6
+    m_Value: 34
   tint:
     m_OverrideState: 1
     m_Value: -23.1
