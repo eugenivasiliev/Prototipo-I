@@ -87,6 +87,7 @@ namespace TowerDefense
 
         public void ShowRange(bool bo)
         {
+            if (range)
             range.SetActive(bo);
         }
 
