@@ -21,7 +21,6 @@ namespace UI
         private bool isHidden = true;
 
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             if (inputs == null) inputs = new InputSystem_Actions();
@@ -29,7 +28,6 @@ namespace UI
             inputs.Player.objectives_toggle.performed += Toggle;
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (ObjectivesManager.Instance.AllObjectivesComplete())
