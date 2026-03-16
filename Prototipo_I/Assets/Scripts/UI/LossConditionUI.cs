@@ -7,7 +7,7 @@ namespace GameMode
     public class LossConditionUI : MonoBehaviour
     {
         [SerializeField] private Tween<float> popupTween;
-
+        private float waitTime = 2.5f;
         void Start()
         {
             popupTween.SetActive(true);
@@ -22,7 +22,7 @@ namespace GameMode
 
         public IEnumerator Leave()
         {
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(waitTime);
             SceneManager.LoadScene("MainMenu");
         }
     }
