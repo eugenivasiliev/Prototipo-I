@@ -50,10 +50,15 @@ namespace TowerDefense
             towerData = data;
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-            float r = currentTower.GetComponent<Tower>().GetRange();
-            SetRange(r);
-
+            if (currentTower.GetComponent<Tower>())
+            {
+                float r = currentTower.GetComponent<Tower>().GetRange();
+                SetRange(r);
+            }
             tm.ToggleMenu();
+        
+            Destroy(contextButton);
+            Destroy(range);
         }
 
         private void OnTowerUpgraded(int level)
@@ -75,7 +80,6 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
-            Destroy(contextButton);
         }
 
         public void SetRange(float dist)
@@ -85,12 +89,13 @@ namespace TowerDefense
 
         public void ShowRange(bool bo)
         {
+            if (range)
             range.SetActive(bo);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player") ShowRange(true);
+            //if (other.tag == "Player") ShowRange(true);
         }
         private void OnTriggerExit(Collider other)
         {
