@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Player;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
@@ -7,49 +8,59 @@ using Utils;
 
 namespace Enemies
 {
-    public class WaveManager : MonoBehaviour
+    public class WaveManager : Singleton<WaveManager>, IInteractable, IContexted
     {
-        public static WaveManager Instance;
         [SerializeField] private GameObject waveUI;
-        [SerializeField] private GameObject collision;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private SphereCollider collision;
+
+        private bool isInteractable = true;
 
         private bool isOpen = false;
 
+        public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
+            new IInteractable.KeyBinding("wave_console", InputActionChange.ActionCanceled, Action_OpenMenu)
+        };
+
         private void Start()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            Instance = this;
+            InitSingleton();
         }
 
         public void ToggleWaveUI()
         {
-            if (!EnemyManager.Instance.IsWaveActive)
-            {
-                isOpen = !isOpen;
-                Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
-                Cursor.visible = isOpen;
-                waveUI.SetActive(isOpen);
-                Time.timeScale = (isOpen) ? 0f : 1f;
-                PlayerController.MovementLocked = isOpen;
-            }
-            
+            if (EnemyManager.Instance.IsWaveActive) return;
+
+            isOpen = !isOpen;
+            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOpen;
+            waveUI.SetActive(isOpen);
+            Time.timeScale = (isOpen) ? 0f : 1f;
+            playerController.MovementLocked = isOpen;
         }
 
         public void StartWave()
-        {
-
+        { 
             DayNightCycle.Instance.PassTime();
-            collision.SetActive(false);
+            isInteractable = false;
+            collision.enabled = isInteractable;
         }
         public void ActivateAgain()
         {
-
-            collision.SetActive(true);
-            collision.transform.GetChild(0).gameObject.SetActive(false);
+            isInteractable = true;
+            collision.enabled = isInteractable;
         }
+
+        private void Action_OpenMenu(InputAction.CallbackContext context)
+        {
+            ToggleWaveUI();
+        }
+
+        public void OnInteract()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool ContextKeyActive() => isInteractable;
     }
 }

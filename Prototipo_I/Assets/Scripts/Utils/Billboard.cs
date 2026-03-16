@@ -9,6 +9,14 @@ namespace Utils
         float distance = 5.0f;
         private Camera mainCamera;
 
+        enum Billboards
+        {
+            BUTTON,
+            HEALTH
+        }
+
+        [SerializeField] private Billboards billboards = Billboards.BUTTON;
+
         void Start()
         {
             mainCamera = Camera.main;
@@ -18,7 +26,27 @@ namespace Utils
 
         void Update()
         {
-            this.transform.rotation = mainCamera.transform.rotation;
+            switch (billboards)
+            {
+                case Billboards.HEALTH:
+                    Follow();
+                    break;
+
+                case Billboards.BUTTON:
+                    CheckHeight();
+                    break;
+
+                default:
+                    break;
+            }
+
+            
+        }
+
+        void CheckHeight() {
+
+            Follow();
+
             if (mainCamera.transform.position.y + distance < startPos.y)
             {
                 Shrink();
@@ -29,6 +57,8 @@ namespace Utils
             }
         }
 
+
+
         private void Shrink()
         {
             this.transform.position = new Vector3(startPos.x, startPos.y - distance, startPos.z);
@@ -38,6 +68,10 @@ namespace Utils
         {
             this.transform.position = new Vector3(startPos.x, startPos.y, startPos.z);
             this.transform.localScale = new Vector3(startSize.x, startSize.y, startSize.z);
+        }
+
+        void Follow() {
+            this.transform.rotation = mainCamera.transform.rotation;
         }
     }
 }

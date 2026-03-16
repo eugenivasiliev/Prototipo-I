@@ -31,13 +31,13 @@ namespace Utils
                 switch (binding.actionChange)
                 {
                     case InputActionChange.ActionStarted:
-                        PlayerController.Inputs.FindAction(binding.actionName).started += binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).started += binding.action;
                         break;
                     case InputActionChange.ActionCanceled:
-                        PlayerController.Inputs.FindAction(binding.actionName).canceled += binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).canceled += binding.action;
                         break;
                     case InputActionChange.ActionPerformed:
-                        PlayerController.Inputs.FindAction(binding.actionName).performed += binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).performed += binding.action;
                         break;
                     default:
                         throw new Exception("Unexpected input binding ActionChange");
@@ -52,13 +52,13 @@ namespace Utils
                 switch (binding.actionChange)
                 {
                     case InputActionChange.ActionStarted:
-                        PlayerController.Inputs.FindAction(binding.actionName).started -= binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).started -= binding.action;
                         break;
                     case InputActionChange.ActionCanceled:
-                        PlayerController.Inputs.FindAction(binding.actionName).canceled -= binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).canceled -= binding.action;
                         break;
                     case InputActionChange.ActionPerformed:
-                        PlayerController.Inputs.FindAction(binding.actionName).performed -= binding.action;
+                        InputSystem.actions.FindAction(binding.actionName).performed -= binding.action;
                         break;
                     default:
                         throw new Exception("Unexpected input binding ActionChange");

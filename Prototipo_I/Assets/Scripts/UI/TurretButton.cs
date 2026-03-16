@@ -27,7 +27,7 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            spotReference.SetRange(15.0f);
+            spotReference.SetRange(td.range);
             spotReference.ShowRange(true);
 
             tm.LoadTowerDescription(td);

@@ -10,9 +10,10 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class PlantBasedTower : Tower, IInteractable
+    public class PlantBasedTower : Tower, IInteractable, IContexted
     {
 
+        [SerializeField] private int damage;
         [SerializeField] private (PlantData data, float amount) currentPlant = (null, 0f);
         private readonly int maxCapacity = 3;
         private readonly float usesPerAttack = .2f;
@@ -121,7 +122,7 @@ namespace TowerDefense
 
             if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
             {
-                damageable.DamagePercent(50.0f);
+                damageable.Damage(damage);
                 currentPlant.amount -= usesPerAttack;
             }
         }
@@ -147,5 +148,7 @@ namespace TowerDefense
             p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
             p.GetComponent<Projectile>().maxTime = waitTime;
         }
+
+        public bool ContextKeyActive() => !CanAttack;
     }
 }
