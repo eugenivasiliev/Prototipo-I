@@ -1,33 +1,46 @@
 using UnityEngine;
+using Utils;
 
 namespace TowerDefense
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : TweenMovement
     {
         public Vector3 startPos;
         public Transform finalPos;
 
+        [SerializeField, Range(0, 1)] private float hitTolerance = 0.05f;
+
         float time = 0.0f;
         public float maxTime;
-        void Start()
+        protected override void Start()
         {
+            xAxis.startValue = startPos.x;
+            yAxis.startValue = startPos.y;
+            zAxis.startValue = startPos.z;
 
+            xAxis.endValue = finalPos.position.x;
+            yAxis.endValue = finalPos.position.y;
+            zAxis.endValue = finalPos.position.z;
+
+            xAxis.SetActive(true);
+            yAxis.SetActive(true);
+            zAxis.SetActive(true);
         }
 
-        // Update is called once per frame
         void Update()
         {
-            time += Time.deltaTime;
-            if (finalPos != null)
-            {
-                this.transform.position = (time / maxTime) * finalPos.position + (1 - (time / maxTime)) * startPos;
-            }
 
+            xAxis.endValue = finalPos.position.x;
+            yAxis.endValue = finalPos.position.y;
+            zAxis.endValue = finalPos.position.z;
 
-            if (time > maxTime)
-            {
-                Destroy(gameObject);
-            }
+            TweenUtil.Update(Time.deltaTime, ref xAxis);
+            TweenUtil.Update(Time.deltaTime, ref yAxis);
+            TweenUtil.Update(Time.deltaTime, ref zAxis);
+
+            this.transform.position = new Vector3(xAxis.value, yAxis.value, zAxis.value);
+
+            if (xAxis.t >= xAxis.duration - hitTolerance) Destroy(this.gameObject);
         }
     }
 }
