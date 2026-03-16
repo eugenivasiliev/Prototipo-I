@@ -109,9 +109,8 @@ namespace TowerDefense
         void SpawnProjectile(float waitTime)
         {
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
-            p.GetComponent<Bomb>().startPos = transform.position;
-            p.GetComponent<Bomb>().finalPos = targetedEnemy.transform;
-            p.GetComponent<Bomb>().maxTime = waitTime;
+            p.GetComponent<Projectile>().startPos = transform.position;
+            p.GetComponent<Projectile>().target = targetedEnemy;
         }
     }
 }
