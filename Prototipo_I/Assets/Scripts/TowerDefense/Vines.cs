@@ -9,14 +9,14 @@ namespace TowerDefense
         {
             if (other.GetComponent<EnemyAI>() != null)
             {
-                
+                other.GetComponent<EnemyAI>().SlowDown();
             }
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<EnemyAI>() != null)
             {
-                
+                other.GetComponent<EnemyAI>().UnSlowDown();
             }
         }
     }

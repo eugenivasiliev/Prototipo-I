@@ -225,7 +225,18 @@ namespace Enemies
             UpdateLife();
         }
 
+        private void SetSpeed(int i) {
+            agent.speed = i * 2;
+        }
 
+
+        public void SlowDown() {
+            SetSpeed((int)slowSpeed);
+        }
+
+        public void UnSlowDown() {         
+            SetSpeed((int)speed);
+        }
         //ui_health.gameObject.SetActive(true);
         //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }

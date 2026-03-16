@@ -50,9 +50,11 @@ namespace TowerDefense
             towerData = data;
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-            float r = currentTower.GetComponent<Tower>().GetRange();
-            SetRange(r);
-
+            if (currentTower.GetComponent<Tower>())
+            {
+                float r = currentTower.GetComponent<Tower>().GetRange();
+                SetRange(r);
+            }
             tm.ToggleMenu();
         
             Destroy(contextButton);
