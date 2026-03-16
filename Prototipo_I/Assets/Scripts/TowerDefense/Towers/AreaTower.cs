@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.ProBuilder;
 using System.Collections.Generic;
 using System.Collections;
+using Enemies;
 
 namespace TowerDefense
 {
@@ -15,7 +16,7 @@ namespace TowerDefense
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
 
                 closeEnemies.Add(other.gameObject);
@@ -27,7 +28,7 @@ namespace TowerDefense
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
                 closeEnemies.Remove(other.gameObject);
 
