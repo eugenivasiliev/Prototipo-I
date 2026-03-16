@@ -39,27 +39,27 @@ namespace Enemies
             Return
         }
 
-        [SerializeField] private EnemyState enemyState;
+        [SerializeField] protected EnemyState enemyState;
 
-        private NavMeshAgent agent;
+        protected NavMeshAgent agent;
         public NavMeshAgent Agent { get => agent; }
 
-        [SerializeField] private int health;
+        [SerializeField] protected int health;
 
         public int Health { get => health; set => health = value; }
-        private int maxHealth;
+        protected int maxHealth;
         public int MaxHealth { get => maxHealth; set { } }
-        [SerializeField] private Canvas ui_health;
+        [SerializeField] protected Canvas ui_health;
 
 
-        [SerializeField] private int damage;
+        [SerializeField] protected int damage;
         public int Damage => damage;
 
-        [SerializeField] private int difficulty;
+        [SerializeField] protected int difficulty;
 
 
-        [SerializeField] private float speed;
-        [SerializeField] private float slowSpeed;
+        [SerializeField] protected float speed;
+        [SerializeField] protected float slowSpeed;
 
 
         public int Difficulty => difficulty;
@@ -78,13 +78,13 @@ namespace Enemies
         }
 
         [Header("Loot")]
-        [SerializeField] private List<DropRateObject> droppableLoot;
-        [SerializeField] private int minItemsDropped;
-        [SerializeField] private int maxItemsDropped;
-        [SerializeField, Range(0, 5)] private float dropRadius;
-        [SerializeField, Range(0, 5)] private float dropHeight = 2;
+        [SerializeField] protected List<DropRateObject> droppableLoot;
+        [SerializeField] protected int minItemsDropped;
+        [SerializeField] protected int maxItemsDropped;
+        [SerializeField, Range(0, 5)] protected float dropRadius;
+        [SerializeField, Range(0, 5)] protected float dropHeight = 2;
 
-        [SerializeField] private Blackboard bb;
+        [SerializeField] protected Blackboard bb;
         public Blackboard BB { get => bb; set => bb = value; }
 
         public enum AnimationType
@@ -94,14 +94,14 @@ namespace Enemies
         }
 
         [Header("Animation")]
-        [SerializeField] private AnimationType animationType;
-        [SerializeField] private AlembicStreamPlayer alembicStreamPlayer;
-        [SerializeField] private Animator animator;
-        [SerializeField] private bool isDying = false;
+        [SerializeField] protected AnimationType animationType;
+        [SerializeField] protected AlembicStreamPlayer alembicStreamPlayer;
+        [SerializeField] protected Animator animator;
+        [SerializeField] protected bool isDying = false;
 
     
     bool frozen = false;
-        private void Awake()
+        protected void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             agent.speed = speed * 2;
@@ -109,7 +109,7 @@ namespace Enemies
         }
 
 
-        private void Start()
+        protected void Start()
         {
             SetState(State.Chase);
             enemyState.Enemy = this;
@@ -124,7 +124,7 @@ namespace Enemies
                 droppableLoot[i] = new DropRateObject(droppableLoot[i].gameObject, (droppableLoot[i - 1].rate + droppableLoot[i].rate) / totalRate);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (isDying) return;
 
@@ -144,7 +144,7 @@ namespace Enemies
             
         }
 
-        private IEnumerator AlembicDeathAnim()
+        protected IEnumerator AlembicDeathAnim()
         {
             AudioManager.Instance.PlaySFX("EnemyDeath");
             while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
@@ -156,7 +156,7 @@ namespace Enemies
             Destroy(gameObject);
         }
 
-        private IEnumerator FBXDeathAnim()
+        protected IEnumerator FBXDeathAnim()
         {
             AudioManager.Instance.PlaySFX("EnemyDeath");
             animator.SetBool("IsDying", true);
@@ -167,14 +167,14 @@ namespace Enemies
             Destroy(gameObject);
         }
 
-        private void DropLoot()
+        protected void DropLoot()
         {
             int itemsDropped = UnityEngine.Random.Range(minItemsDropped, maxItemsDropped + 1);
             for (int i = 0; i < itemsDropped; ++i)
                 DropLootItem();
         }
 
-        private void DropLootItem()
+        protected void DropLootItem()
         {
             Vector2 dropSpot = dropRadius * UnityEngine.Random.insideUnitCircle;
             float lootDropped = UnityEngine.Random.value;
@@ -225,7 +225,18 @@ namespace Enemies
             UpdateLife();
         }
 
+        protected void SetSpeed(int i) {
+            agent.speed = i * 2;
+        }
 
+
+        public void SlowDown() {
+            SetSpeed((int)slowSpeed);
+        }
+
+        public void UnSlowDown() {         
+            SetSpeed((int)speed);
+        }
         //ui_health.gameObject.SetActive(true);
         //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
     }

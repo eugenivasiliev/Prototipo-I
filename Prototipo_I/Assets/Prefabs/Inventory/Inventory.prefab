@@ -29,14 +29,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 470936747454730083}
+  m_Children: []
   m_Father: {fileID: 6097987769715672952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.056250002, y: 0.69900006}
   m_AnchorMax: {x: 0.2, y: 0.836}
-  m_AnchoredPosition: {x: 0.2000122, y: 1.0999756}
-  m_SizeDelta: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2428370853494941992
 CanvasRenderer:
@@ -104,14 +103,14 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 6640281223017885861}
+  m_Father: {fileID: 6097987769715672952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.100006, y: -2.2999954}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0.056250002, y: 0.65900004}
+  m_AnchorMax: {x: 0.28043887, y: 0.864}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7097793515647872175
 CanvasRenderer:
@@ -183,6 +182,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6640281223017885861}
+  - {fileID: 470936747454730083}
   - {fileID: 2543347671972014272}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -234,17 +234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2239edc91666cba44a527de60effe20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySpace: 8
-  items:
-    slots: []
   defaultInventory: {fileID: 0}
   seedCount: 0
   uiSpritesDB: {fileID: 0}
   defaultItemSprite: {fileID: 0}
   seedCounterUI: {fileID: 1970365286912443041}
-  references:
-    version: 2
-    RefIds: []
 --- !u!1001 &2934494821225273120
 PrefabInstance:
   m_ObjectHideFlags: 0

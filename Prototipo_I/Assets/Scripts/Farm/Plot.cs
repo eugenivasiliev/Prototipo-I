@@ -12,7 +12,7 @@ using Utils;
 
 namespace Farm
 {
-    public class Plot : MonoBehaviour, IInteractable, IDamageable
+    public class Plot : MonoBehaviour, IInteractable, IDamageable, IContexted
     {
         [SerializeField] private HybridationManager hybridationManager;
 
@@ -112,5 +112,7 @@ namespace Farm
         }
 
         public void OnDamage() {}
+
+        public bool ContextKeyActive() => !IsPlanted;
     }
 }

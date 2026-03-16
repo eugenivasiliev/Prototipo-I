@@ -8,7 +8,7 @@ namespace TowerDefense
     {
         public string Name;
         public string Description;
-        public float range = 15.0f;
+        public float range = 0.0f;
         public GameObject[] stages;
 
         public int cost;
