@@ -95,7 +95,7 @@ namespace TowerDefense
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player") ShowRange(true);
+            //if (other.tag == "Player") ShowRange(true);
         }
         private void OnTriggerExit(Collider other)
         {
