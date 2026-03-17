@@ -62,10 +62,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 51f128e5c5f0bb54ba646f62b014c2c5, type: 3}
       propertyPath: m_Name
-      value: champi_animation
+      value: Champi_animation_PF
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 51f128e5c5f0bb54ba646f62b014c2c5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2887829729121181611}
   m_SourcePrefab: {fileID: 100100000, guid: 51f128e5c5f0bb54ba646f62b014c2c5, type: 3}
+--- !u!1 &4423342395035004075 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 51f128e5c5f0bb54ba646f62b014c2c5, type: 3}
+  m_PrefabInstance: {fileID: 3576904465740042746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &2887829729121181611
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423342395035004075}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.24
+  m_Height: 1.4
+  m_Direction: 1
+  m_Center: {x: 0.03, y: -0.16, z: -0.04}
