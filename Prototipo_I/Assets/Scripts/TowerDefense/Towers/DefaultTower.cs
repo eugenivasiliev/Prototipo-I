@@ -15,7 +15,7 @@ namespace TowerDefense
         [SerializeField] private Canvas healthHolder;
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
 
                 closeEnemies.Add(other.gameObject);
@@ -27,7 +27,7 @@ namespace TowerDefense
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
                 closeEnemies.Remove(other.gameObject);
 
@@ -54,14 +54,6 @@ namespace TowerDefense
                 SpawnProjectile(waitTime);
 
                 yield return new WaitForSeconds(waitTime);
-
-                if (targetedEnemy != null)
-                    DamageTarget();
-                else
-                {
-                    GetClosestValidEnemy();
-                    DamageTarget();
-                }
             }
 
             attacking = false;
@@ -86,18 +78,6 @@ namespace TowerDefense
                     attacking = true;
                     return;
                 }
-            }
-        }
-
-        void DamageTarget()
-        {
-            if (targetedEnemy == null) return;
-
-            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            {
-                damageable.Damage(damage);
-
-                targetedEnemy.GetComponent<EnemyAI>().UpdateLife();
             }
         }
 
@@ -130,8 +110,7 @@ namespace TowerDefense
             AudioManager.Instance.PlaySFX("TurretAttack");
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
             p.GetComponent<Projectile>().startPos = transform.position;
-            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
-            p.GetComponent<Projectile>().maxTime = waitTime;
+            p.GetComponent<Projectile>().target = targetedEnemy;
         }
 
         void UpdateLife() {
