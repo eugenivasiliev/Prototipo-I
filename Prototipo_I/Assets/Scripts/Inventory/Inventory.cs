@@ -32,8 +32,7 @@ namespace Inventory
                 return data;
             }
         }
-
-        public UnityEvent<float> SaveEvent { get; set; }
+        Action<float> ISaveable<SeedCountWrapper>.SaveEvent { get; set; }
 
         public SeedCountWrapper GetData() => new SeedCountWrapper(seedCount);
         public void SetData(SeedCountWrapper data) => seedCount = data.seedCount;

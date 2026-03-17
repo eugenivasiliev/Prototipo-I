@@ -21,7 +21,7 @@ namespace TowerDefense
 
         [SerializeField] private int seedsPerRound;
 
-        private UnityEvent<float> BaseProduction = new UnityEvent<float>();
+        private System.Action<float> BaseProduction;
 
         [SerializeField] private EnemyManager enemyManager;
 
@@ -29,7 +29,7 @@ namespace TowerDefense
         {
             health = MaxHealth;
             instance = this;
-            BaseProduction.AddListener(AddSeeds);
+            BaseProduction += AddSeeds;
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
