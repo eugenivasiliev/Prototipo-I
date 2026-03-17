@@ -61,8 +61,9 @@ namespace Inventory
         {
             InitSingleton();
 
-            (this as IAutoSaving<SeedCountWrapper>).SetupAutoSave();
-            (this as IAutoSaving<SeedCountWrapper>).Load();
+            //Autosave disabled because of scope cuts
+            //Will be implemented in a future sprint 
+            (this as IAutoSaving<SeedCountWrapper>).LoadDefault();
 
             seedCounterUI.text = seedCount.ToString();
 

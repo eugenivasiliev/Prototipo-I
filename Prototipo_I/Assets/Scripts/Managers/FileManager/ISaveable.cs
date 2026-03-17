@@ -23,5 +23,10 @@ namespace Saving
             if (FileManager.LoadFile(File, out T data)) SetData(data);
             else SetData(DefaultData);
         }
+
+        public virtual void LoadDefault()
+        {
+            SetData(DefaultData);
+        }
     }
 }
