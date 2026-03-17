@@ -63,8 +63,6 @@ namespace Player
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
 
-            inputs.Player.Show_Wave_UI.performed += ctx => WaveManager.Instance.ToggleWaveUI();
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -141,7 +139,7 @@ namespace Player
             if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
-            DamageTarget();
+            gunRecharge.fillAmount = 0.0f;
 
             currentCooldown = 0;
         }
@@ -153,24 +151,13 @@ namespace Player
             return targetedEnemy != null;
         }
 
-        void DamageTarget()
-        {
-            if (targetedEnemy == null) return;
-
-            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-                damageable.DamageMax();
-
-            gunRecharge.fillAmount = 0.0f;
-        }
-
         void SpawnProjectile(float waitTime)
         {
             AudioManager.Instance.PlaySFX("PlayerAttack");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;
-            projectile.finalPos = targetedEnemy.transform;
-            projectile.maxTime = waitTime;
+            projectile.target = targetedEnemy;
         }
 
         public void Stun(float seconds)
