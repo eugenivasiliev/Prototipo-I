@@ -10,7 +10,6 @@ namespace Enemies
 {
     public class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private WaveManager waveManager;
         [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
