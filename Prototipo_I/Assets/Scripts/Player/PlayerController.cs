@@ -101,27 +101,70 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if (/*!isSprinting &&*/ movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            Animate(movementInput);
+        }
+
+        public enum MovementType
+        {
+            FORWARD,
+            BACKWARD,
+            RIGHT,
+            LEFT,
+            IDLE
+        }
+
+        private void Animate(Vector2 movementInput)
+        {
+            if(movementInput.magnitude == 0)
             {
-                anim.SetBool("Is_Running", true);
-                AudioManager.Instance.PlaySFXLoop("Walking");
-            }
-            else
-            {
-                AudioManager.Instance.StopLoop("Walking");
-                anim.SetBool("Is_Running", false);
+                SetAnimation(MovementType.IDLE);
+                AudioManager.Instance.StopLoop("Running");
+                return;
             }
 
-            /*if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            AudioManager.Instance.PlaySFXLoop("Running");
+
+            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
             {
-                anim.SetBool("Is_Running", true);
-                AudioManager.Instance.PlaySFXLoop("Running");
+                //Right-Left axis
+                if (movementInput.x > 0)
+                    SetAnimation(MovementType.RIGHT);
+                else
+                    SetAnimation(MovementType.LEFT);
+            } else
+            {
+                //Forward-Backward axis
+                if (movementInput.y > 0)
+                    SetAnimation(MovementType.FORWARD);
+                else
+                    SetAnimation(MovementType.BACKWARD);
             }
-            else
+        }
+
+        private void SetAnimation(MovementType direction)
+        {
+            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_R_Backwards", false);
+            anim.SetBool("Is_R_Right", false);
+            anim.SetBool("Is_R_Left", false);
+
+            switch (direction)
             {
-                AudioManager.Instance.StopLoop("Running");
-                anim.SetBool("Is_Running", false);
-            }*/
+                case MovementType.FORWARD:
+                    anim.SetBool("Is_R_Front", true);
+                    break;
+                case MovementType.BACKWARD:
+                    anim.SetBool("Is_R_Backwards", true);
+                    break;
+                case MovementType.RIGHT:
+                    anim.SetBool("Is_R_Right", true);
+                    break;
+                case MovementType.LEFT:
+                    anim.SetBool("Is_R_Left", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
