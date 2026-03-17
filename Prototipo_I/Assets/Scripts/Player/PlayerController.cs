@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
         [SerializeField] private float gravity = 9.80665f;
+        [SerializeField] private Animator anim;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -37,6 +38,7 @@ namespace Player
         private Vector2 movementInput;
         private Vector3 velocity;
         private Vector3 horizontalMovement;
+        private MovementType curMovementType = MovementType.IDLE;
 
         private bool isSprinting;
 
@@ -49,6 +51,7 @@ namespace Player
         public bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
         [SerializeField] private Image gunRecharge;
+
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -62,9 +65,6 @@ namespace Player
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-
-            inputs.Player.Show_Wave_UI.performed += ctx => WaveManager.Instance.ToggleWaveUI();
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -102,15 +102,88 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Walking");
-            else
-                AudioManager.Instance.StopLoop("Walking");
+            Animate(movementInput);
+        }
 
-            if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Running");
-            else
+        public enum MovementType
+        {
+            FORWARD,
+            BACKWARD,
+            RIGHT,
+            LEFT,
+            IDLE
+        }
+
+        private void Animate(Vector2 movementInput)
+        {
+            if(movementInput.magnitude == 0)
+            {
+                if (curMovementType == MovementType.IDLE) return;
+                SetAnimation(MovementType.IDLE);
+                curMovementType = MovementType.IDLE;
                 AudioManager.Instance.StopLoop("Running");
+                return;
+            }
+
+            AudioManager.Instance.PlaySFXLoop("Running");
+
+            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
+            {
+                //Right-Left axis
+                if (movementInput.x > 0)
+                {
+                    if (curMovementType == MovementType.RIGHT) return;
+                    SetAnimation(MovementType.RIGHT);
+                    curMovementType = MovementType.RIGHT;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.LEFT) return;
+                    SetAnimation(MovementType.LEFT);
+                    curMovementType = MovementType.LEFT;
+                }
+            } else
+            {
+                //Forward-Backward axis
+                if (movementInput.y > 0)
+                {
+                    if (curMovementType == MovementType.FORWARD) return;
+                    SetAnimation(MovementType.FORWARD);
+                    curMovementType = MovementType.FORWARD;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.BACKWARD) return;
+                    SetAnimation(MovementType.BACKWARD);
+                    curMovementType = MovementType.BACKWARD;
+                }
+            }
+        }
+
+        private void SetAnimation(MovementType direction)
+        {
+            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_R_Backwards", false);
+            anim.SetBool("Is_R_Right", false);
+            anim.SetBool("Is_R_Left", false);
+
+            switch (direction)
+            {
+                case MovementType.FORWARD:
+                    anim.SetBool("Is_R_Front", true);
+                    break;
+                case MovementType.BACKWARD:
+                    anim.SetBool("Is_R_Backwards", true);
+                    break;
+                case MovementType.RIGHT:
+                    anim.SetBool("Is_R_Right", true);
+                    break;
+                case MovementType.LEFT:
+                    anim.SetBool("Is_R_Left", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -138,10 +211,10 @@ namespace Player
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
 
-            if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+            if (currentCooldown < attackCooldown || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
-            DamageTarget();
+            gunRecharge.fillAmount = 0.0f;
 
             currentCooldown = 0;
         }
@@ -153,24 +226,13 @@ namespace Player
             return targetedEnemy != null;
         }
 
-        void DamageTarget()
-        {
-            if (targetedEnemy == null) return;
-
-            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-                damageable.DamageMax();
-
-            gunRecharge.fillAmount = 0.0f;
-        }
-
         void SpawnProjectile(float waitTime)
         {
             AudioManager.Instance.PlaySFX("PlayerAttack");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;
-            projectile.finalPos = targetedEnemy.transform;
-            projectile.maxTime = waitTime;
+            projectile.target = targetedEnemy;
         }
 
         public void Stun(float seconds)
