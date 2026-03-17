@@ -51,7 +51,6 @@ namespace Player
 
         [SerializeField] private Image gunRecharge;
 
-        private int cheatAddSeeds = 10;
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -65,7 +64,6 @@ namespace Player
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-            inputs.Player.debug.performed += ctx => { Inventory.Inventory.Instance.AddSeeds(cheatAddSeeds); }; 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
