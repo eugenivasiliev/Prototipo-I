@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using Combat;
+using Enemies;
 using Farm;
 using Inventory;
 using UnityEngine;
@@ -35,19 +36,12 @@ namespace TowerDefense
                 Inventory.Inventory.Instance.RemoveSeeds(maxCapacity - (int)Mathf.Floor(currentPlant.amount));
                 currentPlant = (null, maxCapacity);
             }
-            //Item item = Inventory.Inventory.Instance.GetCurrentItem();
-            //if (item != null && item is IPlantSeed)
-            //{
-            //    if (currentPlant.data != (item as IPlantSeed).PlantData) currentPlant = (null, 0);
-            //    Inventory.Inventory.Instance.RemoveItem(item, maxCapacity - (int)Mathf.Floor(currentPlant.amount), out int amountDone);
-            //    currentPlant = ((item as IPlantSeed).PlantData, (int)Mathf.Floor(currentPlant.amount) + amountDone);
-            //}
         }
 
         private void OnTriggerEnter(Collider other)
         {
 
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
 
                 closeEnemies.Add(other.gameObject);
@@ -59,7 +53,7 @@ namespace TowerDefense
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
             {
                 closeEnemies.Remove(other.gameObject);
 
@@ -78,7 +72,6 @@ namespace TowerDefense
 
             animator.SetBool("Shooting", true);
 
-            float waitTime = 0.6f;
 
             while (attacking && closeEnemies.Count > 0 && CanAttack)
             {
@@ -88,14 +81,6 @@ namespace TowerDefense
                 SpawnProjectile(waitTime);
 
                 yield return new WaitForSeconds(waitTime);
-
-                if (targetedEnemy != null)
-                    DamageTarget();
-                else
-                {
-                    GetClosestEnemy();
-                    DamageTarget();
-                }
             }
 
             attacking = false;
@@ -113,17 +98,6 @@ namespace TowerDefense
             {
                 targetedEnemy = null;
                 attacking = false;
-            }
-        }
-
-        void DamageTarget()
-        {
-            if (targetedEnemy == null || !CanAttack) return;
-
-            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            {
-                damageable.Damage(damage);
-                currentPlant.amount -= usesPerAttack;
             }
         }
 
@@ -145,8 +119,7 @@ namespace TowerDefense
             GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
             p.transform.rotation = Quaternion.Euler(180, p.transform.rotation.eulerAngles.y, p.transform.rotation.eulerAngles.z);
             p.GetComponent<Projectile>().startPos = transform.position;
-            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
-            p.GetComponent<Projectile>().maxTime = waitTime;
+            p.GetComponent<Projectile>().target = targetedEnemy;
         }
 
         public bool ContextKeyActive() => !CanAttack;

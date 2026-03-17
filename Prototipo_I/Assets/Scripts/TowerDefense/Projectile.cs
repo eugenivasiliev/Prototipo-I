@@ -1,33 +1,65 @@
+using Combat;
 using UnityEngine;
+using Utils;
 
 namespace TowerDefense
 {
-    public class Projectile : MonoBehaviour
+    public class Projectile : TweenMovement
     {
         public Vector3 startPos;
-        public Transform finalPos;
+        public GameObject target;
+        protected IDamageable damageable;
 
-        float time = 0.0f;
-        public float maxTime;
-        void Start()
+        [SerializeField, Range(0, 100)] protected int damage;
+        [SerializeField, Range(0, 1)] protected float hitTolerance = 0.05f;
+
+        protected override void Start()
         {
+            if(!target.TryGetComponent<IDamageable>(out damageable))
+            {
+                Destroy(this.gameObject);
+                return;
+            }
 
+            xAxis.startValue = startPos.x;
+            yAxis.startValue = startPos.y;
+            zAxis.startValue = startPos.z;
+
+            xAxis.endValue = target.transform.position.x;
+            yAxis.endValue = target.transform.position.y;
+            zAxis.endValue = target.transform.position.z;
+
+            xAxis.SetActive(true);
+            yAxis.SetActive(true);
+            zAxis.SetActive(true);
         }
 
-        // Update is called once per frame
         void Update()
         {
-            time += Time.deltaTime;
-            if (finalPos != null)
+            if(target == null)
             {
-                this.transform.position = (time / maxTime) * finalPos.position + (1 - (time / maxTime)) * startPos;
+                Destroy(this.gameObject);
+                return;
             }
 
+            xAxis.endValue = target.transform.position.x;
+            yAxis.endValue = target.transform.position.y;
+            zAxis.endValue = target.transform.position.z;
 
-            if (time > maxTime)
-            {
-                Destroy(gameObject);
-            }
+            TweenUtil.Update(Time.deltaTime, ref xAxis);
+            TweenUtil.Update(Time.deltaTime, ref yAxis);
+            TweenUtil.Update(Time.deltaTime, ref zAxis);
+
+            this.transform.position = new Vector3(xAxis.value, yAxis.value, zAxis.value);
+
+            if (xAxis.t >= xAxis.duration - hitTolerance)
+                HitTarget();
+        }
+
+        protected virtual void HitTarget()
+        {
+            damageable.Damage(damage);
+            Destroy(this.gameObject);
         }
     }
 }
