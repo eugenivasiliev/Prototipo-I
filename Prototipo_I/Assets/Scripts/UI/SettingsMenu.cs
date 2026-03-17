@@ -7,7 +7,6 @@ namespace UI
     {
         [SerializeField] private Toggle fullscreenToggle;
         [SerializeField] private Toggle vSyncToggle;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             fullscreenToggle.isOn = Screen.fullScreen;
