@@ -2782,7 +2782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveManager: {fileID: 0}
   waveDB: {fileID: 11400000, guid: 007cb44a112c7d649bcf5b10c114f848, type: 2}
   currentBiomeIndex: 0
   currentPhaseIndex: 0
@@ -7284,6 +7283,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 1349055956490884076, guid: 8ce6950ff96d05a4686cf4996ab9f7d6, type: 3}
   m_PrefabInstance: {fileID: 1970058450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &190722692 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7116127735788204317, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
+  m_PrefabInstance: {fileID: 743942530}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &192326320
 PrefabInstance:
@@ -24572,7 +24576,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 8987563922714979300}
     m_Modifications:
     - target: {fileID: 3196668089832402387, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: m_Name
@@ -24596,15 +24600,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7116127735788204317, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7116127735788204317, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7116127735788204317, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7116127735788204317, guid: 7961a3ba8fb241746b2e2f6a5303d5a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -80401,13 +80405,14 @@ Transform:
   m_GameObject: {fileID: 6754909343332840567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 97.03769, y: -0.099998474, z: 127.4598}
+  m_LocalPosition: {x: 97.03769, y: 0.98, z: 127.4598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3662888703871845275}
   - {fileID: 578815604}
   - {fileID: 742273700362349958}
+  - {fileID: 190722692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &9017860080823449519
@@ -80436,7 +80441,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 3540242563375668155}
-  - {fileID: 743942530}
   - {fileID: 1223387607}
   - {fileID: 23549174}
   - {fileID: 8987563922714979300}
