@@ -11,6 +11,7 @@ namespace UI
     public class TowerMenu : MonoBehaviour
     {
         [SerializeField] private GameObject towerMenuPanel;
+        private GridLayoutGroup towerMenuGrid;
         [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
 
@@ -26,18 +27,19 @@ namespace UI
         private void Awake()
         {
             towerMenuPanel.SetActive(false);
+            towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
             towerMenuIngredients.SetActive(false);
         }
 
         private void LoadValidTowers()
         {
-            foreach (Transform child in towerMenuPanel.transform) Destroy(child.gameObject);
+            foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
 
             foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
             {
                 if (Inventory.Inventory.Instance.HasSeeds(data.cost))
                 {
-                    GameObject instance = Instantiate(towerUI, towerMenuPanel.transform);
+                    GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
                     instance.GetComponent<Image>().sprite = data.uiSprite;
                     instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
                     instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
