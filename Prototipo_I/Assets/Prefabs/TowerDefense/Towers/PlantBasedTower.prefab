@@ -70,10 +70,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 4228596157751962382, guid: aa038931c83eb5b4dab0280e351e9ce1, type: 3}
-  waitTime: 0.6
+  tracking: 1
+  cooldown: 0.6
   maxRange: 15
   minRange: 3
+  shotSound: TurretVAttack
   animator: {fileID: 8628421164434676625}
+  maxCapacity: 3
 --- !u!1001 &3820958411558775063
 PrefabInstance:
   m_ObjectHideFlags: 0

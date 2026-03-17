@@ -409,10 +409,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 5761682687561010346, guid: 080c6d7be4a13ec4abd7a87a46d38100, type: 3}
-  waitTime: 2
+  tracking: 1
+  cooldown: 0.6
   maxRange: 15
   minRange: 0
-  animator: {fileID: 7698506251254545386}
+  shotSound: TurretAttack
+  animator: {fileID: 0}
 --- !u!135 &3486860077749774598
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -489,40 +491,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8403724227785855501, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7698506251254545386}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
 --- !u!4 &290263366236643076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6288148175203334376, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
   m_PrefabInstance: {fileID: 6000137814654314476}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2874637023407175137 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8403724227785855501, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
-  m_PrefabInstance: {fileID: 6000137814654314476}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &7698506251254545386
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2874637023407175137}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5a5e85f3efb7c1e41b8e76f46454752c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

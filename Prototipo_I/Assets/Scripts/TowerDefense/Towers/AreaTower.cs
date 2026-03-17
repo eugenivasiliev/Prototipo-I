@@ -8,12 +8,6 @@ namespace TowerDefense
 {
     public class AreaTower : Tower
     {
-
-        private void Start()
-        {
-            waitTime = 1.5f;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent<EnemyAI>(out var enemy))
@@ -22,7 +16,10 @@ namespace TowerDefense
                 closeEnemies.Add(other.gameObject);
 
                 if (attacking == false)
-                    StartCoroutine(AttackLoop());
+                {
+                    attacking = true;
+                    animator.SetBool("Shooting", true);
+                }
             }
         }
 
@@ -52,35 +49,15 @@ namespace TowerDefense
                 if (targetedEnemy == null)
                     GetClosestValidEnemy();
 
-                SpawnProjectile(waitTime);
+                SpawnProjectile();
 
-                yield return new WaitForSeconds(waitTime);
+                yield return new WaitForSeconds(cooldown);
 
             }
 
             attacking = false;
 
             animator.SetBool("Shooting", false);
-        }
-
-        void GetClosestValidEnemy()
-        {
-            closeEnemies.RemoveAll(item => item == null);
-
-            targetedEnemy = null;
-            attacking = false;
-
-            if (closeEnemies.Count == 0) return;
-
-            foreach (var e in closeEnemies)
-            {
-                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
-                {
-                    targetedEnemy = e;
-                    attacking = true;
-                    return;
-                }
-            }
         }
 
 
@@ -104,13 +81,6 @@ namespace TowerDefense
 
             Quaternion qt = Quaternion.FromToRotation(fwd, targetFwd);
             transform.rotation *= qt;
-        }
-
-        void SpawnProjectile(float waitTime)
-        {
-            GameObject p = Instantiate(projectile, this.transform.position, this.transform.rotation);
-            p.GetComponent<Projectile>().startPos = transform.position;
-            p.GetComponent<Projectile>().target = targetedEnemy;
         }
     }
 }
