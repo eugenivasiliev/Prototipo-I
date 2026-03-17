@@ -45,6 +45,7 @@ namespace UI
                     instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
 
                     TurretButton turretButton = instance.GetComponent<TurretButton>();
+                    turretButton.descriptionUI = towerMenuIngredients;
                     turretButton.spotReference = spotReference;
                     turretButton.range = data.range;
                     turretButton.tm = this;
