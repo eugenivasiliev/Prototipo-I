@@ -13,7 +13,6 @@ namespace Utils
         public static void LoadScene(string sceneName)
         {
             AudioManager.Instance.StopMusic();
-            Debug.Log(sceneName);
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         }
 

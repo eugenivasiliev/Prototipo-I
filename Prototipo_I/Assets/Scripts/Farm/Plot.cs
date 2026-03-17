@@ -14,8 +14,6 @@ namespace Farm
 {
     public class Plot : MonoBehaviour, IInteractable, IDamageable, IContexted
     {
-        [SerializeField] private HybridationManager hybridationManager;
-
         Plant plant;
         PlantData plantData;
 
