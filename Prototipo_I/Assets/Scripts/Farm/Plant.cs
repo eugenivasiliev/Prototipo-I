@@ -26,7 +26,7 @@ namespace Farm
 
         public Action<int> OnStageChanged;
 
-        private UnityEvent<float> Grow = new UnityEvent<float>();
+        private System.Action<float> Grow;
 
         public Plant(PlantData data)
         {
@@ -45,7 +45,7 @@ namespace Farm
 
         public void TryGrow(int currentTime)
         {
-            Grow.AddListener(NextGrowStage);
+            Grow += NextGrowStage;
             DayNightCycle.Instance.SubscribeTimedEvent(Grow, timeToGrow);
         }
 

@@ -23,6 +23,7 @@ namespace Enemies
             public Transform homeTransform;
             public List<Plot> plots;
             public PlayerController playerController;
+            public List<SpawnZone> spawnZones;
         }
 
         public enum Target

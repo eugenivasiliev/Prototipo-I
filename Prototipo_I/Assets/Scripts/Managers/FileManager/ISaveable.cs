@@ -8,7 +8,7 @@ namespace Saving
         public string File { get; }
         public abstract T GetData();
         public abstract void SetData(T data);
-        public UnityEvent<float> SaveEvent { get; set; }
+        public System.Action<float> SaveEvent { get; set; }
 
         public T DefaultData { get; }
 
