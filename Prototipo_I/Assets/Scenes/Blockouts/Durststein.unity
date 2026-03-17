@@ -1044,6 +1044,10 @@ PrefabInstance:
       value: base_PF
       objectReference: {fileID: 0}
     - target: {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
+      propertyPath: enemyManager
+      value: 
+      objectReference: {fileID: 74349552}
+    - target: {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
       propertyPath: seedsPerRound
       value: 3
       objectReference: {fileID: 0}
@@ -2900,6 +2904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveManager: {fileID: 0}
   enemyDB: {fileID: 11400000, guid: d9d223758ba8f604db49c23c4f169021, type: 2}
   waveDB: {fileID: 11400000, guid: 007cb44a112c7d649bcf5b10c114f848, type: 2}
   currentBiomeIndex: 0
@@ -2918,6 +2923,7 @@ MonoBehaviour:
     homeTransform: {fileID: 0}
     plots: []
     playerController: {fileID: 1359848251}
+    spawnZones: []
 --- !u!4 &74349553
 Transform:
   m_ObjectHideFlags: 0
@@ -5801,7 +5807,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.6
+  m_fontSize: 20.9
   m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11793,12 +11799,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 312680781}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1784fb3affd97a24bbb63e047b4d699e, type: 3}
+  m_Script: {fileID: 11500000, guid: f64ac925abb088f4d9f9f07a47ec09de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveUI: {fileID: 437716892}
+  enemyManager: {fileID: 74349552}
   playerController: {fileID: 9017860080823449519}
-  collision: {fileID: 312680784}
+  ui: {fileID: 1510178022}
 --- !u!1 &314359525
 GameObject:
   m_ObjectHideFlags: 0
@@ -15290,51 +15296,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7584626409962699380, guid: 31fa66afdb2cd7342b85177b0a63dee4, type: 3}
   m_PrefabInstance: {fileID: 433863797}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &437716892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 437716894}
-  - component: {fileID: 437716893}
-  m_Layer: 0
-  m_Name: WaveUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &437716893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437716892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f64ac925abb088f4d9f9f07a47ec09de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &437716894
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437716892}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -337.07047, y: -295.5672, z: -0.8614962}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1510178019}
-  m_Father: {fileID: 1220777689}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &439230809
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26170,6 +26131,10 @@ PrefabInstance:
       propertyPath: contexted
       value: 
       objectReference: {fileID: 312680781}
+    - target: {fileID: 9110874021784230285, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_text
+      value: Q
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -33911,6 +33876,10 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 9017860080823449519}
+    - target: {fileID: 2736973985355788803, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
+      propertyPath: m_fontSize
+      value: 57.65
+      objectReference: {fileID: 0}
     - target: {fileID: 3899845632701245326, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -22.299683
@@ -33919,9 +33888,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4528284955993571197, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
+      propertyPath: m_fontSize
+      value: 56.9
+      objectReference: {fileID: 0}
     - target: {fileID: 7040831398248119852, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 72
+      value: 54.6
       objectReference: {fileID: 0}
     - target: {fileID: 7430568857942902305, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_Pivot.x
@@ -41674,7 +41647,7 @@ Transform:
   - {fileID: 2124740024}
   - {fileID: 949474782}
   - {fileID: 1864812989}
-  - {fileID: 437716894}
+  - {fileID: 1510178019}
   - {fileID: 58123745}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47577,8 +47550,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 437716893}
-        m_TargetAssemblyTypeName: WaveUI, Assembly-CSharp
+      - m_Target: {fileID: 312680787}
+        m_TargetAssemblyTypeName: UI.WaveUI, Assembly-CSharp
         m_MethodName: ClickWave
         m_Mode: 1
         m_Arguments:
@@ -52002,12 +51975,12 @@ GameObject:
   - component: {fileID: 1510178021}
   - component: {fileID: 1510178020}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: WaveUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1510178019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52021,7 +51994,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1369540307}
-  m_Father: {fileID: 437716894}
+  m_Father: {fileID: 1220777689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -81581,7 +81554,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1802216410222425129, guid: b719918f9151737498a350d51a46c76f, type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 19.35
       objectReference: {fileID: 0}
     - target: {fileID: 2413587473780569823, guid: b719918f9151737498a350d51a46c76f, type: 3}
       propertyPath: text
@@ -81661,7 +81634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6172878085713251428, guid: b719918f9151737498a350d51a46c76f, type: 3}
       propertyPath: m_fontSize
-      value: 26.85
+      value: 21.85
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

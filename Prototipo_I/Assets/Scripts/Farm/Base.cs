@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Combat;
 using Enemies;
 using Objectives;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -21,6 +22,9 @@ namespace TowerDefense
         [SerializeField] private int seedsPerRound;
 
         private UnityEvent<float> BaseProduction = new UnityEvent<float>();
+
+        [SerializeField] private EnemyManager enemyManager;
+
         private void Start()
         {
             health = MaxHealth;
@@ -34,10 +38,8 @@ namespace TowerDefense
             if (health <= 0.0f)
             {
 
-                EnemyManager.Instance.ReturnToSpawn(0.0f);
+                enemyManager.ReturnToSpawn();
                 health = MaxHealth;
-
-                WaveManager.Instance.ActivateAgain();
             }
         }
 

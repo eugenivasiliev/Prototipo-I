@@ -8,8 +8,10 @@ using Utils;
 
 namespace Enemies
 {
-    public class EnemyManager : Singleton<EnemyManager>
+    public class EnemyManager : MonoBehaviour
     {
+        [SerializeField] private WaveManager waveManager;
+
         [SerializeField] private EnemyDB enemyDB;
         [SerializeField] private WaveDB waveDB;
 
@@ -34,7 +36,6 @@ namespace Enemies
         [SerializeField] private EnemyAI.Blackboard bb;
         void Start()
         {
-            InitSingleton();
             enemyDB.Init();
 
             allPlots.Clear();
@@ -42,7 +43,7 @@ namespace Enemies
             this.bb.plots = allPlots;
 
             Spawn.AddListener(SpawnEnemies);
-            Return.AddListener(ReturnToSpawn);
+            Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
         }
@@ -57,8 +58,6 @@ namespace Enemies
         private void Update()
         {
             if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
-
-            WaveManager.Instance.ActivateAgain();
 
             isWaveActive = false;
             currentPhaseIndex++;
@@ -78,6 +77,7 @@ namespace Enemies
             {
                 allEnemies.Add(enemy);
                 EnemyAI.Blackboard enemyBB = this.bb;
+                enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
                 enemy.BB = enemyBB;
             }
@@ -124,7 +124,7 @@ namespace Enemies
             }
         }
 
-        public void ReturnToSpawn(float t)
+        public void ReturnToSpawn()
         {
             foreach (var enemy in allEnemies)
                 if (enemy != null) enemy.SetState(EnemyAI.State.Return);
