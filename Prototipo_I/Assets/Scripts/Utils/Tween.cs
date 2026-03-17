@@ -37,6 +37,10 @@ namespace Utils
         }
     }
 
+    /// <remarks>
+    /// Assists with lerping, as the generic <a cref="Tween{T}"/> doesn't work on its own.
+    /// This also forces the code duplication, as generics don't allow for operator filtering.
+    /// </remarks>
     public static class TweenUtil
     {
         public static bool Update(float delta, ref Tween<float> tween)
