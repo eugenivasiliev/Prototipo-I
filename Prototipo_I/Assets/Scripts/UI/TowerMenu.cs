@@ -23,9 +23,6 @@ namespace UI
 
         private float range;
 
-        [Header("UI Sprites")]
-        [SerializeField] private UISpritesDB uiSpritesDB;
-
         private void Awake()
         {
             towerMenuPanel.SetActive(false);

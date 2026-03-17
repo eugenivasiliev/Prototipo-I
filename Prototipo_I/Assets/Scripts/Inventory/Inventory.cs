@@ -52,17 +52,12 @@ namespace Inventory
 
         [SerializeField] private int seedCount;
 
-        [Header("UI Sprites")]
-        [SerializeField] private UISpritesDB uiSpritesDB;
-        [SerializeField] private Sprite defaultItemSprite;
-
         [Header("Seed Counter UI")]
         [SerializeField] private TMP_Text seedCounterUI;
 
         private void Start()
         {
             InitSingleton();
-            uiSpritesDB.Init();
 
             (this as IAutoSaving<SeedCountWrapper>).SetupAutoSave();
             (this as IAutoSaving<SeedCountWrapper>).Load();

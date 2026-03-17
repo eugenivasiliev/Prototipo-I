@@ -23,7 +23,7 @@ namespace AICompanion
         void OpenMenu()
         {
             //TODO: Activate all elements
-            List<string> nextWave = wM.nextWave;
+            List<GameObject> nextWave = wM.nextWave;
         }
     }
 }

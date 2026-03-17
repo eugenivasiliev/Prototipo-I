@@ -11,8 +11,6 @@ namespace Enemies
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private WaveManager waveManager;
-
-        [SerializeField] private EnemyDB enemyDB;
         [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
@@ -25,7 +23,7 @@ namespace Enemies
         [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
         private List<EnemyAI> allEnemies = new List<EnemyAI>();
-        private List<string> enemiesToSpawn = new List<string>();
+        private List<GameObject> enemiesToSpawn = new List<GameObject>();
 
         [SerializeField] private GameObject plotManager;
         private List<Plot> allPlots = new List<Plot>();
@@ -36,8 +34,6 @@ namespace Enemies
         [SerializeField] private EnemyAI.Blackboard bb;
         void Start()
         {
-            enemyDB.Init();
-
             allPlots.Clear();
             allPlots.AddRange(plotManager.GetComponentsInChildren<Plot>());
             this.bb.plots = allPlots;
@@ -98,7 +94,7 @@ namespace Enemies
 
             allEnemies.Clear();
 
-            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex, enemyDB);
+            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
             enemiesToSpawn = waveDB.nextWave;
 
             foreach (SpawnZone zone in spawnZones)
@@ -111,14 +107,14 @@ namespace Enemies
 
             while (enemiesToSpawn.Count > 0)
             {
-                string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
-                GameObject prefab = enemyDB.GetEnemyFromName(name);
-                GameObject enemyObject = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
-                EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
+                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
+                GameObject prefab = enemiesToSpawn[enemyIndex];
+                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
+                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
 
                 if (enemyAI != null) RegisterEnemy(enemyAI);
 
-                enemiesToSpawn.Remove(name);
+                enemiesToSpawn.RemoveAt(enemyIndex);
 
                 yield return new WaitForSeconds(timeToSpawn);
             }
