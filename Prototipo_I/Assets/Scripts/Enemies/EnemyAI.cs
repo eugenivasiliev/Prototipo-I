@@ -134,7 +134,18 @@ namespace Enemies
                 isDying = true;
 
                 if (animationType == AnimationType.ALEMBIC)
-                    StartCoroutine(AlembicDeathAnim());
+                {
+                    /* 
+                     * TODO: Implement alembic in scene.
+                     * Alembic has issues with prefab instantiation, which means it cannot be used as the EnemyManager system stands now.
+                     * The fix is to implement enemy pooling instead of instantiation, but for time limitations this is kept out of the project for alpha.
+                     */
+                    //StartCoroutine(AlembicDeathAnim());
+
+                    AudioManager.Instance.PlaySFX("EnemyDeath");
+                    DropLoot();
+                    Destroy(gameObject);
+                }
                 else if (animationType == AnimationType.FBX)
                     StartCoroutine(FBXDeathAnim());
                 return;
@@ -145,6 +156,9 @@ namespace Enemies
             
         }
 
+        /// <summary>
+        /// Kept unimplemented because of Alembic's issues with prefab instantiation
+        /// </summary>
         protected IEnumerator AlembicDeathAnim()
         {
             AudioManager.Instance.PlaySFX("EnemyDeath");
