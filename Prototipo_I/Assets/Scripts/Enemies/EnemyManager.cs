@@ -10,7 +10,6 @@ namespace Enemies
 {
     public class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private WaveManager waveManager;
         [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
@@ -28,7 +27,7 @@ namespace Enemies
         [SerializeField] private GameObject plotManager;
         private List<Plot> allPlots = new List<Plot>();
 
-        private UnityEvent<float> Spawn = new UnityEvent<float>();
+        private System.Action<float> Spawn;
         private UnityEvent<float> Return = new UnityEvent<float>();
 
         [SerializeField] private EnemyAI.Blackboard bb;
@@ -38,7 +37,7 @@ namespace Enemies
             allPlots.AddRange(plotManager.GetComponentsInChildren<Plot>());
             this.bb.plots = allPlots;
 
-            Spawn.AddListener(SpawnEnemies);
+            Spawn += SpawnEnemies;
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);

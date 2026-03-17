@@ -8,8 +8,7 @@ namespace Saving
     {
         public void SetupAutoSave()
         {
-            SaveEvent = new UnityEvent<float>();
-            SaveEvent.AddListener(Save);
+            SaveEvent += Save;
             DayNightCycle.Instance.SubscribeTimedEvent(SaveEvent, 1);
         }
 
