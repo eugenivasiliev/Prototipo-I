@@ -256,7 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  billboards: 0
+  fixedSize: 0
+  cameraBaseDistance: 0
 --- !u!1 &5947208457080571333
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e74d3a4e244b3074492c70b829ddde1b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e74d3a4e244b3074492c70b829ddde1b, type: 3}
       propertyPath: m_LocalPosition.z
