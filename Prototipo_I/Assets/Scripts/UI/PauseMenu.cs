@@ -53,7 +53,7 @@ namespace UI
         {
             Time.timeScale = 1f;
 
-            UnityEditor.EditorApplication.isPlaying = false;
+            
 
         Application.Quit();
 

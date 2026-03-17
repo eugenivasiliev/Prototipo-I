@@ -22,6 +22,7 @@ namespace Player
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
         [SerializeField] private float gravity = 9.80665f;
+        [SerializeField] private Animator anim;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -100,15 +101,27 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            if (/*!isSprinting &&*/ movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            {
+                anim.SetBool("Is_Running", true);
                 AudioManager.Instance.PlaySFXLoop("Walking");
+            }
             else
+            {
                 AudioManager.Instance.StopLoop("Walking");
+                anim.SetBool("Is_Running", false);
+            }
 
-            if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            /*if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
+            {
+                anim.SetBool("Is_Running", true);
                 AudioManager.Instance.PlaySFXLoop("Running");
+            }
             else
+            {
                 AudioManager.Instance.StopLoop("Running");
+                anim.SetBool("Is_Running", false);
+            }*/
         }
 
         private void OnTriggerEnter(Collider other)
@@ -136,7 +149,7 @@ namespace Player
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
 
-            if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+            if (currentCooldown < attackCooldown || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
             gunRecharge.fillAmount = 0.0f;
