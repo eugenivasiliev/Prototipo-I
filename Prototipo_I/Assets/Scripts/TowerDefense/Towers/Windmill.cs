@@ -8,13 +8,13 @@ namespace TowerDefense
 {
     public class Windmill : Tower
     {
-        private UnityEvent<float> Give = new UnityEvent<float>();
+        private System.Action<float> Give;
 
         [SerializeField] private List<Plot> plots = new List<Plot>();
 
         private void Start()
         {
-            Give.AddListener(AddSeeds);
+            Give += AddSeeds;
             DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
         }
 
