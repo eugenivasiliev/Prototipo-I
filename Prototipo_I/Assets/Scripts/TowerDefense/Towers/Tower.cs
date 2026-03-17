@@ -18,6 +18,8 @@ namespace TowerDefense
         [Header("Animation")]
         [SerializeField] protected string shotSound = "TurretAttack";
         [SerializeField] protected Animator animator;
+        [SerializeField] protected GameObject particles;
+        [SerializeField] protected GameObject particlesOrigin;
 
         protected float currentCooldown = 0;
         protected bool attacking = false;
@@ -35,6 +37,8 @@ namespace TowerDefense
                 Instantiate(projectile, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
             projectileInstance.startPos = transform.position;
             projectileInstance.target = targetedEnemy;
+
+            Instantiate(particles, particlesOrigin.transform.position, this.transform.rotation);
         }
 
         protected void GetClosestValidEnemy()
