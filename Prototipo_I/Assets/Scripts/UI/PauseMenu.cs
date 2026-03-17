@@ -10,6 +10,7 @@ namespace UI
     public class PauseMenu : Singleton<PauseMenu>, IInteractable
     {
         [SerializeField] private GameObject pauseMenuPanel;
+        [SerializeField] private PlayerController playerController;
 
         private bool isPaused = false;
 
@@ -39,7 +40,7 @@ namespace UI
             Cursor.visible = isPaused;
             pauseMenuPanel.SetActive(isPaused);
             Time.timeScale = (isPaused) ? 0f : 1f;
-            PlayerController.MovementLocked = isPaused;
+            playerController.MovementLocked = isPaused;
         }
 
         public void Resume()
@@ -51,11 +52,11 @@ namespace UI
         public void QuitGame()
         {
             Time.timeScale = 1f;
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-#else
+
+            
+
         Application.Quit();
-#endif
+
         }
 
         public void OnInteract()

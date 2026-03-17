@@ -4,6 +4,7 @@ using Enemies;
 using Farm;
 using Objectives;
 using UnityEngine;
+using TowerDefense;
 
 namespace GameMode {
     public class WinLossTracker : MonoBehaviour
@@ -28,15 +29,9 @@ namespace GameMode {
             if(objectivesManager.AllObjectivesComplete())
                 win.gameObject.SetActive(true);
 
-            if(enemyManager.IsWaveActive && !HasPlantsLeft())
-                loss.gameObject.SetActive(true);
+            if (Base.instance.Health < 5.0f)
+                loss.gameObject.SetActive(true);            
         }
 
-        bool HasPlantsLeft()
-        {
-            foreach( var p in plotList )
-                if (p.IsPlanted) return true;
-            return false;
-        }
     }
 }

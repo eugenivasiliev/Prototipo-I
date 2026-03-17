@@ -6,18 +6,12 @@ using Enemies;
 using TowerDefense;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using Utils;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Player
 {
-    public class PlayerController : Singleton<PlayerController>
+    public class PlayerController : MonoBehaviour
     {
-        private bool isReset = false;
-        private float currentTimeForNextDay = 0.0f;
-        private float maxTimeForNextDay = 2.0f;
-
         [Header("Attack")]
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private KeyCode attackKey;
@@ -27,13 +21,10 @@ namespace Player
         [Header("Movement")]
         [SerializeField] private float speed = 5f;
         [SerializeField] private float sprintSpeed = 7.5f;
-        [SerializeField] private float cameraSensibility = 7.5f;
-        [SerializeField] private float scrollSensibility = 20.0f;
         [SerializeField] private float gravity = 9.80665f;
-        [SerializeField] private float jumpHeight = 2f;
+        [SerializeField] private Animator anim;
 
         [Header("Transforms")]
-        [SerializeField] private Transform cameraTransform;
         [SerializeField] private Transform modelTransform;
         [SerializeField] public short InteractionRange { get { return 3; } }
 
@@ -41,47 +32,29 @@ namespace Player
         [SerializeField] private GameObject stunParticles;
 
         private CharacterController characterController;
-        private static InputSystem_Actions inputs;
-        public static InputSystem_Actions Inputs { get { return inputs; } }
+        private InputSystem_Actions inputs;
+        public InputSystem_Actions Inputs { get { return inputs; } }
 
         private Vector2 movementInput;
-        private Vector2 cameraInput;
         private Vector3 velocity;
         private Vector3 horizontalMovement;
 
-        private float Rotation;
         private bool isSprinting;
-        private bool isJumping;
-
-        private RaycastHit hit;
-
-        private IInteractable interactable;
 
         private List<GameObject> closeEnemies = new List<GameObject>();
         private GameObject targetedEnemy;
         int damage = 1;
         bool attacking = false;
 
-        [SerializeField] private int money;
-        public int Money { get => money; set => money = value; }
-
-        private static bool movementLocked = false;
-        public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
-
-        private bool waveMenuTouched = false;
-
-
-        private Camera cam;
+        private bool movementLocked = false;
+        public bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
         [SerializeField] private Image gunRecharge;
+
         private void Awake()
         {
-            InitSingleton();
-
             characterController = GetComponent<CharacterController>();
             if (inputs == null) inputs = new InputSystem_Actions();
-
-            cam = Camera.main;
         }
 
         private void Start()
@@ -91,17 +64,6 @@ namespace Player
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
             inputs.Player.Sprint.performed += ctx => isSprinting = true;
             inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-            inputs.Player.Interact.canceled += ctx => Interact();
-            //inputs.Player.Jump.performed += ctx => isJumping = true;
-
-            inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
-            //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
-            //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
-
-            //inputs.Player.camera_zoom.performed += ToggleCameraDistance;
-
-            inputs.Player.debug.performed += ctx => Stun(1);
-
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -121,8 +83,9 @@ namespace Player
         {
             if (movementLocked) return;
 
-            Vector3 cameraForwardProjected = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
-            Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
+            Transform cameraTransform = Camera.main.transform;
+            Vector3 cameraForwardProjected = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
+            Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
 
             Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
             float currentSpeed = isSprinting ? sprintSpeed : speed;
@@ -133,93 +96,106 @@ namespace Player
             if (characterController.isGrounded && velocity.y < 0)
                 velocity.y = -2;
 
-            if (isJumping && characterController.isGrounded)
-            {
-                AudioManager.Instance.PlaySFX("Jumping");
-                velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
-                isJumping = false;
-            }
-
             velocity.y -= gravity * Time.deltaTime;
 
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if (horizontalMovement.sqrMagnitude > 0.01f)
+            Animate(movementInput);
+        }
+
+        public enum MovementType
+        {
+            FORWARD,
+            BACKWARD,
+            RIGHT,
+            LEFT,
+            IDLE
+        }
+
+        private void Animate(Vector2 movementInput)
+        {
+            if(movementInput.magnitude == 0)
             {
-                modelTransform.LookAt(transform.position + cameraForwardProjected);
-            }
-
-            if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Walking");
-            else
-                AudioManager.Instance.StopLoop("Walking");
-
-            if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Running");
-            else
+                SetAnimation(MovementType.IDLE);
                 AudioManager.Instance.StopLoop("Running");
-        }
+                return;
+            }
 
-        private void Interact()
-        {
-            Vector3 fwr = Camera.main.transform.forward;
-            if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
+            AudioManager.Instance.PlaySFXLoop("Running");
+
+            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
             {
-                interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null) interactable.OnInteract();
+                //Right-Left axis
+                if (movementInput.x > 0)
+                    SetAnimation(MovementType.RIGHT);
+                else
+                    SetAnimation(MovementType.LEFT);
+            } else
+            {
+                //Forward-Backward axis
+                if (movementInput.y > 0)
+                    SetAnimation(MovementType.FORWARD);
+                else
+                    SetAnimation(MovementType.BACKWARD);
             }
         }
 
-        void OpenWaveMenu()
+        private void SetAnimation(MovementType direction)
         {
+            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_R_Backwards", false);
+            anim.SetBool("Is_R_Right", false);
+            anim.SetBool("Is_R_Left", false);
 
-            if (waveMenuTouched)
-                WaveManager.Instance.ToggleWaveUI();
+            switch (direction)
+            {
+                case MovementType.FORWARD:
+                    anim.SetBool("Is_R_Front", true);
+                    break;
+                case MovementType.BACKWARD:
+                    anim.SetBool("Is_R_Backwards", true);
+                    break;
+                case MovementType.RIGHT:
+                    anim.SetBool("Is_R_Right", true);
+                    break;
+                case MovementType.LEFT:
+                    anim.SetBool("Is_R_Left", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Finish"))
-            {
-                closeEnemies.Add(other.gameObject);
-            }
-            else if (other.CompareTag("Console"))
-            {
-                waveMenuTouched = true;
-            }
+            if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
+
+            closeEnemies.Add(other.gameObject);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Finish"))
+            if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
+            
+            closeEnemies.Remove(other.gameObject);
+            if (closeEnemies.Count == 0)
             {
-                closeEnemies.Remove(other.gameObject);
-
-                if (closeEnemies.Count == 0)
-                {
-
-                    attacking = false;
-                    targetedEnemy = null;
-                }
-            }
-            else if (other.CompareTag("Console"))
-            {
-                waveMenuTouched = false;
+                attacking = false;
+                targetedEnemy = null;
             }
         }
 
         private void AttackLoop()
         {
-
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
 
-            if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+            if (currentCooldown < attackCooldown || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
-            DamageTarget();
+            gunRecharge.fillAmount = 0.0f;
 
             currentCooldown = 0;
         }
@@ -231,26 +207,13 @@ namespace Player
             return targetedEnemy != null;
         }
 
-        void DamageTarget()
-        {
-            if (targetedEnemy == null) return;
-
-            if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-                damageable.DamageMax();
-
-            if (targetedEnemy.TryGetComponent<EnemyAI>(out var enemy))
-                enemy.UpdateLife();
-
-            gunRecharge.fillAmount = 0.0f;
-        }
-
         void SpawnProjectile(float waitTime)
         {
             AudioManager.Instance.PlaySFX("PlayerAttack");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
-            p.GetComponent<Projectile>().startPos = transform.position;
-            p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
-            p.GetComponent<Projectile>().maxTime = waitTime;
+            Projectile projectile = p.GetComponent<Projectile>();
+            projectile.startPos = transform.position;
+            projectile.target = targetedEnemy;
         }
 
         public void Stun(float seconds)
