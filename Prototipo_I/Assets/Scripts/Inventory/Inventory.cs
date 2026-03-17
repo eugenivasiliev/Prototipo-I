@@ -54,6 +54,9 @@ namespace Inventory
         [Header("Seed Counter UI")]
         [SerializeField] private TMP_Text seedCounterUI;
 
+        [Header("Cheats")]
+        [SerializeField] private int cheatAddedSeeds = 10;
+
         private void Start()
         {
             InitSingleton();
@@ -62,6 +65,8 @@ namespace Inventory
             (this as IAutoSaving<SeedCountWrapper>).Load();
 
             seedCounterUI.text = seedCount.ToString();
+
+            InputSystem.actions.FindAction("debug").performed += ctx => { this.AddSeeds(cheatAddedSeeds); };
         }
 
         public int GetSeedCount() => seedCount;
