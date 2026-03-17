@@ -369,8 +369,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6144820809362090765}
-  - component: {fileID: 5285529924298988100}
   - component: {fileID: 3486860077749774598}
+  - component: {fileID: 6357739739014323492}
   m_Layer: 0
   m_Name: AreaTower
   m_TagString: Untagged
@@ -396,25 +396,6 @@ Transform:
   - {fileID: 290263366236643076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5285529924298988100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8729063670191569001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fe3ca8e19b0d144db3b4b8eace0fa8f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 5761682687561010346, guid: 080c6d7be4a13ec4abd7a87a46d38100, type: 3}
-  tracking: 1
-  cooldown: 0.6
-  maxRange: 15
-  minRange: 0
-  shotSound: TurretAttack
-  animator: {fileID: 0}
 --- !u!135 &3486860077749774598
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -436,6 +417,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6357739739014323492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729063670191569001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee3c4717a9a129f4d94de818bee35dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 5761682687561010346, guid: 080c6d7be4a13ec4abd7a87a46d38100, type: 3}
+  tracking: 1
+  cooldown: 0.6
+  maxRange: 15
+  minRange: 3
+  shotSound: TurretAttack
+  animator: {fileID: 7698506251254545386}
 --- !u!1001 &6000137814654314476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -491,10 +491,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8403724227785855501, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7698506251254545386}
   m_SourcePrefab: {fileID: 100100000, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
 --- !u!4 &290263366236643076 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6288148175203334376, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
   m_PrefabInstance: {fileID: 6000137814654314476}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2874637023407175137 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8403724227785855501, guid: 0a3b70595a2720d4dae6513355b3ae39, type: 3}
+  m_PrefabInstance: {fileID: 6000137814654314476}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7698506251254545386
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2874637023407175137}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a5e85f3efb7c1e41b8e76f46454752c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
