@@ -1,53 +1,75 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
-public class Plant
+using Utils;
+
+namespace Farm
 {
-    private string name;
-    public string Name { get => name; }
-
-    private int numStages;
-    private int currentStage;
-
-    public bool IsGrown => currentStage >= numStages;
-
-    private float timeToGrow;
-
-    public float currentTime => Mathf.Max(timeToGrow - DayNightCycle.Instance.DayTime, 0f);
-
-    public Action WhenFullGrow;
-
-    private UnityEvent<float> MyEvent = new UnityEvent<float>();
-
-    public Plant(string name, int numStages, float timeToGrow)
+    public class Plant
     {
-        this.name = name;
-        this.numStages = numStages;
-        this.timeToGrow = timeToGrow;
-        this.currentStage = 0;
-    }
+        private int maxStage;
 
-    public void Create()
-    {
-        MyEvent.AddListener(Grow);
+        public int MaxStage => maxStage;
 
-        DayNightCycle.Instance.SubscribeTimedEvent(MyEvent, DayNightCycle.Instance.DayTime + timeToGrow);
-    }
+        private int currentStage;
 
-    private void Grow(float time)
-    {
-        currentStage++;
-        if (IsGrown)
+        public int CurrentStage => currentStage;
+
+        private int timeToGrow;
+        private float growthTimer;
+        private bool isFertilize;
+
+
+        public string Name { get; private set; }
+        public bool IsFullyGrown { get { return currentStage >= maxStage - 1; } }
+        public float TimeLeft { get { return Mathf.Max(timeToGrow - growthTimer, 0f); } }
+
+        public Action<int> OnStageChanged;
+
+        private System.Action<float> Grow;
+
+        public Plant(PlantData data)
         {
-            Debug.Log("Crecio");
-          
-            //UwU
-        } else
-        {
-            WhenFullGrow?.Invoke();
-            Debug.Log("No Crecio");
-            DayNightCycle.Instance.SubscribeTimedEvent(MyEvent, DayNightCycle.Instance.DayTime + timeToGrow);
+            Name = data.plantName;
+            maxStage = data.stages.Length;
+            timeToGrow = data.timeToGrow;
+            currentStage = 0;
+            isFertilize = false;
+            growthTimer = 0f;
         }
-        //Update visual
+
+        public void ApplyFertilize(bool isFertilized)
+        {
+            isFertilize = isFertilized;
+        }
+
+        public void TryGrow(int currentTime)
+        {
+            Grow += NextGrowStage;
+            DayNightCycle.Instance.SubscribeTimedEvent(Grow, timeToGrow);
+        }
+
+        public void UpdateGrowth(float deltaTime)
+        {
+            growthTimer += deltaTime;
+        }
+
+        private void NextGrowStage(float time)
+        {
+            if (IsFullyGrown) return;
+
+            currentStage++;
+            growthTimer = 0f;
+            isFertilize = false;
+            OnStageChanged?.Invoke(currentStage);
+            TryGrow(DayNightCycle.Instance.TotalTime);
+
+        }
+
+        public void FullGrow()
+        {
+
+            currentStage = maxStage;
+        }
     }
 }
