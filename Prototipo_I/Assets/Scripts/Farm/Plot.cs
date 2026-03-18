@@ -1,161 +1,116 @@
 using System.Collections.Generic;
 using System.Timers;
+using Audio;
+using Combat;
+using Inventory;
+using Objectives;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Utils;
 
-public class Plot : MonoBehaviour, IInteractable
+namespace Farm
 {
-    Plant plant;
-    PlantData plantData;
-
-    private bool hasWater;
-    private bool isFertilized;
-    private GameObject currentPlant;
-
-    [SerializeField] private TextMeshProUGUI statusText;
-    public TextMeshProUGUI StatusText => statusText;
-    [SerializeField] public PlantData plantInfo;
-
-    public bool IsPlanted { get { return plant != null; } }
-
-    private void Awake()
+    public class Plot : MonoBehaviour, IInteractable, IDamageable, IContexted
     {
-        if(statusText != null)
-            statusText.gameObject.SetActive(false);
-    }
+        Plant plant;
+        PlantData plantData;
 
-    public void Plant(PlantData data)
-    {
-        AudioManager.instance.PlaySFX("Plant");
-        if (IsPlanted)
+        private bool isFertilized;
+        private GameObject currentPlant;
+
+        [SerializeField] private TextMeshProUGUI statusText;
+        public TextMeshProUGUI StatusText => statusText;
+        [SerializeField] public PlantData plantInfo;
+
+        public bool IsPlanted { get { return plant != null; } }
+
+        [SerializeField] private int health;
+        public int Health { get => health; set => health = value; }
+        public int MaxHealth { get => 100; set { } }
+
+
+        public GameObject plantingFeedback;
+        public GameObject ripeFeedback;
+        private GameObject ripeParticles;
+        public GameObject harvestFeedback;
+
+        [SerializeField] private Canvas healthHolder;
+        private void Awake()
         {
-            if (PlotManager.Instance.HybridationManager.TryFindHybrid((plantData, data), out PlantData newPlant))
-            {
-                this.plantData = newPlant;
-                plant = new Plant(newPlant);
-            }
-            else
-            {
-                Debug.Log("Already planted");
-                return;
-            }
+            if (statusText != null)
+                statusText.gameObject.SetActive(false);
+
+            health = 1;
         }
-        else
+
+        public void Plant(PlantData data)
         {
+            AudioManager.Instance.PlaySFX("Plant");
+            
             plantData = data;
             plant = new Plant(data);
+
+            currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+            plant.OnStageChanged += OnPlantStageChanged;
+
+            isFertilized = false;
+
+            Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);
         }
 
-        currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
-
-        plant.OnStageChanged += OnPlantStageChanged;
-
-        hasWater = false;
-        isFertilized = false;
-
-        Debug.Log($"Planta {plant.Name} plantada!");
-    }
-
-    public void Fertilize()
-    {
-        if (!IsPlanted || isFertilized) { Debug.Log("Ya esta fertilizada"); return; }
-        AudioManager.instance.PlaySFX("Fertilize");
-        isFertilized = true;
-        plant.ApplyFertilize(isFertilized);
-    }
-    private void Harvest()
-    {
-        if (!IsPlanted || !plant.IsFullyGrown)
+        private void OnPlantStageChanged(int currentStage)
         {
-            Debug.Log("Aun no esta lista");
-            return;
+            isFertilized = false;
+
+            if (currentPlant != null) { Destroy(currentPlant); }
+
+            AudioManager.Instance.PlaySFX("NextStage");
+            GameObject prefab = plantData.stages[currentStage];
+            currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
+
+            Inventory.Inventory.Instance.AddSeeds(plantData.seedsPerRound);
+            if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
+                objs[0].UpdateObjective(plantData.seedsPerRound);
         }
 
-        AudioManager.instance.PlaySFX("Harvesting");
-        Inventory.Instance.AddItem(new Item1(), 2, out int amountDone);
+        public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
+            new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant)
+        };
 
-        Destroy(currentPlant);
-        Debug.Log("Yw. Harvested");
-
-        this.plant = null;
-        currentPlant = null;
-    }
-
-    public void UpdateUI()
-    {
-        statusText.gameObject.SetActive(true);
-        if (statusText == null || !statusText.gameObject.activeInHierarchy) return;
-        if (!IsPlanted)
+        private void Action_Plant(InputAction.CallbackContext ctx)
         {
-            statusText.text = "Hueco";
-            return;
+            if (IsPlanted || Inventory.Inventory.Instance.GetSeedCount() == 0) return;
+
+            this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
+            Inventory.Inventory.Instance.RemoveSeeds(1);
+            plant.TryGrow(DayNightCycle.Instance.TotalTime);
         }
-        plant.UpdateGrowth(Time.deltaTime);
-        if (!hasWater && plant.TimeLeft <= 0f)
+
+        public void FullGrow()
         {
-            statusText.text = "<size=40><color=red>Necesita Agua</color></size>";
-            return;
+            if (plant != null)
+                plant.FullGrow();
+            else
+                return;
+
+            OnPlantStageChanged(plant.CurrentStage - 1);
+
+            ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
         }
-        statusText.text = $"{plant.Name}\n" +
-                          $"Stage: {plant.CurrentStage} / {plant.MaxStage}\n" +
-                          $"Time to next stage: {plant.TimeLeft:F1}s\n" +
-                          $"Watered: {(hasWater ? "Sí" : "No")}\n" +
-                          $"Fertilized: {(isFertilized ? "Sí" : "No")}";
-    }
+        public void OnInteract() { }
 
-    private void OnPlantStageChanged(int currentStage)
-    {
-        hasWater = false;
-        isFertilized = false;
-
-        if (currentPlant != null) { Destroy(currentPlant); }
-
-        AudioManager.instance.PlaySFX("NextStage");
-        GameObject prefab = plantData.stages[currentStage];
-        currentPlant = Instantiate(prefab, transform.position, Quaternion.identity, transform);
-
-    }
-
-    public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("water", InputActionChange.ActionCanceled, Action_Water),
-    new IInteractable.KeyBinding("plant", InputActionChange.ActionCanceled, Action_Plant),
-    new IInteractable.KeyBinding("harvest", InputActionChange.ActionCanceled, Action_Harvest),
-    new IInteractable.KeyBinding("fertilize", InputActionChange.ActionCanceled, Action_Fertilize)
-    };
-
-    private void Action_Water(InputAction.CallbackContext ctx)
-    {
-        AudioManager.instance.PlaySFX("Water");
-        hasWater = true;
-        plant.TryGrow(DayNightCycle.Instance.TotalTime, hasWater);
-        Debug.Log("Regada");
-    }
-
-    private void Action_Plant(InputAction.CallbackContext ctx)
-    {
-        Item item = Inventory.Instance.GetCurrentItem();
-        if (item != null && item is IPlantSeed)
+        void UpdateLife()
         {
-            this.Plant((item as IPlantSeed).PlantData);
-            Inventory.Instance.RemoveItem(item);
-        } 
-    }
 
-    private void Action_Harvest(InputAction.CallbackContext ctx)
-    {
-        if (IsPlanted && plant.IsFullyGrown)
-        {
-            Harvest();
-            Debug.Log("Coshechada");
+            healthHolder.gameObject.SetActive(true);
+            healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
-    }
 
-    private void Action_Fertilize(InputAction.CallbackContext ctx)
-    {
-        Fertilize();
-        Debug.Log("Fertilizada");
-    }
+        public void OnDamage() {}
 
-    public void OnInteract() {}
+        public bool ContextKeyActive() => !IsPlanted;
+    }
 }

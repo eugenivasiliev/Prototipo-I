@@ -1,77 +1,131 @@
 using System.Collections;
 using System.Collections.Generic;
+using Farm;
+using Objectives;
 using UnityEngine;
 using UnityEngine.Events;
+using Utils;
 
-public class EnemyManager : MonoBehaviour
+namespace Enemies
 {
-
-    public static EnemyManager Instance {get; private set;}
-
-    [SerializeField] private GameObject enemy;
-    [SerializeField] private short enemiesByZone;
-    [SerializeField] private short timeToSpawn;
-    [SerializeField] public List<Transform> spawnZones = new List<Transform>();
-
-    private List<EnemyAI> allEnemies = new List<EnemyAI>();
-
-    private UnityEvent<float> Spawn = new UnityEvent<float>();
-    private UnityEvent<float> Return = new UnityEvent<float>();
-    void Start()
+    public class EnemyManager : MonoBehaviour
     {
-        Instance = this;
+        [SerializeField] private WaveDB waveDB;
 
-        Spawn.AddListener(SpawnEnemies);
-        Return.AddListener(ReturnToSpawn);
+        [SerializeField] private int currentBiomeIndex = 0;
+        [SerializeField] private int currentPhaseIndex = 0;
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
-    }
+        [SerializeField] private bool isWaveActive = false;
+        public bool IsWaveActive { get { return isWaveActive; } }
 
-    private void RegisterEnemy(EnemyAI enemy)
-    {
-        if (!allEnemies.Contains(enemy))
-            allEnemies.Add(enemy);
-    }
+        [SerializeField] private float timeToSpawn;
+        [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
-    private void SpawnEnemies(float t)
-    {
-        if (enemy == null) return;
+        private List<EnemyAI> allEnemies = new List<EnemyAI>();
+        private List<GameObject> enemiesToSpawn = new List<GameObject>();
 
-        if (allEnemies.Count > 0)
+        [SerializeField] private GameObject plotManager;
+        private List<Plot> allPlots = new List<Plot>();
+
+        private System.Action<float> Spawn;
+        private UnityEvent<float> Return = new UnityEvent<float>();
+
+        [SerializeField] private EnemyAI.Blackboard bb;
+        void Start()
+        {
+            allPlots.Clear();
+            allPlots.AddRange(plotManager.GetComponentsInChildren<Plot>());
+            this.bb.plots = allPlots;
+
+            Spawn += SpawnEnemies;
+            Return.AddListener((float t) => { ReturnToSpawn(); });
+
+            DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
+
+        private bool AreEnemiesRemaining()
         {
             foreach (var enemy in allEnemies)
+                if (enemy != null) return true;
+            return false;
+        }
+
+        private void Update()
+        {
+            if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
+
+            isWaveActive = false;
+            currentPhaseIndex++;
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
+
+            if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
+                foreach (var obj in objs)
+                    obj.UpdateObjective(1);
+
+            DayNightCycle.Instance.PassTime();
+            DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
+
+        private void RegisterEnemy(EnemyAI enemy)
+        {
+            if (!allEnemies.Contains(enemy))
             {
-                if (enemy == null) continue;
-                Destroy(enemy.gameObject);
+                allEnemies.Add(enemy);
+                EnemyAI.Blackboard enemyBB = this.bb;
+                enemyBB.spawnZones = this.spawnZones;
+                enemyBB.target = enemy.BB.target;
+                enemy.BB = enemyBB;
             }
         }
 
-        allEnemies.Clear();
-
-        foreach (Transform zone in spawnZones)
-            StartCoroutine(SpawnEnemyDelay(zone));
-
-        DayNightCycle.Instance.SubscribeTimedEvent(Return, (DayNightCycle.Instance.DayCount + 1) * DayNightCycle.Instance.DayDuration);
-    }
-
-    private IEnumerator SpawnEnemyDelay (Transform zone)
-    {
-        for (int i = 0; i < enemiesByZone; i++)
+        private void SpawnEnemies(float t)
         {
-            GameObject enemyObject = Instantiate(enemy, zone.position, Quaternion.identity, zone.transform);
-            EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
+            isWaveActive = true;
 
-            if (enemyAI != null) RegisterEnemy(enemyAI);
+            if (allEnemies.Count > 0)
+            {
+                foreach (var enemy in allEnemies)
+                {
+                    if (enemy == null) continue;
+                    Destroy(enemy.gameObject);
+                }
+            }
 
-            yield return new WaitForSeconds(timeToSpawn);
+            allEnemies.Clear();
+
+            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
+            enemiesToSpawn = waveDB.nextWave;
+
+            foreach (SpawnZone zone in spawnZones)
+                if (zone.ValidPhases.Contains(currentPhaseIndex)) StartCoroutine(SpawnEnemyDelay(zone));
         }
-    }
 
-    private void ReturnToSpawn(float t)
-    {
-        foreach (var enemy in allEnemies)
-            if (enemy != null) enemy.SetState(EnemyAI.State.Return);
+        private IEnumerator SpawnEnemyDelay(SpawnZone zone)
+        {
 
-        DayNightCycle.Instance.SubscribeTimedEvent(Spawn, (DayNightCycle.Instance.DayCount + 0.5f) * DayNightCycle.Instance.DayDuration);
+
+            while (enemiesToSpawn.Count > 0)
+            {
+                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
+                GameObject prefab = enemiesToSpawn[enemyIndex];
+                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
+                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
+
+                if (enemyAI != null) RegisterEnemy(enemyAI);
+
+                enemiesToSpawn.RemoveAt(enemyIndex);
+
+                yield return new WaitForSeconds(timeToSpawn);
+            }
+        }
+
+        public void ReturnToSpawn()
+        {
+            foreach (var enemy in allEnemies)
+                if (enemy != null) enemy.SetState(EnemyAI.State.Return);
+            isWaveActive = false;
+            DayNightCycle.Instance.PassTime();
+            DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
     }
 }
