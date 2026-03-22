@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a98a5c3d57d6b499ae5e4c386c2c8f, type: 3}
+  m_Name: TutorialDialogueDB
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - id: ouch
+    text: Ouch, nice work landing the pod, doofus. Anyway, can you walk?
+    hasTriggered: 0
+    lifeTime: 5
+  - id: glad
+    text: Glad to see you are ok. Try sprinting now
+    hasTriggered: 0
+    lifeTime: 5
+  - id: enemy
+    text: Look, critters. Feasting on pod remains. Dumb things for sure. Get rid
+      of them!
+    hasTriggered: 0
+    lifeTime: 5
+  - id: seeds
+    text: SEEDS! Gab 'em while they are still fresh! We will need them later.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: base
+    text: Ahhh, there it is. The base, still intact. Be sure to protect it. For now
+      just sow those plots before critters come around.
+    hasTriggered: 0
+    lifeTime: 8
+  - id: wait
+    text: Damn, waiting is boring. Quicken the pace of the enemies.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: turret
+    text: Those things were not messing around. Harvest your plots, and then plant
+      two turrets to ensure we don't get overrun.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: vine
+    text: Things are looking good, but plant a vine in the way to slow those things.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: bomber
+    text: Oh no, a big one... Okay get all your seeds and bomb the fuck out of them!
+    hasTriggered: 0
+    lifeTime: 5
