@@ -38,6 +38,7 @@ namespace Player
         private Vector2 movementInput;
         private Vector3 velocity;
         private Vector3 horizontalMovement;
+        private MovementType curMovementType = MovementType.IDLE;
 
         private bool isSprinting;
 
@@ -117,7 +118,9 @@ namespace Player
         {
             if(movementInput.magnitude == 0)
             {
+                if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
+                curMovementType = MovementType.IDLE;
                 AudioManager.Instance.StopLoop("Running");
                 return;
             }
@@ -128,16 +131,32 @@ namespace Player
             {
                 //Right-Left axis
                 if (movementInput.x > 0)
+                {
+                    if (curMovementType == MovementType.RIGHT) return;
                     SetAnimation(MovementType.RIGHT);
+                    curMovementType = MovementType.RIGHT;
+                }
                 else
+                {
+                    if (curMovementType == MovementType.LEFT) return;
                     SetAnimation(MovementType.LEFT);
+                    curMovementType = MovementType.LEFT;
+                }
             } else
             {
                 //Forward-Backward axis
                 if (movementInput.y > 0)
+                {
+                    if (curMovementType == MovementType.FORWARD) return;
                     SetAnimation(MovementType.FORWARD);
+                    curMovementType = MovementType.FORWARD;
+                }
                 else
+                {
+                    if (curMovementType == MovementType.BACKWARD) return;
                     SetAnimation(MovementType.BACKWARD);
+                    curMovementType = MovementType.BACKWARD;
+                }
             }
         }
 
