@@ -223,6 +223,13 @@ namespace Player
         {
             closeEnemies.RemoveAll(item => item == null);
             targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+
+            if (closeEnemies.Count > 0)            
+            { 
+                if (closeEnemies[0].GetComponent<EnemyAI>().IsAboutToDie()) 
+                    targetedEnemy = (closeEnemies.Count > 1) ? closeEnemies[1] : null;
+            }
+
             return targetedEnemy != null;
         }
 
