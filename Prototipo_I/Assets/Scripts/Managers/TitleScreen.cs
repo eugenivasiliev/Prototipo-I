@@ -1,16 +1,22 @@
+using Audio;
 using UnityEngine;
 
-public class TitleScreen : MonoBehaviour
+namespace UI
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class TitleScreen : MonoBehaviour
     {
-        AudioManager.instance.PlayMusic("TitleScene");
-    }
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+            AudioManager.Instance.PlayMusic("TitleScene");
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }

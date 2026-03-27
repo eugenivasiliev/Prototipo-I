@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IPlantSeed
+namespace Farm
 {
-    public PlantData PlantData { get; }
+    public interface IPlantSeed
+    {
+        public PlantData PlantData { get; }
+    }
 }
