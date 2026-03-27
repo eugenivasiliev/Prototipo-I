@@ -1,60 +1,89 @@
 using System.Collections.Generic;
+using Player;
 using TMPro;
+using TowerDefense;
 using UnityEngine;
 using UnityEngine.UI;
+using Utils;
 
-public class TowerMenu : MonoBehaviour
+namespace UI
 {
-    public static TowerMenu Instance { get; private set; }
-
-    [SerializeField] private GameObject towerMenuPanel;
-    [SerializeField] private GameObject towerUI;
-
-    private bool isOpen = false;
-
-    public bool IsOpen => isOpen;
-
-    public TowerSpot spotReference = null;
-
-    private void Awake()
+    public class TowerMenu : MonoBehaviour
     {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        [SerializeField] private GameObject towerMenuPanel;
+        private GridLayoutGroup towerMenuGrid;
+        [SerializeField] private GameObject towerMenuIngredients;
+        [SerializeField] private GameObject towerUI;
 
-        towerMenuPanel.SetActive(false);
-    }
+        [SerializeField] private PlayerController playerController;
 
-    private void LoadValidTowers()
-    {
-        foreach (Transform child in this.transform.GetChild(0)) Destroy(child.gameObject);
+        private bool isOpen = false;
+        public bool IsOpen => isOpen;
 
-        foreach (TowerData data in TowerDBManager.Instance.DB.TowerDataList)
+        public TowerSpot spotReference = null;
+
+        private float range;
+
+        private void Awake()
         {
-            if(Inventory.Instance.HasIngredients(data.ingredients))
-            {
+            towerMenuPanel.SetActive(false);
+            towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
+            towerMenuIngredients.SetActive(false);
+        }
 
-                GameObject instance = Instantiate(towerUI, this.transform.GetChild(0));
-                instance.GetComponent<Image>().sprite = data.uiSprite;
-                instance.GetComponent<Button>().onClick.AddListener(() => { Debug.Log(name); spotReference.PlaceTower(data); });
+        private void LoadValidTowers()
+        {
+            foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
+
+            foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
+            {
+                if (Inventory.Inventory.Instance.HasSeeds(data.cost))
+                {
+                    GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
+                    instance.GetComponent<Image>().sprite = data.uiSprite;
+                    instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
+                    instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
+
+                    TurretButton turretButton = instance.GetComponent<TurretButton>();
+                    turretButton.descriptionUI = towerMenuIngredients;
+                    turretButton.spotReference = spotReference;
+                    turretButton.range = data.range;
+                    turretButton.tm = this;
+                    turretButton.td = data;
+                }
             }
         }
-    }
 
-    public void ToggleMenu()
-    {
-        isOpen = !isOpen;
-        Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
-        Cursor.visible = isOpen;
-        towerMenuPanel.SetActive(isOpen);
-        Time.timeScale = (isOpen) ? 0f : 1f;
-        PlayerController.MovementLocked = isOpen;
+        public void LoadTowerDescription(TowerData td)
+        {
+            towerMenuIngredients.SetActive(true);
+            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
+        }
 
-        if(isOpen) LoadValidTowers();
-    }
+        public void EraseTowerDescription()
+        {
+            towerMenuIngredients.SetActive(false);
+            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = "";
+        }
 
-    public void Exit()
-    {
-        isOpen = true;
-        ToggleMenu();
+        public void ToggleMenu()
+        {
+            isOpen = !isOpen;
+            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOpen;
+            towerMenuPanel.SetActive(isOpen);
+            Time.timeScale = (isOpen) ? 0f : 1f;
+            playerController.MovementLocked = isOpen;
+
+            EraseTowerDescription();
+
+            if (isOpen) LoadValidTowers();
+        }
+
+        public void Exit()
+        {
+            isOpen = true;
+            ToggleMenu();
+        }
     }
 }
