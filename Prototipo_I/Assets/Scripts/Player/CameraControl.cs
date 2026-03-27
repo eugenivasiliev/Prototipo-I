@@ -46,7 +46,7 @@ namespace Player
             rotationOffset *= q;
             player.transform.rotation *= q;
 
-            float scroll = Mouse.current.scroll.ReadValue().y;
+            float scroll = -Mouse.current.scroll.ReadValue().y;
 
             if(scroll != 0f)
             {
