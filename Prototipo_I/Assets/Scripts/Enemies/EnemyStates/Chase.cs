@@ -10,7 +10,7 @@ namespace Enemies
 
         public override void Behaviour()
         {
-            if (bb.targetTransform == null)
+            if (enemy.BB.targetTransform == null)
             {
                 switch (bb.target)
                 {
@@ -60,14 +60,14 @@ namespace Enemies
                 enemy.BB = this.bb;
             }
 
-            if (bb.targetTransform == null) return;
+            if (enemy.BB.targetTransform == null) return;
 
 
             NavMeshPath path = new NavMeshPath();
-            enemy.Agent.CalculatePath(bb.targetTransform.position, path);
+            enemy.Agent.CalculatePath(enemy.BB.targetTransform.position, path);
             enemy.Agent.SetPath(path);
 
-            float distToTarget = Vector3.Distance(enemy.transform.position, bb.targetTransform.position);
+            float distToTarget = Vector3.Distance(enemy.transform.position, enemy.BB.targetTransform.position);
             if (distToTarget < distanceThreshold) enemy.SetState(EnemyAI.State.Attack);
 
         }
