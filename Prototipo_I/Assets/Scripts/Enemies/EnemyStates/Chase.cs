@@ -51,6 +51,10 @@ namespace Enemies
                     case EnemyAI.Target.Player:
                         bb.targetTransform = bb.playerController.transform;
                         break;
+
+                    case EnemyAI.Target.Barricade:
+                        bb.targetTransform = bb.barricadeTransform;
+                        break;
                 }
 
                 enemy.BB = this.bb;
