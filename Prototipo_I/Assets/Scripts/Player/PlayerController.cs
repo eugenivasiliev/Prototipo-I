@@ -246,7 +246,7 @@ namespace Player
         {
             //TODO: Add proper VFX/SFX
 
-            Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
             //AudioManager.instance.PlaySFX("Stun");
 
             StartCoroutine(StunCorroutine(seconds));
