@@ -44,9 +44,9 @@ namespace Player
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
             rotationOffset *= q;
-            player.transform.rotation *= q;
+            //player.transform.rotation *= q;
 
-            float scroll = Mouse.current.scroll.ReadValue().y;
+            float scroll = -Mouse.current.scroll.ReadValue().y;
 
             if(scroll != 0f)
             {
@@ -62,10 +62,7 @@ namespace Player
                 );
 
             this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
-            this.transform.LookAt(
-                this.transform.position + player.transform.forward //Forward pointing
-                - Vector3.up * (1 - yAxis.value) //Vertical pointing
-                , Vector3.up);
+            this.transform.LookAt(player.transform);
         }
     }
 }

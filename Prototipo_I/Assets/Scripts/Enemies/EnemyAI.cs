@@ -24,13 +24,15 @@ namespace Enemies
             public List<Plot> plots;
             public PlayerController playerController;
             public List<SpawnZone> spawnZones;
+            public Transform barricadeTransform;
         }
 
         public enum Target
         {
             Home,
             Plots,
-            Player
+            Player,
+            Barricade
         }
 
         public enum State
@@ -61,8 +63,7 @@ namespace Enemies
 
         [SerializeField] protected float speed;
         [SerializeField] protected float slowSpeed;
-
-
+        private bool aboutToDie = false;
         public int Difficulty => difficulty;
 
         [Serializable]
@@ -100,8 +101,8 @@ namespace Enemies
         [SerializeField] protected Animator animator;
         [SerializeField] protected bool isDying = false;
 
-    
-    bool frozen = false;
+
+        bool frozen = false;
         protected void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
@@ -134,7 +135,18 @@ namespace Enemies
                 isDying = true;
 
                 if (animationType == AnimationType.ALEMBIC)
-                    StartCoroutine(AlembicDeathAnim());
+                {
+                    /* 
+                     * TODO: Implement alembic in scene.
+                     * Alembic has issues with prefab instantiation, which means it cannot be used as the EnemyManager system stands now.
+                     * The fix is to implement enemy pooling instead of instantiation, but for time limitations this is kept out of the project for alpha.
+                     */
+                    //StartCoroutine(AlembicDeathAnim());
+
+                    AudioManager.Instance.PlaySFX("EnemyDeath");
+                    DropLoot();
+                    Destroy(gameObject);
+                }
                 else if (animationType == AnimationType.FBX)
                     StartCoroutine(FBXDeathAnim());
                 return;
@@ -142,9 +154,12 @@ namespace Enemies
 
             enemyState.Behaviour();
 
-            
+
         }
 
+        /// <summary>
+        /// Kept unimplemented because of Alembic's issues with prefab instantiation
+        /// </summary>
         protected IEnumerator AlembicDeathAnim()
         {
             AudioManager.Instance.PlaySFX("EnemyDeath");
@@ -235,11 +250,26 @@ namespace Enemies
             SetSpeed((int)slowSpeed);
         }
 
-        public void UnSlowDown() {         
+        public void UnSlowDown() {
             SetSpeed((int)speed);
         }
-        //ui_health.gameObject.SetActive(true);
-        //ui_health.GetComponentInChildren<Image>().fillAmount = (this as IDamageable).HealthRatio;
+        public void MightDie(int damage)
+        {
+            aboutToDie = health - damage > 0;
+        }
+
+        public bool IsAboutToDie()
+        {
+            return aboutToDie;
+        }
+
+        public void GetBarricade(Transform t)
+        {
+            bb.barricadeTransform = t;
+            bb.targetTransform = bb.barricadeTransform;
+            bb.target = Target.Barricade;
+        }
+
     }
 
 }
