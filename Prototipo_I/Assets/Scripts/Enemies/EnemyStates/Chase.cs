@@ -1,34 +1,75 @@
+using TowerDefense;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class Chase : EnemyState
+namespace Enemies
 {
-    private Plot targetPlot = null;
-    public override void Behaviour()
+    public class Chase : EnemyState
     {
-        if(targetPlot != null && targetPlot.IsPlanted)
+        private float distanceThreshold => 10.45f;
+
+        public override void Behaviour()
         {
-            float distToTarget = Vector3.Distance(enemy.transform.position, targetPlot.transform.position);
-            if (distToTarget < 0.45f)
-                enemy.SetState(EnemyAI.State.Attack);
-            return;
-        }
-
-        float minDistance = Mathf.Infinity;
-
-        foreach (var plot in PlotManager.Instance.plots)
-        {
-            if (!plot.IsPlanted) continue;
-
-            float distance = Vector3.Distance(enemy.transform.position, plot.transform.position);
-
-            if (distance < minDistance)
+            if (enemy.BB.targetTransform == null)
             {
-                minDistance = distance;
-                targetPlot = plot;
+                switch (bb.target)
+                {
+                    case EnemyAI.Target.Plots:
+                        float minDistance = Mathf.Infinity;
+
+                        foreach (var plot in bb.plots)
+                        {
+                            if (!plot.IsPlanted) continue;
+
+                            float d = Vector3.Distance(enemy.transform.position, plot.transform.position);
+
+                            if (d < minDistance)
+                            {
+                                minDistance = d;
+                                bb.targetTransform = plot.transform;
+                            }
+                        }
+                        break;
+                    case EnemyAI.Target.Home:
+                        //bb.targetTransform = bb.homeTransform;
+                        bb.targetTransform = Base.instance.transform;
+                        float _minDistance = 5.0f;
+
+                        foreach (var plot in bb.plots)
+                        {
+                            if (!plot.IsPlanted) continue;
+
+                            float d = Vector3.Distance(enemy.transform.position, plot.transform.position);
+
+                            if (d < _minDistance)
+                            {
+                                minDistance = d;
+                                bb.targetTransform = plot.transform;
+                            }
+                        }
+                        break;
+                    case EnemyAI.Target.Player:
+                        bb.targetTransform = bb.playerController.transform;
+                        break;
+
+                    case EnemyAI.Target.Barricade:
+                        bb.targetTransform = bb.barricadeTransform;
+                        break;
+                }
+
+                enemy.BB = this.bb;
             }
+
+            if (enemy.BB.targetTransform == null) return;
+
+
+            NavMeshPath path = new NavMeshPath();
+            enemy.Agent.CalculatePath(enemy.BB.targetTransform.position, path);
+            enemy.Agent.SetPath(path);
+
+            float distToTarget = Vector3.Distance(enemy.transform.position, enemy.BB.targetTransform.position);
+            if (distToTarget < distanceThreshold) enemy.SetState(EnemyAI.State.Attack);
+
         }
-        //AudioManager.instance.PlaySFXLoop("MonsterWalking");
-        if (targetPlot != null)
-            enemy.Agent.SetDestination(targetPlot.transform.position);
     }
 }
