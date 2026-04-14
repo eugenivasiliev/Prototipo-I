@@ -19,8 +19,7 @@ namespace Player
         private float currentCooldown = 0.0f;
 
         [Header("Movement")]
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float sprintSpeed = 7.5f;
+        [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private Animator anim;
 
@@ -63,8 +62,8 @@ namespace Player
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            inputs.Player.Sprint.canceled += ctx => isSprinting = false;
+            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
+            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -89,7 +88,7 @@ namespace Player
             Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
 
             Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
-            float currentSpeed = isSprinting ? sprintSpeed : speed;
+            float currentSpeed = speed;
 
             if (characterController.isGrounded)
                 horizontalMovement = movement * currentSpeed;
@@ -246,7 +245,7 @@ namespace Player
         {
             //TODO: Add proper VFX/SFX
 
-            Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
             //AudioManager.instance.PlaySFX("Stun");
 
             StartCoroutine(StunCorroutine(seconds));
