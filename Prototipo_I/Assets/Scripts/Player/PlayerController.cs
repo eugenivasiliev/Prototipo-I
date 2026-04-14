@@ -101,6 +101,9 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
+            if(movement.sqrMagnitude > 0)
+                modelTransform.LookAt(modelTransform.position + totalMovement);
+
             Animate(movementInput);
         }
 
