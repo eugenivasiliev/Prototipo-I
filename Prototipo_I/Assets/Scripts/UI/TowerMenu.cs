@@ -16,6 +16,7 @@ namespace UI
         [SerializeField] private GameObject towerUI;
 
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private CameraControl cameraController;
 
         private bool isOpen = false;
         public bool IsOpen => isOpen;
@@ -78,6 +79,16 @@ namespace UI
             EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
+
+            if (isOpen) {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.NearOffset;
+                cameraController.SavePosition();
+            } else
+            {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.savedPosition;
+            }
         }
 
         public void Exit()

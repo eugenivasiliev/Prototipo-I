@@ -71146,6 +71146,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3534744497507965779, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 6771064223322600473}
+    - target: {fileID: 3534744497507965779, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 9017860080823449519}
@@ -97070,11 +97074,15 @@ MonoBehaviour:
     isReversing: 0
     isLooping: 0
   player: {fileID: 9017860080823449519}
-  nearOffset: {x: 1.6500002, y: 7.4366064, z: -19.109999}
-  farOffset: {x: 0, y: 25, z: -30}
+  nearOffset: {x: 0, y: 40, z: -30}
+  farOffset: {x: 0, y: 20, z: -20}
   currentOffset: {x: 0, y: 0, z: 0}
+  savedPosition: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   lookInput: {x: 0, y: 0}
+  forcedTweenMovement: 0
+  targetTweenPosition: {x: 0, y: 0, z: 0}
+  forcedTweenTolerance: 0.3
   cameraSensibility: 0.3
   scrollSensibility: 0.2
 --- !u!114 &6771064223322600474
