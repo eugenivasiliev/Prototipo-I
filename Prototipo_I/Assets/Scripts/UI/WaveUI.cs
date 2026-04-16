@@ -19,8 +19,11 @@ namespace UI
         public bool IsOpen() { return isOpen; }
         private void Start()
         {
-            //InputSystem.actions.FindAction("wave_menu").started += ctx => { ToggleWaveUI(); };
-            //InputSystem.actions.FindAction("close_menu").started += ctx => { if(isOpen) ToggleWaveUI(); };
+            if (SceneManager.GetSceneName() != "Tutorial")
+            {
+                InputSystem.actions.FindAction("wave_menu").started += ctx => { ToggleWaveUI(); };
+                InputSystem.actions.FindAction("close_menu").started += ctx => { if (isOpen) ToggleWaveUI(); };
+            }
         }
 
         public void ClickWave()
