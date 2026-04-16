@@ -52739,6 +52739,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1318559228}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1321124832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 253327859771632300, guid: 1a1c02cd7106cdf4ead4e16a0e06e508, type: 3}
+  m_PrefabInstance: {fileID: 2003657477}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &1321124835
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1321124832}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 127
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1323752734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85401,6 +85427,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.8412418
       objectReference: {fileID: 0}
+    - target: {fileID: 253327859771632300, guid: 1a1c02cd7106cdf4ead4e16a0e06e508, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 279923248603691159, guid: 1a1c02cd7106cdf4ead4e16a0e06e508, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 39.00835
@@ -86080,7 +86110,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 253327859771632300, guid: 1a1c02cd7106cdf4ead4e16a0e06e508, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1321124835}
   m_SourcePrefab: {fileID: 100100000, guid: 1a1c02cd7106cdf4ead4e16a0e06e508, type: 3}
 --- !u!1001 &2005228052
 PrefabInstance:
