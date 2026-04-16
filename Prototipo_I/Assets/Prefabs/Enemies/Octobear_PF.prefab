@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1046999036042658034}
   - component: {fileID: 4828132213817753355}
   - component: {fileID: 4804224139920288922}
+  - component: {fileID: 8139208468740418366}
+  - component: {fileID: 356598529370319294}
   m_Layer: 0
   m_Name: houligan
   m_TagString: Untagged
@@ -112,6 +114,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8139208468740418366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417815242883439176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df9723abca4d5f74a87cd6f1ba90729b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &356598529370319294
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417815242883439176}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 90.1
+  m_Center: {x: -29.209183, y: -14.476535, z: -12.016953}
 --- !u!1 &4590688058275222406
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +161,7 @@ GameObject:
   - component: {fileID: 7620956390719517439}
   - component: {fileID: 5065621397703225046}
   m_Layer: 0
-  m_Name: Holeigan_PF
+  m_Name: Octobear_PF
   m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -142,8 +177,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.8, y: 2, z: 0.8}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8605677042936002699}
   - {fileID: 1046999036042658034}
@@ -182,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358a37c42b972c84f9d7929174742fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 9
   ui_health: {fileID: 3519588515964795507}
   damage: 1
   difficulty: 1

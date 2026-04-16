@@ -24,13 +24,15 @@ namespace Enemies
             public List<Plot> plots;
             public PlayerController playerController;
             public List<SpawnZone> spawnZones;
+            public Transform barricadeTransform;
         }
 
         public enum Target
         {
             Home,
             Plots,
-            Player
+            Player,
+            Barricade
         }
 
         public enum State
@@ -259,6 +261,13 @@ namespace Enemies
         public bool IsAboutToDie()
         {
             return aboutToDie;
+        }
+
+        public void GetBarricade(Transform t)
+        {
+            bb.barricadeTransform = t;
+            bb.targetTransform = bb.barricadeTransform;
+            bb.target = Target.Barricade;
         }
 
     }

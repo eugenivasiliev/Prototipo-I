@@ -942,6 +942,7 @@ MonoBehaviour:
     plots: []
     playerController: {fileID: 1359848251}
     spawnZones: []
+    barricadeTransform: {fileID: 0}
 --- !u!4 &74349553
 Transform:
   m_ObjectHideFlags: 0
@@ -19043,7 +19044,6 @@ MonoBehaviour:
   attackKey: 0
   attackCooldown: 0.6
   speed: 5
-  sprintSpeed: 7.5
   gravity: 9.80665
   anim: {fileID: 0}
   modelTransform: {fileID: 0}
@@ -31888,7 +31888,7 @@ MonoBehaviour:
     isReversing: 0
     isLooping: 0
   player: {fileID: 9017860080823449519}
-  nearOffset: {x: 2.5, y: 1, z: -5}
+  nearOffset: {x: 1.65, y: 7.436606, z: -19.11}
   farOffset: {x: 0, y: 25, z: -30}
   currentOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
@@ -32164,7 +32164,6 @@ MonoBehaviour:
   attackKey: 323
   attackCooldown: 0.6
   speed: 30
-  sprintSpeed: 40
   gravity: 9.80665
   anim: {fileID: 569532560}
   modelTransform: {fileID: 742273700362349958}
