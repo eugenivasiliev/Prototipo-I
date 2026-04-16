@@ -126,7 +126,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3170591e11ae4784484aafe328a4081c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hybridationManager: {fileID: 0}
   statusText: {fileID: 2666884159055348694}
   plantInfo: {fileID: 11400000, guid: 91aafc185892b5f4cb8122cef347ee20, type: 2}
   health: 0
@@ -529,6 +528,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedSize: 0
+  cameraBaseDistance: 0
 --- !u!1 &7434177248282266878
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +677,10 @@ PrefabInstance:
     - target: {fileID: 80403980495649469, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
       propertyPath: m_Name
       value: ContextCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560748757139810769, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4456959236327491989, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
       propertyPath: m_LocalPosition.x

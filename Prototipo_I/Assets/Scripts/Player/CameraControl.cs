@@ -9,12 +9,19 @@ namespace Player
         [SerializeField] private PlayerController player;
 
         [SerializeField] private Vector3 nearOffset;
-        [SerializeField] private Vector3 farOffset;
+        public Vector3 NearOffset { get { return nearOffset; } }
+
+        [SerializeField] public Vector3 farOffset;
         [SerializeField] private Vector3 currentOffset;
+        public Vector3 savedPosition;
         [SerializeField] private Quaternion rotationOffset = Quaternion.identity;
 
         private InputSystem_Actions inputs;
         [SerializeField] private Vector2 lookInput;
+
+        public bool forcedTweenMovement = false;
+        public Vector3 targetTweenPosition = Vector3.zero;
+        [SerializeField, Range(0, 1f)] private float forcedTweenTolerance;
 
         [Header("Settings")]
         [SerializeField] private float cameraSensibility = 7.5f;
@@ -39,14 +46,38 @@ namespace Player
 
         void Update()
         {
+            if (forcedTweenMovement)
+            {
+                Debug.Log("moving");
+
+                float direction = Mathf.Sign(currentOffset.y - targetTweenPosition.y);
+
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref xAxis);
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref yAxis);
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref zAxis);
+
+                currentOffset = new Vector3(
+                xAxis.value * nearOffset.x + (1 - xAxis.value) * farOffset.x,
+                yAxis.value * nearOffset.y + (1 - yAxis.value) * farOffset.y,
+                zAxis.value * nearOffset.z + (1 - zAxis.value) * farOffset.z
+                );
+
+                this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
+                this.transform.LookAt(player.transform);
+
+                if ((targetTweenPosition - currentOffset).sqrMagnitude <= forcedTweenTolerance)
+                {
+                    forcedTweenMovement = false;
+                }
+            }
+
             if (player.MovementLocked) return;
 
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
             rotationOffset *= q;
-            player.transform.rotation *= q;
 
-            float scroll = Mouse.current.scroll.ReadValue().y;
+            float scroll = -Mouse.current.scroll.ReadValue().y;
 
             if(scroll != 0f)
             {
@@ -62,10 +93,9 @@ namespace Player
                 );
 
             this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
-            this.transform.LookAt(
-                this.transform.position + player.transform.forward //Forward pointing
-                - Vector3.up * (1 - yAxis.value) //Vertical pointing
-                , Vector3.up);
+            this.transform.LookAt(player.transform);
         }
+
+        public void SavePosition() => savedPosition = currentOffset;
     }
 }

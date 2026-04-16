@@ -19,9 +19,9 @@ namespace Player
         private float currentCooldown = 0.0f;
 
         [Header("Movement")]
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float sprintSpeed = 7.5f;
+        [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
+        [SerializeField] private Animator anim;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -37,6 +37,7 @@ namespace Player
         private Vector2 movementInput;
         private Vector3 velocity;
         private Vector3 horizontalMovement;
+        private MovementType curMovementType = MovementType.IDLE;
 
         private bool isSprinting;
 
@@ -49,6 +50,7 @@ namespace Player
         public bool MovementLocked { get => movementLocked; set => movementLocked = value; }
 
         [SerializeField] private Image gunRecharge;
+
         private void Awake()
         {
             characterController = GetComponent<CharacterController>();
@@ -60,9 +62,8 @@ namespace Player
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-
+            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
+            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -87,7 +88,7 @@ namespace Player
             Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
 
             Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
-            float currentSpeed = isSprinting ? sprintSpeed : speed;
+            float currentSpeed = speed;
 
             if (characterController.isGrounded)
                 horizontalMovement = movement * currentSpeed;
@@ -100,15 +101,91 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Walking");
-            else
-                AudioManager.Instance.StopLoop("Walking");
+            if(movement.sqrMagnitude > 0)
+                modelTransform.LookAt(modelTransform.position + totalMovement);
 
-            if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-                AudioManager.Instance.PlaySFXLoop("Running");
-            else
+            Animate(movementInput);
+        }
+
+        public enum MovementType
+        {
+            FORWARD,
+            BACKWARD,
+            RIGHT,
+            LEFT,
+            IDLE
+        }
+
+        private void Animate(Vector2 movementInput)
+        {
+            if(movementInput.magnitude == 0)
+            {
+                if (curMovementType == MovementType.IDLE) return;
+                SetAnimation(MovementType.IDLE);
+                curMovementType = MovementType.IDLE;
                 AudioManager.Instance.StopLoop("Running");
+                return;
+            }
+
+            AudioManager.Instance.PlaySFXLoop("Running");
+
+            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
+            {
+                //Right-Left axis
+                if (movementInput.x > 0)
+                {
+                    if (curMovementType == MovementType.RIGHT) return;
+                    SetAnimation(MovementType.RIGHT);
+                    curMovementType = MovementType.RIGHT;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.LEFT) return;
+                    SetAnimation(MovementType.LEFT);
+                    curMovementType = MovementType.LEFT;
+                }
+            } else
+            {
+                //Forward-Backward axis
+                if (movementInput.y > 0)
+                {
+                    if (curMovementType == MovementType.FORWARD) return;
+                    SetAnimation(MovementType.FORWARD);
+                    curMovementType = MovementType.FORWARD;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.BACKWARD) return;
+                    SetAnimation(MovementType.BACKWARD);
+                    curMovementType = MovementType.BACKWARD;
+                }
+            }
+        }
+
+        private void SetAnimation(MovementType direction)
+        {
+            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_R_Backwards", false);
+            anim.SetBool("Is_R_Right", false);
+            anim.SetBool("Is_R_Left", false);
+
+            switch (direction)
+            {
+                case MovementType.FORWARD:
+                    anim.SetBool("Is_R_Front", true);
+                    break;
+                case MovementType.BACKWARD:
+                    anim.SetBool("Is_R_Backwards", true);
+                    break;
+                case MovementType.RIGHT:
+                    anim.SetBool("Is_R_Right", true);
+                    break;
+                case MovementType.LEFT:
+                    anim.SetBool("Is_R_Left", true);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
@@ -136,7 +213,7 @@ namespace Player
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
 
-            if (currentCooldown < attackCooldown || !Input.GetKey(attackKey) || !GetClosestEnemy()) return;
+            if (currentCooldown < attackCooldown || !GetClosestEnemy()) return;
 
             SpawnProjectile(attackCooldown);
             gunRecharge.fillAmount = 0.0f;
@@ -148,6 +225,13 @@ namespace Player
         {
             closeEnemies.RemoveAll(item => item == null);
             targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+
+            if (closeEnemies.Count > 1)            
+            { 
+                if (closeEnemies[0].GetComponent<EnemyAI>().IsAboutToDie()) 
+                    targetedEnemy = closeEnemies[1];
+            }
+
             return targetedEnemy != null;
         }
 
@@ -164,7 +248,7 @@ namespace Player
         {
             //TODO: Add proper VFX/SFX
 
-            Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
             //AudioManager.instance.PlaySFX("Stun");
 
             StartCoroutine(StunCorroutine(seconds));

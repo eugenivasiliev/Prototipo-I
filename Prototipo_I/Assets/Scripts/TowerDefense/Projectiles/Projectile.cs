@@ -1,4 +1,5 @@
 using Combat;
+using Enemies;
 using UnityEngine;
 using Utils;
 
@@ -32,6 +33,10 @@ namespace TowerDefense
             xAxis.SetActive(true);
             yAxis.SetActive(true);
             zAxis.SetActive(true);
+
+
+            target.GetComponent<EnemyAI>().MightDie(damage);
+
         }
 
         void Update()
