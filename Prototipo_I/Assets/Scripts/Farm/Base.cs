@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Combat;
 using Enemies;
-using Items;
 using Objectives;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -21,12 +21,15 @@ namespace TowerDefense
 
         [SerializeField] private int seedsPerRound;
 
-        private UnityEvent<float> BaseProduction = new UnityEvent<float>();
+        private System.Action<float> BaseProduction;
+
+        [SerializeField] private EnemyManager enemyManager;
+
         private void Start()
         {
             health = MaxHealth;
             instance = this;
-            BaseProduction.AddListener(AddSeeds);
+            BaseProduction += AddSeeds;
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
@@ -35,7 +38,7 @@ namespace TowerDefense
             if (health <= 0.0f)
             {
 
-                EnemyManager.Instance.ReturnToSpawn(0.0f);
+                enemyManager.ReturnToSpawn();
                 health = MaxHealth;
             }
         }
@@ -48,6 +51,6 @@ namespace TowerDefense
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
-
+        public void OnDamage() { }
     }
 }

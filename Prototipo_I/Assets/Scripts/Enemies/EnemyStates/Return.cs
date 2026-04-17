@@ -8,8 +8,6 @@ namespace Enemies
         private Transform targetSpawn = null;
         public override void Behaviour()
         {
-            if (EnemyManager.Instance == null) return;
-
             if (targetSpawn != null)
             {
                 float distance = Vector3.Distance(enemy.transform.position, targetSpawn.position);
@@ -20,7 +18,7 @@ namespace Enemies
 
             float minDistance = Mathf.Infinity;
 
-            foreach (var spawn in EnemyManager.Instance.spawnZones)
+            foreach (var spawn in this.bb.spawnZones)
             {
                 float distance = Vector3.Distance(enemy.transform.position, spawn.transform.position);
 

@@ -11,8 +11,12 @@ namespace UI
     public class TowerMenu : MonoBehaviour
     {
         [SerializeField] private GameObject towerMenuPanel;
+        private GridLayoutGroup towerMenuGrid;
         [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
+
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private CameraControl cameraController;
 
         private bool isOpen = false;
         public bool IsOpen => isOpen;
@@ -21,29 +25,28 @@ namespace UI
 
         private float range;
 
-        [Header("UI Sprites")]
-        [SerializeField] private UISpritesDB uiSpritesDB;
-
         private void Awake()
         {
             towerMenuPanel.SetActive(false);
+            towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
             towerMenuIngredients.SetActive(false);
         }
 
         private void LoadValidTowers()
         {
-            foreach (Transform child in towerMenuPanel.transform) Destroy(child.gameObject);
+            foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
 
             foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
             {
                 if (Inventory.Inventory.Instance.HasSeeds(data.cost))
                 {
-                    GameObject instance = Instantiate(towerUI, towerMenuPanel.transform);
+                    GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
                     instance.GetComponent<Image>().sprite = data.uiSprite;
                     instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
                     instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
 
                     TurretButton turretButton = instance.GetComponent<TurretButton>();
+                    turretButton.descriptionUI = towerMenuIngredients;
                     turretButton.spotReference = spotReference;
                     turretButton.range = data.range;
                     turretButton.tm = this;
@@ -71,11 +74,21 @@ namespace UI
             Cursor.visible = isOpen;
             towerMenuPanel.SetActive(isOpen);
             Time.timeScale = (isOpen) ? 0f : 1f;
-            PlayerController.MovementLocked = isOpen;
+            playerController.MovementLocked = isOpen;
 
             EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
+
+            if (isOpen) {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.NearOffset;
+                cameraController.SavePosition();
+            } else
+            {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.savedPosition;
+            }
         }
 
         public void Exit()
