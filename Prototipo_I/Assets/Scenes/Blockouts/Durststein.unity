@@ -4807,6 +4807,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2339803595930680218, guid: 7cbe300f5fb3d4d4b95ef6b7f370e02a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.19318429
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339803595930680218, guid: 7cbe300f5fb3d4d4b95ef6b7f370e02a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.104396574
+      objectReference: {fileID: 0}
+    - target: {fileID: 2339803595930680218, guid: 7cbe300f5fb3d4d4b95ef6b7f370e02a, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.4339623
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35239,7 +35251,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
+  sharedProfile: {fileID: 11400000, guid: 084984d890508df4791d7d9eac02eb79, type: 2}
 --- !u!4 &816769664
 Transform:
   m_ObjectHideFlags: 0
@@ -35253,7 +35265,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1423668247}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -1.611, y: 2.75, z: 4.786}
 --- !u!1001 &822122879
 PrefabInstance:
@@ -56589,7 +56601,6 @@ Transform:
   - {fileID: 1762312412}
   - {fileID: 1518557843}
   - {fileID: 1012927237}
-  - {fileID: 816769664}
   - {fileID: 595184799}
   - {fileID: 433510522}
   m_Father: {fileID: 0}
@@ -97912,6 +97923,7 @@ SceneRoots:
   - {fileID: 893383468}
   - {fileID: 1172191725}
   - {fileID: 1220777689}
+  - {fileID: 816769664}
   - {fileID: 1423668247}
   - {fileID: 445088306}
   - {fileID: 1385398584}
