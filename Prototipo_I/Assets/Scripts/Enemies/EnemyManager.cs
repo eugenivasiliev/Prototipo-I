@@ -10,6 +10,7 @@ namespace Enemies
 {
     public class EnemyManager : MonoBehaviour
     {
+        [SerializeField] private Minimap minimap;
         [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
@@ -83,6 +84,8 @@ namespace Enemies
                 enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
                 enemy.BB = enemyBB;
+
+                minimap.AddEnemy(enemy.gameObject);
             }
         }
 
