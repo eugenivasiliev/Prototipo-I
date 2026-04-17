@@ -753,6 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 0000000001000000020000000300000004000000
 --- !u!1 &70504427
 GameObject:
@@ -1178,6 +1179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 
 --- !u!1 &99233175
 GameObject:
@@ -12547,6 +12549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 
 --- !u!1 &947836338
 GameObject:
@@ -24002,6 +24005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 
 --- !u!1 &1679273026
 GameObject:
@@ -31891,8 +31895,12 @@ MonoBehaviour:
   nearOffset: {x: 1.65, y: 7.436606, z: -19.11}
   farOffset: {x: 0, y: 25, z: -30}
   currentOffset: {x: 0, y: 0, z: 0}
+  savedPosition: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   lookInput: {x: 0, y: 0}
+  forcedTweenMovement: 0
+  targetTweenPosition: {x: 0, y: 0, z: 0}
+  forcedTweenTolerance: 0
   cameraSensibility: 1
   scrollSensibility: 0.33
 --- !u!1 &7386262895299483862
