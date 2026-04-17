@@ -14,6 +14,7 @@ namespace Enemies
 
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
+        public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -31,6 +32,7 @@ namespace Enemies
         private UnityEvent<float> Return = new UnityEvent<float>();
 
         [SerializeField] private EnemyAI.Blackboard bb;
+
         void Start()
         {
             allPlots.Clear();
@@ -41,6 +43,9 @@ namespace Enemies
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+
+            foreach (SpawnZone zone in spawnZones)
+                zone.ShowIndicator(currentPhaseIndex);
         }
 
         private bool AreEnemiesRemaining()
@@ -61,6 +66,9 @@ namespace Enemies
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
+
+            foreach(SpawnZone zone in spawnZones)
+                zone.ShowIndicator(currentPhaseIndex);
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
@@ -97,7 +105,11 @@ namespace Enemies
             enemiesToSpawn = waveDB.nextWave;
 
             foreach (SpawnZone zone in spawnZones)
-                if (zone.ValidPhases.Contains(currentPhaseIndex)) StartCoroutine(SpawnEnemyDelay(zone));
+                if (zone.ValidPhases.Contains(currentPhaseIndex))
+                {
+                    zone.HideIndicator();
+                    StartCoroutine(SpawnEnemyDelay(zone));
+                }
         }
 
         private IEnumerator SpawnEnemyDelay(SpawnZone zone)
