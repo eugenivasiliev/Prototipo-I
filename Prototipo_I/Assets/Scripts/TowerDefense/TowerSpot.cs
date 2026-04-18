@@ -15,6 +15,10 @@ namespace TowerDefense
         [SerializeField] private GameObject currentTower;
         
         [SerializeField] private GameObject contextButton;
+        
+        [SerializeField] private GameObject beam;
+
+        [SerializeField] private GameObject particles;
 
         public bool hasTower { get { return towerData != null; } }
 
@@ -59,6 +63,8 @@ namespace TowerDefense
         
             Destroy(contextButton);
             Destroy(range);
+            Destroy(beam);
+            Destroy(particles);
         }
 
         private void OnTowerUpgraded(int level)
