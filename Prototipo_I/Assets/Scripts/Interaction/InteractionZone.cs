@@ -6,7 +6,7 @@ namespace Utils
 {
     public class InteractionZone : MonoBehaviour
     {
-        [SerializeField] GameObject playerGameObject;
+        [SerializeField] private PlayerController playerController;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -22,7 +22,7 @@ namespace Utils
 
         void Start()
         {
-            this.GetComponent<SphereCollider>().radius = playerGameObject.GetComponent<PlayerController>().InteractionRange;
+            this.GetComponent<SphereCollider>().radius = playerController.InteractionRange;
         }
     }
 }

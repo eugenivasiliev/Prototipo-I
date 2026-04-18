@@ -7,11 +7,18 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class TowerSpot : MonoBehaviour, IInteractable
+    public class TowerSpot : MonoBehaviour, IInteractable, IContexted
     {
-        TowerData towerData;
 
-        private GameObject currentTower;
+        [SerializeField] private TowerData towerData;
+
+        [SerializeField] private GameObject currentTower;
+        
+        [SerializeField] private GameObject contextButton;
+        
+        [SerializeField] private GameObject beam;
+
+        [SerializeField] private GameObject particles;
 
         public bool hasTower { get { return towerData != null; } }
 
@@ -19,11 +26,11 @@ namespace TowerDefense
 
         [SerializeField] private TowerMenu tm;
 
+        [SerializeField] private TowerData.TowerType towerType;
+        public TowerData.TowerType TowerType { get { return towerType; } }
 
         private void Start()
         {
-            //(this as IInteractable).Bind();
-
             if (this.transform.GetChild(0) != null)
                 range = this.transform.GetChild(0).gameObject;
         }
@@ -39,11 +46,6 @@ namespace TowerDefense
 
         public void PlaceTower(TowerData data)
         {
-            //foreach (var ingredient in data.ingredients)
-            //{
-            //    Inventory.Inventory.Instance.RemoveItem(ingredient.itemName, ingredient.amount, out int amountDone);
-            //}
-
             Inventory.Inventory.Instance.RemoveSeeds(data.cost);
 
             AudioManager.Instance.PlaySFX("Plant");
@@ -52,10 +54,17 @@ namespace TowerDefense
             towerData = data;
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-            float r = currentTower.GetComponent<DefaultTower>().GetRange();
-            SetRange(r);
-
+            if (currentTower.GetComponent<Tower>())
+            {
+                float r = currentTower.GetComponent<Tower>().GetRange();
+                SetRange(r);
+            }
             tm.ToggleMenu();
+        
+            Destroy(contextButton);
+            Destroy(range);
+            Destroy(beam);
+            Destroy(particles);
         }
 
         private void OnTowerUpgraded(int level)
@@ -69,28 +78,30 @@ namespace TowerDefense
         }
 
         public List<IInteractable.KeyBinding> keyBindings => new List<IInteractable.KeyBinding>{
-    new IInteractable.KeyBinding("place_tower", InputActionChange.ActionCanceled, Action_PlaceTower)
-    };
+            new IInteractable.KeyBinding("place_tower", InputActionChange.ActionCanceled, Action_PlaceTower)
+        };
 
         private void Action_PlaceTower(InputAction.CallbackContext context)
         {
+            if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
         }
 
         public void SetRange(float dist)
         {
-            range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+            range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
         }
 
         public void ShowRange(bool bo)
         {
+            if (range)
             range.SetActive(bo);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player") ShowRange(true);
+            //if (other.tag == "Player") ShowRange(true);
         }
         private void OnTriggerExit(Collider other)
         {
@@ -98,5 +109,7 @@ namespace TowerDefense
         }
 
         public void OnInteract() { }
+
+        public bool ContextKeyActive() => !hasTower;
     }
 }
