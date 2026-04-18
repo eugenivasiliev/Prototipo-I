@@ -159,6 +159,8 @@ MonoBehaviour:
   towerData: {fileID: 0}
   currentTower: {fileID: 0}
   contextButton: {fileID: 3520432097105297508}
+  beam: {fileID: 758568279120501291}
+  particles: {fileID: 3986328232490509210}
   tm: {fileID: 0}
   towerType: 1
 --- !u!135 &2887985810413218453
@@ -539,6 +541,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 86e065cc0275ff548a3a2ea30f4c49ec, type: 3}
   m_PrefabInstance: {fileID: 452488639978825594}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &758568279120501291 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 86e065cc0275ff548a3a2ea30f4c49ec, type: 3}
+  m_PrefabInstance: {fileID: 452488639978825594}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &974516443581190633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -604,6 +611,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
+--- !u!1 &3986328232490509210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4239125174371889779, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
+  m_PrefabInstance: {fileID: 974516443581190633}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8637463487376813280 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8815869721010208009, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
