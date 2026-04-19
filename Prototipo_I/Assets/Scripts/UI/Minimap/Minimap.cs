@@ -9,11 +9,13 @@ public class Minimap : MonoBehaviour
     {
         public Transform reference;
         public RectTransform icon;
+        public bool rotating;
 
-        public MinimapIcon(Transform reference, RectTransform icon)
+        public MinimapIcon(Transform reference, RectTransform icon, bool rotating)
         {
             this.reference = reference;
             this.icon = icon;
+            this.rotating = rotating;
         }
     }
 
@@ -57,7 +59,7 @@ public class Minimap : MonoBehaviour
 
     public void AddEnemy(GameObject enemy)
     {
-        enemies.Add(new MinimapIcon(enemy.transform, Instantiate(enemyIconPrefab, minimapPanel).GetComponent<RectTransform>()));
+        enemies.Add(new MinimapIcon(enemy.transform, Instantiate(enemyIconPrefab, minimapPanel).GetComponent<RectTransform>(), true));
     }
     private void PlaceInMap(MinimapIcon icon)
     {
@@ -66,6 +68,8 @@ public class Minimap : MonoBehaviour
         icon.icon.gameObject.SetActive(
             !(icon.icon.anchorMin.x < 0 || icon.icon.anchorMin.x > 1 ||
             icon.icon.anchorMin.y < 0 || icon.icon.anchorMin.y > 1));
+        if(icon.rotating)
+            icon.icon.eulerAngles = Vector3.zero + icon.reference.eulerAngles.y * Vector3.forward;
     }
     private Vector2 WorldToNormalMapPoint(Vector3 worldPoint)
     {
