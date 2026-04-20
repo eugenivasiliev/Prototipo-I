@@ -9,6 +9,7 @@ public class EnemyDeadChecker : MonoBehaviour
         if (enemies[0] == null && enemies[1] == null)
         {
             seedsMessage.SetActive(true);
+            Destroy(gameObject);
         }
     }
 }
