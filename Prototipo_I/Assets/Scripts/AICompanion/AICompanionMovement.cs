@@ -1,30 +1,35 @@
 using UnityEngine;
+using Utils;
 
 namespace AICompanion
 {
-    public class AICompanionMovement : MonoBehaviour
+    public class AICompanionMovement : TweenMovement
     {
-        [SerializeField] private Transform playerTransform;
-        [SerializeField] private AnimationCurve verticalMovement;
-        [SerializeField, Range(0, 5)] private float radius;
-        [SerializeField] private float circlingSpeed;
-        [SerializeField] private float soaringSpeed;
+        [SerializeField, Range(0, 5)] private float soaringAmplitude;
+        [SerializeField, Range(0, 5)] private float separation;
+        [SerializeField, Range(0, 5)] private float forwardMovement;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        override protected void Start()
         {
-
+            yAxis.SetActive(true);
+            zAxis.SetActive(true);
         }
 
-        // Update is called once per frame
         void Update()
         {
-            this.transform.position = playerTransform.position +
-                Vector3.forward * radius * Mathf.Sin(Time.time * circlingSpeed) +
-                Vector3.up * verticalMovement.Evaluate(Time.time * soaringSpeed) +
-                Vector3.right * radius * Mathf.Cos(Time.time * circlingSpeed);
+            TweenUtil.Update(Time.deltaTime, ref yAxis);
+            TweenUtil.Update(Time.deltaTime, ref zAxis);
 
-            this.transform.LookAt(this.transform.position + playerTransform.forward);
+            this.transform.localPosition = 
+                -Vector3.right * separation +
+                Vector3.up * soaringAmplitude * yAxis.value +
+                Vector3.forward * forwardMovement * zAxis.value;
+
+            if (yAxis.value == yAxis.duration)
+                yAxis.Reverse();
+
+            if (zAxis.value == zAxis.duration)
+                zAxis.Reverse();
         }
     }
 }

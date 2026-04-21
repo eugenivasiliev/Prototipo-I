@@ -132,7 +132,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -141,7 +141,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -159,7 +159,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -300,7 +300,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Countdown"",
+                    ""name"": ""wave_menu"",
                     ""type"": ""Button"",
                     ""id"": ""c2644a79-e306-4545-a0d9-449776ac5d0c"",
                     ""expectedControlType"": """",
@@ -348,6 +348,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""debug"",
                     ""type"": ""Button"",
                     ""id"": ""bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Show_Wave_UI"",
+                    ""type"": ""Button"",
+                    ""id"": ""cead5d57-2115-4840-8096-251d879438d8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""close_menu"",
+                    ""type"": ""Button"",
+                    ""id"": ""38bde4e0-3882-4284-a028-4b8d2b813e39"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -493,7 +511,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
+                    ""groups"": "";Joystick"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -709,17 +727,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b3f66d0b-7751-423f-908b-a11c5bd95930"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4f4649ac-64a8-4a73-af11-b3faef356a4d"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -764,11 +771,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""5a0e006f-e8ca-4859-99dc-f7bd89a0122c"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""plant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""a4731b09-5902-44b9-a319-794abba7beb3"",
                     ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""fertilize"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""83a2e962-a8d6-41fc-8d85-e8c34cc3c5d2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""fertilize"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -896,19 +925,52 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""9000ceab-1205-47aa-8437-09c2add459f7"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f5372c13-3e24-4a8a-9bba-9e22ae1549a7"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Countdown"",
+                    ""action"": ""wave_menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1d04c356-ab6f-466c-aad1-ca8da540a805"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""wave_menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""969aaa81-0a53-4e12-8427-0fe366a85534"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""place_tower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7327f61-202f-418c-86e9-05bc5fdc5c61"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -919,10 +981,21 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8312d9d4-ee92-4d79-b316-4c4e5cf157f5"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""refill_tower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""edd49023-b47c-4ed2-9caf-85e098d6fe13"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""refill_tower"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -934,6 +1007,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
+                    ""action"": ""objectives_toggle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""085ddf51-f7d2-444c-81b7-e65ea8d855d7"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""objectives_toggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -957,6 +1041,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""debug"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b984788f-dad0-4eb8-9433-bc9bc9a91bfc"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Show_Wave_UI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""886dc889-ed0b-4d9a-8b32-afb94a456e24"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""close_menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d619bb9c-1587-433a-a131-8a861076c207"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""close_menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1567,12 +1684,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Alpha7 = m_Player.FindAction("Alpha7", throwIfNotFound: true);
         m_Player_Alpha8 = m_Player.FindAction("Alpha8", throwIfNotFound: true);
         m_Player_pause = m_Player.FindAction("pause", throwIfNotFound: true);
-        m_Player_Countdown = m_Player.FindAction("Countdown", throwIfNotFound: true);
+        m_Player_wave_menu = m_Player.FindAction("wave_menu", throwIfNotFound: true);
         m_Player_place_tower = m_Player.FindAction("place_tower", throwIfNotFound: true);
         m_Player_refill_tower = m_Player.FindAction("refill_tower", throwIfNotFound: true);
         m_Player_objectives_toggle = m_Player.FindAction("objectives_toggle", throwIfNotFound: true);
         m_Player_camera_zoom = m_Player.FindAction("camera_zoom", throwIfNotFound: true);
         m_Player_debug = m_Player.FindAction("debug", throwIfNotFound: true);
+        m_Player_Show_Wave_UI = m_Player.FindAction("Show_Wave_UI", throwIfNotFound: true);
+        m_Player_close_menu = m_Player.FindAction("close_menu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1689,12 +1808,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Alpha7;
     private readonly InputAction m_Player_Alpha8;
     private readonly InputAction m_Player_pause;
-    private readonly InputAction m_Player_Countdown;
+    private readonly InputAction m_Player_wave_menu;
     private readonly InputAction m_Player_place_tower;
     private readonly InputAction m_Player_refill_tower;
     private readonly InputAction m_Player_objectives_toggle;
     private readonly InputAction m_Player_camera_zoom;
     private readonly InputAction m_Player_debug;
+    private readonly InputAction m_Player_Show_Wave_UI;
+    private readonly InputAction m_Player_close_menu;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1799,9 +1920,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @pause => m_Wrapper.m_Player_pause;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Countdown".
+        /// Provides access to the underlying input action "Player/wave_menu".
         /// </summary>
-        public InputAction @Countdown => m_Wrapper.m_Player_Countdown;
+        public InputAction @wave_menu => m_Wrapper.m_Player_wave_menu;
         /// <summary>
         /// Provides access to the underlying input action "Player/place_tower".
         /// </summary>
@@ -1822,6 +1943,14 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/debug".
         /// </summary>
         public InputAction @debug => m_Wrapper.m_Player_debug;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Show_Wave_UI".
+        /// </summary>
+        public InputAction @Show_Wave_UI => m_Wrapper.m_Player_Show_Wave_UI;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/close_menu".
+        /// </summary>
+        public InputAction @close_menu => m_Wrapper.m_Player_close_menu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1917,9 +2046,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started += instance.OnPause;
             @pause.performed += instance.OnPause;
             @pause.canceled += instance.OnPause;
-            @Countdown.started += instance.OnCountdown;
-            @Countdown.performed += instance.OnCountdown;
-            @Countdown.canceled += instance.OnCountdown;
+            @wave_menu.started += instance.OnWave_menu;
+            @wave_menu.performed += instance.OnWave_menu;
+            @wave_menu.canceled += instance.OnWave_menu;
             @place_tower.started += instance.OnPlace_tower;
             @place_tower.performed += instance.OnPlace_tower;
             @place_tower.canceled += instance.OnPlace_tower;
@@ -1935,6 +2064,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @debug.started += instance.OnDebug;
             @debug.performed += instance.OnDebug;
             @debug.canceled += instance.OnDebug;
+            @Show_Wave_UI.started += instance.OnShow_Wave_UI;
+            @Show_Wave_UI.performed += instance.OnShow_Wave_UI;
+            @Show_Wave_UI.canceled += instance.OnShow_Wave_UI;
+            @close_menu.started += instance.OnClose_menu;
+            @close_menu.performed += instance.OnClose_menu;
+            @close_menu.canceled += instance.OnClose_menu;
         }
 
         /// <summary>
@@ -2015,9 +2150,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @pause.started -= instance.OnPause;
             @pause.performed -= instance.OnPause;
             @pause.canceled -= instance.OnPause;
-            @Countdown.started -= instance.OnCountdown;
-            @Countdown.performed -= instance.OnCountdown;
-            @Countdown.canceled -= instance.OnCountdown;
+            @wave_menu.started -= instance.OnWave_menu;
+            @wave_menu.performed -= instance.OnWave_menu;
+            @wave_menu.canceled -= instance.OnWave_menu;
             @place_tower.started -= instance.OnPlace_tower;
             @place_tower.performed -= instance.OnPlace_tower;
             @place_tower.canceled -= instance.OnPlace_tower;
@@ -2033,6 +2168,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @debug.started -= instance.OnDebug;
             @debug.performed -= instance.OnDebug;
             @debug.canceled -= instance.OnDebug;
+            @Show_Wave_UI.started -= instance.OnShow_Wave_UI;
+            @Show_Wave_UI.performed -= instance.OnShow_Wave_UI;
+            @Show_Wave_UI.canceled -= instance.OnShow_Wave_UI;
+            @close_menu.started -= instance.OnClose_menu;
+            @close_menu.performed -= instance.OnClose_menu;
+            @close_menu.canceled -= instance.OnClose_menu;
         }
 
         /// <summary>
@@ -2495,12 +2636,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Countdown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "wave_menu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCountdown(InputAction.CallbackContext context);
+        void OnWave_menu(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "place_tower" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2536,6 +2677,20 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDebug(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Show_Wave_UI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShow_Wave_UI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "close_menu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClose_menu(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
