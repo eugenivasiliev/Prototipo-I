@@ -27,21 +27,37 @@ public class Minimap : MonoBehaviour
 
     [SerializeField] private Transform minimapPanel;
 
+    //[SerializeField] private MinimapIcon background;
     [SerializeField] private MinimapIcon player;
     [SerializeField] private MinimapIcon house;
 
     [SerializeField] private List<MinimapIcon> enemies;
     [SerializeField] private GameObject enemyIconPrefab;
 
+    [SerializeField] private List<MinimapIcon> attackPlots;
+    [SerializeField] private GameObject attackPlotsPrefab;
+    [SerializeField] private List<MinimapIcon> defensePlots;
+    [SerializeField] private GameObject defensePlotsPrefab;
+    [SerializeField] private List<MinimapIcon> utilityPlots;
+    [SerializeField] private GameObject utilityPlotsPrefab;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        for (int i = 0; i < attackPlots.Count; i++)
+            attackPlots[i] = new MinimapIcon(attackPlots[i].reference, Instantiate(attackPlotsPrefab, minimapPanel).GetComponent<RectTransform>(), false);
+
+        for (int i = 0; i < defensePlots.Count; i++)
+            defensePlots[i] = new MinimapIcon(defensePlots[i].reference, Instantiate(defensePlotsPrefab, minimapPanel).GetComponent<RectTransform>(), false);
+
+        for (int i = 0; i < utilityPlots.Count; i++)
+            utilityPlots[i] = new MinimapIcon(utilityPlots[i].reference, Instantiate(utilityPlotsPrefab, minimapPanel).GetComponent<RectTransform>(), false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        //PlaceInMap(background);
         PlaceInMap(player);
         PlaceInMap(house);
         for (int i = 0; i < enemies.Count; i++)
@@ -55,6 +71,15 @@ public class Minimap : MonoBehaviour
             if(i < enemies.Count)
                 PlaceInMap(enemies[i]);
         }
+
+        for (int i = 0; i < attackPlots.Count; i++)
+            PlaceInMap(attackPlots[i]);
+
+        for (int i = 0; i < defensePlots.Count; i++)
+            PlaceInMap(defensePlots[i]);
+
+        for (int i = 0; i < utilityPlots.Count; i++)
+            PlaceInMap(utilityPlots[i]);
     }
 
     public void AddEnemy(GameObject enemy)
