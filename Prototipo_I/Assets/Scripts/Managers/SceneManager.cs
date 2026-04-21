@@ -15,6 +15,10 @@ namespace Utils
             AudioManager.Instance.StopMusic();
             UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
         }
+        
+        public static string GetSceneName() {
+            return UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        }
 
 
         public static void LoadScene(int buildIndex) =>
