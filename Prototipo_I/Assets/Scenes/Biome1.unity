@@ -496,6 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 0100000002000000
 --- !u!4 &56692765
 Transform:
@@ -5270,12 +5271,17 @@ MonoBehaviour:
     isActive: 0
     isReversing: 0
     isLooping: 0
+  cone: {fileID: 0}
   player: {fileID: 1782495480}
   nearOffset: {x: 1.6500002, y: 7.4366064, z: -19.109999}
   farOffset: {x: 0, y: 25, z: -30}
   currentOffset: {x: 0, y: 0, z: 0}
+  savedPosition: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0, w: 0}
   lookInput: {x: 0, y: 0}
+  forcedTweenMovement: 0
+  targetTweenPosition: {x: 0, y: 0, z: 0}
+  forcedTweenTolerance: 0
   cameraSensibility: 0.3
   scrollSensibility: 0.2
 --- !u!114 &106731228
@@ -27104,6 +27110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 00000000
 --- !u!1 &738011896
 GameObject:
@@ -37047,6 +37054,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5436639368148429403, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
+      propertyPath: nextScene
+      value: MainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 6046389363343201417, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
       propertyPath: m_Name
       value: YouWin
@@ -39331,6 +39342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 02000000
 --- !u!43 &1506527578
 Mesh:
@@ -39710,6 +39722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minimap: {fileID: 0}
   waveDB: {fileID: 11400000, guid: 007cb44a112c7d649bcf5b10c114f848, type: 2}
   currentBiomeIndex: 0
   currentPhaseIndex: 0
@@ -65622,6 +65635,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
   attackKey: 323
   attackCooldown: 0.6
+  attackAngle: 30
   speed: 30
   gravity: 35
   anim: {fileID: 2110943589}
@@ -65817,6 +65831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc8a8eed70e1d344adb8555fdaf6ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeZoneIndicatorInstance: {fileID: 0}
   validPhases: 01000000
 --- !u!4 &1866027493 stripped
 Transform:
@@ -66215,6 +66230,10 @@ PrefabInstance:
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: InitialModule.gravitySource
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: ExternalForcesModule.enabled
