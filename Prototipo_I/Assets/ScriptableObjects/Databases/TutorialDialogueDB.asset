@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a98a5c3d57d6b499ae5e4c386c2c8f, type: 3}
+  m_Name: TutorialDialogueDB
+  m_EditorClassIdentifier: 
+  dialogueList:
+  - id: ouch
+    text: Great, you are here. The simulation will read your movements, try walking.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: glad
+    text: Everything seems good
+    hasTriggered: 0
+    lifeTime: 5
+  - id: enemy
+    text: Look, critters. Dumb things for sure. Get close to get rid of them!
+    hasTriggered: 0
+    lifeTime: 5
+  - id: seeds
+    text: Yo! SEEDS! Gab 'em while they are still fresh! We'll use them later.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: base
+    text: Do you see that? Pretend it's a base. Be sure to protect it. For now just
+      sow the four plots for seed production.
+    hasTriggered: 0
+    lifeTime: 8
+  - id: wait
+    text: Damn, waiting is boring. Pres the console button to start the wave now.
+    hasTriggered: 0
+    lifeTime: 5
+  - id: turret
+    text: Those things were not messing around. Plant a turret to ensure we don't
+      get overrun.
+    hasTriggered: 0
+    lifeTime: 8
+  - id: vine
+    text: Things are looking good, but plant a vine in the way to slow those things.
+    hasTriggered: 0
+    lifeTime: 8
+  - id: bomber
+    text: Oh no, here comes a big one... Get all your seeds and blast 'em!
+    hasTriggered: 0
+    lifeTime: 8
