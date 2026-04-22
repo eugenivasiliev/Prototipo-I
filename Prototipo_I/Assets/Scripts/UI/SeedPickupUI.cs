@@ -21,6 +21,7 @@ public class SeedPickupUI : Singleton<SeedPickupUI>
     
     [SerializeField] private LinkedList<SeedPickupPopup> seedPickups = new LinkedList<SeedPickupPopup>();
     [SerializeField, Range(1, 10)] private int maxSeedPopups = 3;
+    [SerializeField, Range(0, 5)] private float seedPopupLifetime;
     [SerializeField] private GameObject seedPopupPrefab;
     [SerializeField] private VerticalLayoutGroup layoutGroup;
 
@@ -37,10 +38,16 @@ public class SeedPickupUI : Singleton<SeedPickupUI>
         while (node != null)
         {
             node.Value = new SeedPickupPopup(node.Value.lifeTime - Time.deltaTime, node.Value.ui);
+            node.Value.ui.GetComponentInChildren<Image>().color = new Color(
+                node.Value.ui.GetComponentInChildren<Image>().color.r,
+                node.Value.ui.GetComponentInChildren<Image>().color.g,
+                node.Value.ui.GetComponentInChildren<Image>().color.b,
+                node.Value.lifeTime / seedPopupLifetime
+                );
             if(node.Value.lifeTime <= 0)
             {
                 Destroy(node.Value.ui);
-                seedPickups.Remove();
+                seedPickups.Remove(node);
             }
             node = node.Next;
         }
@@ -55,7 +62,7 @@ public class SeedPickupUI : Singleton<SeedPickupUI>
             seedPickups.RemoveFirst();
         }
 
-
+        seedPickups.AddLast(new SeedPickupPopup(seedPopupLifetime, Instantiate(seedPopupPrefab, layoutGroup.transform)));
 
     }
 }

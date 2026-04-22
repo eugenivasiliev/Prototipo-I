@@ -9,6 +9,7 @@ namespace Enemies
             if (other.tag == "Player")
             {
                 Inventory.Inventory.Instance.AddSeeds(1);
+                SeedPickupUI.Instance.SeedPickedUp();
                 Destroy(this.gameObject);
             }
         }
