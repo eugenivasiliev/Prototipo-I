@@ -4,6 +4,7 @@ using UI;
 public class InputActivator : MonoBehaviour
 {
     [SerializeField] private WaveUI waveUI;
+    [SerializeField] private GameObject contextKey;
 
 
     private void OnTriggerEnter(Collider other)
@@ -12,6 +13,7 @@ public class InputActivator : MonoBehaviour
         {
             InputSystem.actions.FindAction("wave_menu").started += ctx => { waveUI.ToggleWaveUI(); };
             InputSystem.actions.FindAction("close_menu").started += ctx => { if (waveUI.IsOpen()) waveUI.ToggleWaveUI(); };
+            contextKey.SetActive(true);
         }
     }
 }
