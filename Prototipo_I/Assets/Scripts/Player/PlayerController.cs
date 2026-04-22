@@ -1,259 +1,269 @@
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
+using Combat;
+using Enemies;
+using TowerDefense;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Windows;
+using UnityEngine.UI;
+using Utils;
 
-public class PlayerController : MonoBehaviour
+namespace Player
 {
-    private bool isReset = false;
-    private float currentTimeForNextDay = 0.0f;
-    private float maxTimeForNextDay = 2.0f;
-    private static PlayerController instance;
-    public static PlayerController Instance { get { return instance; } }
-
-    [SerializeField] private GameObject projectilePrefab;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float sprintSpeed = 7.5f;
-    [SerializeField] private float cameraSensibility = 7.5f;
-    [SerializeField] private float gravity = 9.80665f;
-    [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private Transform modelTransform;
-    [SerializeField] public short InteractionRange { get { return 3; } }
-
-    private CharacterController characterController;
-    private static InputSystem_Actions inputs;
-    public static InputSystem_Actions Inputs { get { return inputs; } }
-
-    private Vector2 movementInput;
-    private Vector2 cameraInput;
-    private Vector3 velocity;
-    private Vector3 horizontalMovement;
-
-    private float Rotation;
-    private bool isSprinting;
-    private bool isJumping;
-
-    private RaycastHit hit;
-
-    private IInteractable interactable;
-
-    private List<GameObject> closeEnemies = new List<GameObject>();
-    private GameObject targetedEnemy;
-    int damage = 1;
-    bool attacking = false;
-
-    [SerializeField] private int money;
-    public int Money { get => money; set => money = value; }
-
-    private static bool movementLocked = false;
-    public static bool MovementLocked { get => movementLocked; set => movementLocked = value; }
-
-    private bool waveMenuTouched = false;
-
-    private void Awake()
+    public class PlayerController : MonoBehaviour
     {
-        if(instance != null)
+        [Header("Attack")]
+        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private KeyCode attackKey;
+        [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+        [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
+        private float currentCooldown = 0.0f;
+
+        [Header("Movement")]
+        [SerializeField] private float speed = 35f;        
+        [SerializeField] private float gravity = 9.80665f;
+        [SerializeField] private Animator anim;
+
+        [Header("Transforms")]
+        [SerializeField] private Transform modelTransform;
+        [SerializeField] public short InteractionRange { get { return 3; } }
+
+        [Header("VFX")]
+        [SerializeField] private GameObject stunParticles;
+
+        private CharacterController characterController;
+        private InputSystem_Actions inputs;
+        public InputSystem_Actions Inputs { get { return inputs; } }
+
+        private Vector2 movementInput;
+        private Vector3 velocity;
+        private Vector3 horizontalMovement;
+        private MovementType curMovementType = MovementType.IDLE;
+
+        private bool isSprinting;
+
+        private List<GameObject> closeEnemies = new List<GameObject>();
+        private GameObject targetedEnemy;
+        int damage = 1;
+        bool attacking = false;
+
+        private bool movementLocked = false;
+        public bool MovementLocked { get => movementLocked; set => movementLocked = value; }
+
+        [SerializeField] private Image gunRecharge;
+
+        private void Awake()
         {
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
-        characterController = GetComponent<CharacterController>();
-        if(inputs == null) inputs = new InputSystem_Actions();
-    }
-
-    private void Start()
-    {
-        inputs.Player.Enable();
-        inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
-        inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-        inputs.Player.Look.performed += ctx => cameraInput = ctx.ReadValue<Vector2>();
-        inputs.Player.Look.canceled += ctx => cameraInput = Vector2.zero;
-        inputs.Player.Sprint.performed += ctx => isSprinting = true;
-        inputs.Player.Sprint.canceled += ctx => isSprinting = false;
-        inputs.Player.Interact.canceled += ctx => Interact();
-        inputs.Player.Jump.performed += ctx => isJumping = true;
-
-        inputs.Player.Countdown.performed += ctx => OpenWaveMenu();
-        //inputs.Player.Countdown.performed += ctx => StartCoroutine(NextDayCountdown());
-        //inputs.Player.Countdown.canceled += ctx => ResetDayCountdown();
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    private void OnDisable()
-    {
-        inputs.Player.Disable();
-    }
-
-    void Update()
-    {
-        Look();
-        Movement();
-    }
-
-    private void Movement()
-    {
-        if(movementLocked) return;
-
-        Vector3 cameraForwardProjected = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z);
-        Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
-
-        Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
-        float currentSpeed = isSprinting ? sprintSpeed : speed;
-
-        if (characterController.isGrounded)
-            horizontalMovement = movement * currentSpeed;
-
-        if (characterController.isGrounded && velocity.y < 0)
-            velocity.y = -2;
-
-        if(isJumping && characterController.isGrounded)
-        {
-            AudioManager.instance.PlaySFX("Jumping");
-            velocity.y = Mathf.Sqrt(2f * jumpHeight * gravity);
-            Debug.Log(velocity.y);
-            isJumping = false;
+            characterController = GetComponent<CharacterController>();
+            if (inputs == null) inputs = new InputSystem_Actions();
         }
 
-        velocity.y -= gravity * Time.deltaTime;
-
-        Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
-        characterController.Move(totalMovement * Time.deltaTime);
-
-        if(horizontalMovement.sqrMagnitude > 0.01f)
+        private void Start()
         {
-            modelTransform.LookAt(transform.position + cameraForwardProjected);
+            inputs.Player.Enable();
+            inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
+            inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
+            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
+            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
-        if (!isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-            AudioManager.instance.PlaySFXLoop("Walking");
-        else
-            AudioManager.instance.StopLoop("Walking");
-
-        if (isSprinting && movementInput.sqrMagnitude > 0.01f && characterController.isGrounded)
-            AudioManager.instance.PlaySFXLoop("Running");
-        else
-            AudioManager.instance.StopLoop("Running");
-    }
-    private void Look()
-    {
-        if(movementLocked) return;
-
-        float mouseX = cameraInput.x* cameraSensibility;
-        Vector3 offset = cameraTransform.position - transform.position;
-        Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-        cameraTransform.transform.position = transform.position + q * offset;
-
-        cameraTransform.LookAt(transform.position, Vector3.up);
-    }
-
-    private void Interact()
-    {
-        Vector3 fwr = Camera.main.transform.forward;
-        if (Physics.Raycast(transform.position, fwr, out hit, InteractionRange))
+        private void OnDisable()
         {
-            Debug.Log("Yeah! I did it");
-            interactable = hit.collider.GetComponent<IInteractable>();
-            if( interactable != null ) interactable.OnInteract();
+            inputs.Player.Disable();
         }
-    }
 
-    void OpenWaveMenu() {
-
-        if (waveMenuTouched)
-            WaveManager.Instance.ToggleWaveUI();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Finish"))
+        void Update()
         {
+            Movement();
+            AttackLoop();
+        }
+
+        private void Movement()
+        {
+            if (movementLocked) return;
+
+            Transform cameraTransform = Camera.main.transform;
+            Vector3 cameraForwardProjected = new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
+            Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
+
+            Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
+            float currentSpeed = speed;
+
+            if (characterController.isGrounded)
+                horizontalMovement = movement * currentSpeed;
+
+            if (characterController.isGrounded && velocity.y < 0)
+                velocity.y = -2;
+
+            velocity.y -= gravity * Time.deltaTime;
+
+            Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
+            characterController.Move(totalMovement * Time.deltaTime);
+
+            if(movement.sqrMagnitude > 0)
+                modelTransform.LookAt(modelTransform.position + movement);
+
+            Animate(movementInput);
+        }
+
+        public enum MovementType
+        {
+            FORWARD,
+            BACKWARD,
+            RIGHT,
+            LEFT,
+            IDLE
+        }
+
+        private void Animate(Vector2 movementInput)
+        {
+            if(movementInput.magnitude == 0)
+            {
+                if (curMovementType == MovementType.IDLE) return;
+                SetAnimation(MovementType.IDLE);
+                curMovementType = MovementType.IDLE;
+                AudioManager.Instance.StopLoop("Running");
+                return;
+            }
+
+            AudioManager.Instance.PlaySFXLoop("Running");
+
+            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
+            {
+                //Right-Left axis
+                if (movementInput.x > 0)
+                {
+                    if (curMovementType == MovementType.RIGHT) return;
+                    SetAnimation(MovementType.RIGHT);
+                    curMovementType = MovementType.RIGHT;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.LEFT) return;
+                    SetAnimation(MovementType.LEFT);
+                    curMovementType = MovementType.LEFT;
+                }
+            } else
+            {
+                //Forward-Backward axis
+                if (movementInput.y > 0)
+                {
+                    if (curMovementType == MovementType.FORWARD) return;
+                    SetAnimation(MovementType.FORWARD);
+                    curMovementType = MovementType.FORWARD;
+                }
+                else
+                {
+                    if (curMovementType == MovementType.BACKWARD) return;
+                    SetAnimation(MovementType.BACKWARD);
+                    curMovementType = MovementType.BACKWARD;
+                }
+            }
+        }
+
+        private void SetAnimation(MovementType direction)
+        {
+            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_R_Backwards", false);
+            anim.SetBool("Is_R_Right", false);
+            anim.SetBool("Is_R_Left", false);
+
+            switch (direction)
+            {
+                case MovementType.FORWARD:
+                    anim.SetBool("Is_R_Front", true);
+                    break;
+                case MovementType.BACKWARD:
+                    anim.SetBool("Is_R_Backwards", true);
+                    break;
+                case MovementType.RIGHT:
+                    anim.SetBool("Is_R_Right", true);
+                    break;
+                case MovementType.LEFT:
+                    anim.SetBool("Is_R_Left", true);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
 
             closeEnemies.Add(other.gameObject);
-
-            if (attacking == false)
-                StartCoroutine(AttackLoop());
         }
-        else if (other.CompareTag("Console")) 
-        {
-            waveMenuTouched = true;
-        }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Finish"))
+        private void OnTriggerExit(Collider other)
         {
+            if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
+            
             closeEnemies.Remove(other.gameObject);
-
-            if (closeEnemies.Count == 0) {
-
+            if (closeEnemies.Count == 0)
+            {
                 attacking = false;
                 targetedEnemy = null;
             }
         }
-        else if (other.CompareTag("Console"))
+
+        private void AttackLoop()
         {
-            waveMenuTouched = false;
-        }
-    }
+            if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
-    IEnumerator AttackLoop()
-    {
-        attacking = true;
+            gunRecharge.fillAmount = currentCooldown / attackCooldown;
 
-        float waitTime = 0.6f;
+            if (currentCooldown < attackCooldown || !GetClosestEnemy()) return;
 
-        while (attacking && closeEnemies.Count > 0)
-        {
-            if (targetedEnemy == null)
-                GetClosestEnemy();
+            SpawnProjectile(attackCooldown);
+            gunRecharge.fillAmount = 0.0f;
 
-            SpawnProjectile(waitTime);
-
-            yield return new WaitForSeconds(waitTime);
-
-            if (targetedEnemy != null)
-                DamageTarget();
-            else 
-            {
-                GetClosestEnemy();
-                DamageTarget();
-            }
+            currentCooldown = 0;
         }
 
-        attacking = false;
-    }
-
-    void GetClosestEnemy()
-    {
-        closeEnemies.RemoveAll(item => item == null);
-
-        if (closeEnemies.Count > 0)
-            targetedEnemy = closeEnemies[0];
-        else {
+        private bool GetClosestEnemy()
+        {
+            closeEnemies.RemoveAll(item => item == null);
             targetedEnemy = null;
-            attacking = false;
+
+            for(int i = 0; i < closeEnemies.Count; ++i)
+            {
+                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, modelTransform.forward) > attackAngle / 2.0f)
+                    continue;
+
+                targetedEnemy = closeEnemies[i];
+            }
+
+            return targetedEnemy != null;
         }
-    }
 
-    void DamageTarget()
-    {
-        if (targetedEnemy == null) return;
+        void SpawnProjectile(float waitTime)
+        {
+            AudioManager.Instance.PlaySFX("PlayerAttack");
+            GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
+            Projectile projectile = p.GetComponent<Projectile>();
+            projectile.startPos = transform.position;
+            projectile.target = targetedEnemy;
+        }
 
-        if (targetedEnemy.TryGetComponent<IDamageable>(out var damageable))
-            damageable.DamageMax();        
-    }
+        public void Stun(float seconds)
+        {
+            //TODO: Add proper VFX/SFX
 
-    void SpawnProjectile(float waitTime) {
-        AudioManager.instance.PlaySFX("PlayerAttack");
-        GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
-        p.GetComponent<Projectile>().startPos = transform.position;
-        p.GetComponent<Projectile>().finalPos = targetedEnemy.transform;
-        p.GetComponent<Projectile>().maxTime = waitTime;
+            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+            //AudioManager.instance.PlaySFX("Stun");
+
+            StartCoroutine(StunCorroutine(seconds));
+        }
+
+        private IEnumerator StunCorroutine(float seconds)
+        {
+            movementLocked = true;
+
+            yield return new WaitForSeconds(seconds);
+
+            movementLocked = false;
+        }
     }
 }
