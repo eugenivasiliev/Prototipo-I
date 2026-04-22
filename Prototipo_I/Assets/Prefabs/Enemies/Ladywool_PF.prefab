@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 2595835917433282528}
   - component: {fileID: 6956086674888791588}
   - component: {fileID: 60629846971362980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ladywool_PF
   m_TagString: Finish
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358a37c42b972c84f9d7929174742fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 7
   ui_health: {fileID: 8745831415376716272}
   damage: 1
   difficulty: 1
@@ -136,6 +136,7 @@ MonoBehaviour:
     plots: []
     playerController: {fileID: 0}
     spawnZones: []
+    barricadeTransform: {fileID: 0}
   animationType: 0
   alembicStreamPlayer: {fileID: 0}
   animator: {fileID: 0}
@@ -148,7 +149,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7114638766383851020}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 10
   m_Acceleration: 8
