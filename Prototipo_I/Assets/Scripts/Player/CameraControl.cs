@@ -6,7 +6,6 @@ namespace Player
 {
     public class CameraControl : TweenMovement
     {
-        [SerializeField] private GameObject cone;
 
         [SerializeField] private PlayerController player;
 
@@ -96,9 +95,6 @@ namespace Player
 
             this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
             this.transform.LookAt(player.transform);
-            Vector3 tr = this.transform.position;
-            tr = new Vector3(tr.x, cone.transform.position.y, tr.z);
-            cone.transform.LookAt(tr); 
         }
 
         public void SavePosition() => savedPosition = currentOffset;
