@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Combat;
 using Enemies;
 using Objectives;
-using UI;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -14,6 +14,8 @@ namespace TowerDefense
         public static Base instance;
 
         [SerializeField] private int health;
+
+        [SerializeField] private Image healthBar;
 
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
@@ -41,6 +43,8 @@ namespace TowerDefense
                 enemyManager.ReturnToSpawn();
                 health = MaxHealth;
             }
+
+
         }
 
         void AddSeeds(float ff)
@@ -51,6 +55,9 @@ namespace TowerDefense
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
         }
 
-        public void OnDamage() { }
+        public void OnDamage() {
+
+            healthBar.fillAmount = Health / MaxHealth;
+        }
     }
 }
