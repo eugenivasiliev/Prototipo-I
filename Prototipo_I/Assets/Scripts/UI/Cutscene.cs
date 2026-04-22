@@ -17,5 +17,14 @@ namespace UI
             player.Play();
             player.loopPointReached += (VideoPlayer vp) => { afterCutsceneEvent.Invoke(); };
         }
+
+        void Update()
+        {
+
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Escape)) {
+
+                player.time += 10;
+            }
+        }
     }
 }
