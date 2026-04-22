@@ -5,6 +5,8 @@ namespace Utils
     public class Billboard : MonoBehaviour
     {
         private Camera mainCamera;
+        [SerializeField] private bool fixedSize;
+        [SerializeField] private float cameraBaseDistance;
 
         void Start()
         {
@@ -13,7 +15,15 @@ namespace Utils
 
         void Update()
         {
-            this.transform.rotation = mainCamera.transform.rotation;
+            Follow();
+
+            if (!fixedSize) return;
+
+            this.GetComponent<RectTransform>().localScale = 
+                Vector3.one * Vector3.Distance(this.transform.position, mainCamera.transform.position) / cameraBaseDistance;
         }
+
+        void Follow() => 
+            this.transform.rotation = mainCamera.transform.rotation;
     }
 }

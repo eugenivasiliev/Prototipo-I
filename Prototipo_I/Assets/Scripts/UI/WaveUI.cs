@@ -1,21 +1,49 @@
 using Enemies;
-using Trading;
+using Player;
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Utils;
+using static Enemies.WaveDB;
 
 namespace UI
 {
-    public class WaveUI : MonoBehaviour
+    public class WaveUI : MonoBehaviour, IContexted
     {
-        public void Start()
+        [SerializeField] private EnemyManager enemyManager;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private Canvas ui;
+
+        private bool isOpen = false;
+        public bool IsOpen() { return isOpen; }
+        private void Start()
         {
-            this.gameObject.SetActive(false);
+            if (SceneManager.GetSceneName() != "Tutorial")
+            {
+                InputSystem.actions.FindAction("wave_menu").started += ctx => { ToggleWaveUI(); };
+                InputSystem.actions.FindAction("close_menu").started += ctx => { if (isOpen) ToggleWaveUI(); };
+            }
         }
 
         public void ClickWave()
         {
-            WaveManager.Instance.StartWave();
-            WaveManager.Instance.ToggleWaveUI();
+            ToggleWaveUI();
+            DayNightCycle.Instance.PassTime();
         }
 
+        public void ToggleWaveUI()
+        {
+            if (enemyManager.IsWaveActive) return;
+
+            isOpen = !isOpen;
+            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOpen;
+            ui.gameObject.SetActive(isOpen);
+            Time.timeScale = (isOpen) ? 0f : 1f;
+            playerController.MovementLocked = isOpen;
+        }
+
+        public bool ContextKeyActive() => !enemyManager.IsWaveActive;
     }
 }

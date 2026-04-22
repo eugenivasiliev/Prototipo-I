@@ -22,36 +22,36 @@ namespace Enemies
             [SerializeField] public int phase;
             [SerializeField] public int difficulty;
             [SerializeField] public int enemyCount;
-            [SerializeField] public List<string> enemies;
+            [SerializeField] public List<GameObject> enemies;
         }
 
         public readonly int difficultyTolerance = 3;
         [SerializeField] private List<PhaseEnemies> waves;
         public List<PhaseEnemies> Waves => waves;
-        public List<string> nextWave;
+        public List<GameObject> nextWave;
 
-        public void ReadyNextWave(int biome, int phase, EnemyDB enemyDB)
+        public void ReadyNextWave(int biome, int phase)
         {
             PhaseEnemies phaseEnemies = GetPhaseEnemies(biome, phase);
 
-            List<string> wave = new List<string>();
+            List<GameObject> wave = new List<GameObject>();
             do
             {
                 for (int i = 0; i < phaseEnemies.enemyCount; ++i)
                 {
                     wave.Add(phaseEnemies.enemies[UnityEngine.Random.Range(0, phaseEnemies.enemies.Count)]);
                 }
-            } while (Mathf.Abs(TotalDifficulty(wave, enemyDB) - phaseEnemies.difficulty) > difficultyTolerance);
+            } while (Mathf.Abs(TotalDifficulty(wave) - phaseEnemies.difficulty) > difficultyTolerance);
 
             nextWave = wave;
         }
 
-        private int TotalDifficulty(List<string> wave, EnemyDB enemyDB)
+        private int TotalDifficulty(List<GameObject> wave)
         {
             int sum = 0;
-            foreach (string enemy in wave)
+            foreach (GameObject enemy in wave)
             {
-                sum += enemyDB.GetAIFromName(enemy).Difficulty;
+                sum += enemy.GetComponent<EnemyAI>().Difficulty;
             }
             return sum;
         }

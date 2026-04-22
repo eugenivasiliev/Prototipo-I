@@ -81,6 +81,7 @@ MonoBehaviour:
   minItemsDropped: 1
   maxItemsDropped: 1
   dropRadius: 2
+  dropHeight: 2
   bb:
     target: 1
     targetTransform: {fileID: 0}
@@ -155,6 +156,10 @@ PrefabInstance:
     - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
       propertyPath: startTime
       value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
+      propertyPath: currentTime
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2488796389871762927, guid: 754226547ab538045befb687da285bbf, type: 3}
       propertyPath: m_Mesh
