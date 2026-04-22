@@ -90,8 +90,6 @@ namespace TowerDefense
             tm.spotReference = this;
             tm.ToggleMenu();
 
-            Destroy(beam);
-            Destroy(particles);
         }
 
         public void SetRange(float dist)
