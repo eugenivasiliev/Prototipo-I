@@ -16,11 +16,11 @@ namespace Player
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private KeyCode attackKey;
         [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
+        [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
         private float currentCooldown = 0.0f;
 
         [Header("Movement")]
-        [SerializeField] private float speed = 5f;
-        [SerializeField] private float sprintSpeed = 7.5f;
+        [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private Animator anim;
 
@@ -63,8 +63,8 @@ namespace Player
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            inputs.Player.Sprint.canceled += ctx => isSprinting = false;
+            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
+            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -89,7 +89,7 @@ namespace Player
             Vector3 cameraRightProjected = new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
 
             Vector3 movement = cameraRightProjected * movementInput.x + cameraForwardProjected * movementInput.y;
-            float currentSpeed = isSprinting ? sprintSpeed : speed;
+            float currentSpeed = speed;
 
             if (characterController.isGrounded)
                 horizontalMovement = movement * currentSpeed;
@@ -101,6 +101,9 @@ namespace Player
 
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
+
+            if(movement.sqrMagnitude > 0)
+                modelTransform.LookAt(modelTransform.position + movement);
 
             Animate(movementInput);
         }
@@ -222,7 +225,16 @@ namespace Player
         private bool GetClosestEnemy()
         {
             closeEnemies.RemoveAll(item => item == null);
-            targetedEnemy = (closeEnemies.Count > 0) ? closeEnemies[0] : null;
+            targetedEnemy = null;
+
+            for(int i = 0; i < closeEnemies.Count; ++i)
+            {
+                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, modelTransform.forward) > attackAngle / 2.0f)
+                    continue;
+
+                targetedEnemy = closeEnemies[i];
+            }
+
             return targetedEnemy != null;
         }
 
@@ -239,7 +251,7 @@ namespace Player
         {
             //TODO: Add proper VFX/SFX
 
-            Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
+            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
             //AudioManager.instance.PlaySFX("Stun");
 
             StartCoroutine(StunCorroutine(seconds));

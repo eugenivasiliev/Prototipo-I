@@ -16,6 +16,7 @@ namespace UI
         [SerializeField] private GameObject towerUI;
 
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private CameraControl cameraController;
 
         private bool isOpen = false;
         public bool IsOpen => isOpen;
@@ -57,7 +58,10 @@ namespace UI
         public void LoadTowerDescription(TowerData td)
         {
             towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
+            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
+                td.cost.ToString() + '\n' +
+                td.damage.ToString() + '\n' +
+                (td.hasAOE ? "AOE" : "None");
         }
 
         public void EraseTowerDescription()
@@ -78,6 +82,16 @@ namespace UI
             EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
+
+            if (isOpen) {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.NearOffset;
+                cameraController.SavePosition();
+            } else
+            {
+                cameraController.forcedTweenMovement = true;
+                cameraController.targetTweenPosition = cameraController.savedPosition;
+            }
         }
 
         public void Exit()

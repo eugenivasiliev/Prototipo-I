@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using Audio;
@@ -52,11 +53,13 @@ namespace TowerDefense
 
             foreach (var e in closeEnemies)
             {
-                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
-                {
-                    targetedEnemy = e;
-                    attacking = true;
-                    return;
+                if (e.GetComponent<EnemyAI>().IsAboutToDie() == false) { 
+                    if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                    {
+                        targetedEnemy = e;
+                        attacking = true;
+                        return;
+                    }
                 }
             }
         }
