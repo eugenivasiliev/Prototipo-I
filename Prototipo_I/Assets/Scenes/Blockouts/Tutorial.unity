@@ -36935,6 +36935,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 0}
   attackKey: 0
   attackCooldown: 0.6
+  attackAngle: 30
   speed: 5
   gravity: 9.80665
   anim: {fileID: 0}
@@ -59100,6 +59101,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5436639368148429403, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
+      propertyPath: nextScene
+      value: Biome1
+      objectReference: {fileID: 0}
     - target: {fileID: 6046389363343201417, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
       propertyPath: m_Name
       value: YouWin
@@ -60490,6 +60495,7 @@ MonoBehaviour:
     isActive: 0
     isReversing: 0
     isLooping: 0
+  cone: {fileID: 0}
   player: {fileID: 9017860080823449519}
   nearOffset: {x: 0, y: 40, z: -30}
   farOffset: {x: 0, y: 25, z: -30}
@@ -60770,6 +60776,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
   attackKey: 323
   attackCooldown: 0.6
+  attackAngle: 30
   speed: 30
   gravity: 9.80665
   anim: {fileID: 569532560}

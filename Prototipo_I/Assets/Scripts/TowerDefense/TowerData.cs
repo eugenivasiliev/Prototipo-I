@@ -12,6 +12,8 @@ namespace TowerDefense
         public GameObject[] stages;
 
         public int cost;
+        public int damage = 0;
+        public bool hasAOE = false;
 
         public string Id => throw new NotImplementedException();
 
