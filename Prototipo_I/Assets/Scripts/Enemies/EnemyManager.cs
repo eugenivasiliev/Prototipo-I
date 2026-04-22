@@ -85,7 +85,7 @@ namespace Enemies
                 enemyBB.target = enemy.BB.target;
                 enemy.BB = enemyBB;
 
-                minimap.AddEnemy(enemy.gameObject);
+                minimap?.AddEnemy(enemy.gameObject);
             }
         }
 
