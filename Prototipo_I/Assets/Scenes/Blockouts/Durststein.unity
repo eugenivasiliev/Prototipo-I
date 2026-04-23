@@ -6272,7 +6272,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &143063956
 Transform:
   m_ObjectHideFlags: 0
@@ -54903,9 +54903,12 @@ MonoBehaviour:
   attackKey: 0
   attackCooldown: 0.6
   attackAngle: 30
+  attackCone: {fileID: 0}
   speed: 5
   gravity: 9.80665
   anim: {fileID: 0}
+  targetForward: {x: 0, y: 0, z: 0}
+  rotationSpeed: 0
   modelTransform: {fileID: 0}
   stunParticles: {fileID: 0}
   gunRecharge: {fileID: 0}
@@ -65976,7 +65979,6 @@ Transform:
   - {fileID: 630944304}
   - {fileID: 1081841180}
   - {fileID: 1125536387}
-  - {fileID: 2009392097}
   - {fileID: 1944941369}
   - {fileID: 1614572122}
   - {fileID: 1994932676}
@@ -99303,7 +99305,6 @@ MonoBehaviour:
     isActive: 0
     isReversing: 0
     isLooping: 0
-  cone: {fileID: 1238858168}
   player: {fileID: 9017860080823449519}
   nearOffset: {x: 0, y: 40, z: -30}
   farOffset: {x: 0, y: 20, z: -20}
@@ -99720,9 +99721,12 @@ MonoBehaviour:
   attackKey: 323
   attackCooldown: 0.6
   attackAngle: 30
+  attackCone: {fileID: 143063955}
   speed: 30
   gravity: 9.80665
   anim: {fileID: 569532560}
+  targetForward: {x: 0, y: 0, z: 0}
+  rotationSpeed: 7
   modelTransform: {fileID: 742273700362349958}
   stunParticles: {fileID: 0}
   gunRecharge: {fileID: 340928821}
@@ -99747,3 +99751,5 @@ SceneRoots:
   - {fileID: 85553130}
   - {fileID: 926794217}
   - {fileID: 1665642695}
+  - {fileID: 941028164}
+  - {fileID: 1715506694}
