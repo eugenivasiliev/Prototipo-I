@@ -58,7 +58,10 @@ namespace UI
         public void LoadTowerDescription(TowerData td)
         {
             towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
+            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
+                td.cost.ToString() + '\n' +
+                td.damage.ToString() + '\n' +
+                (td.hasAOE ? "AOE" : "None");
         }
 
         public void EraseTowerDescription()
