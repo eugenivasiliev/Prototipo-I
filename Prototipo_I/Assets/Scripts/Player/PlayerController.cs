@@ -17,6 +17,7 @@ namespace Player
         [SerializeField] private KeyCode attackKey;
         [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
         [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
+        [SerializeField] private GameObject attackCone;
         private float currentCooldown = 0.0f;
 
         [Header("Movement")]
@@ -69,6 +70,8 @@ namespace Player
             //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
 
         private void OnDisable()
@@ -275,6 +278,12 @@ namespace Player
             yield return new WaitForSeconds(seconds);
 
             movementLocked = false;
+        }
+
+        private void ToggleCone(float t)
+        {
+            attackCone.SetActive(!attackCone.activeSelf);
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }
 }
