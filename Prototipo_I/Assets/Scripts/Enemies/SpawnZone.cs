@@ -14,14 +14,14 @@ namespace Enemies
         public void ShowIndicator(int phaseIndex)
         {
             bool shouldShow = validPhases.Contains(phaseIndex);
-            activeZoneIndicatorInstance.SetActive(shouldShow);
-            zoneArrowIndicatorInstance.SetActive(shouldShow);
+            activeZoneIndicatorInstance?.SetActive(shouldShow);
+            zoneArrowIndicatorInstance?.SetActive(shouldShow);
         }
 
         public void HideIndicator()
         {
-            activeZoneIndicatorInstance.SetActive(false);
-            zoneArrowIndicatorInstance.SetActive(false);
+            activeZoneIndicatorInstance?.SetActive(false);
+            zoneArrowIndicatorInstance?.SetActive(false);
         }
 
         private void Update()
