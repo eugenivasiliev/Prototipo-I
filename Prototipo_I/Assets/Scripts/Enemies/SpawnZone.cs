@@ -6,15 +6,23 @@ namespace Enemies
     public class SpawnZone : MonoBehaviour
     {
         [SerializeField] private GameObject activeZoneIndicatorInstance;
+        [SerializeField] private GameObject zoneArrowIndicatorInstance;
 
         [SerializeField] private List<int> validPhases = new List<int>();
         public List<int> ValidPhases { get { return validPhases; } }
 
-        public void ShowIndicator(int phaseIndex) =>
-            activeZoneIndicatorInstance.SetActive(validPhases.Contains(phaseIndex));
+        public void ShowIndicator(int phaseIndex)
+        {
+            bool shouldShow = validPhases.Contains(phaseIndex);
+            activeZoneIndicatorInstance.SetActive(shouldShow);
+            zoneArrowIndicatorInstance.SetActive(shouldShow);
+        }
 
-        public void HideIndicator() =>
+        public void HideIndicator()
+        {
             activeZoneIndicatorInstance.SetActive(false);
+            zoneArrowIndicatorInstance.SetActive(false);
+        }
 
         private void Update()
         {
