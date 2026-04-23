@@ -32,7 +32,7 @@ namespace TowerDefense
             health = MaxHealth;
             instance = this;
             BaseProduction += AddSeeds;
-            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
 
         void Update()
@@ -52,7 +52,7 @@ namespace TowerDefense
             Inventory.Inventory.Instance.AddSeeds(seedsPerRound);
             if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
                 foreach (PlantsCollected obj in objs) obj.UpdateObjective(seedsPerRound);
-            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
 
         public void OnDamage() {
