@@ -64,6 +64,10 @@ namespace Enemies
         [SerializeField] protected float speed;
         [SerializeField] protected float slowSpeed;
         private bool aboutToDie = false;
+        [SerializeField] private SkinnedMeshRenderer matHolder;
+        [SerializeField] private Material blinkMat;
+        [SerializeField] private Material originalMat;
+        [SerializeField] private float blinkTime;
         public int Difficulty => difficulty;
 
         [Serializable]
@@ -231,7 +235,7 @@ namespace Enemies
 
         public void UpdateLife()
         {
-
+            StartCoroutine(TurnRed());
             ui_health.gameObject.SetActive(true);
             ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
@@ -270,6 +274,13 @@ namespace Enemies
             bb.target = Target.Barricade;
         }
 
+
+        IEnumerator TurnRed()
+        {
+            matHolder.material = blinkMat;
+            yield return new WaitForSeconds(blinkTime);
+            matHolder.material = originalMat;
+        }
     }
 
 }
