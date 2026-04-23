@@ -23,6 +23,8 @@ namespace Player
         [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private Animator anim;
+        [SerializeField] private Vector3 targetForward;
+        [SerializeField] private float rotationSpeed;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -102,8 +104,17 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if(movement.sqrMagnitude > 0)
-                modelTransform.LookAt(modelTransform.position + movement);
+            targetForward = movement;
+
+            if (movement.sqrMagnitude > 0)
+            {
+                modelTransform.rotation = 
+                    Quaternion.Slerp(
+                        modelTransform.rotation, 
+                        Quaternion.FromToRotation(modelTransform.forward, targetForward) * modelTransform.rotation,
+                        rotationSpeed * Time.deltaTime
+                        );
+            }
 
             Animate(movementInput);
         }
