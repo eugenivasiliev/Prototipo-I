@@ -42,6 +42,9 @@ namespace TowerDefense
 
             towerData = DBManager.Instance.TowerDB[dataName];
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+
+            Destroy(beam);
+            Destroy(particles);
         }
 
         public void PlaceTower(TowerData data)
@@ -86,6 +89,7 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
+
         }
 
         public void SetRange(float dist)
