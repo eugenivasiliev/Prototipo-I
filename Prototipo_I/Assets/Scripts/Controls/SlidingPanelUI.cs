@@ -15,7 +15,7 @@ namespace UI
 
         [SerializeField] protected Tween<float> tween;
 
-        protected bool isHidden = false;
+        [SerializeField] protected bool isHidden = false;
         void Start()
         {
             if (inputs == null) inputs = new InputSystem_Actions();
