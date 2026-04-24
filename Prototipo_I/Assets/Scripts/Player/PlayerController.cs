@@ -17,12 +17,15 @@ namespace Player
         [SerializeField] private KeyCode attackKey;
         [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
         [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
+        [SerializeField] private GameObject attackCone;
         private float currentCooldown = 0.0f;
 
         [Header("Movement")]
         [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private Animator anim;
+        [SerializeField] private Vector3 targetForward;
+        [SerializeField] private float rotationSpeed;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -67,6 +70,8 @@ namespace Player
             //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
 
         private void OnDisable()
@@ -102,8 +107,17 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if(movement.sqrMagnitude > 0)
-                modelTransform.LookAt(modelTransform.position + movement);
+            targetForward = movement;
+
+            if (movement.sqrMagnitude > 0)
+            {
+                modelTransform.rotation = 
+                    Quaternion.Slerp(
+                        modelTransform.rotation, 
+                        Quaternion.FromToRotation(modelTransform.forward, targetForward) * modelTransform.rotation,
+                        rotationSpeed * Time.deltaTime
+                        );
+            }
 
             Animate(movementInput);
         }
@@ -264,6 +278,12 @@ namespace Player
             yield return new WaitForSeconds(seconds);
 
             movementLocked = false;
+        }
+
+        private void ToggleCone(float t)
+        {
+            attackCone.SetActive(!attackCone.activeSelf);
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }
 }
