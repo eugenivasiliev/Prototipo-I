@@ -4276,7 +4276,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4288282623
-  m_fontColor: {r: 1, g: 1, b: 0.6, a: 1}
+  m_fontColor: {r: 0.36078432, g: 0.59607846, b: 0.5254902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -42743,7 +42743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantDB: {fileID: 11400000, guid: b3977962d2a89334f81cfbcf4d216e94, type: 2}
-  towerDB: {fileID: 11400000, guid: f1a8c4a097e39484d8eeb22ab084d52d, type: 2}
+  towerDB: {fileID: 11400000, guid: 2ea09e4b588f8504e8e3f09fc39589fb, type: 2}
 --- !u!4 &1541648037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1946132065215312334, guid: d368871fd93c54a4b912cc8ffaa09fb4, type: 3}
@@ -50699,6 +50699,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3534744497507965779, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 6771064223322600473}
+    - target: {fileID: 3534744497507965779, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 9017860080823449519}
@@ -51532,8 +51536,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4287010908
+  m_fontColor: {r: 0.36078432, g: 0.59607846, b: 0.5254902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
