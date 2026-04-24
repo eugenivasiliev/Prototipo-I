@@ -29,7 +29,7 @@ namespace Player
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
-        [SerializeField] public short InteractionRange { get { return 3; } }
+        [SerializeField, Range(0, 10)] public float InteractionRange = 3;
 
         [Header("VFX")]
         [SerializeField] private GameObject stunParticles;
