@@ -61,7 +61,7 @@ namespace UI
             towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
                 td.cost.ToString() + '\n' +
                 td.damage.ToString() + '\n' +
-                (td.hasAOE ? "AOE" : "None");
+                td.range;
         }
 
         public void EraseTowerDescription()
