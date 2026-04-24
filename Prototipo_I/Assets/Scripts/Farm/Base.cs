@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
+using System.Collections;
 
 namespace TowerDefense
 {
@@ -16,7 +17,10 @@ namespace TowerDefense
         [SerializeField] private int health;
 
         [SerializeField] private Image healthBar;
-
+        [SerializeField] private MeshRenderer meshHolder;
+        [SerializeField] private Material blinkMaterial;
+        [SerializeField] private Material naturalMaterial;
+        [SerializeField] private float blinkTime;
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
         [SerializeField] private Canvas ui_health;
@@ -32,7 +36,7 @@ namespace TowerDefense
             health = MaxHealth;
             instance = this;
             BaseProduction += AddSeeds;
-            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
 
         void Update()
@@ -52,12 +56,21 @@ namespace TowerDefense
             Inventory.Inventory.Instance.AddSeeds(seedsPerRound);
             if (ObjectivesManager.Instance.TryGetObjective<PlantsCollected, int>(out List<PlantsCollected> objs))
                 foreach (PlantsCollected obj in objs) obj.UpdateObjective(seedsPerRound);
-            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
 
         public void OnDamage() {
 
             healthBar.fillAmount = Health / MaxHealth;
+
+            StartCoroutine(RedBlink());
         }
+
+        IEnumerator RedBlink() {
+            meshHolder.material = blinkMaterial;
+            yield return new WaitForSeconds(blinkTime);
+            meshHolder.material = naturalMaterial;
+        }
+
     }
 }

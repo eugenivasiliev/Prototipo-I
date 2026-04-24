@@ -15,7 +15,7 @@ namespace TowerDefense
         private void Start()
         {
             Give += AddSeeds;
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -31,7 +31,7 @@ namespace TowerDefense
             foreach (Plot plot in plots)
                 if (plot.IsPlanted) Inventory.Inventory.Instance.AddSeeds(1);
             
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
     }
 }
