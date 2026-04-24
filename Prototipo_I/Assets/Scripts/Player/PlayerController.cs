@@ -29,7 +29,7 @@ namespace Player
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
-        [SerializeField] public short InteractionRange { get { return 3; } }
+        [SerializeField, Range(0, 10)] public float InteractionRange = 3;
 
         [Header("VFX")]
         [SerializeField] private GameObject stunParticles;
@@ -111,12 +111,10 @@ namespace Player
 
             if (movement.sqrMagnitude > 0)
             {
-                modelTransform.rotation = 
-                    Quaternion.Slerp(
-                        modelTransform.rotation, 
-                        Quaternion.FromToRotation(modelTransform.forward, targetForward) * modelTransform.rotation,
-                        rotationSpeed * Time.deltaTime
-                        );
+                float rotationAngle = Vector3.SignedAngle(modelTransform.forward, targetForward, Vector3.up);
+
+                modelTransform.rotation =
+                    Quaternion.AngleAxis(rotationAngle * Time.deltaTime * rotationSpeed, Vector3.up) * modelTransform.rotation;
             }
 
             Animate(movementInput);

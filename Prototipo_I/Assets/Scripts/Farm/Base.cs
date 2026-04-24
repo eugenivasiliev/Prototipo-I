@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
+using System.Collections;
 
 namespace TowerDefense
 {
@@ -16,7 +17,10 @@ namespace TowerDefense
         [SerializeField] private int health;
 
         [SerializeField] private Image healthBar;
-
+        [SerializeField] private MeshRenderer meshHolder;
+        [SerializeField] private Material blinkMaterial;
+        [SerializeField] private Material naturalMaterial;
+        [SerializeField] private float blinkTime;
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
         [SerializeField] private Canvas ui_health;
@@ -58,6 +62,15 @@ namespace TowerDefense
         public void OnDamage() {
 
             healthBar.fillAmount = Health / MaxHealth;
+
+            StartCoroutine(RedBlink());
         }
+
+        IEnumerator RedBlink() {
+            meshHolder.material = blinkMaterial;
+            yield return new WaitForSeconds(blinkTime);
+            meshHolder.material = naturalMaterial;
+        }
+
     }
 }
