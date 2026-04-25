@@ -65910,6 +65910,10 @@ PrefabInstance:
       value: General_Particles
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
+      propertyPath: simulationSpeed
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: ShapeModule.type
       value: 5
       objectReference: {fileID: 0}
@@ -65959,7 +65963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: ShapeModule.radiusThickness
-      value: 1.0000
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: ExternalForcesModule.enabled
@@ -65984,6 +65988,10 @@ PrefabInstance:
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: CollisionModule.m_Dampen.scalar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2932057206397619975, guid: 073689a55cbed5249b72ea7ccc1ae79d, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.size
