@@ -6,6 +6,7 @@ namespace Player
 {
     public class CameraControl : TweenMovement
     {
+
         [SerializeField] private PlayerController player;
 
         [SerializeField] private Vector3 nearOffset;
