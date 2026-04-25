@@ -11,12 +11,15 @@ namespace Utils
 
         [SerializeField] private TowerDB towerDB;
         public TowerDB TowerDB { get => towerDB; }
+        [SerializeField] private TowerDecalDB towerDecalDB;
+        public TowerDecalDB TowerDecalDB { get => towerDecalDB; }
 
         private void Start()
         {
             InitSingleton();
             plantDB.Init();
             towerDB.Init();
+            towerDecalDB.Init();
         }
 
     }
