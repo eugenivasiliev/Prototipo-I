@@ -6134,8 +6134,8 @@ Transform:
   m_GameObject: {fileID: 143063955}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.9, z: 5}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.9, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 742273700362349958}
@@ -12363,6 +12363,7 @@ MonoBehaviour:
   enemyManager: {fileID: 74349552}
   playerController: {fileID: 9017860080823449519}
   ui: {fileID: 1510178022}
+  highlitedParts: []
 --- !u!1 &314359525
 GameObject:
   m_ObjectHideFlags: 0
@@ -99045,7 +99046,7 @@ MonoBehaviour:
   forcedTweenMovement: 0
   targetTweenPosition: {x: 0, y: 0, z: 0}
   forcedTweenTolerance: 0.3
-  cameraSensibility: 0.3
+  cameraSensibility: 0.2
   scrollSensibility: 0.2
 --- !u!114 &6771064223322600474
 MonoBehaviour:

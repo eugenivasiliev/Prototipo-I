@@ -92,7 +92,7 @@ namespace UI
             } else
             {
                 cameraController.forcedTweenMovement = true;
-                cameraController.targetTweenPosition = cameraController.savedPosition;
+                cameraController.targetTweenPosition = cameraController.FarOffset;
             }
         }
 

@@ -110,7 +110,7 @@ namespace Enemies
             foreach (SpawnZone zone in spawnZones)
                 if (zone.ValidPhases.Contains(currentPhaseIndex))
                 {
-                    zone.HideIndicator();
+                    zone.WaveStarted();
                     StartCoroutine(SpawnEnemyDelay(zone));
                 }
         }
