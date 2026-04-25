@@ -103,7 +103,9 @@ namespace Enemies
         [SerializeField] protected AnimationType animationType;
         [SerializeField] protected AlembicStreamPlayer alembicStreamPlayer;
         [SerializeField] protected Animator animator;
+        public Animator Animator { get => animator; }
         [SerializeField] protected bool isDying = false;
+        [SerializeField] protected AnimationClip deathAnim;
 
 
         bool frozen = false;
@@ -180,8 +182,9 @@ namespace Enemies
         {
             AudioManager.Instance.PlaySFX("EnemyDeath");
             animator.SetBool("IsDying", true);
-            while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
-                yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(deathAnim.length);
+            //while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
+            //    yield return new WaitForEndOfFrame();
 
             DropLoot();
             Destroy(gameObject);
@@ -215,6 +218,8 @@ namespace Enemies
 
         public void SetState(State newState)
         {
+            if(enemyState != null) enemyState.OnExit();
+
             switch (newState)
             {
                 case State.Chase:
@@ -231,6 +236,8 @@ namespace Enemies
             }
             enemyState.Enemy = this;
             enemyState.BB = this.bb;
+
+            enemyState.OnEnter();
         }
 
         public void UpdateLife()
@@ -277,6 +284,7 @@ namespace Enemies
 
         IEnumerator TurnRed()
         {
+            if (!matHolder) yield break;
             matHolder.material = blinkMat;
             yield return new WaitForSeconds(blinkTime);
             matHolder.material = originalMat;
