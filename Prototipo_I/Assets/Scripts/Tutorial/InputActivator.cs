@@ -14,6 +14,8 @@ public class InputActivator : MonoBehaviour
             InputSystem.actions.FindAction("wave_menu").started += ctx => { waveUI.ToggleWaveUI(); };
             InputSystem.actions.FindAction("close_menu").started += ctx => { if (waveUI.IsOpen()) waveUI.ToggleWaveUI(); };
             contextKey.SetActive(true);
+
+            waveUI.ToggleShiny();
         }
     }
 }
