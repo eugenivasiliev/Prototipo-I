@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using Audio;
@@ -38,7 +39,8 @@ namespace TowerDefense
             projectileInstance.startPos = transform.position;
             projectileInstance.target = targetedEnemy;
 
-            Instantiate(particles, particlesOrigin.transform.position, this.transform.rotation);
+            if(particlesOrigin != null) 
+                Instantiate(particles, particlesOrigin.transform.position, this.transform.rotation);
         }
 
         protected void GetClosestValidEnemy()

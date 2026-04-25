@@ -58,7 +58,10 @@ namespace UI
         public void LoadTowerDescription(TowerData td)
         {
             towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
+            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
+                td.cost.ToString() + '\n' +
+                td.damage.ToString() + '\n' +
+                td.range;
         }
 
         public void EraseTowerDescription()
@@ -69,6 +72,8 @@ namespace UI
 
         public void ToggleMenu()
         {
+            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds()) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;

@@ -85,7 +85,7 @@ namespace Enemies
                 enemyBB.target = enemy.BB.target;
                 enemy.BB = enemyBB;
 
-                minimap.AddEnemy(enemy.gameObject);
+                minimap?.AddEnemy(enemy.gameObject);
             }
         }
 
@@ -110,7 +110,7 @@ namespace Enemies
             foreach (SpawnZone zone in spawnZones)
                 if (zone.ValidPhases.Contains(currentPhaseIndex))
                 {
-                    zone.HideIndicator();
+                    zone.WaveStarted();
                     StartCoroutine(SpawnEnemyDelay(zone));
                 }
         }
