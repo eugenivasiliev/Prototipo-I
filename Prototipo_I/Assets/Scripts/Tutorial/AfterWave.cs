@@ -26,7 +26,7 @@ public class AfterWave : MonoBehaviour
         if (i < messages.Length) { 
             messages[i].SetActive(true);
             plots[i].SetActive(true);
-            signals[i].SetActive(true);
+            
             i++;            
         }
     }
