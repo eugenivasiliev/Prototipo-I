@@ -53,6 +53,8 @@ namespace Inventory
 
         [Header("Seed Counter UI")]
         [SerializeField] private TMP_Text seedCounterUI;
+        [SerializeField] private Color defaultColour;
+        [SerializeField] private Color emptyColour;
 
         [Header("Cheats")]
         [SerializeField] private int cheatAddedSeeds = 10;
@@ -76,6 +78,7 @@ namespace Inventory
         {
             seedCount += amount;
             seedCounterUI.text = seedCount.ToString();
+            seedCounterUI.color = (seedCount == 0) ? emptyColour : defaultColour;
         }
 
         public bool RemoveSeeds(int amount) {
@@ -83,9 +86,12 @@ namespace Inventory
 
             seedCount -= amount;
             seedCounterUI.text = seedCount.ToString();
+            seedCounterUI.color = (seedCount == 0) ? emptyColour : defaultColour;
             return true;
         }
 
         public bool HasSeeds(int amount) => seedCount >= amount;
+
+        public bool HasSeeds() => seedCount > 0;
     }
 }

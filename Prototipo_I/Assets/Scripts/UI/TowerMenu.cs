@@ -72,6 +72,8 @@ namespace UI
 
         public void ToggleMenu()
         {
+            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds()) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;

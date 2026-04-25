@@ -6134,8 +6134,8 @@ Transform:
   m_GameObject: {fileID: 143063955}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.9, z: 5}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalPosition: {x: 0, y: -0.9, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 742273700362349958}
@@ -54468,6 +54468,7 @@ MonoBehaviour:
   targetForward: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
   modelTransform: {fileID: 0}
+  InteractionRange: 3
   stunParticles: {fileID: 0}
   gunRecharge: {fileID: 0}
 --- !u!1001 &1360881753
@@ -97825,6 +97826,38 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 10e6f8d9e5a183c47977529175bb684d, type: 2}
     - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: emptyColour.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: emptyColour.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: emptyColour.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: emptyColour.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: defaultColour.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: defaultColour.b
+      value: 0.5254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: defaultColour.g
+      value: 0.59607846
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
+      propertyPath: defaultColour.r
+      value: 0.36078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304765780311396411, guid: ac5edd3f3935f4648bb255091b52aa1d, type: 3}
       propertyPath: defaultInventory
       value: 
       objectReference: {fileID: 4900000, guid: 47d9ca78603e40f478b33effbf967e40, type: 3}
@@ -99425,6 +99458,7 @@ MonoBehaviour:
   targetForward: {x: 0, y: 0, z: 0}
   rotationSpeed: 7
   modelTransform: {fileID: 742273700362349958}
+  InteractionRange: 3
   stunParticles: {fileID: 0}
   gunRecharge: {fileID: 340928821}
 --- !u!1660057539 &9223372036854775807
