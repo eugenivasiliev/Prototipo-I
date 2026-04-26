@@ -6,18 +6,25 @@ namespace UI
 {
     public class WaveStartedUI : SlidingPanelUI
     {
-        [SerializeField] private VideoClip clip;
-        [SerializeField, Range(0, 10)] private float playbackSpeed;
-        [SerializeField] private VideoPlayer player;
-        [SerializeField] private UnityEvent afterCutsceneEvent;
+        [SerializeField, Range(0, 10)] private float imageHideDelay;
+        private float imageHideCurrentDelay;
         protected override void Start() { }
 
         public void Play()
         {
-            player.clip = clip;
-            player.Play();
-            player.loopPointReached += (VideoPlayer vp) => { afterCutsceneEvent.Invoke(); };
             Toggle();
+            imageHideCurrentDelay = imageHideDelay;
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (isHidden) return;
+
+            imageHideCurrentDelay -= Time.deltaTime;
+            if (imageHideCurrentDelay <= 0)
+                Toggle();
         }
     }
 }
