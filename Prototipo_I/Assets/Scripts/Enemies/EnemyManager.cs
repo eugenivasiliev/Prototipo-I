@@ -35,8 +35,6 @@ namespace Enemies
 
         [SerializeField] private EnemyAI.Blackboard bb;
 
-        [SerializeField] private WaveStartedUI waveStartedUI;
-
         void Start()
         {
             allPlots.Clear();
@@ -95,8 +93,6 @@ namespace Enemies
         private void SpawnEnemies(float t)
         {
             isWaveActive = true;
-
-            waveStartedUI.Play();
 
             if (allEnemies.Count > 0)
             {
