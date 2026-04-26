@@ -12,9 +12,9 @@ namespace TowerDefense
 {
     public class Base : MonoBehaviour, IDamageable
     {
-        public static Base instance;
 
         [SerializeField] private int health;
+        [SerializeField] private int maxHealth = 100;
 
         [SerializeField] private Image healthBar;
         [SerializeField] private MeshRenderer meshHolder;
@@ -22,7 +22,7 @@ namespace TowerDefense
         [SerializeField] private Material naturalMaterial;
         [SerializeField] private float blinkTime;
         public int Health { get => health; set => health = value; }
-        public int MaxHealth { get => 100; set { } }
+        public int MaxHealth { get => maxHealth; set => maxHealth = value; }
         [SerializeField] private Canvas ui_health;
 
         [SerializeField] private int seedsPerRound;
@@ -34,14 +34,13 @@ namespace TowerDefense
         private void Start()
         {
             health = MaxHealth;
-            instance = this;
             BaseProduction += AddSeeds;
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
 
         void Update()
         {
-            if (health <= 0.0f)
+            if (((IDamageable)this).IsDead())
             {
 
                 enemyManager.ReturnToSpawn();
