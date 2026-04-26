@@ -8,6 +8,12 @@ namespace UI
     {
         [SerializeField] private Tween<float> tween;
         [SerializeField] private RectTransform rectTransform;
+        private Vector3 baseScale;
+
+        void Start()
+        {
+            baseScale = transform.localScale;
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -23,8 +29,8 @@ namespace UI
 
         void Update()
         {
-            if(TweenUtil.Update(Time.deltaTime, ref tween)) 
-                rectTransform.localScale = tween.value * Vector3.one;
+            if (TweenUtil.Update(Time.deltaTime, ref tween))
+                rectTransform.localScale = tween.value * baseScale;
         }
     }
 }
