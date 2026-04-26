@@ -206,12 +206,12 @@ namespace Enemies
                 {
                     GameObject loot = Instantiate(drop.gameObject, this.transform.position, Quaternion.identity);
                     TweenMovement lootMovement = loot.GetComponent<TweenMovement>();
-                    lootMovement.xAxis.startValue = this.transform.position.x;
+                    /*lootMovement.xAxis.startValue = this.transform.position.x;
                     lootMovement.xAxis.endValue = this.transform.position.x + dropSpot.x;
                     lootMovement.yAxis.startValue = this.transform.position.y;
                     lootMovement.yAxis.endValue = this.transform.position.y + dropHeight;
                     lootMovement.zAxis.startValue = this.transform.position.z;
-                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;
+                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;*/
                     return;
                 }
         }
