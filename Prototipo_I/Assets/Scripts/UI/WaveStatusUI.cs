@@ -1,19 +1,25 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Video;
+using Utils;
 
 namespace UI
 {
-    public class WaveStartedUI : SlidingPanelUI
+    public class WaveStatusUI : SlidingPanelUI
     {
         [SerializeField, Range(0, 10)] private float imageHideDelay;
         private float imageHideCurrentDelay;
-        protected override void Start() { }
+        [SerializeField] private int startShowPhase;
+        [SerializeField] private int showPhaseSeparation = 2;
+        protected override void Start() {
+            DayNightCycle.Instance.SubscribeTimedEvent(Play, startShowPhase);
+        }
 
-        public void Play()
+        public void Play(float t)
         {
             Toggle();
             imageHideCurrentDelay = imageHideDelay;
+            DayNightCycle.Instance.SubscribeTimedEvent(Play, showPhaseSeparation);
         }
 
         protected override void Update()
