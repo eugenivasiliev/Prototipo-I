@@ -24,6 +24,7 @@ namespace UI
         public void OnPointerEnter(PointerEventData eventData)
         {
             spotReference.SetRange(td.range);
+            spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
 
             tm.LoadTowerDescription(td);

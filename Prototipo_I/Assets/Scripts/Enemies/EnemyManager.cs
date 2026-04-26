@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Farm;
 using Objectives;
+using UI;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -33,6 +34,8 @@ namespace Enemies
         private UnityEvent<float> Return = new UnityEvent<float>();
 
         [SerializeField] private EnemyAI.Blackboard bb;
+
+        [SerializeField] private WaveStartedUI waveStartedUI;
 
         void Start()
         {
@@ -93,6 +96,8 @@ namespace Enemies
         {
             isWaveActive = true;
 
+            waveStartedUI.Play();
+
             if (allEnemies.Count > 0)
             {
                 foreach (var enemy in allEnemies)
@@ -110,7 +115,7 @@ namespace Enemies
             foreach (SpawnZone zone in spawnZones)
                 if (zone.ValidPhases.Contains(currentPhaseIndex))
                 {
-                    zone.HideIndicator();
+                    zone.WaveStarted();
                     StartCoroutine(SpawnEnemyDelay(zone));
                 }
         }
