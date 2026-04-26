@@ -61,7 +61,7 @@ namespace UI
             towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
                 td.cost.ToString() + '\n' +
                 td.damage.ToString() + '\n' +
-                (td.hasAOE ? "AOE" : "None");
+                td.range;
         }
 
         public void EraseTowerDescription()
@@ -72,6 +72,8 @@ namespace UI
 
         public void ToggleMenu()
         {
+            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds()) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
@@ -90,7 +92,7 @@ namespace UI
             } else
             {
                 cameraController.forcedTweenMovement = true;
-                cameraController.targetTweenPosition = cameraController.savedPosition;
+                cameraController.targetTweenPosition = cameraController.FarOffset;
             }
         }
 
