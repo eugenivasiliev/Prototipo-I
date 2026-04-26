@@ -6,7 +6,7 @@ namespace AICompanion
 {
     public class DialogueTrigger : MonoBehaviour
     {
-        
+        [SerializeField] private int time;
         private PlayerController playerController;
         [SerializeField] private string dialogueId;
         
@@ -25,7 +25,10 @@ namespace AICompanion
 
 
 
-        void ActivateNextTutorial() {
+        IEnumerator ActivateNextTutorial() {
+
+            yield return new WaitForSeconds(time);
+
             Destroy(gameObject);
 
             if (wall != null)
