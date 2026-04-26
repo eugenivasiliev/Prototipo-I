@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: es
   m_SharedData: {fileID: 11400000, guid: 4793e93d1410b2f4799438e9df15193a, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 4242451929309905068
   m_TableData:
   - m_Id: 541685587968
     m_Localized: "Atr\xE1s"
@@ -73,6 +74,17 @@ MonoBehaviour:
     m_Localized: "Men\xFAs"
     m_Metadata:
       m_Items: []
+  - m_Id: 80906057371648
+    m_Localized: Fase {curWave}/{totalWaves}
+    m_Metadata:
+      m_Items:
+      - rid: 4242451929309905068
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4242451929309905068
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 80906057371648
