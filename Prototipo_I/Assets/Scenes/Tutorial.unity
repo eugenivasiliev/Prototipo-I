@@ -604,7 +604,8 @@ PrefabInstance:
       propertyPath: seedsPerRound
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2715755364084897083, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
@@ -1839,7 +1840,6 @@ MonoBehaviour:
     spawnZones:
     - {fileID: 0}
     barricadeTransform: {fileID: 0}
-  waveStartedUI: {fileID: 1819934022}
 --- !u!4 &74349553
 Transform:
   m_ObjectHideFlags: 0
@@ -8855,6 +8855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   win: {fileID: 195074674}
   objectivesManager: {fileID: 1762312411}
+  home: {fileID: 0}
   loss: {fileID: 1565657954}
   enemyManager: {fileID: 74349552}
   plots: {fileID: 305112750}
@@ -28276,7 +28277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantDB: {fileID: 11400000, guid: b3977962d2a89334f81cfbcf4d216e94, type: 2}
   towerDB: {fileID: 11400000, guid: 2ea09e4b588f8504e8e3f09fc39589fb, type: 2}
-  towerDecalDB: {fileID: 0}
+  towerDecalDB: {fileID: 11400000, guid: 54d98c9d42acd3e4eadaa6ea7afb6cb4, type: 2}
 --- !u!1001 &1550303192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33236,17 +33237,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6397950123979858704, guid: 81391c007deb43f43af4e1567b7eaab6, type: 3}
   m_PrefabInstance: {fileID: 1819934020}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1819934022 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2128897116270181880, guid: 81391c007deb43f43af4e1567b7eaab6, type: 3}
-  m_PrefabInstance: {fileID: 1819934020}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 282090617fe437645b0d9f687398d260, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1820083682
 GameObject:
   m_ObjectHideFlags: 0
@@ -34356,7 +34346,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44.8
+  m_fontSize: 50.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
