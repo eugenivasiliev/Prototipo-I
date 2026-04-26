@@ -1065,6 +1065,7 @@ GameObject:
   - component: {fileID: 179236720}
   - component: {fileID: 179236719}
   - component: {fileID: 179236718}
+  - component: {fileID: 179236721}
   m_Layer: 5
   m_Name: Continue
   m_TagString: Untagged
@@ -1185,6 +1186,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179236716}
   m_CullTransparentMesh: 1
+--- !u!114 &179236721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179236716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74e51261287a84bbb338eab53b4503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.1
+    value: 0
+    startValue: 1
+    endValue: 1.5
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  rectTransform: {fileID: 179236717}
 --- !u!1 &246769390
 GameObject:
   m_ObjectHideFlags: 0
@@ -4231,6 +4278,7 @@ GameObject:
   - component: {fileID: 931541103}
   - component: {fileID: 931541102}
   - component: {fileID: 931541101}
+  - component: {fileID: 931541104}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -4351,6 +4399,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 931541099}
   m_CullTransparentMesh: 1
+--- !u!114 &931541104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931541099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74e51261287a84bbb338eab53b4503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.1
+    value: 0
+    startValue: 1
+    endValue: 1.5
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  rectTransform: {fileID: 931541100}
 --- !u!1 &936136832
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,6 +4555,7 @@ GameObject:
   - component: {fileID: 945724591}
   - component: {fileID: 945724590}
   - component: {fileID: 945724589}
+  - component: {fileID: 945724592}
   m_Layer: 5
   m_Name: 'Exit '
   m_TagString: Untagged
@@ -4581,6 +4676,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945724587}
   m_CullTransparentMesh: 1
+--- !u!114 &945724592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945724587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74e51261287a84bbb338eab53b4503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.1
+    value: 0
+    startValue: 1
+    endValue: 1.5
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  rectTransform: {fileID: 945724588}
 --- !u!1 &992072596
 GameObject:
   m_ObjectHideFlags: 0
@@ -5320,6 +5461,7 @@ GameObject:
   - component: {fileID: 1247364898}
   - component: {fileID: 1247364901}
   - component: {fileID: 1247364900}
+  - component: {fileID: 1247364902}
   - component: {fileID: 1247364899}
   m_Layer: 5
   m_Name: New Game
@@ -5441,6 +5583,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247364897}
   m_CullTransparentMesh: 1
+--- !u!114 &1247364902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247364897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74e51261287a84bbb338eab53b4503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.1
+    value: 0
+    startValue: 1
+    endValue: 1.5
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  rectTransform: {fileID: 1247364898}
 --- !u!1 &1300148043
 GameObject:
   m_ObjectHideFlags: 0
@@ -7224,6 +7412,7 @@ GameObject:
   - component: {fileID: 1950358874}
   - component: {fileID: 1950358873}
   - component: {fileID: 1950358872}
+  - component: {fileID: 1950358875}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -7344,6 +7533,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950358870}
   m_CullTransparentMesh: 1
+--- !u!114 &1950358875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950358870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff74e51261287a84bbb338eab53b4503, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.1
+    value: 0
+    startValue: 1
+    endValue: 1.5
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  rectTransform: {fileID: 1950358871}
 --- !u!1 &1954975342
 GameObject:
   m_ObjectHideFlags: 0
