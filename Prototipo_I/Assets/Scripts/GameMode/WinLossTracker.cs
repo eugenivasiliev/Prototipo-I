@@ -5,6 +5,7 @@ using Farm;
 using Objectives;
 using UnityEngine;
 using TowerDefense;
+using Combat;
 
 namespace GameMode {
     public class WinLossTracker : MonoBehaviour
@@ -14,6 +15,7 @@ namespace GameMode {
         [SerializeField] private ObjectivesManager objectivesManager;
 
         [Header("Loss")]
+        [SerializeField] private Base home;
         [SerializeField] private LossConditionUI loss;
         [SerializeField] private EnemyManager enemyManager;
         [SerializeField] private Transform plots;
@@ -29,7 +31,7 @@ namespace GameMode {
             if(objectivesManager.AllObjectivesComplete())
                 win.gameObject.SetActive(true);
 
-            if (Base.instance.Health < 5.0f)
+            if (home != null && ((IDamageable)home).Health < 5)
                 loss.gameObject.SetActive(true);            
         }
 
