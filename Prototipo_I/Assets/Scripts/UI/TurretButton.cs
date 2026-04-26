@@ -11,26 +11,27 @@ namespace UI
 
         public TowerMenu tm;
         public TowerData td;
-
-        void Start()
-        {
-
-        }
+        public GameObject descriptionUI;
+        [SerializeField, Range(0, 1000)] private float descriptionVerticalOffset;
 
         public void OnPointerExit(PointerEventData eventData)
         {
             ResetRange();
-
-
             tm.EraseTowerDescription();
+            descriptionUI.SetActive(false);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            spotReference.SetRange(15.0f);
+            spotReference.SetRange(td.range);
+            spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
 
             tm.LoadTowerDescription(td);
+
+            descriptionUI.SetActive(true);
+            descriptionUI.GetComponent<RectTransform>().position = 
+                this.GetComponent<RectTransform>().position + Vector3.up * descriptionVerticalOffset;
         }
 
         private void OnDisable()

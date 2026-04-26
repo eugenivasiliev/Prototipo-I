@@ -8,14 +8,14 @@ namespace TowerDefense
 {
     public class Windmill : Tower
     {
-        private UnityEvent<float> Give = new UnityEvent<float>();
+        private System.Action<float> Give;
 
         [SerializeField] private List<Plot> plots = new List<Plot>();
 
         private void Start()
         {
-            Give.AddListener(AddSeeds);
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+            Give += AddSeeds;
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -31,7 +31,7 @@ namespace TowerDefense
             foreach (Plot plot in plots)
                 if (plot.IsPlanted) Inventory.Inventory.Instance.AddSeeds(1);
             
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
     }
 }

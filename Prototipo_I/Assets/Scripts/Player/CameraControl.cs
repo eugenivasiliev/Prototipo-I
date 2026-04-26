@@ -6,15 +6,24 @@ namespace Player
 {
     public class CameraControl : TweenMovement
     {
+
         [SerializeField] private PlayerController player;
 
         [SerializeField] private Vector3 nearOffset;
+        public Vector3 NearOffset { get { return nearOffset; } }
+
         [SerializeField] private Vector3 farOffset;
+        public Vector3 FarOffset { get { return farOffset; } }
         [SerializeField] private Vector3 currentOffset;
+        public Vector3 savedPosition;
         [SerializeField] private Quaternion rotationOffset = Quaternion.identity;
 
         private InputSystem_Actions inputs;
         [SerializeField] private Vector2 lookInput;
+
+        public bool forcedTweenMovement = false;
+        public Vector3 targetTweenPosition = Vector3.zero;
+        [SerializeField, Range(0, 1f)] private float forcedTweenTolerance;
 
         [Header("Settings")]
         [SerializeField] private float cameraSensibility = 7.5f;
@@ -22,7 +31,7 @@ namespace Player
 
         override protected void Start()
         {
-            inputs = PlayerController.Inputs;
+            inputs = player.Inputs;
 
             this.transform.position = player.transform.position + farOffset;
             currentOffset = farOffset;
@@ -39,33 +48,56 @@ namespace Player
 
         void Update()
         {
-            if (PlayerController.MovementLocked) return;
-
-            float mouseX = lookInput.x * cameraSensibility;
-            Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
-            rotationOffset *= q;
-            player.transform.rotation *= q;
-
-            float scroll = Mouse.current.scroll.ReadValue().y;
-
-            if(scroll != 0f)
+            if (forcedTweenMovement)
             {
-                TweenUtil.Update(scroll * scrollSensibility, ref xAxis);
-                TweenUtil.Update(scroll * scrollSensibility, ref yAxis);
-                TweenUtil.Update(scroll * scrollSensibility, ref zAxis);
-            }
+                Debug.Log("moving");
 
-            currentOffset = new Vector3(
+                float direction = Mathf.Sign(currentOffset.y - targetTweenPosition.y);
+
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref xAxis);
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref yAxis);
+                TweenUtil.Update(direction * Time.unscaledDeltaTime, ref zAxis);
+
+                currentOffset = new Vector3(
                 xAxis.value * nearOffset.x + (1 - xAxis.value) * farOffset.x,
                 yAxis.value * nearOffset.y + (1 - yAxis.value) * farOffset.y,
                 zAxis.value * nearOffset.z + (1 - zAxis.value) * farOffset.z
                 );
 
+                this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
+                this.transform.LookAt(player.transform);
+
+                if ((targetTweenPosition - currentOffset).sqrMagnitude <= forcedTweenTolerance)
+                {
+                    forcedTweenMovement = false;
+                }
+            }
+
+            if (player.MovementLocked) return;
+
+            float mouseX = lookInput.x * cameraSensibility;
+            Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
+            rotationOffset *= q;
+
+            //float scroll = -Mouse.current.scroll.ReadValue().y;
+
+            //if(scroll != 0f)
+            //{
+            //    TweenUtil.Update(scroll * scrollSensibility, ref xAxis);
+            //    TweenUtil.Update(scroll * scrollSensibility, ref yAxis);
+            //    TweenUtil.Update(scroll * scrollSensibility, ref zAxis);
+            //}
+
+            //currentOffset = new Vector3(
+            //    xAxis.value * nearOffset.x + (1 - xAxis.value) * farOffset.x,
+            //    yAxis.value * nearOffset.y + (1 - yAxis.value) * farOffset.y,
+            //    zAxis.value * nearOffset.z + (1 - zAxis.value) * farOffset.z
+            //    );
+
             this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
-            this.transform.LookAt(
-                this.transform.position + player.transform.forward //Forward pointing
-                - Vector3.up * (1 - yAxis.value) //Vertical pointing
-                , Vector3.up);
+            this.transform.LookAt(player.transform);
         }
+
+        public void SavePosition() => savedPosition = currentOffset;
     }
 }

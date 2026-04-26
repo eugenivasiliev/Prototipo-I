@@ -8,10 +8,12 @@ namespace TowerDefense
     {
         public string Name;
         public string Description;
-        public float range = 15.0f;
+        public float range = 0.0f;
         public GameObject[] stages;
 
         public int cost;
+        public int damage = 0;
+        public bool hasAOE = false;
 
         public string Id => throw new NotImplementedException();
 

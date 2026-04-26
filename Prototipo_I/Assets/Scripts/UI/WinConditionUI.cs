@@ -7,7 +7,8 @@ namespace GameMode
     public class WinConditionUI : MonoBehaviour
     {
         [SerializeField] private Tween<float> popupTween;
-
+        [SerializeField] private string nextScene;
+        private float waitTime = 2.5f;
         void Start()
         {
             popupTween.SetActive(true);
@@ -22,8 +23,8 @@ namespace GameMode
         }
         public IEnumerator Leave()
         {
-            yield return new WaitForSeconds(2.5f);
-            SceneManager.LoadScene("MainMenu");
+            yield return new WaitForSeconds(waitTime);
+            SceneManager.LoadScene(nextScene);
         }
     }
 }

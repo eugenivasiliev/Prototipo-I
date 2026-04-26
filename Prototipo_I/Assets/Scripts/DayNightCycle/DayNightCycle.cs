@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
-using TimedEvent = UnityEngine.Events.UnityEvent<float>;
+using TimedEvent = System.Action<float>;
 using Utils;
 
 namespace Utils

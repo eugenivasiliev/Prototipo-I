@@ -7,27 +7,30 @@ using Utils;
 
 namespace TowerDefense
 {
-    public class TowerSpot : MonoBehaviour, IInteractable
+    public class TowerSpot : MonoBehaviour, IInteractable, IContexted
     {
 
         [SerializeField] private TowerData towerData;
 
         [SerializeField] private GameObject currentTower;
+        
+        [SerializeField] private GameObject contextButton;
+        
+        [SerializeField] private GameObject beam;
+
+        [SerializeField] private GameObject particles;
 
         public bool hasTower { get { return towerData != null; } }
 
-        private GameObject range;
+        [SerializeField] private GameObject range;
+        [SerializeField] private TowerDecalDB decalDB;
+        private string towerDecalName;
+        private GameObject towerDecal;
 
         [SerializeField] private TowerMenu tm;
 
         [SerializeField] private TowerData.TowerType towerType;
         public TowerData.TowerType TowerType { get { return towerType; } }
-
-        private void Start()
-        {
-            if (this.transform.GetChild(0) != null)
-                range = this.transform.GetChild(0).gameObject;
-        }
 
         public void PlaceTower(string dataName)
         {
@@ -36,6 +39,9 @@ namespace TowerDefense
 
             towerData = DBManager.Instance.TowerDB[dataName];
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
+
+            beam.SetActive(false);
+            particles.SetActive(false);
         }
 
         public void PlaceTower(TowerData data)
@@ -48,10 +54,17 @@ namespace TowerDefense
             towerData = data;
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-            float r = currentTower.GetComponent<Tower>().GetRange();
-            SetRange(r);
-
+            if (currentTower.GetComponent<Tower>())
+            {
+                float r = currentTower.GetComponent<Tower>().GetRange();
+                SetRange(r);
+            }
             tm.ToggleMenu();
+        
+            Destroy(contextButton);
+            Destroy(range);
+            beam.SetActive(false);
+            particles.SetActive(false);
         }
 
         private void OnTowerUpgraded(int level)
@@ -73,21 +86,29 @@ namespace TowerDefense
             if (hasTower) return;
             tm.spotReference = this;
             tm.ToggleMenu();
+
         }
 
         public void SetRange(float dist)
         {
-            range.transform.localScale = new Vector3(dist * 4, dist * 4, dist * 4);
+            range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
         }
 
-        public void ShowRange(bool bo)
+        public void SetDecal(string decalName) => towerDecalName = decalName;
+
+        public void ShowRange(bool state)
         {
-            range.SetActive(bo);
+            if (range)
+                range.SetActive(state);
+            if (state)
+                towerDecal = Instantiate(decalDB[towerDecalName], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), this.transform);
+            else
+                Destroy(towerDecal);
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player") ShowRange(true);
+            //if (other.tag == "Player") ShowRange(true);
         }
         private void OnTriggerExit(Collider other)
         {
@@ -95,5 +116,7 @@ namespace TowerDefense
         }
 
         public void OnInteract() { }
+
+        public bool ContextKeyActive() => !hasTower;
     }
 }

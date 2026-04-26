@@ -46,7 +46,7 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -55,7 +55,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "f1ba0d36-48eb-4cd5-b651-1c94a6531f70",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -73,7 +73,7 @@
                     "name": "Next",
                     "type": "Button",
                     "id": "b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -214,7 +214,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Countdown",
+                    "name": "wave_menu",
                     "type": "Button",
                     "id": "c2644a79-e306-4545-a0d9-449776ac5d0c",
                     "expectedControlType": "",
@@ -262,6 +262,24 @@
                     "name": "debug",
                     "type": "Button",
                     "id": "bbc1dcdc-7cfc-4d7d-b042-ad3c8e18c7a2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Show_Wave_UI",
+                    "type": "Button",
+                    "id": "cead5d57-2115-4840-8096-251d879438d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "close_menu",
+                    "type": "Button",
+                    "id": "38bde4e0-3882-4284-a028-4b8d2b813e39",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -407,7 +425,7 @@
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": ";Joystick",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -623,17 +641,6 @@
                 },
                 {
                     "name": "",
-                    "id": "b3f66d0b-7751-423f-908b-a11c5bd95930",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "4f4649ac-64a8-4a73-af11-b3faef356a4d",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -678,11 +685,33 @@
                 },
                 {
                     "name": "",
+                    "id": "5a0e006f-e8ca-4859-99dc-f7bd89a0122c",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "plant",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a4731b09-5902-44b9-a319-794abba7beb3",
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "fertilize",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83a2e962-a8d6-41fc-8d85-e8c34cc3c5d2",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "fertilize",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -810,19 +839,52 @@
                 },
                 {
                     "name": "",
+                    "id": "9000ceab-1205-47aa-8437-09c2add459f7",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f5372c13-3e24-4a8a-9bba-9e22ae1549a7",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Countdown",
+                    "action": "wave_menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1d04c356-ab6f-466c-aad1-ca8da540a805",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "wave_menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "969aaa81-0a53-4e12-8427-0fe366a85534",
-                    "path": "<Keyboard>/l",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "place_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7327f61-202f-418c-86e9-05bc5fdc5c61",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -833,10 +895,21 @@
                 {
                     "name": "",
                     "id": "8312d9d4-ee92-4d79-b316-4c4e5cf157f5",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "refill_tower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "edd49023-b47c-4ed2-9caf-85e098d6fe13",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "refill_tower",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -848,6 +921,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "objectives_toggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "085ddf51-f7d2-444c-81b7-e65ea8d855d7",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "objectives_toggle",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -871,6 +955,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "debug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b984788f-dad0-4eb8-9433-bc9bc9a91bfc",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Show_Wave_UI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "886dc889-ed0b-4d9a-8b32-afb94a456e24",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "close_menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d619bb9c-1587-433a-a131-8a861076c207",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "close_menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

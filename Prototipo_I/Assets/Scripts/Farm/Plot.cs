@@ -12,10 +12,8 @@ using Utils;
 
 namespace Farm
 {
-    public class Plot : MonoBehaviour, IInteractable, IDamageable
+    public class Plot : MonoBehaviour, IInteractable, IDamageable, IContexted
     {
-        [SerializeField] private HybridationManager hybridationManager;
-
         Plant plant;
         PlantData plantData;
 
@@ -29,6 +27,8 @@ namespace Farm
         public bool IsPlanted { get { return plant != null; } }
 
         [SerializeField] private int health;
+        [SerializeField] private GameObject contextCollider;
+        [SerializeField] private GameObject beam;
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
 
@@ -89,6 +89,9 @@ namespace Farm
             this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
             Inventory.Inventory.Instance.RemoveSeeds(1);
             plant.TryGrow(DayNightCycle.Instance.TotalTime);
+
+            contextCollider.SetActive(false);
+            beam.SetActive(false);
         }
 
         public void FullGrow()
@@ -110,5 +113,9 @@ namespace Farm
             healthHolder.gameObject.SetActive(true);
             healthHolder.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
         }
+
+        public void OnDamage() {}
+
+        public bool ContextKeyActive() => !IsPlanted;
     }
 }

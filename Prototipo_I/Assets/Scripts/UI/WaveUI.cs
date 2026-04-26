@@ -1,32 +1,57 @@
 using Enemies;
+using Player;
 using System.Collections.Generic;
-using Trading;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
+using static Enemies.WaveDB;
 
 namespace UI
 {
-    public class WaveUI : MonoBehaviour
+    public class WaveUI : MonoBehaviour, IContexted
     {
-        public void Start()
-        {
-            this.gameObject.SetActive(false);
-            
-        }
+        [SerializeField] private EnemyManager enemyManager;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private Canvas ui;
 
-        private void Update()
+        [SerializeField] private MeshRenderer[] highlitedParts;
+
+        private bool isOpen = false;
+        public bool IsOpen() { return isOpen; }
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.Escape)) {
-                WaveManager.Instance.ToggleWaveUI();
+            if (SceneManager.GetSceneName() != "Tutorial")
+            {
+                InputSystem.actions.FindAction("wave_menu").started += ctx => { ToggleWaveUI(); };
+                InputSystem.actions.FindAction("close_menu").started += ctx => { if (isOpen) ToggleWaveUI(); };
             }
         }
 
         public void ClickWave()
         {
-            WaveManager.Instance.StartWave();
-            WaveManager.Instance.ToggleWaveUI();
+            ToggleWaveUI();
+            DayNightCycle.Instance.PassTime();
+
+            ToggleShiny();
         }
 
+        public void ToggleWaveUI()
+        {
+            if (enemyManager.IsWaveActive) return;
+
+            isOpen = !isOpen;
+            Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isOpen;
+            ui.gameObject.SetActive(isOpen);
+            Time.timeScale = (isOpen) ? 0f : 1f;
+            playerController.MovementLocked = isOpen;
+        }
+
+        public void ToggleShiny() { 
+            //
+        }
+
+        public bool ContextKeyActive() => !enemyManager.IsWaveActive;
     }
 }
