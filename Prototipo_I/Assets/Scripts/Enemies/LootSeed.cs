@@ -25,6 +25,7 @@ namespace Enemies
             if (other.tag != "Player") return;
 
             Inventory.Inventory.Instance.AddSeeds(1);
+            SeedPickupUI.Instance.SeedPickedUp();
             Instantiate(collectionParticles, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
