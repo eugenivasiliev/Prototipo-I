@@ -9,11 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 252742664067782761}
-  - component: {fileID: 7068248714908192521}
   - component: {fileID: 5089493264917860335}
   - component: {fileID: 8561385271031844761}
   - component: {fileID: 4488990721250893826}
   - component: {fileID: 4419768033295176081}
+  - component: {fileID: 6689878181451612503}
+  - component: {fileID: 7330932770888809761}
   m_Layer: 0
   m_Name: Seed
   m_TagString: Untagged
@@ -36,123 +37,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7068248714908192521
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4694494138638134153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6458dc93a2f4b84ebee10a9b32b5699, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xAxis:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    t: 0
-    duration: 1
-    value: 0
-    startValue: 0
-    endValue: 0
-    isActive: 0
-    isReversing: 0
-  yAxis:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 2.0147722
-        outSlope: 2.0147722
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 1
-      - serializedVersion: 3
-        time: 0.5
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.9979836
-        value: 0.0033007911
-        inSlope: -2.0081441
-        outSlope: -2.0081441
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 1
-        outWeight: 0
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 4
-    t: 0
-    duration: 1
-    value: 0
-    startValue: 0
-    endValue: 0
-    isActive: 0
-    isReversing: 0
-  zAxis:
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 1
-        outSlope: 1
-        tangentMode: 34
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    t: 0
-    duration: 1
-    value: 0
-    startValue: 0
-    endValue: 0
-    isActive: 0
-    isReversing: 0
 --- !u!33 &5089493264917860335
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -185,6 +69,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a944f86cb3fd68f42b89766c7ede1127, type: 2}
+  - {fileID: 2100000, guid: cdb5887439f5cc14ab1aa2e19050f02f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -219,13 +104,13 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.28892216
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0.023729343, z: 0.080746636}
 --- !u!114 &4419768033295176081
 MonoBehaviour:
@@ -239,3 +124,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be829fa389e62b040b40e79fcb053033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forceRange: 300
+  collectionParticles: {fileID: 4065207414125692444, guid: d104344e84b3cde4496f031917d8d001, type: 3}
+--- !u!54 &6689878181451612503
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694494138638134153}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!65 &7330932770888809761
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4694494138638134153}
+  m_Material: {fileID: 13400000, guid: dea535d439450964180ba67969045c3a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 152
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5778443, y: 0.2736987, z: 0.44725093}
+  m_Center: {x: 0, y: 0.023729343, z: 0.080746636}

@@ -1,3 +1,4 @@
+using TMPro;
 using TowerDefense;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,24 +12,37 @@ namespace UI
 
         public TowerMenu tm;
         public TowerData td;
+        [Header("Description")]
         public GameObject descriptionUI;
+        [SerializeField] private TMP_Text descriptionText;
+        [SerializeField] private GameObject cost;
+        [SerializeField] private TMP_Text costText;
+        [SerializeField] private TMP_Text damageText;
+        [SerializeField] private TMP_Text rangeText;
+        [SerializeField, Range(0, 1000)] private float verticalOffset;
         [SerializeField, Range(0, 1000)] private float descriptionVerticalOffset;
 
         public void OnPointerExit(PointerEventData eventData)
         {
             ResetRange();
-            tm.EraseTowerDescription();
+            this.GetComponent<RectTransform>().position -= Vector3.up * verticalOffset;
             descriptionUI.SetActive(false);
+            cost.SetActive(false);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             spotReference.SetRange(td.range);
+            spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
 
-            tm.LoadTowerDescription(td);
-
             descriptionUI.SetActive(true);
+            cost.SetActive(true);
+            descriptionText.text = td.Description;
+            costText.text = td.cost.ToString();
+            damageText.text = td.damage.ToString();
+            rangeText.text = td.range.ToString();
+            this.GetComponent<RectTransform>().position += Vector3.up * verticalOffset;
             descriptionUI.GetComponent<RectTransform>().position = 
                 this.GetComponent<RectTransform>().position + Vector3.up * descriptionVerticalOffset;
         }

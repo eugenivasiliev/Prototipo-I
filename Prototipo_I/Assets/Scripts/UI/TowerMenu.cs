@@ -12,7 +12,6 @@ namespace UI
     {
         [SerializeField] private GameObject towerMenuPanel;
         private GridLayoutGroup towerMenuGrid;
-        [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
 
         [SerializeField] private PlayerController playerController;
@@ -29,7 +28,18 @@ namespace UI
         {
             towerMenuPanel.SetActive(false);
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
-            towerMenuIngredients.SetActive(false);
+        }
+
+        private int MinCost()
+        {
+            int minCost = int.MaxValue;
+            foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
+                if(minCost >= data.cost)
+                    minCost = data.cost;
+
+            Debug.Log(minCost);
+
+            return minCost;
         }
 
         private void LoadValidTowers()
@@ -43,10 +53,8 @@ namespace UI
                     GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
                     instance.GetComponent<Image>().sprite = data.uiSprite;
                     instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
-                    instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
 
                     TurretButton turretButton = instance.GetComponent<TurretButton>();
-                    turretButton.descriptionUI = towerMenuIngredients;
                     turretButton.spotReference = spotReference;
                     turretButton.range = data.range;
                     turretButton.tm = this;
@@ -55,28 +63,16 @@ namespace UI
             }
         }
 
-        public void LoadTowerDescription(TowerData td)
-        {
-            towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
-        }
-
-        public void EraseTowerDescription()
-        {
-            towerMenuIngredients.SetActive(false);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = "";
-        }
-
         public void ToggleMenu()
         {
+            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
             towerMenuPanel.SetActive(isOpen);
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
-
-            EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
 
@@ -87,7 +83,7 @@ namespace UI
             } else
             {
                 cameraController.forcedTweenMovement = true;
-                cameraController.targetTweenPosition = cameraController.savedPosition;
+                cameraController.targetTweenPosition = cameraController.FarOffset;
             }
         }
 
