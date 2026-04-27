@@ -10,6 +10,8 @@ namespace Enemies
         protected EnemyAI.Blackboard bb;
         public EnemyAI.Blackboard BB { get => bb; set => bb = value; }
 
+        public virtual void OnEnter() {}
+        public virtual void OnExit() {}
         public abstract void Behaviour();
     }
 }

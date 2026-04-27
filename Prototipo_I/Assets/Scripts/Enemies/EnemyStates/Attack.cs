@@ -6,6 +6,16 @@ namespace Enemies
 {
     public class Attack : EnemyState
     {
+        public override void OnEnter()
+        {
+            enemy.Animator.SetBool("IsAttacking", true);
+        }
+
+        public override void OnExit()
+        {
+            enemy.Animator.SetBool("IsAttacking", false);
+        }
+
         public override void Behaviour()
         {
             if (bb.targetTransform == null) return;

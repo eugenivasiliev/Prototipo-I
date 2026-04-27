@@ -15,6 +15,8 @@ namespace UI
         [SerializeField] private PlayerController playerController;
         [SerializeField] private Canvas ui;
 
+        [SerializeField] private MeshRenderer[] highlitedParts;
+
         private bool isOpen = false;
         public bool IsOpen() { return isOpen; }
         private void Start()
@@ -30,6 +32,8 @@ namespace UI
         {
             ToggleWaveUI();
             DayNightCycle.Instance.PassTime();
+
+            ToggleShiny();
         }
 
         public void ToggleWaveUI()
@@ -42,6 +46,10 @@ namespace UI
             ui.gameObject.SetActive(isOpen);
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
+        }
+
+        public void ToggleShiny() { 
+            //
         }
 
         public bool ContextKeyActive() => !enemyManager.IsWaveActive;

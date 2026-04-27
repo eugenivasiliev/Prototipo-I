@@ -256,7 +256,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  billboards: 0
+  fixedSize: 0
+  cameraBaseDistance: 0
 --- !u!1 &4630232684832050817
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,7 +300,7 @@ GameObject:
   - component: {fileID: 2364767506637235391}
   - component: {fileID: 2312738860307825253}
   - component: {fileID: 959188969571852693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DefaultTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -321,6 +322,7 @@ Transform:
   m_Children:
   - {fileID: 4581919015937944692}
   - {fileID: 586719443477670982}
+  - {fileID: 6966321320895480747}
   - {fileID: 5324370993818266660}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -561,6 +563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: canonzanahoria_PF
       objectReference: {fileID: 0}
+    - target: {fileID: 106909739270527415, guid: 4cffa37ed167b2347aade651df76bd66, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5841174092114319887, guid: 4cffa37ed167b2347aade651df76bd66, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.0607
@@ -655,4 +661,70 @@ Animator:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5841174092114319887, guid: 4cffa37ed167b2347aade651df76bd66, type: 3}
   m_PrefabInstance: {fileID: 1798048776789571115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4646606308584924948
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2364767506637235391}
+    m_Modifications:
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947208457080571333, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_Name
+      value: DefaultTowerDecal
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947208457080571333, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+--- !u!4 &6966321320895480747 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2364767506637235391, guid: 14a07fe70f1d8c148af8aabe3f84d063, type: 3}
+  m_PrefabInstance: {fileID: 4646606308584924948}
   m_PrefabAsset: {fileID: 0}

@@ -56,7 +56,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 69981e04b76cfb34dbac9f34585aa347, type: 2}
+  - {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
+  - {fileID: 2100000, guid: 0aba698e47bcb7c45b97c3a2100b7dd8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,8 +100,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417815242883439176}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 62bb45951ade13940996765f9099696c, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+  m_Controller: {fileID: 9100000, guid: ef488590356418d47a4655d46d6c0e45, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -188,11 +189,15 @@ MonoBehaviour:
   difficulty: 1
   speed: 5
   slowSpeed: 1
+  matHolder: {fileID: 4828132213817753355}
+  blinkMat: {fileID: 2100000, guid: b45e54790b4a52749b3f983f2c58ae5f, type: 2}
+  originalMat: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
+  blinkTime: 0.2
   droppableLoot:
   - gameObject: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
     rate: 1
-  minItemsDropped: 3
-  maxItemsDropped: 3
+  minItemsDropped: 1
+  maxItemsDropped: 1
   dropRadius: 2
   dropHeight: 2
   bb:
@@ -207,6 +212,7 @@ MonoBehaviour:
   alembicStreamPlayer: {fileID: 0}
   animator: {fileID: 4804224139920288922}
   isDying: 0
+  deathAnim: {fileID: 1145948381123686574, guid: 5e37939ecb9c8ee409a93597e2c5fe9b, type: 3}
 --- !u!195 &7620956390719517439
 NavMeshAgent:
   m_ObjectHideFlags: 0
