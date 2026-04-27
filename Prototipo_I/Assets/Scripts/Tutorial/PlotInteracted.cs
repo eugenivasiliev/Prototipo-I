@@ -16,6 +16,8 @@ public class PlotInteracted : MonoBehaviour
             waitDialogue.SetActive(true);
             console.SetActive(true);
             dullConsole.SetActive(false);
+
+            Destroy(this);
         }
     }
 }
