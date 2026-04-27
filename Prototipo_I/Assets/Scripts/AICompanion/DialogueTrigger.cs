@@ -6,10 +6,10 @@ namespace AICompanion
 {
     public class DialogueTrigger : MonoBehaviour
     {
-        private float time = 5.0f;
+        [SerializeField] private int time;
         private PlayerController playerController;
         [SerializeField] private string dialogueId;
-        [SerializeField] private bool shouldStop;
+        
         [SerializeField] private GameObject wall;
 
         private void OnTriggerEnter(Collider other)
@@ -17,26 +17,18 @@ namespace AICompanion
             if (other.tag == "Player") { 
                 AICompanionDialogueUI.Instance.DisplayTextById(dialogueId);
 
-                if (shouldStop) 
-                    StartCoroutine(StopForATime(other));
+                ActivateNextTutorial();
             }
 
         }
 
 
 
-        IEnumerator StopForATime(Collider c)
-        {
-            c.GetComponent<PlayerController>().MovementLocked = true;
+
+        IEnumerator ActivateNextTutorial() {
 
             yield return new WaitForSeconds(time);
-            
-            c.GetComponent<PlayerController>().MovementLocked = false;
 
-            ActivateNextTutorial();
-        }
-
-        void ActivateNextTutorial() {
             Destroy(gameObject);
 
             if (wall != null)
