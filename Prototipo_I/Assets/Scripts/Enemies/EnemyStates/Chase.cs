@@ -31,8 +31,7 @@ namespace Enemies
                         }
                         break;
                     case EnemyAI.Target.Home:
-                        //bb.targetTransform = bb.homeTransform;
-                        bb.targetTransform = Base.instance.transform;
+                        bb.targetTransform = bb.homeTransform;
                         float _minDistance = 5.0f;
 
                         foreach (var plot in bb.plots)

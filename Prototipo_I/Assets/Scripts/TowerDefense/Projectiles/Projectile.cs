@@ -57,6 +57,10 @@ namespace TowerDefense
 
             this.transform.position = new Vector3(xAxis.value, yAxis.value, zAxis.value);
 
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, 0.1f, 0.0f);
+
+            this.transform.rotation = Quaternion.LookRotation(newDirection);
+
             if (xAxis.t >= xAxis.duration - hitTolerance)
                 HitTarget();
         }
