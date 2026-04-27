@@ -17,6 +17,7 @@ namespace Enemies
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
+        public int TotalWaves { get { return waveDB.Waves.Count; } }
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -34,8 +35,6 @@ namespace Enemies
         private UnityEvent<float> Return = new UnityEvent<float>();
 
         [SerializeField] private EnemyAI.Blackboard bb;
-
-        [SerializeField] private WaveStartedUI waveStartedUI;
 
         void Start()
         {
@@ -95,8 +94,6 @@ namespace Enemies
         private void SpawnEnemies(float t)
         {
             isWaveActive = true;
-
-            waveStartedUI.Play();
 
             if (allEnemies.Count > 0)
             {
