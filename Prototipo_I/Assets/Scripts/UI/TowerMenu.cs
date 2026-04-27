@@ -12,7 +12,6 @@ namespace UI
     {
         [SerializeField] private GameObject towerMenuPanel;
         private GridLayoutGroup towerMenuGrid;
-        [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
 
         [SerializeField] private PlayerController playerController;
@@ -29,7 +28,6 @@ namespace UI
         {
             towerMenuPanel.SetActive(false);
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
-            towerMenuIngredients.SetActive(false);
         }
 
         private void LoadValidTowers()
@@ -43,31 +41,14 @@ namespace UI
                     GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
                     instance.GetComponent<Image>().sprite = data.uiSprite;
                     instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
-                    instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
 
                     TurretButton turretButton = instance.GetComponent<TurretButton>();
-                    turretButton.descriptionUI = towerMenuIngredients;
                     turretButton.spotReference = spotReference;
                     turretButton.range = data.range;
                     turretButton.tm = this;
                     turretButton.td = data;
                 }
             }
-        }
-
-        public void LoadTowerDescription(TowerData td)
-        {
-            towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text =
-                td.cost.ToString() + '\n' +
-                td.damage.ToString() + '\n' +
-                td.range;
-        }
-
-        public void EraseTowerDescription()
-        {
-            towerMenuIngredients.SetActive(false);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = "";
         }
 
         public void ToggleMenu()
@@ -80,8 +61,6 @@ namespace UI
             towerMenuPanel.SetActive(isOpen);
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
-
-            EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
 
