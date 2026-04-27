@@ -40,8 +40,8 @@ namespace TowerDefense
             towerData = DBManager.Instance.TowerDB[dataName];
             currentTower = Instantiate(towerData.stages[0], transform.position + new Vector3(0, 1.0f, 0), Quaternion.Euler(0, 0, 0), transform);
 
-            Destroy(beam);
-            Destroy(particles);
+            beam.SetActive(false);
+            particles.SetActive(false);
         }
 
         public void PlaceTower(TowerData data)
@@ -63,8 +63,8 @@ namespace TowerDefense
         
             Destroy(contextButton);
             Destroy(range);
-            Destroy(beam);
-            Destroy(particles);
+            beam.SetActive(false);
+            particles.SetActive(false);
         }
 
         private void OnTowerUpgraded(int level)
