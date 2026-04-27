@@ -676,6 +676,7 @@ GameObject:
   - component: {fileID: 2515481284298199559}
   - component: {fileID: 2999983615101688694}
   - component: {fileID: 5823691907241179502}
+  - component: {fileID: 8255400105359870944}
   m_Layer: 5
   m_Name: Label
   m_TagString: Untagged
@@ -745,6 +746,46 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: FullScreen
 --- !u!114 &5823691907241179502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1587468593587119441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
+    m_TableEntryReference:
+      m_KeyId: 10679377076224
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2999983615101688694}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &8255400105359870944
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1725,7 +1766,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
     m_TableEntryReference:
-      m_KeyId: 55497767657472
+      m_KeyId: 247610740449280
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -2212,7 +2253,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
     m_TableEntryReference:
-      m_KeyId: 53374095073280
+      m_KeyId: 246934920634368
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
@@ -2391,7 +2432,7 @@ MonoBehaviour:
     m_TableReference:
       m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
     m_TableEntryReference:
-      m_KeyId: 52963682426880
+      m_KeyId: 246509165223936
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0
