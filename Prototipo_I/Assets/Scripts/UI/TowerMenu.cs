@@ -30,6 +30,18 @@ namespace UI
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
         }
 
+        private int MinCost()
+        {
+            int minCost = int.MaxValue;
+            foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
+                if(minCost >= data.cost)
+                    minCost = data.cost;
+
+            Debug.Log(minCost);
+
+            return minCost;
+        }
+
         private void LoadValidTowers()
         {
             foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
@@ -53,7 +65,7 @@ namespace UI
 
         public void ToggleMenu()
         {
-            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds()) return;
+            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
 
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
