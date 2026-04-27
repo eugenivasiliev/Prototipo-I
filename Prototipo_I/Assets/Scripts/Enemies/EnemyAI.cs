@@ -64,8 +64,7 @@ namespace Enemies
         [SerializeField] protected float speed;
         [SerializeField] protected float slowSpeed;
         private bool aboutToDie = false;
-        [SerializeField] private SkinnedMeshRenderer matHolder;
-        [SerializeField] private MeshRenderer otherMatHolder;
+        [SerializeField] private Renderer matHolder;
         [SerializeField] private Material blinkMat;
         [SerializeField] private Material originalMat;
         [SerializeField] private float blinkTime;
@@ -247,10 +246,7 @@ namespace Enemies
             ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
 
 
-            if (otherMatHolder == null)
-                StartCoroutine(TurnRed());
-            else
-                StartCoroutine(OtherTurnRed());
+            StartCoroutine(TurnRed());
         }
 
         public void OnDamage()
@@ -295,13 +291,7 @@ namespace Enemies
             yield return new WaitForSeconds(blinkTime);
             matHolder.material = originalMat;
         }
-        IEnumerator OtherTurnRed()
-        {
-            if (!otherMatHolder) yield break;
-            otherMatHolder.material = blinkMat;
-            yield return new WaitForSeconds(blinkTime);
-            otherMatHolder.material = originalMat;
-        }
+
     }
 
 }
