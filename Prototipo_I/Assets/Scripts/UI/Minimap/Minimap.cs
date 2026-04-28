@@ -56,7 +56,7 @@ public class Minimap : MonoBehaviour
     {
         PlaceInMap(background);
         PlaceInMap(player);
-        PlaceInMap(house);
+        //PlaceInMap(house);
         for (int i = 0; i < enemies.Count; i++)
         {
             while (enemies[i].reference == null)
