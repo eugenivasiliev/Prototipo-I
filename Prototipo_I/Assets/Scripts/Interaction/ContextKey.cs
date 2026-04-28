@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 
 namespace Utils
@@ -7,12 +8,15 @@ namespace Utils
     {
         [SerializeField] private GameObject contexted;
         [SerializeField] private GameObject key;
-
+        [SerializeField] private GameObject controllerKey;
         private void OnTriggerEnter(Collider other)
         {
             if (contexted.GetComponent<IContexted>().ContextKeyActive() && other.tag == "Player")
             {
-                key.SetActive(true);
+                if (Gamepad.current != null)
+                    controllerKey.SetActive(true);
+                else 
+                    key.SetActive(true);
             }
         }
         private void OnTriggerExit(Collider other)
@@ -20,6 +24,7 @@ namespace Utils
             if (other.tag == "Player")
             {
                 key.SetActive(false);
+                controllerKey.SetActive(false);
             }
         }
     }
