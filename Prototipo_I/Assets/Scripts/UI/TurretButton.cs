@@ -2,6 +2,7 @@ using TMPro;
 using TowerDefense;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Localization.Settings;
 
 namespace UI
 {
@@ -38,7 +39,12 @@ namespace UI
 
             descriptionUI.SetActive(true);
             cost.SetActive(true);
-            descriptionText.text = td.Description;
+
+            string localizedString = LocalizationSettings.StringDatabase.GetLocalizedString("LocalizarionTableCollection", td.Name);
+
+            descriptionText.text = localizedString;
+
+
             costText.text = td.cost.ToString();
             damageText.text = td.damage.ToString();
             rangeText.text = td.range.ToString();
