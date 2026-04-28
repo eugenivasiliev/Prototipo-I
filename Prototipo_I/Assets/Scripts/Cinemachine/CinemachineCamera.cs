@@ -4,10 +4,12 @@ using Unity.Cinemachine;
 public class CinemachineCamera : MonoBehaviour
 {
     [SerializeField] private GameObject mainCamera;
+
     [SerializeField] private GameObject zone1;
     [SerializeField] private GameObject zone2;
     [SerializeField] private GameObject zone3;
     [SerializeField] private GameObject zone4;
+
     [SerializeField] private float maxTime;
     private float currentTime;
     private CinemachineSplineDolly csd;
@@ -36,7 +38,7 @@ public class CinemachineCamera : MonoBehaviour
             zone2.SetActive(true);
             zone3.SetActive(true);
             zone4.SetActive(true);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
         }
     }
