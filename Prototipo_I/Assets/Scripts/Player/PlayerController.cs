@@ -18,7 +18,9 @@ namespace Player
         [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
         [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
         [SerializeField] private GameObject attackCone;
+        [SerializeField] private bool defaultArmed = false;
         private float currentCooldown = 0.0f;
+        private bool isArmed = false;
 
         [Header("Movement")]
         [SerializeField] private float speed = 35f;        
@@ -26,6 +28,12 @@ namespace Player
         [SerializeField] private Animator anim;
         [SerializeField] private Vector3 targetForward;
         [SerializeField] private float rotationSpeed;
+
+        [Header("Idle")]
+        [SerializeField, Range(0, 60)] private float minIdleChangeSeconds;
+        [SerializeField, Range(0, 60)] private float maxIdleChangeSeconds;
+        private float randomIdleChangeSeconds = 0;
+        private float currentIdleChangeSeconds = 0;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
@@ -70,6 +78,8 @@ namespace Player
             //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            anim.SetBool("Is_Armed", defaultArmed);
 
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
@@ -133,6 +143,23 @@ namespace Player
         {
             if(movementInput.magnitude == 0)
             {
+                currentIdleChangeSeconds += Time.deltaTime;
+
+                anim.SetBool("Idle2", false);
+
+                if (randomIdleChangeSeconds == 0)
+                {
+                    randomIdleChangeSeconds = Random.Range(minIdleChangeSeconds, maxIdleChangeSeconds);
+                    currentIdleChangeSeconds = 0;
+                }
+
+                if (currentIdleChangeSeconds >= randomIdleChangeSeconds)
+                {
+                    randomIdleChangeSeconds = Random.Range(minIdleChangeSeconds, maxIdleChangeSeconds);
+                    currentIdleChangeSeconds = 0;
+                    anim.SetBool("Idle2", true);
+                }
+
                 if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
                 curMovementType = MovementType.IDLE;
@@ -140,52 +167,58 @@ namespace Player
                 return;
             }
 
+            randomIdleChangeSeconds = 0;
+
             AudioManager.Instance.PlaySFXLoop("Running");
 
-            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
-            {
-                //Right-Left axis
-                if (movementInput.x > 0)
-                {
-                    if (curMovementType == MovementType.RIGHT) return;
-                    SetAnimation(MovementType.RIGHT);
-                    curMovementType = MovementType.RIGHT;
-                }
-                else
-                {
-                    if (curMovementType == MovementType.LEFT) return;
-                    SetAnimation(MovementType.LEFT);
-                    curMovementType = MovementType.LEFT;
-                }
-            } else
-            {
-                //Forward-Backward axis
-                if (movementInput.y > 0)
-                {
-                    if (curMovementType == MovementType.FORWARD) return;
-                    SetAnimation(MovementType.FORWARD);
-                    curMovementType = MovementType.FORWARD;
-                }
-                else
-                {
-                    if (curMovementType == MovementType.BACKWARD) return;
-                    SetAnimation(MovementType.BACKWARD);
-                    curMovementType = MovementType.BACKWARD;
-                }
-            }
+            SetAnimation(MovementType.FORWARD);
+
+            //if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
+            //{
+            //    //Right-Left axis
+            //    if (movementInput.x > 0)
+            //    {
+            //        if (curMovementType == MovementType.RIGHT) return;
+            //        SetAnimation(MovementType.RIGHT);
+            //        curMovementType = MovementType.RIGHT;
+            //    }
+            //    else
+            //    {
+            //        if (curMovementType == MovementType.LEFT) return;
+            //        SetAnimation(MovementType.LEFT);
+            //        curMovementType = MovementType.LEFT;
+            //    }
+            //} else
+            //{
+            //    //Forward-Backward axis
+            //    if (movementInput.y > 0)
+            //    {
+            //        if (curMovementType == MovementType.FORWARD) return;
+            //        SetAnimation(MovementType.FORWARD);
+            //        curMovementType = MovementType.FORWARD;
+            //    }
+            //    else
+            //    {
+            //        if (curMovementType == MovementType.BACKWARD) return;
+            //        SetAnimation(MovementType.BACKWARD);
+            //        curMovementType = MovementType.BACKWARD;
+            //    }
+            //}
         }
 
         private void SetAnimation(MovementType direction)
         {
-            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_Walking", false);
             anim.SetBool("Is_R_Backwards", false);
             anim.SetBool("Is_R_Right", false);
             anim.SetBool("Is_R_Left", false);
 
+            curMovementType = direction;
+
             switch (direction)
             {
                 case MovementType.FORWARD:
-                    anim.SetBool("Is_R_Front", true);
+                    anim.SetBool("Is_Walking", true);
                     break;
                 case MovementType.BACKWARD:
                     anim.SetBool("Is_R_Backwards", true);
@@ -281,6 +314,8 @@ namespace Player
         private void ToggleCone(float t)
         {
             attackCone.SetActive(!attackCone.activeSelf);
+            isArmed = !isArmed;
+            anim.SetBool("Is_Armed", isArmed);
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }
