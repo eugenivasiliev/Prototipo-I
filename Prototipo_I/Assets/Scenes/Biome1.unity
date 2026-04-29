@@ -7311,6 +7311,7 @@ GameObject:
   - component: {fileID: 106731228}
   - component: {fileID: 106731227}
   - component: {fileID: 106731226}
+  - component: {fileID: 106731232}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7376,7 +7377,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106731224}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 
@@ -7642,6 +7643,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 43.723, y: 0, z: 0}
+--- !u!81 &106731232
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106731224}
+  m_Enabled: 1
 --- !u!1001 &107459439
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38424,6 +38433,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &643320015
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643320007}
+  m_Enabled: 1
 --- !u!1001 &649006341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68544,6 +68561,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec5b341f2971704e8313450d054376d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  phaseMusics:
+  - GameSceneDay
+  - GameSceneNight
 --- !u!1001 &1427972480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72903,6 +72923,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8293887783704937783, guid: 7338ee36c3bc2264fb03997b8e0b2e98, type: 3}
       insertIndex: -1
       addedObject: {fileID: 643320013}
+    - targetCorrespondingSourceObject: {fileID: 8293887783704937783, guid: 7338ee36c3bc2264fb03997b8e0b2e98, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 643320015}
   m_SourcePrefab: {fileID: 100100000, guid: 7338ee36c3bc2264fb03997b8e0b2e98, type: 3}
 --- !u!1001 &1567538899
 PrefabInstance:
