@@ -20453,6 +20453,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8853877873880936908, guid: 057b4bbe9c97c2a4ea880b60f2deefe0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1141855183}
+    - targetCorrespondingSourceObject: {fileID: 8853877873880936908, guid: 057b4bbe9c97c2a4ea880b60f2deefe0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1141855190}
   m_SourcePrefab: {fileID: 100100000, guid: 057b4bbe9c97c2a4ea880b60f2deefe0, type: 3}
 --- !u!1 &1141855182 stripped
 GameObject:
@@ -20572,6 +20575,14 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!81 &1141855190
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141855182}
+  m_Enabled: 1
 --- !u!1001 &1142599550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29338,6 +29349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec5b341f2971704e8313450d054376d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  phaseMusics:
+  - GameSceneDay
+  - GameSceneNight
 --- !u!4 &1518557843
 Transform:
   m_ObjectHideFlags: 0
@@ -36063,7 +36077,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.7
+  m_fontSize: 50.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -43274,7 +43288,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
   attackKey: 323
   attackCooldown: 0.6
-  attackAngle: 30
+  attackAngle: 45
   attackCone: {fileID: 1425465489}
   defaultArmed: 1
   speed: 30
