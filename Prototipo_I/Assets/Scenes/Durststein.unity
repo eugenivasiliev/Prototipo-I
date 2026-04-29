@@ -39100,6 +39100,89 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.5, y: 16.4, z: 1.8}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &1082843510
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 742273700362349958}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.0900002
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_Name
+      value: Evelyn_T_Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 3f8c8682ddb19b34c93a09b58ebbb614, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+--- !u!4 &1082843511 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+  m_PrefabInstance: {fileID: 1082843510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1082843512 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: a7ebac75e7ede79408117dec5deaf798, type: 3}
+  m_PrefabInstance: {fileID: 1082843510}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1084314388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47924,11 +48007,14 @@ MonoBehaviour:
   attackCooldown: 0.6
   attackAngle: 30
   attackCone: {fileID: 0}
+  defaultArmed: 0
   speed: 5
   gravity: 9.80665
   anim: {fileID: 0}
   targetForward: {x: 0, y: 0, z: 0}
   rotationSpeed: 0
+  minIdleChangeSeconds: 0
+  maxIdleChangeSeconds: 0
   modelTransform: {fileID: 0}
   InteractionRange: 3
   stunParticles: {fileID: 0}
@@ -89827,11 +89913,14 @@ MonoBehaviour:
   attackCooldown: 0.6
   attackAngle: 30
   attackCone: {fileID: 143063955}
+  defaultArmed: 0
   speed: 30
   gravity: 45
   anim: {fileID: 569532560}
   targetForward: {x: 0, y: 0, z: 0}
   rotationSpeed: 7
+  minIdleChangeSeconds: 10
+  maxIdleChangeSeconds: 15
   modelTransform: {fileID: 742273700362349958}
   InteractionRange: 3
   stunParticles: {fileID: 0}
