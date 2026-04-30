@@ -2990,6 +2990,7 @@ GameObject:
   - component: {fileID: 97663650}
   - component: {fileID: 97663652}
   - component: {fileID: 97663651}
+  - component: {fileID: 97663653}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3115,6 +3116,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97663649}
   m_CullTransparentMesh: 1
+--- !u!114 &97663653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97663649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
+    m_TableEntryReference:
+      m_KeyId: 878113277485056
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 97663651}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &98649509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38337,7 +38378,7 @@ MonoBehaviour:
   zone2: {fileID: 584382816}
   zone3: {fileID: 2067004973}
   zone4: {fileID: 146614119}
-  maxTime: 4
+  maxTime: 8
 --- !u!114 &643320013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103501,7 +103542,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
   attackKey: 323
   attackCooldown: 0.6
-  attackAngle: 30
+  attackAngle: 45
   attackCone: {fileID: 1522230052}
   defaultArmed: 0
   speed: 30

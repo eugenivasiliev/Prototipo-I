@@ -1837,7 +1837,7 @@ MonoBehaviour:
   zone2: {fileID: 1675155307}
   zone3: {fileID: 125142048}
   zone4: {fileID: 718022332}
-  maxTime: 3
+  maxTime: 6
 --- !u!114 &68712277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5100,6 +5100,7 @@ GameObject:
   - component: {fileID: 144172111}
   - component: {fileID: 144172113}
   - component: {fileID: 144172112}
+  - component: {fileID: 144172114}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -5225,6 +5226,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144172110}
   m_CullTransparentMesh: 1
+--- !u!114 &144172114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144172110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
+    m_TableEntryReference:
+      m_KeyId: 878113277485056
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 144172112}
+        m_TargetAssemblyTypeName: TMPro.TMP_Text, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &156742062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36109,11 +36150,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2736973985355788803, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 29.95
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 4528284955993571197, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 29.55
+      value: 64.25
       objectReference: {fileID: 0}
     - target: {fileID: 6787745030914890829, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -36121,7 +36162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7040831398248119852, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 28.35
+      value: 19.8
       objectReference: {fileID: 0}
     - target: {fileID: 7430568857942902305, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_Pivot.x
@@ -86913,7 +86954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5436639368148429403, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
       propertyPath: nextScene
-      value: Biome1
+      value: MainMenu
       objectReference: {fileID: 0}
     - target: {fileID: 6046389363343201417, guid: 6915ef7ff0c7c374caeccf6739752b8a, type: 3}
       propertyPath: m_Name
@@ -89219,7 +89260,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 4228596157751962382, guid: 9eb102d848bb0cb42b3c807dde67aa43, type: 3}
   attackKey: 323
   attackCooldown: 0.6
-  attackAngle: 30
+  attackAngle: 45
   attackCone: {fileID: 143063955}
   defaultArmed: 0
   speed: 30
