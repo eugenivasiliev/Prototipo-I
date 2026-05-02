@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 using Utils;
 
 namespace AICompanion
@@ -37,7 +38,7 @@ namespace AICompanion
             textPosTween.Reset();
             StopAllCoroutines();
 
-            dialogueText.text = dialogue.Text;
+            //dialogueText.text = dialogue.Text;
             dialogue.hasTriggered = true;
             textPosTween.SetActive(true);
 
@@ -46,6 +47,12 @@ namespace AICompanion
 
         public bool DisplayTextById(string id)
         {
+
+            string localizedString = LocalizationSettings.StringDatabase.GetLocalizedString("LocalizarionTableCollection", id);
+
+
+            dialogueText.text = localizedString;
+
             if (!dialogueDB.ContainsKey(id)) return false;
 
             OneTimeDialogue dialogue = dialogueDB[id];
