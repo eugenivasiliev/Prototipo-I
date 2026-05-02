@@ -27,7 +27,7 @@ public class CinemachineCamera : MonoBehaviour
     {
         if (currentTime < maxTime)
         {
-            currentTime += 0.01f;
+            currentTime += Time.deltaTime;
 
             csd.CameraPosition = currentTime / maxTime;
         }
