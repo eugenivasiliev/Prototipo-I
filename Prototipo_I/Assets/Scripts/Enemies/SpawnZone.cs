@@ -16,12 +16,13 @@ namespace Enemies
         [SerializeField] private List<int> validPhases = new List<int>();
         public List<int> ValidPhases { get { return validPhases; } }
 
-        public void ShowIndicator(int phaseIndex)
+        public bool ShowIndicator(int phaseIndex)
         {
             bool shouldShow = validPhases.Contains(phaseIndex);
             activeZoneIndicatorInstance?.SetActive(shouldShow);
             activeZoneIndicatorTween.duration = activeZoneIndicatorSlowBlinkDuration;
             zoneArrowIndicatorInstance?.SetActive(shouldShow);
+            return shouldShow;
         }
 
         public void WaveStarted()
