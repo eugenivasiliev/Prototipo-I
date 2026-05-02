@@ -52,6 +52,9 @@ public class Minimap : MonoBehaviour
     [SerializeField] private List<MinimapIcon> enemies;
     [SerializeField] private GameObject enemyIconPrefab;
 
+    [SerializeField] private List<MinimapIcon> spawnZones;
+    [SerializeField] private GameObject spawnZoneIconPrefab;
+
     void Update()
     {
         PlaceInMap(background);
