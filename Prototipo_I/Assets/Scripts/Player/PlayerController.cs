@@ -240,6 +240,15 @@ namespace Player
 
             closeEnemies.Add(other.gameObject);
         }
+        private void OnTriggerStay(Collider other)
+        {
+            if (!other.TryGetComponent<LootSeed>(out LootSeed seed)) return;
+
+            seed.gameObject.GetComponent<Rigidbody>().mass = 0;
+            seed.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+            seed.transform.position += (transform.position - seed.transform.position).normalized;
+        }
 
         private void OnTriggerExit(Collider other)
         {
