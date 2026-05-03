@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Farm;
 using Objectives;
 using UI;
+using UI.Minimap;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -47,8 +48,7 @@ namespace Enemies
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
 
-            foreach (SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
+            CheckSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
@@ -70,8 +70,7 @@ namespace Enemies
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
-            foreach(SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
+            CheckSpawnZones();
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
@@ -143,6 +142,16 @@ namespace Enemies
             isWaveActive = false;
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
+
+        private void CheckSpawnZones()
+        {
+            minimap.ClearSpawnZones();
+            foreach (SpawnZone zone in spawnZones)
+            {
+                if (zone.ShowIndicator(currentPhaseIndex))
+                    minimap.AddSpawnZone(zone.gameObject);
+            }
         }
     }
 }
