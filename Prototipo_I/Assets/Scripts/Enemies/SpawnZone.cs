@@ -33,7 +33,10 @@ namespace Enemies
         private void Update()
         {
             TweenUtil.Update(Time.deltaTime, ref activeZoneIndicatorTween);
-            activeZoneIndicatorInstance.GetComponent<Image>().color = new Color(1, 1, 1, activeZoneIndicatorTween.value);
+
+            bool isBehindCamera = Vector3.Dot(this.transform.position - Camera.main.transform.position, Camera.main.transform.forward) < 0;
+
+            activeZoneIndicatorInstance.GetComponent<Image>().color = new Color(1, 1, 1, (isBehindCamera) ? 0 : activeZoneIndicatorTween.value);
 
             Vector3 screenPos = Camera.main.WorldToScreenPoint(this.transform.position);
             Vector3 clampedScreenPos = new Vector3(
