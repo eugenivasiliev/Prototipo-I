@@ -5018,7 +5018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &143063956
 Transform:
   m_ObjectHideFlags: 0
@@ -5027,12 +5027,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143063955}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.9, z: 10}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 742273700362349958}
+  m_Father: {fileID: 1851514309}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!212 &143063957
 SpriteRenderer:
@@ -62936,6 +62936,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3312398070382093398, guid: b36c7e98d09baa741b75548761e9cd2d, type: 3}
   m_PrefabInstance: {fileID: 1847181668}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1851514308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851514309}
+  m_Layer: 3
+  m_Name: ConeTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1851514309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851514308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 143063956}
+  m_Father: {fileID: 742273700362349958}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1859387727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86956,7 +86988,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1082843511}
-  - {fileID: 143063956}
+  - {fileID: 1851514309}
   m_Father: {fileID: 8987563922714979300}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &758813105979014928
@@ -89221,7 +89253,7 @@ MonoBehaviour:
   attackKey: 323
   attackCooldown: 0.6
   attackAngle: 45
-  attackCone: {fileID: 143063955}
+  attackCone: {fileID: 1851514308}
   defaultArmed: 0
   speed: 30
   gravity: 45
