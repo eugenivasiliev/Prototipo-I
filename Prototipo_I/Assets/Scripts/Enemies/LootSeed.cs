@@ -23,6 +23,8 @@ namespace Enemies
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag != "Player") return;
+            
+            if ((transform.position - other.transform.position).sqrMagnitude > 5.0f) return;
 
             Inventory.Inventory.Instance.AddSeeds(1);
             SeedPickupUI.Instance.SeedPickedUp();
