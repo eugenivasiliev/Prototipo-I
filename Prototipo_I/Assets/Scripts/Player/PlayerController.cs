@@ -80,6 +80,7 @@ namespace Player
             Cursor.visible = false;
 
             anim.SetBool("Is_Armed", defaultArmed);
+            attackCone.SetActive(defaultArmed);
 
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
@@ -264,6 +265,9 @@ namespace Player
 
         private void AttackLoop()
         {
+            Vector3 projectedFwd = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+            attackCone.transform.LookAt(attackCone.transform.position + projectedFwd);
+
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
@@ -283,7 +287,7 @@ namespace Player
 
             for(int i = 0; i < closeEnemies.Count; ++i)
             {
-                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, modelTransform.forward) > attackAngle / 2.0f)
+                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, attackCone.transform.forward) > attackAngle / 2.0f)
                     continue;
 
                 targetedEnemy = closeEnemies[i];
@@ -322,9 +326,9 @@ namespace Player
 
         private void ToggleCone(float t)
         {
-            attackCone.SetActive(!attackCone.activeSelf);
             isArmed = !isArmed;
             anim.SetBool("Is_Armed", isArmed);
+            attackCone.SetActive(isArmed);
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }
