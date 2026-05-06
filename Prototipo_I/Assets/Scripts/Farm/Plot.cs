@@ -27,6 +27,9 @@ namespace Farm
         public bool IsPlanted { get { return plant != null; } }
 
         [SerializeField] private int health;
+        [SerializeField] private GameObject contextCollider;
+        [SerializeField] private GameObject beam;
+        [SerializeField] private GameObject particles;
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
 
@@ -52,7 +55,7 @@ namespace Farm
             plantData = data;
             plant = new Plant(data);
 
-            currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+            currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
 
             plant.OnStageChanged += OnPlantStageChanged;
 
@@ -87,6 +90,10 @@ namespace Farm
             this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
             Inventory.Inventory.Instance.RemoveSeeds(1);
             plant.TryGrow(DayNightCycle.Instance.TotalTime);
+
+            contextCollider.SetActive(false);
+            beam.SetActive(false);
+            particles.SetActive(false);
         }
 
         public void FullGrow()

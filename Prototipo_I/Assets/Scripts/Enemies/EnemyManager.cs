@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Farm;
 using Objectives;
+using UI;
+using UI.Minimap;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -16,6 +18,7 @@ namespace Enemies
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
+        public int TotalWaves { get { return waveDB.Waves.Count; } }
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -45,8 +48,7 @@ namespace Enemies
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
 
-            foreach (SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
+            CheckSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
@@ -68,8 +70,7 @@ namespace Enemies
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
-            foreach(SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
+            CheckSpawnZones();
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
@@ -110,7 +111,7 @@ namespace Enemies
             foreach (SpawnZone zone in spawnZones)
                 if (zone.ValidPhases.Contains(currentPhaseIndex))
                 {
-                    zone.HideIndicator();
+                    zone.WaveStarted();
                     StartCoroutine(SpawnEnemyDelay(zone));
                 }
         }
@@ -141,6 +142,16 @@ namespace Enemies
             isWaveActive = false;
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
+
+        private void CheckSpawnZones()
+        {
+            minimap.ClearSpawnZones();
+            foreach (SpawnZone zone in spawnZones)
+            {
+                if (zone.ShowIndicator(currentPhaseIndex))
+                    minimap.AddSpawnZone(zone.gameObject);
+            }
         }
     }
 }
