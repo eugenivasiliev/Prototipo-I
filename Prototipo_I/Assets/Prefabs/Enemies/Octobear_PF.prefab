@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 0
   cameraBaseDistance: 0
 --- !u!1001 &7744420720800898940
@@ -433,6 +434,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 94d98c82b4a7a104d95aaf02c958db2b, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 2dce8f6629064fd4eb7d345067aa591b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8084539558603222962, guid: 2dce8f6629064fd4eb7d345067aa591b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
