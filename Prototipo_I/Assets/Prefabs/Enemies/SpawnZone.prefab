@@ -80,8 +80,41 @@ MonoBehaviour:
     isActive: 1
     isReversing: 0
     isLooping: 1
-  activeZoneIndicatorSlowBlinkDuration: 1.5
-  activeZoneIndicatorFastBlinkDuration: 0.5
+  scalingTween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0.5
+    value: {x: 0, y: 0, z: 0}
+    startValue: {x: 0, y: 0, z: 1}
+    endValue: {x: 1, y: 1, z: 1}
+    isActive: 1
+    isReversing: 0
+    isLooping: 1
+  activeZoneIndicatorSlowBlinkDuration: 0.5
+  activeZoneIndicatorFastBlinkDuration: 0.2
   zoneArrowIndicatorInstance: {fileID: 3691166469918004918}
   validPhases: 
 --- !u!1 &6890164669470587777
@@ -144,7 +177,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -200
   m_TargetDisplay: 0
 --- !u!114 &4640347352058876344
 MonoBehaviour:
