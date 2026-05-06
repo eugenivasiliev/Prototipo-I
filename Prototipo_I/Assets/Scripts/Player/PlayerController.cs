@@ -10,7 +10,7 @@ using Utils;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Singleton<PlayerController>
     {
         [Header("Attack")]
         [SerializeField] private GameObject projectilePrefab;
@@ -71,11 +71,11 @@ namespace Player
 
         private void Start()
         {
+            InitSingleton();
+
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
