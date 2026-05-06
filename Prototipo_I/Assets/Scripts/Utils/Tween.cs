@@ -18,6 +18,7 @@ namespace Utils
         public T endValue;
         public bool isActive;
         public bool isReversing;
+        public bool isLooping;
 
         public bool SetActive(bool state) => isActive = state;
         public void Reset()
@@ -36,17 +37,23 @@ namespace Utils
         }
     }
 
+    /// <remarks>
+    /// Assists with lerping, as the generic <a cref="Tween{T}"/> doesn't work on its own.
+    /// This also forces the code duplication, as generics don't allow for operator filtering.
+    /// </remarks>
     public static class TweenUtil
     {
         public static bool Update(float delta, ref Tween<float> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive)
+            if (!tween.isActive) return false;
+
+            if(tween.isLooping && tween.t + delta > tween.duration)
             {
-                tween.SetActive(false);
-                return false;
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
             }
 
-            tween.t += delta;
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 
@@ -56,9 +63,15 @@ namespace Utils
 
         public static bool Update(float delta, ref Tween<Vector2> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive) return false;
+            if (!tween.isActive) return false;
 
-            tween.t += delta;
+            if (tween.isLooping && tween.t + delta > tween.duration)
+            {
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
+            }
+
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 
@@ -68,9 +81,15 @@ namespace Utils
 
         public static bool Update(float delta, ref Tween<Vector3> tween)
         {
-            if (tween.t > tween.duration || !tween.isActive) return false;
+            if (!tween.isActive) return false;
 
-            tween.t += delta;
+            if (tween.isLooping && tween.t + delta > tween.duration)
+            {
+                tween.isReversing = !tween.isReversing;
+                tween.t = 0;
+            }
+
+            tween.t = Mathf.Clamp(tween.t + delta, 0, tween.duration);
             float alpha = tween.curve.Evaluate(tween.t / tween.duration);
             if (tween.isReversing) alpha = 1 - alpha;
 

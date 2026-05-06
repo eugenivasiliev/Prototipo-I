@@ -2,48 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using Farm;
 using Objectives;
+using UI;
+using UI.Minimap;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
 
 namespace Enemies
 {
-    public class EnemyManager : Singleton<EnemyManager>
+    public class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private EnemyDB enemyDB;
+        [SerializeField] private Minimap minimap;
         [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
+        public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
+        public int TotalWaves { get { return waveDB.Waves.Count; } }
 
         [SerializeField] private bool isWaveActive = false;
+        public bool IsWaveActive { get { return isWaveActive; } }
 
         [SerializeField] private float timeToSpawn;
         [SerializeField] public List<SpawnZone> spawnZones = new List<SpawnZone>();
 
         private List<EnemyAI> allEnemies = new List<EnemyAI>();
-        private List<string> enemiesToSpawn = new List<string>();
+        private List<GameObject> enemiesToSpawn = new List<GameObject>();
 
         [SerializeField] private GameObject plotManager;
         private List<Plot> allPlots = new List<Plot>();
 
-        private UnityEvent<float> Spawn = new UnityEvent<float>();
+        private System.Action<float> Spawn;
         private UnityEvent<float> Return = new UnityEvent<float>();
 
         [SerializeField] private EnemyAI.Blackboard bb;
+
         void Start()
         {
-            InitSingleton();
-            enemyDB.Init();
-
             allPlots.Clear();
             allPlots.AddRange(plotManager.GetComponentsInChildren<Plot>());
             this.bb.plots = allPlots;
 
-            Spawn.AddListener(SpawnEnemies);
-            Return.AddListener(ReturnToSpawn);
+            Spawn += SpawnEnemies;
+            Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+
+            CheckSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
@@ -65,6 +70,8 @@ namespace Enemies
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
+            CheckSpawnZones();
+
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
         }
@@ -75,8 +82,11 @@ namespace Enemies
             {
                 allEnemies.Add(enemy);
                 EnemyAI.Blackboard enemyBB = this.bb;
+                enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
                 enemy.BB = enemyBB;
+
+                minimap?.AddEnemy(enemy.gameObject);
             }
         }
 
@@ -95,11 +105,15 @@ namespace Enemies
 
             allEnemies.Clear();
 
-            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex, enemyDB);
+            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
             enemiesToSpawn = waveDB.nextWave;
 
             foreach (SpawnZone zone in spawnZones)
-                if (zone.ValidPhases.Contains(currentPhaseIndex)) StartCoroutine(SpawnEnemyDelay(zone));
+                if (zone.ValidPhases.Contains(currentPhaseIndex))
+                {
+                    zone.WaveStarted();
+                    StartCoroutine(SpawnEnemyDelay(zone));
+                }
         }
 
         private IEnumerator SpawnEnemyDelay(SpawnZone zone)
@@ -108,26 +122,36 @@ namespace Enemies
 
             while (enemiesToSpawn.Count > 0)
             {
-                string name = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
-                GameObject prefab = enemyDB.GetEnemyFromName(name);
-                GameObject enemyObject = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
-                EnemyAI enemyAI = enemyObject.GetComponent<EnemyAI>();
+                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
+                GameObject prefab = enemiesToSpawn[enemyIndex];
+                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
+                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
 
                 if (enemyAI != null) RegisterEnemy(enemyAI);
 
-                enemiesToSpawn.Remove(name);
+                enemiesToSpawn.RemoveAt(enemyIndex);
 
                 yield return new WaitForSeconds(timeToSpawn);
             }
         }
 
-        public void ReturnToSpawn(float t)
+        public void ReturnToSpawn()
         {
             foreach (var enemy in allEnemies)
                 if (enemy != null) enemy.SetState(EnemyAI.State.Return);
             isWaveActive = false;
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
+        }
+
+        private void CheckSpawnZones()
+        {
+            minimap.ClearSpawnZones();
+            foreach (SpawnZone zone in spawnZones)
+            {
+                if (zone.ShowIndicator(currentPhaseIndex))
+                    minimap.AddSpawnZone(zone.gameObject);
+            }
         }
     }
 }

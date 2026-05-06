@@ -1,25 +1,37 @@
-using Items;
+using System.Collections.Generic;
+using Farm;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
 
 namespace TowerDefense
 {
-    public class Windmill : MonoBehaviour
+    public class Windmill : Tower
     {
-        private UnityEvent<float> Give = new UnityEvent<float>();
-        [SerializeField] private int seedsPerRound = 3;
-        int amount = 1;
+        private System.Action<float> Give;
+
+        [SerializeField] private List<Plot> plots = new List<Plot>();
+
         private void Start()
         {
-            Give.AddListener(AddSeeds);
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, 1);
+            Give += AddSeeds;
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.TryGetComponent<Plot>(out Plot plot))
+            {
+                plots.Add(plot);
+            }
         }
 
         void AddSeeds(float ff)
         {
-            Inventory.Inventory.Instance.AddSeeds(seedsPerRound);
-            DayNightCycle.Instance.SubscribeTimedEvent(Give, amount);
+            foreach (Plot plot in plots)
+                if (plot.IsPlanted) Inventory.Inventory.Instance.AddSeeds(1);
+            
+            DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
     }
 }

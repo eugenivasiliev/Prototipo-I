@@ -5,6 +5,7 @@ namespace Combat
 {
     public class DamageArea : MonoBehaviour
     {
+        [SerializeField] int damage;
         private void Awake()
         {
             StartCoroutine(SelfDestruct());
@@ -12,7 +13,7 @@ namespace Combat
         private void OnTriggerStay(Collider other)
         {
             if (other.TryGetComponent<IDamageable>(out var enemy))
-                enemy.DamageMax();
+                enemy.Damage(damage);
         }
 
         IEnumerator SelfDestruct()

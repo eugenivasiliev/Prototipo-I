@@ -1,23 +1,30 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.ProBuilder;
 
 namespace Utils
 {
     public class ContextKey : MonoBehaviour
     {
+        [SerializeField] private GameObject contexted;
+        [SerializeField] private GameObject key;
+        [SerializeField] private GameObject controllerKey;
         private void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player")
+            if (contexted.GetComponent<IContexted>().ContextKeyActive() && other.tag == "Player")
             {
-
-                transform.GetChild(0).gameObject.SetActive(true);
+                if (Gamepad.current != null)
+                    controllerKey.SetActive(true);
+                else 
+                    key.SetActive(true);
             }
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.tag == "Player")
             {
-                transform.GetChild(0).gameObject.SetActive(false);
+                key.SetActive(false);
+                controllerKey.SetActive(false);
             }
         }
     }
