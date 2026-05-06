@@ -3,6 +3,8 @@ using Player;
 using TMPro;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utils;
 
@@ -59,6 +61,9 @@ namespace UI
                     turretButton.range = data.range;
                     turretButton.tm = this;
                     turretButton.td = data;
+
+                    if (Gamepad.current != null)
+                        EventSystem.current.SetSelectedGameObject(instance);
                 }
             }
         }
