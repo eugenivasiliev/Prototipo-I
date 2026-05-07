@@ -106,6 +106,7 @@ namespace Enemies
         public Animator Animator { get => animator; }
         [SerializeField] protected bool isDying = false;
         [SerializeField] protected AnimationClip deathAnim;
+        [SerializeField] protected GameObject deathPrefab;
 
 
         bool frozen = false;
@@ -139,6 +140,10 @@ namespace Enemies
             if (health <= 0)
             {
                 isDying = true;
+
+                Instantiate(deathPrefab, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
+                return;
 
                 if (animationType == AnimationType.ALEMBIC)
                 {
