@@ -42101,6 +42101,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 475b8072159523241a3e0c7e970c3eb3, type: 3}
+--- !u!114 &735503599 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7989820420518407522, guid: 475b8072159523241a3e0c7e970c3eb3, type: 3}
+  m_PrefabInstance: {fileID: 735503598}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b91f0ba2dc07c648b1ae84866cfe3d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &738011896
 GameObject:
   m_ObjectHideFlags: 0
@@ -62733,6 +62744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 1
   cameraBaseDistance: 60
 --- !u!114 &1211952180
@@ -72031,7 +72043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598e95be3e712644aa8c87603099bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minimap: {fileID: 0}
+  minimap: {fileID: 735503599}
   waveDB: {fileID: 11400000, guid: 60878fb69768ccc438514baf53b53dd0, type: 2}
   currentBiomeIndex: 0
   currentPhaseIndex: 0
