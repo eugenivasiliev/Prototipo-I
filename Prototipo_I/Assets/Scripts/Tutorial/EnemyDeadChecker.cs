@@ -7,11 +7,21 @@ public class EnemyDeadChecker : MonoBehaviour
     [SerializeField] GameObject wall;
     void Update()
     {
-        if (enemies[0] == null && enemies[1] == null)
+
+        for (int i = 0; i < enemies.Length; i++)
         {
-            seedsMessage.SetActive(true);
-            Destroy(wall);
-            Destroy(gameObject);
+            if (enemies[i] != null)
+            {
+                return;
+            }
         }
+
+        if (seedsMessage != null) 
+            seedsMessage.SetActive(true);
+
+        if (wall != null) 
+            Destroy(wall);
+
+        Destroy(gameObject);
     }
 }
