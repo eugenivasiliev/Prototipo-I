@@ -5,6 +5,12 @@ public class EnemyDeadChecker : MonoBehaviour
     [SerializeField] GameObject[] enemies;
     [SerializeField] GameObject seedsMessage;
     [SerializeField] GameObject wall;
+
+
+    private float waitTime = 0f;
+    [SerializeField] private float waitUntilActivation = 0f;
+
+
     void Update()
     {
 
@@ -16,12 +22,17 @@ public class EnemyDeadChecker : MonoBehaviour
             }
         }
 
-        if (seedsMessage != null) 
-            seedsMessage.SetActive(true);
+        waitTime += Time.deltaTime;
 
-        if (wall != null) 
-            Destroy(wall);
+        if (waitTime > waitUntilActivation)
+        {
+            if (seedsMessage != null) 
+                seedsMessage.SetActive(true);
 
-        Destroy(gameObject);
+            if (wall != null) 
+                Destroy(wall);
+
+            Destroy(gameObject);
+        }
     }
 }
