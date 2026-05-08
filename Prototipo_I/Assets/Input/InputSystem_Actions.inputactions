@@ -284,6 +284,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "level_cutscene_skip",
+                    "type": "Button",
+                    "id": "c4106913-7398-4345-b42f-d2cfc9e84f17",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -988,6 +997,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "close_menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcaa1be8-016e-48a0-99ea-ce2fea21c90d",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "level_cutscene_skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "78ed4c04-3eef-49d1-86c2-01e65463ebf6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "level_cutscene_skip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
