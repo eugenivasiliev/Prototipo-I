@@ -29,10 +29,12 @@ namespace Enemies
 
         protected void Update()
         {
+            collectionTween.endValue = PlayerController.Instance.transform.position;
+
             if (TweenUtil.Update(Time.deltaTime, ref collectionTween))
                 this.transform.position = collectionTween.value;
 
-            if(collectionTween.t == collectionTween.duration)
+            if(collectionTween.t >= 0.95f * collectionTween.duration)
             {
                 Inventory.Inventory.Instance.AddSeeds(1);
                 SeedPickupUI.Instance.SeedPickedUp();
@@ -46,17 +48,7 @@ namespace Enemies
             yield return new WaitForSeconds(collectionWaitTime);
 
             collectionTween.startValue = this.transform.position;
-            collectionTween.endValue = PlayerController.Instance.transform.position;
             collectionTween.SetActive(true);
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.tag != "Player") return;
-            
-            if ((transform.position - other.transform.position).sqrMagnitude > 5.0f) return;
-
-            
         }
     }
 }
