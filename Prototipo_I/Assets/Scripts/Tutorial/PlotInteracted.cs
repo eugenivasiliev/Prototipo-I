@@ -10,8 +10,7 @@ public class PlotInteracted : MonoBehaviour
     void Update()
     {
         if (beams[0].activeSelf == false &&
-            beams[1].activeSelf == false &&
-            beams[2].activeSelf == false)
+            beams[1].activeSelf == false)
         { 
             waitDialogue.SetActive(true);
             console.SetActive(true);
