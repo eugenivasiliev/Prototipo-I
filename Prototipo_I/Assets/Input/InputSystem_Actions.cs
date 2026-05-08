@@ -370,6 +370,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""level_cutscene_skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""c4106913-7398-4345-b42f-d2cfc9e84f17"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1076,6 +1085,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""close_menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcaa1be8-016e-48a0-99ea-ce2fea21c90d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""level_cutscene_skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78ed4c04-3eef-49d1-86c2-01e65463ebf6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""level_cutscene_skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1692,6 +1723,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_debug = m_Player.FindAction("debug", throwIfNotFound: true);
         m_Player_Show_Wave_UI = m_Player.FindAction("Show_Wave_UI", throwIfNotFound: true);
         m_Player_close_menu = m_Player.FindAction("close_menu", throwIfNotFound: true);
+        m_Player_level_cutscene_skip = m_Player.FindAction("level_cutscene_skip", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1816,6 +1848,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_debug;
     private readonly InputAction m_Player_Show_Wave_UI;
     private readonly InputAction m_Player_close_menu;
+    private readonly InputAction m_Player_level_cutscene_skip;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1952,6 +1985,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @close_menu => m_Wrapper.m_Player_close_menu;
         /// <summary>
+        /// Provides access to the underlying input action "Player/level_cutscene_skip".
+        /// </summary>
+        public InputAction @level_cutscene_skip => m_Wrapper.m_Player_level_cutscene_skip;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -2070,6 +2107,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @close_menu.started += instance.OnClose_menu;
             @close_menu.performed += instance.OnClose_menu;
             @close_menu.canceled += instance.OnClose_menu;
+            @level_cutscene_skip.started += instance.OnLevel_cutscene_skip;
+            @level_cutscene_skip.performed += instance.OnLevel_cutscene_skip;
+            @level_cutscene_skip.canceled += instance.OnLevel_cutscene_skip;
         }
 
         /// <summary>
@@ -2174,6 +2214,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @close_menu.started -= instance.OnClose_menu;
             @close_menu.performed -= instance.OnClose_menu;
             @close_menu.canceled -= instance.OnClose_menu;
+            @level_cutscene_skip.started -= instance.OnLevel_cutscene_skip;
+            @level_cutscene_skip.performed -= instance.OnLevel_cutscene_skip;
+            @level_cutscene_skip.canceled -= instance.OnLevel_cutscene_skip;
         }
 
         /// <summary>
@@ -2691,6 +2734,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnClose_menu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "level_cutscene_skip" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLevel_cutscene_skip(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
