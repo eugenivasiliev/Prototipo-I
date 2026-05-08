@@ -146,11 +146,13 @@ namespace Enemies
 
         private void CheckSpawnZones()
         {
-            minimap.ClearSpawnZones();
+            if (minimap != null)
+                minimap.ClearSpawnZones();
             foreach (SpawnZone zone in spawnZones)
             {
                 if (zone.ShowIndicator(currentPhaseIndex))
-                    minimap.AddSpawnZone(zone.gameObject);
+                    if (minimap != null)
+                        minimap.AddSpawnZone(zone.gameObject);
             }
         }
     }
