@@ -3,6 +3,8 @@ using Player;
 using TMPro;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utils;
 
@@ -13,6 +15,7 @@ namespace UI
         [SerializeField] private GameObject towerMenuPanel;
         private GridLayoutGroup towerMenuGrid;
         [SerializeField] private GameObject towerUI;
+        [SerializeField] private GameObject towerInactiveUI;
 
         [SerializeField] private PlayerController playerController;
         [SerializeField] private CameraControl cameraController;
@@ -59,13 +62,29 @@ namespace UI
                     turretButton.range = data.range;
                     turretButton.tm = this;
                     turretButton.td = data;
+
+                    if (Gamepad.current != null)
+                        EventSystem.current.SetSelectedGameObject(instance);
+                } else
+                {
+                    GameObject instance = Instantiate(towerInactiveUI, towerMenuGrid.transform);
+                    instance.GetComponent<Image>().sprite = data.uiSprite;
+
+                    TurretButton turretButton = instance.GetComponent<TurretButton>();
+                    turretButton.spotReference = spotReference;
+                    turretButton.range = data.range;
+                    turretButton.tm = this;
+                    turretButton.td = data;
+
+                    if (Gamepad.current != null)
+                        EventSystem.current.SetSelectedGameObject(instance);
                 }
             }
         }
 
         public void ToggleMenu()
         {
-            if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
+            //if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
 
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
