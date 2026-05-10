@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 0
   cameraBaseDistance: 0
 --- !u!1 &5947208457080571333
@@ -363,7 +364,7 @@ MonoBehaviour:
   cooldown: 0.6
   maxRange: 15
   minRange: 3
-  shotSound: TurretAttack
+  shotSound: CarrotShot
   animator: {fileID: 691944410978731378}
   particles: {fileID: 2186902746282544362, guid: f9c12b2e5928ee840ad8ecf77a61c354, type: 3}
   particlesOrigin: {fileID: 1573082879751723289}

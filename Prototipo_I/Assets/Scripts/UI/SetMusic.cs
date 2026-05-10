@@ -7,11 +7,13 @@ namespace UI
 {
     public class SetMusic : MonoBehaviour
     {
+        [SerializeField] private string ambience;
         [SerializeField] private List<string> phaseMusics = new List<string> { "GameSceneDay", "GameSceneNight" };
         private int curPhaseMusic = 0;
 
         void Start()
         {
+            if(ambience != "") AudioManager.Instance.PlayAmbientEvent(ambience);
             AudioManager.Instance.PlayMusicEvent(phaseMusics[curPhaseMusic]);
             DayNightCycle.Instance.SubscribeTimedEvent(ChangePhaseMusic, 1);
         }
