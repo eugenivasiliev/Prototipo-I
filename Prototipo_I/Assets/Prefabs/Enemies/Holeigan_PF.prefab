@@ -70,6 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358a37c42b972c84f9d7929174742fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSound: HoleiganFootstep
+  attackSound: HoleiganShot
   health: 5
   ui_health: {fileID: 3519588515964795507}
   damage: 1
@@ -195,6 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 0
   cameraBaseDistance: 0
 --- !u!1001 &1683688734128474314
@@ -245,10 +248,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5963285329683707779, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -5963285329683707779, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
+    - target: {fileID: -5963285329683707779, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: cdb5887439f5cc14ab1aa2e19050f02f, type: 2}
+    - target: {fileID: -5365484487981760345, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
+    - target: {fileID: -1556330363786742993, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
     - target: {fileID: 919132149155446097, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
       propertyPath: m_Name
       value: Holeigan_T-Pose
       objectReference: {fileID: 0}
+    - target: {fileID: 2818733256216145521, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
+    - target: {fileID: 3871199561501103352, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ef51c3ce35a0ca244a54a04f92ddbfcc, type: 2}
     - target: {fileID: 5866666021909216657, guid: 6f920196aa584f44b954ce89fc1ab165, type: 3}
       propertyPath: m_Controller
       value: 
