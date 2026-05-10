@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead717714a27f5743b0b2034f82958cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathSound: LadywoolDeath
   deathAnim: {fileID: 7845886193055782156, guid: 890d78a90b32b77409f59f38a8dee1c1, type: 3}
   droppableLoot:
   - gameObject: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
@@ -111,18 +112,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7635737649914330294}
     m_Modifications:
-    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
-      propertyPath: endTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
-      propertyPath: startTime
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
-      propertyPath: currentTime
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 890d78a90b32b77409f59f38a8dee1c1, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -210,6 +199,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 890d78a90b32b77409f59f38a8dee1c1, type: 3}
       propertyPath: m_Name
       value: animacionmuerte_ladywool
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
+      propertyPath: endTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
+      propertyPath: startTime
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454131955020506989, guid: 754226547ab538045befb687da285bbf, type: 3}
+      propertyPath: currentTime
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

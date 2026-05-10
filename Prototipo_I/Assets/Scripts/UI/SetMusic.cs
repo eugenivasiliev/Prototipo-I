@@ -12,7 +12,7 @@ namespace UI
 
         void Start()
         {
-            AudioManager.Instance.PlayMusic(phaseMusics[curPhaseMusic]);
+            AudioManager.Instance.PlayMusicEvent(phaseMusics[curPhaseMusic]);
             DayNightCycle.Instance.SubscribeTimedEvent(ChangePhaseMusic, 1);
         }
 
@@ -20,7 +20,7 @@ namespace UI
         {
             curPhaseMusic++;
             curPhaseMusic %= phaseMusics.Count;
-            AudioManager.Instance.PlayMusic(phaseMusics[curPhaseMusic]);
+            AudioManager.Instance.PlayMusicEvent(phaseMusics[curPhaseMusic]);
             DayNightCycle.Instance.SubscribeTimedEvent(ChangePhaseMusic, 1);
         }
 

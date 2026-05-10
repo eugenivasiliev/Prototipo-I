@@ -164,13 +164,13 @@ namespace Player
                 if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
                 curMovementType = MovementType.IDLE;
-                AudioManager.Instance.StopLoop("Running");
+                AudioManager.Instance.StopSFXLoop("EvelynFootstep");
                 return;
             }
 
             randomIdleChangeSeconds = 0;
 
-            AudioManager.Instance.PlaySFXLoop("Running");
+            AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
 
             SetAnimation(MovementType.FORWARD);
 
@@ -298,7 +298,7 @@ namespace Player
 
         void SpawnProjectile(float waitTime)
         {
-            AudioManager.Instance.PlaySFX("PlayerAttack");
+            AudioManager.Instance.PlaySFXEvent("EvelynShot");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;
