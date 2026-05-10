@@ -8,6 +8,7 @@ namespace Enemies
 {
     public class EnemyDeath : MonoBehaviour
     {
+        [SerializeField] private string deathSound;
         [SerializeField] private AnimationClip deathAnim;
         private float deathAnimTime;
 
@@ -40,7 +41,7 @@ namespace Enemies
         // Update is called once per frame
         void Update()
         {
-            AudioManager.Instance.PlaySFX("EnemyDeath");
+            AudioManager.Instance.PlaySFXEvent(deathSound);
 
             deathAnimTime -= Time.deltaTime;
 
