@@ -10,7 +10,7 @@ using Utils;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Singleton<PlayerController>
     {
         [Header("Attack")]
         [SerializeField] private GameObject projectilePrefab;
@@ -71,11 +71,11 @@ namespace Player
 
         private void Start()
         {
+            InitSingleton();
+
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
@@ -164,13 +164,13 @@ namespace Player
                 if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
                 curMovementType = MovementType.IDLE;
-                AudioManager.Instance.StopLoop("Running");
+                AudioManager.Instance.StopSFXLoop("EvelynFootstep");
                 return;
             }
 
             randomIdleChangeSeconds = 0;
 
-            AudioManager.Instance.PlaySFXLoop("Running");
+            AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
 
             SetAnimation(MovementType.FORWARD);
 
@@ -298,7 +298,7 @@ namespace Player
 
         void SpawnProjectile(float waitTime)
         {
-            AudioManager.Instance.PlaySFX("PlayerAttack");
+            AudioManager.Instance.PlaySFXEvent("EvelynShot");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;

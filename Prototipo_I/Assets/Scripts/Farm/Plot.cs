@@ -50,7 +50,7 @@ namespace Farm
 
         public void Plant(PlantData data)
         {
-            AudioManager.Instance.PlaySFX("Plant");
+            AudioManager.Instance.PlaySFXEvent("PlantSeeds");
             
             plantData = data;
             plant = new Plant(data);
@@ -70,7 +70,6 @@ namespace Farm
 
             if (currentPlant != null) { Destroy(currentPlant); }
 
-            AudioManager.Instance.PlaySFX("NextStage");
             GameObject prefab = plantData.stages[currentStage];
             currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
