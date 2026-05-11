@@ -8,7 +8,7 @@ namespace UI
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            AudioManager.Instance.PlayMusic("TitleScene");
+            AudioManager.Instance.PlayMusicEvent("TitleScene");
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }

@@ -48,19 +48,21 @@ namespace Enemies
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
 
-            CheckSpawnZones();
+            minimap.ClearSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
         {
             foreach (var enemy in allEnemies)
                 if (enemy != null) return true;
+            foreach (var zone in spawnZones)
+                if (zone.EnemiesPendingCount() > 0) return true;
             return false;
         }
 
         private void Update()
         {
-            if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
+            if (!isWaveActive || AreEnemiesRemaining()) return;
 
             isWaveActive = false;
             currentPhaseIndex++;
@@ -70,13 +72,13 @@ namespace Enemies
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
-            CheckSpawnZones();
+            minimap.ClearSpawnZones();
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
         }
 
-        private void RegisterEnemy(EnemyAI enemy)
+        public void RegisterEnemy(EnemyAI enemy)
         {
             if (!allEnemies.Contains(enemy))
             {
@@ -106,33 +108,6 @@ namespace Enemies
             allEnemies.Clear();
 
             waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
-            enemiesToSpawn = waveDB.nextWave;
-
-            foreach (SpawnZone zone in spawnZones)
-                if (zone.ValidPhases.Contains(currentPhaseIndex))
-                {
-                    zone.WaveStarted();
-                    StartCoroutine(SpawnEnemyDelay(zone));
-                }
-        }
-
-        private IEnumerator SpawnEnemyDelay(SpawnZone zone)
-        {
-
-
-            while (enemiesToSpawn.Count > 0)
-            {
-                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
-                GameObject prefab = enemiesToSpawn[enemyIndex];
-                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
-                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
-
-                if (enemyAI != null) RegisterEnemy(enemyAI);
-
-                enemiesToSpawn.RemoveAt(enemyIndex);
-
-                yield return new WaitForSeconds(timeToSpawn);
-            }
         }
 
         public void ReturnToSpawn()
@@ -142,16 +117,6 @@ namespace Enemies
             isWaveActive = false;
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-        }
-
-        private void CheckSpawnZones()
-        {
-            minimap.ClearSpawnZones();
-            foreach (SpawnZone zone in spawnZones)
-            {
-                if (zone.ShowIndicator(currentPhaseIndex))
-                    minimap.AddSpawnZone(zone.gameObject);
-            }
         }
     }
 }
