@@ -59,6 +59,7 @@ namespace Enemies
         protected int maxHealth;
         public int MaxHealth { get => maxHealth; set { } }
         [SerializeField] protected Canvas ui_health;
+        private Image ui_health_image;
         private float barSpeed = 1f;
 
         [SerializeField] protected int damage;
@@ -137,6 +138,8 @@ namespace Enemies
             droppableLoot[0] = new DropRateObject(droppableLoot[0].gameObject, droppableLoot[0].rate / totalRate);
             for (int i = 1; i < droppableLoot.Count; ++i)
                 droppableLoot[i] = new DropRateObject(droppableLoot[i].gameObject, (droppableLoot[i - 1].rate + droppableLoot[i].rate) / totalRate);
+
+            ui_health_image = ui_health.gameObject.transform.GetChild(1).GetComponent<Image>();
         }
 
         protected virtual void Update()
@@ -154,11 +157,8 @@ namespace Enemies
 
             enemyState.Behaviour();
 
-            if (ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount > (this as IDamageable).HealthRatio)
-            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = Mathf.MoveTowards(
-                ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount,
-                (this as IDamageable).HealthRatio,
-                barSpeed * Time.deltaTime);
+            if (ui_health_image.fillAmount > (this as IDamageable).HealthRatio)
+                ui_health_image.fillAmount = Mathf.MoveTowards(ui_health_image.fillAmount, (this as IDamageable).HealthRatio, barSpeed * Time.deltaTime);
         }
 
         /// <summary>
