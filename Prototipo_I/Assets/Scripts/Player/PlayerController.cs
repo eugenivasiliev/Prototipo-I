@@ -10,7 +10,7 @@ using Utils;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Singleton<PlayerController>
     {
         [Header("Attack")]
         [SerializeField] private GameObject projectilePrefab;
@@ -71,15 +71,16 @@ namespace Player
 
         private void Start()
         {
+            InitSingleton();
+
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
             anim.SetBool("Is_Armed", defaultArmed);
+            attackCone.SetActive(defaultArmed);
 
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
@@ -163,13 +164,13 @@ namespace Player
                 if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
                 curMovementType = MovementType.IDLE;
-                AudioManager.Instance.StopLoop("Running");
+                AudioManager.Instance.StopSFXLoop("EvelynFootstep");
                 return;
             }
 
             randomIdleChangeSeconds = 0;
 
-            AudioManager.Instance.PlaySFXLoop("Running");
+            AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
 
             SetAnimation(MovementType.FORWARD);
 
@@ -240,6 +241,7 @@ namespace Player
 
             closeEnemies.Add(other.gameObject);
         }
+        
 
         private void OnTriggerExit(Collider other)
         {
@@ -255,6 +257,9 @@ namespace Player
 
         private void AttackLoop()
         {
+            Vector3 projectedFwd = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+            attackCone.transform.LookAt(attackCone.transform.position + projectedFwd);
+
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
@@ -274,7 +279,7 @@ namespace Player
 
             for(int i = 0; i < closeEnemies.Count; ++i)
             {
-                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, modelTransform.forward) > attackAngle / 2.0f)
+                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, attackCone.transform.forward) > attackAngle / 2.0f)
                     continue;
 
                 targetedEnemy = closeEnemies[i];
@@ -285,7 +290,7 @@ namespace Player
 
         void SpawnProjectile(float waitTime)
         {
-            AudioManager.Instance.PlaySFX("PlayerAttack");
+            AudioManager.Instance.PlaySFXEvent("EvelynShot");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;
@@ -313,9 +318,9 @@ namespace Player
 
         private void ToggleCone(float t)
         {
-            attackCone.SetActive(!attackCone.activeSelf);
             isArmed = !isArmed;
             anim.SetBool("Is_Armed", isArmed);
+            attackCone.SetActive(isArmed);
             DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }

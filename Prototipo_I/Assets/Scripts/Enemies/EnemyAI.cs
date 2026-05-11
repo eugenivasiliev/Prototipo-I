@@ -42,6 +42,12 @@ namespace Enemies
             Return
         }
 
+        [Header("Audio")]
+        [SerializeField] protected string walkSound;
+        public string WalkSound { get => walkSound; }
+        [SerializeField] protected string attackSound;
+        public string AttackSound { get => attackSound; }
+
         [SerializeField] protected EnemyState enemyState;
 
         protected NavMeshAgent agent;
@@ -106,6 +112,7 @@ namespace Enemies
         public Animator Animator { get => animator; }
         [SerializeField] protected bool isDying = false;
         [SerializeField] protected AnimationClip deathAnim;
+        [SerializeField] protected GameObject deathPrefab;
 
 
         bool frozen = false;
@@ -140,21 +147,8 @@ namespace Enemies
             {
                 isDying = true;
 
-                if (animationType == AnimationType.ALEMBIC)
-                {
-                    /* 
-                     * TODO: Implement alembic in scene.
-                     * Alembic has issues with prefab instantiation, which means it cannot be used as the EnemyManager system stands now.
-                     * The fix is to implement enemy pooling instead of instantiation, but for time limitations this is kept out of the project for alpha.
-                     */
-                    //StartCoroutine(AlembicDeathAnim());
-
-                    AudioManager.Instance.PlaySFX("EnemyDeath");
-                    DropLoot();
-                    Destroy(gameObject);
-                }
-                else if (animationType == AnimationType.FBX)
-                    StartCoroutine(FBXDeathAnim());
+                Instantiate(deathPrefab, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
                 return;
             }
 
@@ -168,7 +162,6 @@ namespace Enemies
         /// </summary>
         protected IEnumerator AlembicDeathAnim()
         {
-            AudioManager.Instance.PlaySFX("EnemyDeath");
             while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
             {
                 alembicStreamPlayer.CurrentTime += Time.deltaTime;
@@ -180,7 +173,6 @@ namespace Enemies
 
         protected IEnumerator FBXDeathAnim()
         {
-            AudioManager.Instance.PlaySFX("EnemyDeath");
             animator.SetBool("IsDying", true);
             yield return new WaitForSeconds(deathAnim.length);
             //while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
