@@ -5,6 +5,7 @@ namespace AICompanion
 {
     public class AICompanionMovement : TweenMovement
     {
+        [SerializeField] private Animator animator;
         [SerializeField] private Transform target;
         [SerializeField, Range(0, 5)] private float arrivalDistance;
         [SerializeField, Range(0, 5)] private float chaseCooldown;
@@ -39,12 +40,15 @@ namespace AICompanion
 
                 currentChaseCooldown = 0;
 
+                animator.SetBool("Is_Running", false);
+
                 return;
-            } else
-            {
-                currentChaseCooldown += Time.deltaTime;
-                if (currentChaseCooldown < chaseCooldown) return;
             }
+
+            currentChaseCooldown += Time.deltaTime;
+            if (currentChaseCooldown < chaseCooldown) return;
+
+            animator.SetBool("Is_Running", true);
 
             TweenUtil.Update(Time.deltaTime, ref xAxis);
             TweenUtil.Update(Time.deltaTime, ref yAxis);
