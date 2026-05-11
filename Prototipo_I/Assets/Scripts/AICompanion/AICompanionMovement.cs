@@ -5,31 +5,59 @@ namespace AICompanion
 {
     public class AICompanionMovement : TweenMovement
     {
-        [SerializeField, Range(0, 5)] private float soaringAmplitude;
-        [SerializeField, Range(0, 5)] private float separation;
-        [SerializeField, Range(0, 5)] private float forwardMovement;
+        [SerializeField] private Transform target;
+        [SerializeField, Range(0, 5)] private float arrivalDistance;
+        [SerializeField, Range(0, 5)] private float chaseCooldown;
+        private bool hasArrived => Vector3.Distance(this.transform.position, target.position) < arrivalDistance;
+        private float yPosition;
+        private float currentChaseCooldown = 0;
 
         override protected void Start()
         {
-            yAxis.SetActive(true);
-            zAxis.SetActive(true);
+            xAxis.startValue = this.transform.position.x;
+            yPosition = this.transform.position.y;
+            zAxis.startValue = this.transform.position.z;
         }
 
         void Update()
         {
+            xAxis.SetActive(!hasArrived);
+            yAxis.SetActive(!hasArrived);
+            zAxis.SetActive(!hasArrived);
+
+            xAxis.endValue = target.position.x;
+            zAxis.endValue = target.position.z;
+
+            if (hasArrived)
+            {
+                xAxis.Reset();
+                yAxis.Reset();
+                zAxis.Reset();
+
+                xAxis.startValue = this.transform.position.x;
+                zAxis.startValue = this.transform.position.z;
+
+                currentChaseCooldown = 0;
+
+                return;
+            } else
+            {
+                currentChaseCooldown += Time.deltaTime;
+                if (currentChaseCooldown < chaseCooldown) return;
+            }
+
+            TweenUtil.Update(Time.deltaTime, ref xAxis);
             TweenUtil.Update(Time.deltaTime, ref yAxis);
             TweenUtil.Update(Time.deltaTime, ref zAxis);
 
-            this.transform.localPosition = 
-                -Vector3.right * separation +
-                Vector3.up * soaringAmplitude * yAxis.value +
-                Vector3.forward * forwardMovement * zAxis.value;
+            this.transform.position =
+                Vector3.right * xAxis.value +
+                Vector3.up * (yPosition + yAxis.value) +
+                Vector3.forward * zAxis.value;
 
-            if (yAxis.value == yAxis.duration)
-                yAxis.Reverse();
+            Vector3 fwd = new Vector3(target.position.x - this.transform.position.x, 0, target.position.z - this.transform.position.z);
 
-            if (zAxis.value == zAxis.duration)
-                zAxis.Reverse();
+            this.transform.LookAt(this.transform.position + fwd);
         }
     }
 }
