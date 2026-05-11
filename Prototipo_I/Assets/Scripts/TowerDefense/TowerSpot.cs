@@ -34,7 +34,7 @@ namespace TowerDefense
 
         public void PlaceTower(string dataName)
         {
-            AudioManager.Instance.PlaySFX("Plant");
+            AudioManager.Instance.PlaySFXEvent("PlaceTower");
             if (hasTower) return;
 
             towerData = DBManager.Instance.TowerDB[dataName];
@@ -48,7 +48,7 @@ namespace TowerDefense
         {
             Inventory.Inventory.Instance.RemoveSeeds(data.cost);
 
-            AudioManager.Instance.PlaySFX("Plant");
+            AudioManager.Instance.PlaySFXEvent("PlaceTower");
             if (hasTower) return;
 
             towerData = data;
@@ -71,7 +71,7 @@ namespace TowerDefense
         {
             if (currentTower != null) { Destroy(currentTower); }
 
-            AudioManager.Instance.PlaySFX("NextStage");
+            AudioManager.Instance.PlaySFXEvent("NextStage");
             GameObject prefab = towerData.stages[level];
             currentTower = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 

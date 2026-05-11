@@ -23,7 +23,7 @@ namespace Enemies
             float distance = Vector3.Distance(enemy.transform.position, bb.targetTransform.transform.position);
             if (distance < 10.45f)
             {
-                AudioManager.Instance.PlaySFX("MonsterAttack");
+                AudioManager.Instance.PlaySFXEvent(enemy.AttackSound);
                 ((IAttacker)enemy).Attack(bb.targetTransform.gameObject);
                 enemy.SetState(EnemyAI.State.Chase);
             }
