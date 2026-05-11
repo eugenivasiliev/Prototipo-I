@@ -59,7 +59,7 @@ namespace Enemies
         protected int maxHealth;
         public int MaxHealth { get => maxHealth; set { } }
         [SerializeField] protected Canvas ui_health;
-
+        private float barSpeed = 1f;
 
         [SerializeField] protected int damage;
         public int Damage => damage;
@@ -154,7 +154,11 @@ namespace Enemies
 
             enemyState.Behaviour();
 
-
+            if (ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount > (this as IDamageable).HealthRatio)
+            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = Mathf.MoveTowards(
+                ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount,
+                (this as IDamageable).HealthRatio,
+                barSpeed * Time.deltaTime);
         }
 
         /// <summary>
@@ -235,7 +239,7 @@ namespace Enemies
         public void UpdateLife()
         {
             ui_health.gameObject.SetActive(true);
-            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+            //ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
 
 
             StartCoroutine(TurnRed());
