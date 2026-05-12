@@ -2340,6 +2340,7 @@ MonoBehaviour:
   waveDB: {fileID: 11400000, guid: 007cb44a112c7d649bcf5b10c114f848, type: 2}
   currentBiomeIndex: 0
   currentPhaseIndex: 0
+  TotalWaves: 5
   isWaveActive: 0
   timeToSpawn: 0.5
   spawnZones:
@@ -36246,11 +36247,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2736973985355788803, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 34
+      value: 30.45
       objectReference: {fileID: 0}
     - target: {fileID: 4528284955993571197, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 64.25
+      value: 30.05
       objectReference: {fileID: 0}
     - target: {fileID: 6787745030914890829, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -36258,7 +36259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7040831398248119852, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_fontSize
-      value: 19.8
+      value: 28.85
       objectReference: {fileID: 0}
     - target: {fileID: 7430568857942902305, guid: 30670e80c7f19d948bc33a0247c450dd, type: 3}
       propertyPath: m_Pivot.x
@@ -38066,18 +38067,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1423668247}
     m_Modifications:
-    - target: {fileID: 1654090520078962521, guid: 655c2a8b30cbf7f4ba4dd5ac3526bb21, type: 3}
-      propertyPath: m_Volume
-      value: 0.519
-      objectReference: {fileID: 0}
-    - target: {fileID: 3078091946154305696, guid: 655c2a8b30cbf7f4ba4dd5ac3526bb21, type: 3}
-      propertyPath: sfxSounds.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 819d192589c281b4a80762a3b66890d8, type: 3}
-    - target: {fileID: 3078091946154305696, guid: 655c2a8b30cbf7f4ba4dd5ac3526bb21, type: 3}
-      propertyPath: sfxSounds.Array.data[6].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: f8c45d33ae75cd54c903ad1135c5fa84, type: 3}
     - target: {fileID: 4561919283410854939, guid: 655c2a8b30cbf7f4ba4dd5ac3526bb21, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -53065,6 +53054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec5b341f2971704e8313450d054376d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ambience: ForestAmbience
   phaseMusics:
   - GameSceneDay
   - GameSceneNight
