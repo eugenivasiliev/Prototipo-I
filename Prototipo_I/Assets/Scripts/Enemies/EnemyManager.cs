@@ -18,7 +18,7 @@ namespace Enemies
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
-        public int TotalWaves { get { return waveDB.Waves.Count; } }
+        public int TotalWaves;
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
