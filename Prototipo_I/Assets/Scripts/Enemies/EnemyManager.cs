@@ -13,12 +13,11 @@ namespace Enemies
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Minimap minimap;
-        [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
-        public int TotalWaves { get { return waveDB.Waves.Count; } }
+        public int TotalWaves;
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -48,35 +47,37 @@ namespace Enemies
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
 
-            CheckSpawnZones();
+            minimap.ClearSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
         {
             foreach (var enemy in allEnemies)
                 if (enemy != null) return true;
+            foreach (var zone in spawnZones)
+                if (zone.EnemiesPendingCount() > 0) return true;
             return false;
         }
 
         private void Update()
         {
-            if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
+            if (!isWaveActive || AreEnemiesRemaining()) return;
 
             isWaveActive = false;
             currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, TotalWaves - 1);
 
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
-            CheckSpawnZones();
+            minimap.ClearSpawnZones();
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
         }
 
-        private void RegisterEnemy(EnemyAI enemy)
+        public void RegisterEnemy(EnemyAI enemy)
         {
             if (!allEnemies.Contains(enemy))
             {
@@ -104,35 +105,6 @@ namespace Enemies
             }
 
             allEnemies.Clear();
-
-            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
-            enemiesToSpawn = waveDB.nextWave;
-
-            foreach (SpawnZone zone in spawnZones)
-                if (zone.ValidPhases.Contains(currentPhaseIndex))
-                {
-                    zone.WaveStarted();
-                    StartCoroutine(SpawnEnemyDelay(zone));
-                }
-        }
-
-        private IEnumerator SpawnEnemyDelay(SpawnZone zone)
-        {
-
-
-            while (enemiesToSpawn.Count > 0)
-            {
-                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
-                GameObject prefab = enemiesToSpawn[enemyIndex];
-                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
-                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
-
-                if (enemyAI != null) RegisterEnemy(enemyAI);
-
-                enemiesToSpawn.RemoveAt(enemyIndex);
-
-                yield return new WaitForSeconds(timeToSpawn);
-            }
         }
 
         public void ReturnToSpawn()
@@ -142,16 +114,6 @@ namespace Enemies
             isWaveActive = false;
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-        }
-
-        private void CheckSpawnZones()
-        {
-            minimap.ClearSpawnZones();
-            foreach (SpawnZone zone in spawnZones)
-            {
-                if (zone.ShowIndicator(currentPhaseIndex))
-                    minimap.AddSpawnZone(zone.gameObject);
-            }
         }
     }
 }
