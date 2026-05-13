@@ -175,62 +175,265 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5705bb5e55218048876bf6b454d19e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSounds:
-  - name: TitleScene
-    clip: {fileID: 8300000, guid: e4911aaae01726b4bac994b9e31bd8e2, type: 3}
+  ambientEvents:
+  - name: ForestAmbience
+    reference:
+      Guid:
+        Data1: 1673747673
+        Data2: 1116942948
+        Data3: -281246042
+        Data4: 1744908605
+      Path: event:/loop/ambients/ambient_forest
+  - name: SnowAmbience
+    reference:
+      Guid:
+        Data1: 89186602
+        Data2: 1298610389
+        Data3: 1238226853
+        Data4: -598721567
+      Path: event:/loop/ambients/ambient_snow
+  musicEvents:
   - name: GameSceneDay
-    clip: {fileID: 8300000, guid: 2924fd382e25290478214128f06113a7, type: 3}
+    reference:
+      Guid:
+        Data1: -213384006
+        Data2: 1075890625
+        Data3: 1285130664
+        Data4: -5072259
+      Path: event:/loop/music/music_forest_loop
   - name: GameSceneNight
-    clip: {fileID: 8300000, guid: 695377280f21064448c89d9c2b1267ec, type: 3}
-  sfxSounds:
-  - name: Walking
-    clip: {fileID: 8300000, guid: e6a7f04ffb877ca4db736cf726207489, type: 3}
-  - name: Running
-    clip: {fileID: 8300000, guid: e6a7f04ffb877ca4db736cf726207489, type: 3}
-  - name: Jumping
-    clip: {fileID: 8300000, guid: fc553d9ecb8a67f42a01d3493ca2d22c, type: 3}
-  - name: InLand
-    clip: {fileID: 8300000, guid: 1ec565f1b06e39a4f90d00dfcded48ea, type: 3}
-  - name: Plant
-    clip: {fileID: 8300000, guid: eee2dcbb7cbd5fe4fbb31624a5f8bcc3, type: 3}
-  - name: Water
-    clip: {fileID: 8300000, guid: 5ebd36e7d9b70a142b92de4d212f2cf3, type: 3}
-  - name: Fertilize
-    clip: {fileID: 8300000, guid: f8c45d33ae75cd54c903ad1135c5fa84, type: 3}
-  - name: NextStage
-    clip: {fileID: 8300000, guid: b8d67c96b849a4e4ab1c5e64fb67ea4f, type: 3}
-  - name: Harvesting
-    clip: {fileID: 8300000, guid: 4cb5f646587e6844d85f048a62a1617e, type: 3}
-  - name: MonsterSound
-    clip: {fileID: 8300000, guid: b6975edeb7cf1fb47b35c2dc690edf99, type: 3}
-  - name: MonsterWalking
-    clip: {fileID: 8300000, guid: 4119dd027e819dc42ab6615cf1a97c84, type: 3}
-  - name: MonsterAttack
-    clip: {fileID: 8300000, guid: 9ada5449ecf59474da4e68f1fc8d1ad9, type: 3}
-  - name: MonsterDead
-    clip: {fileID: 8300000, guid: ffd5f5e245c40b141a0424ea75209719, type: 3}
-  - name: FirePlant
-    clip: {fileID: 8300000, guid: 80abb92c12789be4f9a5abcbc3804aa4, type: 3}
-  - name: GasPlant
-    clip: {fileID: 8300000, guid: ff273b1915af77f49a6d2cfa2d60465b, type: 3}
-  - name: PuddlePLant
-    clip: {fileID: 8300000, guid: 1ba396eab0e353644a04c6cce316057d, type: 3}
-  - name: Gas&&FirePlant
-    clip: {fileID: 8300000, guid: 59e11e20a1fa57a41888c9195052aaab, type: 3}
-  - name: Fire&&PuddlePlant
-    clip: {fileID: 8300000, guid: 0b4fb57ff02bc574e9b80fd35a41f1e4, type: 3}
-  - name: AnimalSound
-    clip: {fileID: 8300000, guid: f36ca662e408b4b45878aa0bcf06dadf, type: 3}
-  - name: AnimalWalking
-    clip: {fileID: 8300000, guid: c57a88dc34ad6a544b9fa30d2f4a8d64, type: 3}
-  - name: EnemyDeath
-    clip: {fileID: 8300000, guid: ffd5f5e245c40b141a0424ea75209719, type: 3}
-  - name: PlayerAttack
-    clip: {fileID: 8300000, guid: e9c8fb2fd7c84614f9316cc7db161a4b, type: 3}
-  - name: TurretAttack
-    clip: {fileID: 8300000, guid: 77d1161e6455b5949bfd5d3979ada9a4, type: 3}
-  - name: TurretVAttack
-    clip: {fileID: 8300000, guid: d9d3c0428c96a07428c287146418f0d1, type: 3}
+    reference:
+      Guid:
+        Data1: 1990810362
+        Data2: 1318660802
+        Data3: 535137453
+        Data4: -1301012981
+      Path: event:/loop/music/music_wave_loop
+  - name: TitleScene
+    reference:
+      Guid:
+        Data1: 1990810362
+        Data2: 1318660802
+        Data3: 535137453
+        Data4: -1301012981
+      Path: event:/loop/music/music_wave_loop
+  sfxEvents:
+  - name: HoleiganDeath
+    reference:
+      Guid:
+        Data1: 241889724
+        Data2: 1184499246
+        Data3: 686910869
+        Data4: -360635097
+      Path: event:/oneshot/fx/enemies/holeigan/holeigan_death
+  - name: HoleiganFootstep
+    reference:
+      Guid:
+        Data1: 1965258226
+        Data2: 1222643640
+        Data3: 445841538
+        Data4: -326424549
+      Path: event:/oneshot/fx/enemies/holeigan/holeigan_footstep
+  - name: HoleiganShoot
+    reference:
+      Guid:
+        Data1: 362370357
+        Data2: 1098446447
+        Data3: 1088048262
+        Data4: -1806371735
+      Path: event:/oneshot/fx/enemies/holeigan/holeigan_shoot
+  - name: HoleiganShot
+    reference:
+      Guid:
+        Data1: -1497044159
+        Data2: 1075353749
+        Data3: 1259380625
+        Data4: 191011825
+      Path: event:/oneshot/fx/enemies/holeigan/holeigan_shot
+  - name: LadywoolDeath
+    reference:
+      Guid:
+        Data1: -74515611
+        Data2: 1206077482
+        Data3: -1804850038
+        Data4: -530498083
+      Path: event:/oneshot/fx/enemies/ladywool/ladywool_death
+  - name: LadywoolFootstep
+    reference:
+      Guid:
+        Data1: 883095708
+        Data2: 1196758119
+        Data3: 1478941579
+        Data4: 1614703746
+      Path: event:/oneshot/fx/enemies/ladywool/ladywool_footstep
+  - name: LadywoolShoot
+    reference:
+      Guid:
+        Data1: -1084718886
+        Data2: 1199532476
+        Data3: -1886607741
+        Data4: -1592854572
+      Path: event:/oneshot/fx/enemies/ladywool/ladywool_shoot
+  - name: LadywoolShot
+    reference:
+      Guid:
+        Data1: -1770154441
+        Data2: 1265952431
+        Data3: -1334889588
+        Data4: -856380069
+      Path: event:/oneshot/fx/enemies/ladywool/ladywool_shot
+  - name: OctobearDeath
+    reference:
+      Guid:
+        Data1: -199628215
+        Data2: 1205817059
+        Data3: -604189296
+        Data4: -1449529427
+      Path: event:/oneshot/fx/enemies/octobear/octobear_death
+  - name: OctobearFootstep
+    reference:
+      Guid:
+        Data1: -1302162850
+        Data2: 1281272777
+        Data3: -1007757668
+        Data4: -945208024
+      Path: event:/oneshot/fx/enemies/octobear/octobear_footstep
+  - name: OctobearShoot
+    reference:
+      Guid:
+        Data1: 1158465525
+        Data2: 1205283681
+        Data3: 753598852
+        Data4: 1915409362
+      Path: event:/oneshot/fx/enemies/octobear/octobear_shoot
+  - name: OctobearShot
+    reference:
+      Guid:
+        Data1: -1355063144
+        Data2: 1332578481
+        Data3: -144241526
+        Data4: -2111648000
+      Path: event:/oneshot/fx/enemies/octobear/octobear_shot
+  - name: EvelynDamaged
+    reference:
+      Guid:
+        Data1: -2143298368
+        Data2: 1258144309
+        Data3: 548172474
+        Data4: 1004373934
+      Path: event:/oneshot/fx/evelyn/evelyn_damaged
+  - name: EvelynFootstep
+    reference:
+      Guid:
+        Data1: 1457099207
+        Data2: 1209984067
+        Data3: -1403714130
+        Data4: -1291045245
+      Path: event:/oneshot/fx/evelyn/evelyn_footstep
+  - name: EvelynGunreload
+    reference:
+      Guid:
+        Data1: -911651339
+        Data2: 1076925298
+        Data3: -916312926
+        Data4: 506179633
+      Path: event:/oneshot/fx/evelyn/evelyn_gunreload
+  - name: PlantSeeds
+    reference:
+      Guid:
+        Data1: 1943046959
+        Data2: 1096437291
+        Data3: -440444529
+        Data4: -76483882
+      Path: event:/oneshot/fx/evelyn/evelyn_plantingseeds
+  - name: PlaceTower
+    reference:
+      Guid:
+        Data1: -1786998870
+        Data2: 1106882334
+        Data3: -701050443
+        Data4: -1026533360
+      Path: event:/oneshot/fx/evelyn/evelyn_plantingtowerdefense
+  - name: EvelynShot
+    reference:
+      Guid:
+        Data1: 991973001
+        Data2: 1328781973
+        Data3: -664605252
+        Data4: 1009891235
+      Path: event:/oneshot/fx/evelyn/evelyn_shot
+  - name: CarrotLoading
+    reference:
+      Guid:
+        Data1: 1948967127
+        Data2: 1315445065
+        Data3: 1896649652
+        Data4: 1893360013
+      Path: event:/oneshot/fx/tower/carrot/carrot_loading
+  - name: CarrotShot
+    reference:
+      Guid:
+        Data1: -741955617
+        Data2: 1269172848
+        Data3: 1888864670
+        Data4: 1537677215
+      Path: event:/oneshot/fx/tower/carrot/carrot_shot
+  - name: CreeperLoading
+    reference:
+      Guid:
+        Data1: -1691949286
+        Data2: 1214654688
+        Data3: 1776961440
+        Data4: 556991078
+      Path: event:/oneshot/fx/tower/creepercannon/creepercannon_loading
+  - name: CreeperShot
+    reference:
+      Guid:
+        Data1: -61602360
+        Data2: 1136800193
+        Data3: -107412560
+        Data4: 1149161384
+      Path: event:/oneshot/fx/tower/creepercannon/creepercannon_shot
+  - name: PitayaLoading
+    reference:
+      Guid:
+        Data1: -2063147677
+        Data2: 1153932153
+        Data3: 425726088
+        Data4: -208611331
+      Path: event:/oneshot/fx/tower/pitaya/pitaya_loading
+  - name: PitayaShot
+    reference:
+      Guid:
+        Data1: -119668808
+        Data2: 1313870365
+        Data3: -2000497232
+        Data4: -1142955336
+      Path: event:/oneshot/fx/tower/pitaya/pitaya_shot
+  - name: UIClick
+    reference:
+      Guid:
+        Data1: -1867349569
+        Data2: 1316515224
+        Data3: 211348924
+        Data4: 1959395711
+      Path: event:/oneshot/fx/ui/ui_selection_click
+  - name: UINoClick
+    reference:
+      Guid:
+        Data1: 1152035233
+        Data2: 1109583334
+        Data3: -707469891
+        Data4: -1830036337
+      Path: event:/oneshot/fx/ui/ui_selection_noclick
+  - name: UIWaveClick
+    reference:
+      Guid:
+        Data1: -1189450573
+        Data2: 1129204683
+        Data3: -1851823442
+        Data4: 1792757488
+      Path: event:/oneshot/fx/ui/ui_wave_selection_click
   musicSource: {fileID: 1654090520078962521}
   sfxSource: {fileID: 1862176639732291867}
 --- !u!1 &8700263654956403708
@@ -278,7 +481,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.519
   m_Pitch: 1
   Loop: 1
   Mute: 0
