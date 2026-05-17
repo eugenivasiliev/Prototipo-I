@@ -33,7 +33,7 @@ namespace TowerDefense
 
         protected virtual void SpawnProjectile()
         {
-            AudioManager.Instance.PlaySFX(shotSound);
+            AudioManager.Instance.PlaySFXEvent(shotSound);
             Projectile projectileInstance = 
                 Instantiate(projectile, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
             projectileInstance.startPos = transform.position;
