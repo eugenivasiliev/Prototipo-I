@@ -35,8 +35,8 @@ namespace TowerDefense
         {
             AudioManager.Instance.PlaySFXEvent(shotSound);
             Projectile projectileInstance = 
-                Instantiate(projectile, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
-            projectileInstance.startPos = transform.position;
+                Instantiate(projectile, particlesOrigin.transform.position, this.transform.rotation).GetComponent<Projectile>();
+            projectileInstance.startPos = particlesOrigin.transform.position;
             projectileInstance.target = targetedEnemy;
 
             if(particlesOrigin != null) 
