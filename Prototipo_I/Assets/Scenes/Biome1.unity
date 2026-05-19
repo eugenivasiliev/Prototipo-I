@@ -29653,7 +29653,7 @@ PrefabInstance:
     - target: {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
       propertyPath: healthBar
       value: 
-      objectReference: {fileID: 1071954662}
+      objectReference: {fileID: 908165560}
     - target: {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
       propertyPath: enemyManager
       value: 
@@ -29662,6 +29662,10 @@ PrefabInstance:
       propertyPath: seedsPerRound
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6590608293972196725, guid: 22f99fab7ea70eb4da7deb9123bb4c36, type: 3}
+      propertyPath: healthPercentage
+      value: 
+      objectReference: {fileID: 1964561232}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -74697,7 +74701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -83233,6 +83237,9 @@ MonoBehaviour:
     spawnZones:
     - {fileID: 0}
     barricadeTransform: {fileID: 0}
+    attackCooldown: 0
+    curAttackCooldown: 0
+    attackRange: 0
 --- !u!4 &1522150991
 Transform:
   m_ObjectHideFlags: 0

@@ -54,13 +54,11 @@ namespace TowerDefense
 
             foreach (var e in closeEnemies)
             {
-                if (e.GetComponent<EnemyAI>().IsAboutToDie() == false) { 
-                    if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
-                    {
-                        targetedEnemy = e;
-                        attacking = true;
-                        return;
-                    }
+                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                {
+                    targetedEnemy = e;
+                    attacking = true;
+                    return;
                 }
             }
         }
