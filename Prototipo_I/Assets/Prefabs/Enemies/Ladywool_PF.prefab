@@ -102,6 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358a37c42b972c84f9d7929174742fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSound: LadywoolFootstep
+  attackSound: LadywoolShot
   health: 7
   ui_health: {fileID: 8745831415376716272}
   damage: 1
@@ -127,11 +129,15 @@ MonoBehaviour:
     playerController: {fileID: 0}
     spawnZones: []
     barricadeTransform: {fileID: 0}
+    attackCooldown: 1
+    curAttackCooldown: 0
+    attackRange: 10
   animationType: 0
   alembicStreamPlayer: {fileID: 0}
   animator: {fileID: 0}
   isDying: 0
-  deathAnim: {fileID: 0}
+  deathAnim: {fileID: 7845886193055782156, guid: 890d78a90b32b77409f59f38a8dee1c1, type: 3}
+  deathPrefab: {fileID: 7114638766383851020, guid: 2885203e6a8e99f4e9431497df038292, type: 3}
 --- !u!195 &6956086674888791588
 NavMeshAgent:
   m_ObjectHideFlags: 0

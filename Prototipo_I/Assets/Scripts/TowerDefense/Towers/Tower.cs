@@ -33,10 +33,10 @@ namespace TowerDefense
 
         protected virtual void SpawnProjectile()
         {
-            AudioManager.Instance.PlaySFX(shotSound);
+            AudioManager.Instance.PlaySFXEvent(shotSound);
             Projectile projectileInstance = 
-                Instantiate(projectile, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
-            projectileInstance.startPos = transform.position;
+                Instantiate(projectile, particlesOrigin.transform.position, this.transform.rotation).GetComponent<Projectile>();
+            projectileInstance.startPos = particlesOrigin.transform.position;
             projectileInstance.target = targetedEnemy;
 
             if(particlesOrigin != null) 
@@ -54,13 +54,11 @@ namespace TowerDefense
 
             foreach (var e in closeEnemies)
             {
-                if (e.GetComponent<EnemyAI>().IsAboutToDie() == false) { 
-                    if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
-                    {
-                        targetedEnemy = e;
-                        attacking = true;
-                        return;
-                    }
+                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                {
+                    targetedEnemy = e;
+                    attacking = true;
+                    return;
                 }
             }
         }

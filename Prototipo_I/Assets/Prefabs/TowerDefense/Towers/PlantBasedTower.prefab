@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1363206456342674415}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: particleOrigin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,8 +41,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2364767506637235391}
   - component: {fileID: 2312738860307825253}
-  - component: {fileID: 4774537968050465030}
-  m_Layer: 0
+  - component: {fileID: 2749905983196826760}
+  m_Layer: 7
   m_Name: PlantBasedTower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 30
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4774537968050465030
+--- !u!114 &2749905983196826760
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5947208457080571333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90706a4324f54f044bfeaa03db376ad2, type: 3}
+  m_Script: {fileID: 11500000, guid: ee3c4717a9a129f4d94de818bee35dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 4228596157751962382, guid: aa038931c83eb5b4dab0280e351e9ce1, type: 3}
@@ -105,12 +105,10 @@ MonoBehaviour:
   cooldown: 0.6
   maxRange: 15
   minRange: 3
-  shotSound: TurretAttack
+  shotSound: PitayaShot
   animator: {fileID: 3873626193996499663}
   particles: {fileID: 2186902746282544362, guid: f9c12b2e5928ee840ad8ecf77a61c354, type: 3}
   particlesOrigin: {fileID: 3053829106773309990}
-  maxCapacity: 3
-  usesPerAttack: 0.2
 --- !u!1001 &1966490525248875273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,6 +117,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2364767506637235391}
     m_Modifications:
+    - target: {fileID: 3403830623564462262, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3898935181821838100, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4910996
@@ -175,6 +177,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canonpitaya_PF (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7890430089060638930, guid: 2cff4c6aac4c3674d8a5afe8def307db, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -204,6 +210,18 @@ PrefabInstance:
     - target: {fileID: 80403980495649469, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
       propertyPath: m_Name
       value: ContextCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 80403980495649469, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 483775067221086917, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560748757139810769, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2560748757139810769, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
       propertyPath: m_IsActive
@@ -317,6 +335,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6623605962738003747, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8993157470479781375, guid: 4194d3b411b79084fb6153e1503c1499, type: 3}
       propertyPath: key
       value: 
@@ -355,6 +377,10 @@ PrefabInstance:
     - target: {fileID: 5647965539313927473, guid: 1deaa7901c5e0b3498c54251689e4e50, type: 3}
       propertyPath: m_Name
       value: "Root_Ca\xF1on_Pitaya"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5647965539313927473, guid: 1deaa7901c5e0b3498c54251689e4e50, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6335276140073508784, guid: 1deaa7901c5e0b3498c54251689e4e50, type: 3}
       propertyPath: m_Pivot.x
