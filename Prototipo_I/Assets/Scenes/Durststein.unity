@@ -1643,7 +1643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[0].spawnDelay
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[1].spawnDelay
@@ -1655,15 +1655,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[0].enemies.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[1].enemies.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[2].enemies.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[0]'
@@ -1682,6 +1682,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[4]'
+      value: 
+      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[5]'
+      value: 
+      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[6]'
+      value: 
+      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[7]'
+      value: 
+      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[0]'
       value: 
       objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
@@ -1692,15 +1708,15 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[2]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[3]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[4]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[5]'
       value: 
@@ -1724,11 +1740,11 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[3]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[4]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[5]'
       value: 
@@ -17190,7 +17206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -57069,7 +57085,7 @@ PrefabInstance:
       objectReference: {fileID: 74349552}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: validPhases.Array.size
@@ -57109,7 +57125,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[0].enemies.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[1].enemies.Array.size
@@ -57117,7 +57133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[2].enemies.Array.size
-      value: 11
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[0]'
@@ -57140,17 +57156,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
-      propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[0]'
+      propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[5]'
       value: 
       objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[1]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[2]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[3]'
       value: 
@@ -57182,11 +57202,11 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[3]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[4]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[5]'
       value: 
@@ -77642,11 +77662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[0].enemies.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[1].enemies.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[2].enemies.Array.size
@@ -77699,7 +77719,7 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[2]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[1].enemies.Array.data[3]'
       value: 
@@ -77739,9 +77759,13 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[3]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[4]'
+      value: 
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
+    - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
+      propertyPath: 'phaseInfo.Array.data[2].enemies.Array.data[5]'
       value: 
       objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3995239118139321222, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
@@ -87734,7 +87758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[0].enemies.Array.size
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[1].enemies.Array.size
@@ -87751,19 +87775,19 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[2]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[3]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[4]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[5]'
       value: 
-      objectReference: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[6]'
       value: 
