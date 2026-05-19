@@ -63,10 +63,10 @@ namespace TowerDefense
 
         public void OnDamage() {
 
-            healthBar.fillAmount = Health / MaxHealth;
+            healthBar.fillAmount = (float)Health / (float)MaxHealth;
 
             if (healthPercentage != null)
-                healthPercentage.text = (Health / MaxHealth * 100).ToString() + "%";
+                healthPercentage.text = ((float)Health / (float)MaxHealth * 100).ToString() + "%";
 
             StartCoroutine(RedBlink());
         }

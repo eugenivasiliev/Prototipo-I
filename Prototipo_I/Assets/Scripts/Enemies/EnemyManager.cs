@@ -85,6 +85,8 @@ namespace Enemies
                 EnemyAI.Blackboard enemyBB = this.bb;
                 enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
+                enemyBB.attackRange = enemy.BB.attackRange;
+                enemyBB.attackCooldown = enemy.BB.attackCooldown;
                 enemy.BB = enemyBB;
 
                 minimap?.AddEnemy(enemy.gameObject);

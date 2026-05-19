@@ -25,6 +25,9 @@ namespace Enemies
             public PlayerController playerController;
             public List<SpawnZone> spawnZones;
             public Transform barricadeTransform;
+            public float attackCooldown;
+            public float curAttackCooldown;
+            public float attackRange;
         }
 
         public enum Target
