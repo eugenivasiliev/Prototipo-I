@@ -70,6 +70,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358a37c42b972c84f9d7929174742fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSound: OctobearFootstep
+  attackSound: OctobearShot
   health: 9
   ui_health: {fileID: 8188570041980599422}
   damage: 1
@@ -95,6 +97,9 @@ MonoBehaviour:
     playerController: {fileID: 0}
     spawnZones: []
     barricadeTransform: {fileID: 0}
+    attackCooldown: 1
+    curAttackCooldown: 0
+    attackRange: 10
   animationType: 1
   alembicStreamPlayer: {fileID: 0}
   animator: {fileID: 4356446967973939416}

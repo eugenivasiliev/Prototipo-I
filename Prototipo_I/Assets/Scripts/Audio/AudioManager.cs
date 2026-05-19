@@ -3,77 +3,83 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Utils;
+using FMODUnity;
+using FMOD.Studio;
 
 namespace Audio
 {
     public class AudioManager : Singleton<AudioManager>
     {
+        [Serializable]
+        public struct NamedEvent
+        {
+            public string name;
+            public EventReference reference;
+        }
 
-        public Sound[] musicSounds, sfxSounds;
+        public NamedEvent[] ambientEvents, musicEvents, sfxEvents;
+        public EventInstance ambientInstance, musicInstance, sfxInstance;
         public AudioSource musicSource, sfxSource;
 
         private Dictionary<string, float> soundCooldowns = new Dictionary<string, float>();
-        private Dictionary<string, AudioSource> loopingSources = new Dictionary<string, AudioSource>();
+        private Dictionary<string, EventInstance> loopingSources = new Dictionary<string, EventInstance>();
         private float cooldownTime = 0.15f;
         private void Awake()
         {
             InitSingleton();
         }
 
-        public void PlayMusic(string name)
+        public void PlayAmbientEvent(string name)
         {
-            Sound s = Array.Find(musicSounds, x => x.name == name);
-
-            if (s != null)
-            {
-                musicSource.clip = s.clip;
-                musicSource.Play();
-            }
+            ambientInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            ambientInstance = RuntimeManager.CreateInstance(
+                Array.Find(ambientEvents, e => e.name == name).reference
+            );
+            ambientInstance.start();
         }
 
-        public void PlaySFX(string name)
+        public void PlayMusicEvent(string name)
         {
-            Sound s = Array.Find(sfxSounds, x => x.name == name);
+            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            musicInstance = RuntimeManager.CreateInstance(
+                Array.Find(musicEvents, e => e.name == name).reference
+            );
+            musicInstance.start();
+        }
 
-            if (s != null)
-            {
-                if (soundCooldowns.ContainsKey(name) && Time.time - soundCooldowns[name] < cooldownTime) return; // Avoids saturating
-                soundCooldowns[name] = Time.time;
-                sfxSource.PlayOneShot(s.clip);
-            }
+        public void PlaySFXEvent(string name)
+        {
+            sfxInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            sfxInstance = RuntimeManager.CreateInstance(
+                Array.Find(sfxEvents, e => e.name == name).reference
+            );
+            sfxInstance.start();
         }
 
         public void PlaySFXLoop(string name)
         {
-            Sound s = Array.Find(sfxSounds, x => x.name == name);
+            if (loopingSources.ContainsKey(name)) return;
 
-            if (s != null)
-            {
-                if (loopingSources.ContainsKey(name)) return;
-                AudioSource newSource = gameObject.AddComponent<AudioSource>();
-                newSource.clip = s.clip;
-                newSource.loop = true;
-                newSource.volume = sfxSource.volume;
-                newSource.Play();
-
-                loopingSources[name] = newSource;
-            }
+            EventInstance instance = RuntimeManager.CreateInstance(
+                Array.Find(sfxEvents, e => e.name == name).reference
+            );
+            instance.start();
+            loopingSources.Add(name, instance);
         }
-        public void StopLoop(string name)
+        public void StopSFXLoop(string name)
         {
             if (!loopingSources.ContainsKey(name)) return;
 
-            loopingSources[name].Stop();
-            Destroy(loopingSources[name]);
+            loopingSources[name].stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             loopingSources.Remove(name);
         }
         public void StopMusic()
         {
-            if (musicSource.isPlaying) musicSource.Stop();
+            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
         public void StopSFX()
         {
-            sfxSource.Stop();
+            sfxInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
     }
 }
