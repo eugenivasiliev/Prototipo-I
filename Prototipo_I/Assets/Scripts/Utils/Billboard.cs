@@ -4,13 +4,14 @@ namespace Utils
 {
     public class Billboard : MonoBehaviour
     {
-        private Camera mainCamera;
+        [SerializeField] private Camera targetCamera;
         [SerializeField] private bool fixedSize;
         [SerializeField] private float cameraBaseDistance;
 
         void Start()
         {
-            mainCamera = Camera.main;
+            if(targetCamera == null)
+                targetCamera = Camera.main;
         }
 
         void Update()
@@ -20,10 +21,10 @@ namespace Utils
             if (!fixedSize) return;
 
             this.GetComponent<RectTransform>().localScale = 
-                Vector3.one * Vector3.Distance(this.transform.position, mainCamera.transform.position) / cameraBaseDistance;
+                Vector3.one * Vector3.Distance(this.transform.position, targetCamera.transform.position) / cameraBaseDistance;
         }
 
         void Follow() => 
-            this.transform.rotation = mainCamera.transform.rotation;
+            this.transform.rotation = targetCamera.transform.rotation;
     }
 }
