@@ -14,6 +14,9 @@ namespace Enemies
         public override void OnExit()
         {
             enemy.Animator.SetBool("IsAttacking", false);
+            EnemyAI.Blackboard bb = enemy.BB;
+            bb.curAttackCooldown = enemy.BB.attackCooldown;
+            enemy.BB = bb;
         }
 
         public override void Behaviour()
@@ -21,7 +24,7 @@ namespace Enemies
             if (bb.targetTransform == null) return;
 
             float distance = Vector3.Distance(enemy.transform.position, bb.targetTransform.transform.position);
-            if (distance < 10.45f)
+            if (distance < bb.attackRange)
             {
                 AudioManager.Instance.PlaySFXEvent(enemy.AttackSound);
                 ((IAttacker)enemy).Attack(bb.targetTransform.gameObject);
