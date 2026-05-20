@@ -17,9 +17,21 @@ namespace TowerDefense
 
         [SerializeField] private GameObject activeDecal;
 
+        [SerializeField] private List<Animator> activeAnimators;
+
+        [SerializeField] private int minRandParticles = 3;
+        [SerializeField] private int maxRandParticles = 10;
+        private List<GameObject> randParticles = new List<GameObject>();
+
+        [SerializeField, Range(0, 30)] private float radius = 20f;
+
+        private bool IsActive => state == 1;
+
         private void Start()
         {
             activeDecal.SetActive(false);
+            foreach(Animator anim in activeAnimators)
+                anim.SetBool("IsActive", false);
         }
 
         private void Update()
@@ -29,9 +41,30 @@ namespace TowerDefense
             {
                 state = 1 - state;
                 curCooldown = 0;
-                activeDecal.SetActive(state == 1);
-                if (state == 1) foreach (EnemyAI e in enemies) SlowDown(e);
-                else foreach (EnemyAI e in enemies) UnSlowDown(e);
+                activeDecal.SetActive(IsActive);
+                foreach (Animator anim in activeAnimators)
+                    anim.SetBool("IsActive", IsActive);
+                if (IsActive)
+                {
+                    foreach (EnemyAI e in enemies) SlowDown(e);
+                    int randParticleCount = UnityEngine.Random.Range(minRandParticles, maxRandParticles + 1);
+                    for (int i = 0; i < randParticleCount; i++)
+                    {
+                        Vector2 posXZ = UnityEngine.Random.insideUnitCircle * radius * this.transform.localScale;
+                        Vector3 pos = new Vector3(posXZ.x, 0, posXZ.y);
+                        Quaternion rot = UnityEngine.Random.rotation;
+                        randParticles.Add(Instantiate(particle, this.transform.position + pos, rot, this.transform));
+                    }
+                }
+                else
+                {
+                    foreach (EnemyAI e in enemies) UnSlowDown(e);
+                    while (randParticles.Count > 0)
+                    {
+                        Destroy(randParticles[randParticles.Count - 1]);
+                        randParticles.RemoveAt(randParticles.Count - 1);
+                    }
+                }
             }
         }
 
@@ -40,6 +73,8 @@ namespace TowerDefense
             if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemy)) return;
 
             enemies.Add(enemy);
+
+            if (IsActive) SlowDown(enemy);
         }
         private void OnTriggerExit(Collider other)
         {
@@ -47,7 +82,7 @@ namespace TowerDefense
 
             enemies.Remove(enemy);
 
-            if (state == 1) UnSlowDown(enemy);
+            if (IsActive) UnSlowDown(enemy);
         }
 
         private void SlowDown(EnemyAI enemy)
