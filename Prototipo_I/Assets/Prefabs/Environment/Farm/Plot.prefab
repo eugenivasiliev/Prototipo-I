@@ -209,6 +209,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 3b42ea3859b424d448aab9da4caee1ab, type: 2}
+  - {fileID: 2100000, guid: cdb5887439f5cc14ab1aa2e19050f02f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -273,6 +274,7 @@ MonoBehaviour:
   ripeFeedback: {fileID: 2386061190149393091, guid: a625d262defc1bd44a1530b134ea8a9b, type: 3}
   harvestFeedback: {fileID: 0}
   healthHolder: {fileID: 1406812291375341189}
+  seedLoot: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
 --- !u!54 &7984380653976584505
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -491,6 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 1
   cameraBaseDistance: 60
 --- !u!1 &3216234784607856102
@@ -786,6 +789,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 0
   cameraBaseDistance: 0
 --- !u!1 &5854299594940578300

@@ -3,6 +3,8 @@ using Unity.Cinemachine;
 
 public class CinemachineCamera : MonoBehaviour
 {
+    InputSystem_Actions inputs;
+
     [SerializeField] private GameObject mainCamera;
 
     [SerializeField] private GameObject zone1;
@@ -20,6 +22,12 @@ public class CinemachineCamera : MonoBehaviour
         zone2.SetActive(false);
         zone3.SetActive(false);
         zone4.SetActive(false);
+
+        inputs = new InputSystem_Actions();
+        inputs.Enable();
+        inputs.FindAction("level_cutscene_skip").started += ctx => { Debug.Log("bweh"); currentTime = maxTime; };
+
+        Debug.Log("done");
     }
 
     // Update is called once per frame
