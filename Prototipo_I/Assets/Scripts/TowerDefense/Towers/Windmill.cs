@@ -12,9 +12,11 @@ namespace TowerDefense
 
         [SerializeField] private List<Plot> plots = new List<Plot>();
 
+        [Header("Loot")]
+        [SerializeField] protected GameObject seedLoot;
         private void Start()
         {
-            Give += AddSeeds;
+            Give += DropLootItem;
             DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
 
@@ -26,11 +28,12 @@ namespace TowerDefense
             }
         }
 
-        void AddSeeds(float ff)
+        void DropLootItem(float t)
         {
             foreach (Plot plot in plots)
-                if (plot.IsPlanted) Inventory.Inventory.Instance.AddSeeds(1);
-            
+                if (plot.IsPlanted)
+                    Instantiate(seedLoot, this.transform.position, Quaternion.identity);
+
             DayNightCycle.Instance.SubscribeTimedEvent(Give, 2);
         }
     }
