@@ -79,10 +79,10 @@ MonoBehaviour:
   difficulty: 1
   speed: 5
   slowSpeed: 1
-  matHolder: {fileID: 0}
+  matHolder: {fileID: 8765628478098956387}
   blinkMat: {fileID: 2100000, guid: b45e54790b4a52749b3f983f2c58ae5f, type: 2}
-  originalMat: {fileID: 1054026264599947857, guid: 2dce8f6629064fd4eb7d345067aa591b, type: 3}
-  blinkTime: 0
+  originalMat: {fileID: 2100000, guid: fe9ea4b114c56284d9dc4d3105f3d099, type: 2}
+  blinkTime: 0.2
   droppableLoot:
   - gameObject: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
     rate: 1
@@ -603,5 +603,10 @@ Animator:
 --- !u!4 &7680073030996316834 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2dce8f6629064fd4eb7d345067aa591b, type: 3}
+  m_PrefabInstance: {fileID: 7863180248339887433}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8765628478098956387 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7729755382707890902, guid: 2dce8f6629064fd4eb7d345067aa591b, type: 3}
   m_PrefabInstance: {fileID: 7863180248339887433}
   m_PrefabAsset: {fileID: 0}
