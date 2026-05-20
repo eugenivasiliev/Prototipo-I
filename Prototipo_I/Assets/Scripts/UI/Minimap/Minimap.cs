@@ -61,7 +61,11 @@ namespace UI.Minimap
 
         public void ClearSpawnZones()
         {
-            spawnZones.Clear();
+            while (spawnZones.Count > 0)
+            {
+                Destroy(spawnZones[spawnZones.Count - 1].icon.gameObject);
+                spawnZones.RemoveAt(spawnZones.Count - 1);
+            }
         }
 
         private void PlaceInMap(MinimapIcon icon)
