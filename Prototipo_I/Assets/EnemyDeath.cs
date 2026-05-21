@@ -36,13 +36,12 @@ namespace Enemies
         void Start()
         {
             deathAnimTime = deathAnim.length;
+            AudioManager.Instance.PlaySFXEvent(deathSound);
         }
 
         // Update is called once per frame
         void Update()
         {
-            AudioManager.Instance.PlaySFXEvent(deathSound);
-
             deathAnimTime -= Time.deltaTime;
 
             if (deathAnimTime > 0) return;
