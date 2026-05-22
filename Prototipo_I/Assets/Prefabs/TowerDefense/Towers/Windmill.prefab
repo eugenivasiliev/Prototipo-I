@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 0
   cameraBaseDistance: 0
 --- !u!1 &5947208457080571333
@@ -337,6 +338,11 @@ MonoBehaviour:
   particles: {fileID: 0}
   particlesOrigin: {fileID: 0}
   plots: []
+  seedLoot: {fileID: 4694494138638134153, guid: 4a40d1c0fc380ba4bb01a7699296103f, type: 3}
+  minItemsDropped: 0
+  maxItemsDropped: 0
+  dropRadius: 0
+  dropHeight: 2
 --- !u!1 &6472302125353931987
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ namespace Combat
         {
             StartCoroutine(SelfDestruct());
         }
-        private void OnTriggerStay(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<IDamageable>(out var enemy))
                 enemy.Damage(damage);
