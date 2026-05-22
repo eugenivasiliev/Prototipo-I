@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7916319861629702668
+--- !u!114 &-3719768284595325356
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,13 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader casa2
-  m_Shader: {fileID: -6465566751694194690, guid: 6c5c2f73458f8a3418fc8e29e83679ba, type: 3}
+  m_Name: Shader Graphs_HouseShaderv2
+  m_Shader: {fileID: -6465566751694194690, guid: ac594b1113d864b46af864981de9e898, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -64,14 +64,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _Float: 2.7
-    - _FresnelStrengh: 2
+    - _FresnelStrengh: 0.5
     - _LineFrequency: 100
     - _LineRotation: 27.9
     - _LineStreng: 1
     - _LineThicknes: 0.2
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scroolspeed: -10
+    - _Scroolspeed: -1
     m_Colors:
     - _FresnelColor: {r: 0, g: 1, b: 0.01141953, a: 0}
     - _MainColor: {r: 0.09234107, g: 1, b: 0, a: 0}
