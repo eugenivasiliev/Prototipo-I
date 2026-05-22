@@ -46,8 +46,6 @@ namespace Enemies
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-
-            minimap.ClearSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
