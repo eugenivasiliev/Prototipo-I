@@ -117,6 +117,7 @@ namespace Enemies
         [SerializeField] protected bool isDying = false;
         [SerializeField] protected AnimationClip deathAnim;
         [SerializeField] protected GameObject deathPrefab;
+        [SerializeField] protected GameObject damageParticle;
 
 
         bool frozen = false;
@@ -251,6 +252,7 @@ namespace Enemies
         public void OnDamage()
         {
             UpdateLife();
+            Instantiate(damageParticle, this.transform.position, Quaternion.identity);
         }
 
         protected void SetSpeed(int i) {
