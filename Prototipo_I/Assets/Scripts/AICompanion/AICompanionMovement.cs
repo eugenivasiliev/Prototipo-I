@@ -10,18 +10,27 @@ namespace AICompanion
         [SerializeField, Range(0, 5)] private float arrivalDistance;
         [SerializeField, Range(0, 5)] private float chaseCooldown;
         private bool hasArrived => Vector3.Distance(this.transform.position, target.position) < arrivalDistance;
+        private bool previousHasArrived;
         private float yPosition;
         private float currentChaseCooldown = 0;
+
+        [Header("Leaning")]
+        [SerializeField] private Tween<float> leanAngle;
+        [SerializeField] private GameObject pivot;
 
         override protected void Start()
         {
             xAxis.startValue = this.transform.position.x;
             yPosition = this.transform.position.y;
             zAxis.startValue = this.transform.position.z;
+
+            previousHasArrived = hasArrived;
         }
 
         void Update()
         {
+            leanAngle.SetActive(true);
+
             xAxis.SetActive(!hasArrived);
             yAxis.SetActive(!hasArrived);
             zAxis.SetActive(!hasArrived);
@@ -31,6 +40,8 @@ namespace AICompanion
 
             if (hasArrived)
             {
+                leanAngle.Reverse();
+
                 xAxis.Reset();
                 yAxis.Reset();
                 zAxis.Reset();
@@ -42,6 +53,8 @@ namespace AICompanion
 
                 animator.SetBool("Is_Running", false);
 
+                previousHasArrived = true;
+
                 return;
             }
 
@@ -49,6 +62,14 @@ namespace AICompanion
             if (currentChaseCooldown < chaseCooldown) return;
 
             animator.SetBool("Is_Running", true);
+
+            if (previousHasArrived) leanAngle.Reset();
+
+            previousHasArrived = false;
+
+            TweenUtil.Update(Time.deltaTime, ref leanAngle);
+
+            pivot.transform.rotation = this.transform.rotation * Quaternion.Euler(leanAngle.value, 0, 0);
 
             TweenUtil.Update(Time.deltaTime, ref xAxis);
             TweenUtil.Update(Time.deltaTime, ref yAxis);
@@ -61,7 +82,11 @@ namespace AICompanion
 
             Vector3 fwd = new Vector3(target.position.x - this.transform.position.x, 0, target.position.z - this.transform.position.z);
 
-            this.transform.LookAt(this.transform.position + fwd);
+            float alpha = Vector3.SignedAngle(this.transform.forward, fwd, Vector3.up);
+
+            Quaternion q = Quaternion.AngleAxis(alpha * Time.deltaTime, Vector3.up);
+            this.transform.rotation *= q;
+            //this.transform.LookAt(this.transform.position + fwd);
         }
     }
 }
