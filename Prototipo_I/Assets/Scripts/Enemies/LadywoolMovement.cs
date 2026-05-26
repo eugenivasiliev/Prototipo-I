@@ -6,6 +6,7 @@ namespace Enemies
     public class LadywoolMovement : TweenMovement
     {
         [SerializeField, Range(0, 5)] private float jumpHeight;
+        [SerializeField] private GameObject pivot;
 
         override protected void Start()
         {
@@ -19,7 +20,8 @@ namespace Enemies
         {
             TweenUtil.Update(Time.deltaTime, ref yAxis);
 
-            this.transform.localPosition = new Vector3(this.transform.localPosition.x, yAxis.value * jumpHeight, this.transform.localPosition.z);
+            this.transform.position = pivot.transform.position + yAxis.value * jumpHeight * Vector3.up;
+            this.transform.rotation = Quaternion.AngleAxis(pivot.transform.rotation.eulerAngles.y, Vector3.up);
         }
     }
 }
