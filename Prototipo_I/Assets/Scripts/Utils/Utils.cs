@@ -10,6 +10,9 @@ namespace Utils
         public static Vector2 Clamp01(Vector2 value) =>
             new Vector2(Mathf.Clamp01(value.x), Mathf.Clamp01(value.y));
 
+        public static Vector2 Clamp(Vector2 value, float minX, float maxX, float minY, float maxY) =>
+            new Vector2(Mathf.Clamp(value.x, minX, maxX), Mathf.Clamp(value.y, minY, maxY));
+
         public static bool IsBetween(Vector2 value, Vector2 min, Vector2 max) =>
             min.x <= value.x && value.x <= max.x &&
             min.y <= value.y && value.y <= max.y;
