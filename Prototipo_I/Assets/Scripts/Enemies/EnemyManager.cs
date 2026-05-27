@@ -13,12 +13,11 @@ namespace Enemies
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Minimap minimap;
-        [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
-        public int TotalWaves { get { return waveDB.Waves.Count; } }
+        public int TotalWaves;
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -47,8 +46,6 @@ namespace Enemies
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-
-            minimap.ClearSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
@@ -66,7 +63,7 @@ namespace Enemies
 
             isWaveActive = false;
             currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, TotalWaves - 1);
 
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
                 foreach (var obj in objs)
@@ -86,6 +83,8 @@ namespace Enemies
                 EnemyAI.Blackboard enemyBB = this.bb;
                 enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
+                enemyBB.attackRange = enemy.BB.attackRange;
+                enemyBB.attackCooldown = enemy.BB.attackCooldown;
                 enemy.BB = enemyBB;
 
                 minimap?.AddEnemy(enemy.gameObject);
@@ -106,8 +105,6 @@ namespace Enemies
             }
 
             allEnemies.Clear();
-
-            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
         }
 
         public void ReturnToSpawn()
