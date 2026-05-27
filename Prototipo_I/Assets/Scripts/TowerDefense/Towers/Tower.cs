@@ -33,11 +33,22 @@ namespace TowerDefense
 
         protected virtual void SpawnProjectile()
         {
-            AudioManager.Instance.PlaySFX(shotSound);
-            Projectile projectileInstance = 
-                Instantiate(projectile, this.transform.position, this.transform.rotation).GetComponent<Projectile>();
-            projectileInstance.startPos = transform.position;
-            projectileInstance.target = targetedEnemy;
+            AudioManager.Instance.PlaySFXEvent(shotSound);
+            if (particlesOrigin != null) { 
+            
+
+                Projectile projectileInstance = 
+                Instantiate(projectile, particlesOrigin.transform.position, this.transform.rotation).GetComponent<Projectile>();
+                projectileInstance.startPos = particlesOrigin.transform.position;
+                projectileInstance.target = targetedEnemy;
+            }
+            else
+            {
+                Projectile projectileInstance =
+                Instantiate(projectile, transform.position, this.transform.rotation).GetComponent<Projectile>();
+                projectileInstance.startPos = transform.position;
+                projectileInstance.target = targetedEnemy;
+            }
 
             if(particlesOrigin != null) 
                 Instantiate(particles, particlesOrigin.transform.position, this.transform.rotation);
@@ -54,13 +65,11 @@ namespace TowerDefense
 
             foreach (var e in closeEnemies)
             {
-                if (e.GetComponent<EnemyAI>().IsAboutToDie() == false) { 
-                    if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
-                    {
-                        targetedEnemy = e;
-                        attacking = true;
-                        return;
-                    }
+                if (Vector3.Distance(this.transform.position, e.transform.position) >= minRange)
+                {
+                    targetedEnemy = e;
+                    attacking = true;
+                    return;
                 }
             }
         }

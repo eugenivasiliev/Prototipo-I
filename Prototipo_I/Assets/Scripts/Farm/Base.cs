@@ -17,6 +17,7 @@ namespace TowerDefense
         [SerializeField] private int maxHealth = 100;
 
         [SerializeField] private Image healthBar;
+        [SerializeField] private Text healthPercentage;
         [SerializeField] private MeshRenderer meshHolder;
         [SerializeField] private Material blinkMaterial;
         [SerializeField] private Material naturalMaterial;
@@ -34,6 +35,8 @@ namespace TowerDefense
         private void Start()
         {
             health = MaxHealth;
+            if (healthPercentage != null)
+                healthPercentage.text = (Health / MaxHealth * 100).ToString() + "%";
             BaseProduction += AddSeeds;
             DayNightCycle.Instance.SubscribeTimedEvent(BaseProduction, 2);
         }
@@ -60,7 +63,10 @@ namespace TowerDefense
 
         public void OnDamage() {
 
-            healthBar.fillAmount = Health / MaxHealth;
+            healthBar.fillAmount = (float)Health / (float)MaxHealth;
+
+            if (healthPercentage != null)
+                healthPercentage.text = ((float)Health / (float)MaxHealth * 100).ToString() + "%";
 
             StartCoroutine(RedBlink());
         }
