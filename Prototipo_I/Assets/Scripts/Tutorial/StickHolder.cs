@@ -6,7 +6,7 @@ public class StickHolder : MonoBehaviour
 
     [SerializeField] GameObject[] sticks;
     float time = 0f;
-    float Maxtime = 3.0f;
+    float Maxtime = 1.0f;
 
     float speed = 0.5f;
 

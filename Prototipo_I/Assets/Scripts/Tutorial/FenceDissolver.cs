@@ -28,7 +28,8 @@ public class FenceDissolver : MonoBehaviour
 
         for (int i = 0; i < fences.Length; i++)
         {
-            StartCoroutine(fences[i].GetComponent<StickHolder>().Dissolve());
+            fences[i].GetComponent<StickHolder>().StartCoroutine(
+                fences[i].GetComponent<StickHolder>().Dissolve());
 
         }
 
