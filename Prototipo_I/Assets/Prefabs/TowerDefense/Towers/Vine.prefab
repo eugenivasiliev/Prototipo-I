@@ -79,8 +79,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldowns:
-  - 5
   - 3
+  - 4
   particle: {fileID: 3133402332335678663, guid: 4285b4ce5210c2a4cbd6bdda4abf39e7, type: 3}
   activeDecal: {fileID: 7458322486362074096}
   activeAnimators:
@@ -94,6 +94,9 @@ MonoBehaviour:
   - {fileID: 6646722892660965202}
   - {fileID: 6853691954006390268}
   - {fileID: 5399185686060520939}
+  minRandParticles: 3
+  maxRandParticles: 10
+  radius: 20
 --- !u!1 &6083129813839753216
 GameObject:
   m_ObjectHideFlags: 0
