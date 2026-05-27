@@ -10,6 +10,7 @@ namespace VFX
         [SerializeField] private VisualEffect effect;
         void Start()
         {
+            Debug.Log("Flag");
             effect.Play();
             StartCoroutine(SelfDestruct());
         }
@@ -19,6 +20,7 @@ namespace VFX
 
             yield return new WaitForSeconds(time);
 
+            Debug.Log("Flag");
             Destroy(gameObject);
         }
     }
