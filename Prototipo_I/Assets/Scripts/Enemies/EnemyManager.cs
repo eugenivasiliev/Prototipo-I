@@ -46,8 +46,6 @@ namespace Enemies
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-
-            minimap.ClearSpawnZones();
         }
 
         private bool AreEnemiesRemaining()
@@ -85,6 +83,8 @@ namespace Enemies
                 EnemyAI.Blackboard enemyBB = this.bb;
                 enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
+                enemyBB.attackRange = enemy.BB.attackRange;
+                enemyBB.attackCooldown = enemy.BB.attackCooldown;
                 enemy.BB = enemyBB;
 
                 minimap?.AddEnemy(enemy.gameObject);

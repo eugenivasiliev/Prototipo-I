@@ -28,6 +28,12 @@ namespace UI.Minimap
         [SerializeField] private MinimapIcon spawnZoneIcon;
         [SerializeField] private GameObject spawnZoneIconPrefab;
 
+        [Header("Borders")]
+        [SerializeField, Range(0, 1)] private float minXPosition;
+        [SerializeField, Range(0, 1)] private float maxXPosition;
+        [SerializeField, Range(0, 1)] private float minYPosition;
+        [SerializeField, Range(0, 1)] private float maxYPosition;
+
         void Update()
         {
             PlaceInMap(background);
@@ -61,7 +67,11 @@ namespace UI.Minimap
 
         public void ClearSpawnZones()
         {
-            spawnZones.Clear();
+            while (spawnZones.Count > 0)
+            {
+                Destroy(spawnZones[spawnZones.Count - 1].icon.gameObject);
+                spawnZones.RemoveAt(spawnZones.Count - 1);
+            }
         }
 
         private void PlaceInMap(MinimapIcon icon)
@@ -78,8 +88,8 @@ namespace UI.Minimap
         {
             icon.icon.anchorMin = Utils.Utils.Clamp(
                 WorldToNormalMapPoint(icon.reference.position),
-                Vector2.one * 0.1f,
-                Vector2.one * 0.9f
+                minXPosition, maxXPosition,
+                minYPosition, maxYPosition
                 );
             icon.icon.anchorMax = icon.icon.anchorMin;
             icon.icon.gameObject.SetActive(
