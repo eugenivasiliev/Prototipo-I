@@ -77,10 +77,10 @@ namespace Player
 
             if (player.MovementLocked) return;
 
-            if (inputs.Player.Look.activeControl.device is Mouse)
+            if (inputs.Player.Look.activeControl?.device is Mouse)
                 cameraSensibility = mouseCameraSensibility;
-            else if (inputs.Player.Look.activeControl.device is Gamepad)
-                cameraSensibility = controllerCameraSensibility;
+            else if (inputs.Player.Look.activeControl?.device is Gamepad)
+                    cameraSensibility = controllerCameraSensibility;
 
 
             float mouseX = lookInput.x * cameraSensibility;
