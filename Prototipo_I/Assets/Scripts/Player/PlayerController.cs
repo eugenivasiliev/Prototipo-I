@@ -279,7 +279,11 @@ namespace Player
 
             for(int i = 0; i < closeEnemies.Count; ++i)
             {
-                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, attackCone.transform.forward) > attackAngle / 2.0f)
+                Vector3 enemyFwd = closeEnemies[i].transform.position - modelTransform.position;
+                enemyFwd.y = 0;
+                Vector3 attackFwd = attackCone.transform.forward;
+                attackFwd.y = 0;
+                if (Vector3.Angle(enemyFwd, attackFwd) > attackAngle / 2.0f)
                     continue;
 
                 targetedEnemy = closeEnemies[i];
