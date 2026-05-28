@@ -16,7 +16,7 @@ namespace UI
         void Start()
         {
             Dictionary<string, string> values = new Dictionary<string, string> {
-            { "curWave", enemyManager.CurrentPhaseIndex.ToString() },
+            { "curWave", (enemyManager.CurrentPhaseIndex + 1).ToString() },
             { "totalWaves", enemyManager.TotalWaves.ToString() }
         };
             localizedString.Arguments = new object[] { values };
@@ -27,7 +27,7 @@ namespace UI
         private void RenderText(float t)
         {
             Dictionary<string, string> values = new Dictionary<string, string> {
-            { "curWave", enemyManager.CurrentPhaseIndex.ToString() },
+            { "curWave", (enemyManager.CurrentPhaseIndex + 1).ToString() },
             { "totalWaves", enemyManager.TotalWaves.ToString() }
         };
             localizedString.Arguments = new object[] { values };
