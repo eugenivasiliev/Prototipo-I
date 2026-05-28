@@ -27,11 +27,13 @@ namespace UI
                 || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton7)) {
 
                 if (nextCutscene != null)
+                {
                     nextCutscene.SetActive(true);
+                    gameObject.SetActive(false);
+                }
                 else
                     SceneManager.LoadScene("Tutorial");
 
-                gameObject.SetActive(false);
             }
         }
     }
