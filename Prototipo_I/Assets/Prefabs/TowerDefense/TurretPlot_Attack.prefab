@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetCamera: {fileID: 0}
   fixedSize: 1
   cameraBaseDistance: 60
 --- !u!1 &4416505677043015158
@@ -1118,6 +1119,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1349055956490884076}
     m_Modifications:
+    - target: {fileID: 1297989773507248814, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccba00f61329e9d49a52a7bfeec753ce, type: 2}
+    - target: {fileID: 1949464643239220091, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1949464643239220091, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4239125174371889779, guid: 58a794fd20cb9a34a9dc66f23d8d6a5f, type: 3}
       propertyPath: m_Name
       value: Light_Beam_ParticleSystem
