@@ -168,6 +168,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &262986816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3154143295322318981, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
+  m_PrefabInstance: {fileID: 787658670}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &262986817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262986816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab21b7005e0c3174cb00feaaa4184e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myButton: {fileID: 1752237413}
 --- !u!1 &398080026
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,10 +368,10 @@ PrefabInstance:
     - target: {fileID: 473561440177977385, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: aa717107b0ec6b34ab7f8794c45ac26d, type: 3}
+      objectReference: {fileID: 21300000, guid: 361ce2b6372026b43b68c594abc07fdc, type: 3}
     - target: {fileID: 2416018905858686594, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Name
-      value: Durst
+      value: Snowy
       objectReference: {fileID: 0}
     - target: {fileID: 2707518492554933537, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Pivot.x
@@ -446,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 5163887752539081729, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 361ce2b6372026b43b68c594abc07fdc, type: 3}
+      objectReference: {fileID: 21300000, guid: aa717107b0ec6b34ab7f8794c45ac26d, type: 3}
     - target: {fileID: 5791093567874557747, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Type
       value: 0
@@ -465,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7602730479216937099, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       propertyPath: m_Name
-      value: Snowy
+      value: Durst
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -480,6 +498,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 943835605}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3154143295322318981, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 262986817}
     - targetCorrespondingSourceObject: {fileID: 7578608232908770506, guid: 35ee67d3784b0534fa7e73a149209bd0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1752237418}
@@ -519,7 +540,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -548,7 +569,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Biome1
+          m_StringArgument: Durststein
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &787658673 stripped
@@ -589,6 +610,10 @@ PrefabInstance:
     - target: {fileID: 5133475047789268817, guid: 7edfe490abf0e004883f718ed13122c2, type: 3}
       propertyPath: m_Name
       value: MouseControllerEnabler
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133475047789268817, guid: 7edfe490abf0e004883f718ed13122c2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6880948010782344810, guid: 7edfe490abf0e004883f718ed13122c2, type: 3}
       propertyPath: m_Pivot.x
@@ -1097,7 +1122,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1375,7 +1400,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.5566038, g: 0.5566038, b: 0.5566038, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
