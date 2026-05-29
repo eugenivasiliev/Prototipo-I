@@ -626,33 +626,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 0ccff4257ef7ed54a8577fcec65f43c9, type: 3}
   playbackSpeed: 1
   player: {fileID: 52659754}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1354505805}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 52659749}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1354505805}
 --- !u!328 &52659754
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -700,6 +674,7 @@ GameObject:
   - component: {fileID: 74971584}
   - component: {fileID: 74971586}
   - component: {fileID: 74971585}
+  - component: {fileID: 74971587}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -825,6 +800,46 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74971583}
   m_CullTransparentMesh: 1
+--- !u!114 &74971587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74971583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56eb0353ae6e5124bb35b17aff880f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_StringReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:4793e93d1410b2f4799438e9df15193a
+    m_TableEntryReference:
+      m_KeyId: 541685587968
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  m_FormatArguments: []
+  m_UpdateString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 74971585}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: set_text
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &97600314
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,33 +1570,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 065180a2088d30e4e99bcec057093c76, type: 3}
   playbackSpeed: 1
   player: {fileID: 144953249}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 447594736}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 144953244}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 447594736}
 --- !u!328 &144953249
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1823,7 +1812,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 2ea3242b0d4ab284abe26a99c22e1a9a, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -2179,33 +2168,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 81893883ead78cf499cc5dc1395a9c64, type: 3}
   playbackSpeed: 1
   player: {fileID: 350094853}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1171555931}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 350094848}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1171555931}
 --- !u!328 &350094853
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -2375,33 +2338,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 64822285627b5dd4e84f9b774f2feb3d, type: 3}
   playbackSpeed: 1
   player: {fileID: 388915720}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 447594736}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 388915715}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 144953244}
 --- !u!328 &388915720
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -2714,21 +2651,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: fb86cb1d55e1ba74cb58b5aa23196701, type: 3}
   playbackSpeed: 1
   player: {fileID: 447594741}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 385578757}
-        m_TargetAssemblyTypeName: Utils.SceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 0}
 --- !u!328 &447594741
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -3312,33 +3235,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: a509b81615a0e264eadbd2499e499ba5, type: 3}
   playbackSpeed: 1
   player: {fileID: 550464698}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2128023493}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 550464693}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 2128023493}
 --- !u!328 &550464698
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -4083,36 +3980,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dc46446c3a090428f7e7b8b426e48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 32900000, guid: 69e720e868cdb40458c569e108850a2d, type: 3}
+  clip: {fileID: 32900000, guid: 67d3cf25de760f24facc766771f1d252, type: 3}
   playbackSpeed: 1
   player: {fileID: 643841737}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 350094848}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 643841735}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 350094848}
 --- !u!328 &643841737
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -5384,21 +5255,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: ee4d9109f86b83746a9c6f2f12ee5815, type: 3}
   playbackSpeed: 1
   player: {fileID: 855624533}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 385578757}
-        m_TargetAssemblyTypeName: Utils.SceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 0}
 --- !u!328 &855624533
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -6551,7 +6408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 5baf1b579a0ac6341854339656026784, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -6745,33 +6602,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 4f97a2a81877bc54589980784258e530, type: 3}
   playbackSpeed: 1
   player: {fileID: 945680561}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1453218304}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 945680556}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1957957665}
 --- !u!328 &945680561
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -7013,7 +6844,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: 38ced5325ea198342a98ada7c88b7c65, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -7677,33 +7508,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: f6553867b02dbc742b5892cc8f651d9f, type: 3}
   playbackSpeed: 1
   player: {fileID: 1149748845}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 52659749}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1149748841}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 52659749}
 --- !u!328 &1149748845
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -7848,33 +7653,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 5693ec43be88b9a4787093d0e23a637a, type: 3}
   playbackSpeed: 1
   player: {fileID: 1171555936}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 447594736}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1171555931}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 388915715}
 --- !u!328 &1171555936
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -8747,33 +8526,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: eb6106f937c9a9c4785eec24fc7aef1a, type: 3}
   playbackSpeed: 1
   player: {fileID: 1354505810}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 855624528}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1354505805}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 855624528}
 --- !u!328 &1354505810
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -9044,21 +8797,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: d51d630c3920b794bafe81b0f25c366e, type: 3}
   playbackSpeed: 1
   player: {fileID: 1453218309}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 385578757}
-        m_TargetAssemblyTypeName: Utils.SceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 0}
 --- !u!328 &1453218309
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -10164,8 +9903,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1763792184}
   - component: {fileID: 1763792186}
-  - component: {fileID: 1763792185}
   - component: {fileID: 1763792187}
+  - component: {fileID: 1763792189}
+  - component: {fileID: 1763792188}
   m_Layer: 5
   m_Name: CreditsMenu
   m_TagString: Untagged
@@ -10194,36 +9934,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1763792185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763792183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2cb08a29ff48be5469baa23a5688dd8f, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1763792186
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10245,6 +9955,68 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myButton: {fileID: 859844450}
+--- !u!114 &1763792188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763792183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006beb027fab52e48975b991d80a6d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LocalizedAssetReference:
+    m_TableReference:
+      m_TableCollectionName: GUID:e6f23eedf79a2c347a946d3096138ada
+    m_TableEntryReference:
+      m_KeyId: 788627004727296
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+  m_UpdateAsset:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1763792189}
+        m_TargetAssemblyTypeName: UnityEngine.UI.RawImage, UnityEngine.UI
+        m_MethodName: set_texture
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+--- !u!114 &1763792189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763792183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 2cb08a29ff48be5469baa23a5688dd8f, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &1791398996
 GameObject:
   m_ObjectHideFlags: 0
@@ -10390,33 +10162,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 579e4c4a9dadccb46a8b26dc62150fd1, type: 3}
   playbackSpeed: 1
   player: {fileID: 1805036036}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1149748841}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1805036032}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1149748841}
 --- !u!328 &1805036036
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -11266,36 +11012,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dc46446c3a090428f7e7b8b426e48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 32900000, guid: f70cedab9c434724eb2ed15458f8850d, type: 3}
+  clip: {fileID: 32900000, guid: fa54630249560924cb23fef8e855d6ec, type: 3}
   playbackSpeed: 1
   player: {fileID: 1940292862}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1805036032}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1940292858}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1805036032}
 --- !u!328 &1940292862
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -11568,7 +11288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 2800000, guid: f80b96c1e72bf2142b23d27ab0031f4b, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -11739,33 +11459,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 4ecf3e290f306754784642b2d31cab5e, type: 3}
   playbackSpeed: 1
   player: {fileID: 1957957670}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1453218304}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1957957665}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 1453218304}
 --- !u!328 &1957957670
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -11888,36 +11582,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5dc46446c3a090428f7e7b8b426e48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 32900000, guid: f7942f489c73df04a93d50fa954c51c0, type: 3}
+  clip: {fileID: 32900000, guid: 000c36e77af5fed4390a40a5caae81c5, type: 3}
   playbackSpeed: 1
   player: {fileID: 1974368529}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 550464693}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1974368524}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 550464693}
 --- !u!328 &1974368529
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -12334,33 +12002,7 @@ MonoBehaviour:
   clip: {fileID: 32900000, guid: 94e6168e3b3db0943ab37cd3b4d2ba2b, type: 3}
   playbackSpeed: 1
   player: {fileID: 2128023498}
-  afterCutsceneEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1453218304}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2128023493}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tutorial
-          m_BoolArgument: 0
-        m_CallState: 2
+  nextCutscene: {fileID: 945680556}
 --- !u!328 &2128023498
 VideoPlayer:
   m_ObjectHideFlags: 0

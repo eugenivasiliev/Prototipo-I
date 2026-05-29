@@ -72,11 +72,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSound: LadywoolFootstep
   attackSound: LadywoolShot
-  health: 7
-  ui_health: {fileID: 8241145701832423742}
-  damage: 1
+  health: 10
+  ui_health: {fileID: 0}
+  damage: 2
   difficulty: 1
-  speed: 5
+  speed: 3
   slowSpeed: 1
   matHolder: {fileID: 0}
   blinkMat: {fileID: 2100000, guid: b8e522915dd176946b8cb17313c5d6fa, type: 2}
@@ -106,7 +106,7 @@ MonoBehaviour:
   isDying: 0
   deathAnim: {fileID: 7845886193055782156, guid: 890d78a90b32b77409f59f38a8dee1c1, type: 3}
   deathPrefab: {fileID: 1108098440531153338, guid: 98b15e37277e3fc49916ffcb88a5cd89, type: 3}
-  damageParticle: {fileID: 0}
+  damageParticle: {fileID: 4150153061077254716, guid: 770cfe1823bbf0d4a886d2619b0fd8fa, type: 3}
 --- !u!195 &6956086674888791588
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -542,10 +542,5 @@ PrefabInstance:
 --- !u!224 &6274498412738806947 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4582133097479429791, guid: 6b1e1062bed51974b853da8e970112b2, type: 3}
-  m_PrefabInstance: {fileID: 7531283936335288892}
-  m_PrefabAsset: {fileID: 0}
---- !u!223 &8241145701832423742 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 1934877184936878850, guid: 6b1e1062bed51974b853da8e970112b2, type: 3}
   m_PrefabInstance: {fileID: 7531283936335288892}
   m_PrefabAsset: {fileID: 0}
