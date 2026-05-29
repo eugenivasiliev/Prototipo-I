@@ -23,10 +23,10 @@ namespace TowerDefense
 
         public enum TowerType : int
         {
-            ATTACK,
-            DEFENSE,
-            UTILITY,
-            COUNT
+            ATTACK = 0,
+            DEFENSE = 1,
+            UTILITY = 2,
+            COUNT = 3
         }
     }
 }
