@@ -17,7 +17,7 @@ public class PlotInteracted : MonoBehaviour
         if (console != null)
             console.SetActive(true);
         if (dullConsole != null) 
-            dullConsole.SetActive(false);
+            dullConsole.SetActive(true);
 
         Destroy(this.gameObject);
     }
