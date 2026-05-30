@@ -7752,7 +7752,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &490557045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7765,7 +7780,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &490557046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7778,7 +7808,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &490557047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7791,7 +7836,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &490557048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7804,11 +7864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0d1178bdfc774da7aed6dd2ef86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sticks:
-  - {fileID: 490557042}
-  - {fileID: 490557041}
-  - {fileID: 490557040}
-  - {fileID: 490557039}
+  materials: []
 --- !u!1001 &490924173
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10928,11 +10984,6 @@ Transform:
   - {fileID: 1223387607}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &742672092 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3052344525549008046, guid: 23592548e7b37444db42c9774ce5d2a0, type: 3}
-  m_PrefabInstance: {fileID: 1192106043}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &744376451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13959,10 +14010,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1057959315}
     m_Modifications:
-    - target: {fileID: 141579820982674005, guid: 400e804450d33394cad59778c9a69b16, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -255.7
-      objectReference: {fileID: 0}
     - target: {fileID: 3170017501924747812, guid: ce65ad9db0ba766428143ce821b37eb8, type: 3}
       propertyPath: dialogueId
       value: shoot
@@ -13978,6 +14025,10 @@ PrefabInstance:
     - target: {fileID: 9030217958721277387, guid: ce65ad9db0ba766428143ce821b37eb8, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 141579820982674005, guid: 400e804450d33394cad59778c9a69b16, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -255.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14598,7 +14649,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &992865107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14611,7 +14677,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &992865108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14624,7 +14705,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &992865109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14637,7 +14733,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &992865110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14650,11 +14761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0d1178bdfc774da7aed6dd2ef86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sticks:
-  - {fileID: 992865104}
-  - {fileID: 992865103}
-  - {fileID: 992865102}
-  - {fileID: 992865101}
+  materials: []
 --- !u!1001 &994546742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15339,7 +15446,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!1001 &1024902106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17618,11 +17740,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0d1178bdfc774da7aed6dd2ef86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sticks:
-  - {fileID: 1192106045}
-  - {fileID: 742672092}
-  - {fileID: 1465894597}
-  - {fileID: 1023626993}
+  materials: []
 --- !u!114 &1192106051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17635,7 +17753,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!1 &1195093326
 GameObject:
   m_ObjectHideFlags: 0
@@ -18019,7 +18152,7 @@ PrefabInstance:
     - target: {fileID: 7922081088581396577, guid: 9c10d5537b381d94699bcd7b668b64aa, type: 3}
       propertyPath: plantingFeedback
       value: 
-      objectReference: {fileID: 4065207414125692444, guid: 4dcaf9096cabfc048b081deb4e4c0062, type: 3}
+      objectReference: {fileID: 4065207414125692444, guid: 5744a4354cf5cdb44b07a893171868b7, type: 3}
     - target: {fileID: 7922081088581396577, guid: 9c10d5537b381d94699bcd7b668b64aa, type: 3}
       propertyPath: hybridationManager
       value: 
@@ -20630,7 +20763,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &1321608588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20643,7 +20791,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &1321608589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20656,7 +20819,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &1321608590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20669,7 +20847,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &1321608591
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20682,11 +20875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0d1178bdfc774da7aed6dd2ef86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sticks:
-  - {fileID: 1321608585}
-  - {fileID: 1321608584}
-  - {fileID: 1321608583}
-  - {fileID: 1321608582}
+  materials: []
 --- !u!4 &1322823835 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1946132065215312334, guid: d368871fd93c54a4b912cc8ffaa09fb4, type: 3}
@@ -23086,7 +23275,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!1 &1473765309
 GameObject:
   m_ObjectHideFlags: 0
@@ -30119,7 +30323,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 51.4
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -30642,9 +30846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b21395f78d76c4fb6560f57b731096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  things:
-  - {fileID: 1706983867}
-  - {fileID: 1917701796}
+  conditions: []
   fences:
   - {fileID: 1192106046}
   waitDialogue: {fileID: 707536208}
@@ -32876,7 +33078,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &2039479345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32889,7 +33106,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &2039479346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32902,7 +33134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &2039479347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32915,7 +33162,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dissolveValue: 0
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 0
+    value: 0
+    startValue: 0
+    endValue: 0
+    isActive: 0
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!114 &2039479348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32928,11 +33190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b0d1178bdfc774da7aed6dd2ef86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sticks:
-  - {fileID: 2039479342}
-  - {fileID: 2039479341}
-  - {fileID: 2039479340}
-  - {fileID: 2039479339}
+  materials: []
 --- !u!1001 &2041132980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33666,9 +33924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b21395f78d76c4fb6560f57b731096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  things:
-  - {fileID: 1706983867}
-  - {fileID: 1917701796}
+  conditions: []
   fences:
   - {fileID: 1192106046}
   - {fileID: 2039479343}
