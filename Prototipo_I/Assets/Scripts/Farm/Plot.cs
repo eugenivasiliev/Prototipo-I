@@ -4,6 +4,7 @@ using Audio;
 using Combat;
 using Inventory;
 using Objectives;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -98,6 +99,8 @@ namespace Farm
             contextCollider.SetActive(false);
             beam.SetActive(false);
             particles.SetActive(false);
+
+            StartCoroutine(PlayerController.Instance.Harvest());
         }
 
         public void FullGrow()
