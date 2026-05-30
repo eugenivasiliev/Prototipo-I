@@ -48,7 +48,7 @@ namespace UI
         private void LoadValidTowers()
         {
             foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
-
+            bool isFirstButton = true;
             foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
             {
                 if (Inventory.Inventory.Instance.HasSeeds(data.cost))
@@ -63,8 +63,11 @@ namespace UI
                     turretButton.tm = this;
                     turretButton.td = data;
 
-                    if (Gamepad.current != null)
+                    if (Gamepad.current != null && isFirstButton)
+                    {
                         EventSystem.current.SetSelectedGameObject(instance);
+                        isFirstButton = false; 
+                    }
                 } else
                 {
                     GameObject instance = Instantiate(towerInactiveUI, towerMenuGrid.transform);
@@ -75,9 +78,6 @@ namespace UI
                     turretButton.range = data.range;
                     turretButton.tm = this;
                     turretButton.td = data;
-
-                    if (Gamepad.current != null)
-                        EventSystem.current.SetSelectedGameObject(instance);
                 }
             }
         }
