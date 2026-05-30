@@ -173,38 +173,6 @@ namespace Player
             AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
 
             SetAnimation(MovementType.FORWARD);
-
-            //if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
-            //{
-            //    //Right-Left axis
-            //    if (movementInput.x > 0)
-            //    {
-            //        if (curMovementType == MovementType.RIGHT) return;
-            //        SetAnimation(MovementType.RIGHT);
-            //        curMovementType = MovementType.RIGHT;
-            //    }
-            //    else
-            //    {
-            //        if (curMovementType == MovementType.LEFT) return;
-            //        SetAnimation(MovementType.LEFT);
-            //        curMovementType = MovementType.LEFT;
-            //    }
-            //} else
-            //{
-            //    //Forward-Backward axis
-            //    if (movementInput.y > 0)
-            //    {
-            //        if (curMovementType == MovementType.FORWARD) return;
-            //        SetAnimation(MovementType.FORWARD);
-            //        curMovementType = MovementType.FORWARD;
-            //    }
-            //    else
-            //    {
-            //        if (curMovementType == MovementType.BACKWARD) return;
-            //        SetAnimation(MovementType.BACKWARD);
-            //        curMovementType = MovementType.BACKWARD;
-            //    }
-            //}
         }
 
         private void SetAnimation(MovementType direction)
@@ -233,6 +201,13 @@ namespace Player
                 default:
                     break;
             }
+        }
+
+        public IEnumerator Harvest()
+        {
+            anim.SetBool("Is_Harvesting", true);
+            yield return new WaitForEndOfFrame();
+            anim.SetBool("Is_Harvesting", false);
         }
 
         private void OnTriggerEnter(Collider other)
