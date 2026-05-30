@@ -32,7 +32,7 @@ public class EnemyDeadChecker : MonoBehaviour
             if (wall != null) 
                 Destroy(wall);
 
-            Destroy(gameObject);
+            this.enabled = false;
         }
     }
 }
