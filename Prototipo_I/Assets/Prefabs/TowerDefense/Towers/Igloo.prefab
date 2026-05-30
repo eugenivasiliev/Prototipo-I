@@ -642,6 +642,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d3406280b7e1a1408de9d5076a89828, type: 3}
       insertIndex: -1
       addedObject: {fileID: 691944410978731378}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1d3406280b7e1a1408de9d5076a89828, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1961746882870137702}
   m_SourcePrefab: {fileID: 100100000, guid: 1d3406280b7e1a1408de9d5076a89828, type: 3}
 --- !u!4 &399006781032703800 stripped
 Transform:
@@ -675,6 +678,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1961746882870137702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063515958860938626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfbf57bca151df04abc7bc44baf6e474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dissolveTween:
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    t: 0
+    duration: 1
+    value: 0
+    startValue: 1
+    endValue: 0
+    isActive: 1
+    isReversing: 0
+    isLooping: 0
+  destroyOnFinish: 0
 --- !u!1001 &2674062537115920620
 PrefabInstance:
   m_ObjectHideFlags: 0

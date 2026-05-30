@@ -1,37 +1,27 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FenceDissolver : MonoBehaviour
 {
-    [SerializeField] GameObject[] things;
+    [SerializeField] private List<GameObject> conditions;
     
-    [SerializeField] GameObject[] fences;
+    [SerializeField] private GameObject[] fences;
 
-    [SerializeField] GameObject waitDialogue;
-    [SerializeField] GameObject console;
-    [SerializeField] GameObject dullConsole;
-
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject waitDialogue;
+    [SerializeField] private GameObject console;
+    [SerializeField] private GameObject dullConsole;
 
     void Update()
     {
-        for (int i = 0; i < things.Length; i++)
-        {
-            if (things[i] != null) return;
-        }
+        for (int i = 0; i < conditions.Count; i++)
+            if (conditions[i] == null || !conditions[i].activeSelf) conditions.RemoveAt(i);
 
-
+        if (conditions.Count > 0) return;
 
         for (int i = 0; i < fences.Length; i++)
-        {
-            fences[i].GetComponent<StickHolder>().StartCoroutine(
-                fences[i].GetComponent<StickHolder>().Dissolve());
-
-        }
+            fences[i].GetComponent<DissolvingObject>().Dissolve();
 
 
         waitDialogue.SetActive(true);
@@ -40,7 +30,6 @@ public class FenceDissolver : MonoBehaviour
         if (dullConsole != null)
             dullConsole.SetActive(false);
 
-
-        Destroy(gameObject);
+        this.enabled = false;
     }
 }
