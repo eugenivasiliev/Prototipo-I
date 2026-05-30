@@ -91,6 +91,7 @@ namespace AICompanion
 
             Quaternion q = Quaternion.AngleAxis(alpha * Time.deltaTime, Vector3.up);
             this.transform.rotation *= q;
+            //this.transform.LookAt(this.transform.position + fwd);
         }
     }
 }
