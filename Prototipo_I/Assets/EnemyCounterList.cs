@@ -13,6 +13,7 @@ public class EnemyCounterList : MonoBehaviour
         public int amount;
         public string name;
         public Sprite sprite;
+        public Material material;
     }
 
     [SerializeField] private EnemyManager enemyManager;

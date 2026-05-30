@@ -18,6 +18,7 @@ public class EnemyCounter : MonoBehaviour
             info = value;
             text.text = value.amount + " " + value.name;
             image.sprite = value.sprite;
+            image.material = value.material;
         }
     }
 }
