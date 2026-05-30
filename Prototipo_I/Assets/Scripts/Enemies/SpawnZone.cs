@@ -108,5 +108,11 @@ namespace Enemies
             if(currentPhaseIndex == -1) return 0;
             return phaseInfo[currentPhaseIndex].enemies.Count;
         }
+
+        public List<GameObject> EnemiesPendingList()
+        {
+            if (currentPhaseIndex == -1) return new List<GameObject>();
+            return phaseInfo[currentPhaseIndex].enemies;
+        }
     }
 }
