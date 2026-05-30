@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using Utils;
 
 namespace AICompanion
@@ -18,6 +19,9 @@ namespace AICompanion
         [SerializeField] private Tween<float> leanAngle;
         [SerializeField] private GameObject pivot;
 
+        private NavMeshAgent nma;
+        private NavMeshPath path;
+
         override protected void Start()
         {
             xAxis.startValue = this.transform.position.x;
@@ -25,6 +29,9 @@ namespace AICompanion
             zAxis.startValue = this.transform.position.z;
 
             previousHasArrived = hasArrived;
+
+            nma = GetComponent<NavMeshAgent>();
+            path = new NavMeshPath();
         }
 
         void Update()
@@ -75,10 +82,8 @@ namespace AICompanion
             TweenUtil.Update(Time.deltaTime, ref yAxis);
             TweenUtil.Update(Time.deltaTime, ref zAxis);
 
-            this.transform.position =
-                Vector3.right * xAxis.value +
-                Vector3.up * (yPosition + yAxis.value) +
-                Vector3.forward * zAxis.value;
+            nma.CalculatePath(target.position, path);
+            nma.SetPath(path);
 
             Vector3 fwd = new Vector3(target.position.x - this.transform.position.x, 0, target.position.z - this.transform.position.z);
 
@@ -86,7 +91,6 @@ namespace AICompanion
 
             Quaternion q = Quaternion.AngleAxis(alpha * Time.deltaTime, Vector3.up);
             this.transform.rotation *= q;
-            //this.transform.LookAt(this.transform.position + fwd);
         }
     }
 }
