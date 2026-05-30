@@ -52,7 +52,7 @@ public class EnemyCounterList : MonoBehaviour
                 } else
                 {
                     GameObject instance = Instantiate(enemyCounterPrefab, 
-                        this.transform.position + enemyCounterInstances.Count * Vector3.down * listPadding, Quaternion.identity, transform);
+                        this.transform.position + enemyCounterInstances.Count * Vector3.down * listPadding, transform.rotation, transform);
                     foreach(EnemyCounterInfo info in enemyCounterList) 
                         if(info.prefab == enemy)
                             instance.GetComponent<EnemyCounter>().Info = info;
