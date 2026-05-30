@@ -537,11 +537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[2].enemies.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[3].enemies.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[0].enemies.Array.data[0]'
@@ -670,7 +670,7 @@ PrefabInstance:
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[3].enemies.Array.data[9]'
       value: 
-      objectReference: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
+      objectReference: {fileID: 4590688058275222406, guid: 8b0e2a2872483044b954eb5a8b92cca8, type: 3}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: 'phaseInfo.Array.data[3].enemies.Array.data[10]'
       value: 
@@ -12587,6 +12587,182 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 896562418902961500, guid: bc7cc712738d2684eb8cb982b10e9197, type: 3}
   m_PrefabInstance: {fileID: 170226165}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &171256934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 171256935}
+  - component: {fileID: 171256941}
+  - component: {fileID: 171256940}
+  - component: {fileID: 171256939}
+  - component: {fileID: 171256938}
+  - component: {fileID: 171256937}
+  - component: {fileID: 171256936}
+  m_Layer: 0
+  m_Name: EnemyCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &171256935
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1772779504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 5}
+  m_SizeDelta: {x: 10, y: 10}
+  m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &171256936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544d6834f85601f44a9c3b5d715f8562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCamera: {fileID: 106731225}
+  fixedSize: 0
+  cameraBaseDistance: 0
+--- !u!114 &171256937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
+--- !u!114 &171256938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c992e1e5ded06d5468d15e38f005ddad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyManager: {fileID: 1522150990}
+  enemyCounterList:
+  - prefab: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
+    amount: 0
+    name: Holeigan
+    sprite: {fileID: 21300000, guid: 56b621d40f32e4e4b8d6b16efbeba1f7, type: 3}
+    material: {fileID: 2100000, guid: af23a066c7a9f4748a7cf3baeb3debcf, type: 2}
+  - prefab: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
+    amount: 0
+    name: Ladywool
+    sprite: {fileID: 21300000, guid: c8dd0ff2969ce2247b7929991fff3521, type: 3}
+    material: {fileID: 2100000, guid: a51fad9cef372fa4d94d3d646e97eab2, type: 2}
+  - prefab: {fileID: 4590688058275222406, guid: 8b0e2a2872483044b954eb5a8b92cca8, type: 3}
+    amount: 0
+    name: Octobear
+    sprite: {fileID: 21300000, guid: a9969fe587b59b44aa94249bc6eb304a, type: 3}
+    material: {fileID: 2100000, guid: d3d185649da13f642a39c926b6c2e0f1, type: 2}
+  enemyCounterPrefab: {fileID: 1310782472168176381, guid: 99250deeef02b7045b429130500dc396, type: 3}
+  listPadding: 3
+--- !u!114 &171256939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &171256940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!223 &171256941
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171256934}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1001 &172024736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44461,11 +44637,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[2].enemies.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[3].enemies.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3698712879245432435, guid: 16f02121fbfa5bc4bb59da1ba1a404e5, type: 3}
       propertyPath: phaseInfo.Array.data[4].enemies.Array.size
@@ -121877,6 +122053,7 @@ Transform:
   m_Children:
   - {fileID: 969588190}
   - {fileID: 1637336453}
+  - {fileID: 171256935}
   m_Father: {fileID: 2118551336}
   m_LocalEulerAnglesHint: {x: 0, y: 53.848, z: 0}
 --- !u!1001 &1773406552
