@@ -45,6 +45,9 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (Gamepad.current != null)
+                return;
+
             spotReference.SetRange(td.range);
             spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
