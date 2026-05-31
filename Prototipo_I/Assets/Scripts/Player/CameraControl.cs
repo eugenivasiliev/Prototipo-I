@@ -6,14 +6,14 @@ namespace Player
 {
     public class CameraControl : TweenMovement
     {
-        [SerializeField] private GameObject cone;
 
         [SerializeField] private PlayerController player;
 
         [SerializeField] private Vector3 nearOffset;
         public Vector3 NearOffset { get { return nearOffset; } }
 
-        [SerializeField] public Vector3 farOffset;
+        [SerializeField] private Vector3 farOffset;
+        public Vector3 FarOffset { get { return farOffset; } }
         [SerializeField] private Vector3 currentOffset;
         public Vector3 savedPosition;
         [SerializeField] private Quaternion rotationOffset = Quaternion.identity;
@@ -27,6 +27,8 @@ namespace Player
 
         [Header("Settings")]
         [SerializeField] private float cameraSensibility = 7.5f;
+        [SerializeField] private float mouseCameraSensibility = 0.2f;
+        [SerializeField] private float controllerCameraSensibility = 1.2f;
         [SerializeField] private float scrollSensibility = 20.0f;
 
         override protected void Start()
@@ -75,30 +77,33 @@ namespace Player
 
             if (player.MovementLocked) return;
 
+            if (inputs.Player.Look.activeControl?.device is Mouse)
+                cameraSensibility = mouseCameraSensibility;
+            else if (inputs.Player.Look.activeControl?.device is Gamepad)
+                    cameraSensibility = controllerCameraSensibility;
+
+
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
             rotationOffset *= q;
 
-            float scroll = -Mouse.current.scroll.ReadValue().y;
+            //float scroll = -Mouse.current.scroll.ReadValue().y;
 
-            if(scroll != 0f)
-            {
-                TweenUtil.Update(scroll * scrollSensibility, ref xAxis);
-                TweenUtil.Update(scroll * scrollSensibility, ref yAxis);
-                TweenUtil.Update(scroll * scrollSensibility, ref zAxis);
-            }
+            //if(scroll != 0f)
+            //{
+            //    TweenUtil.Update(scroll * scrollSensibility, ref xAxis);
+            //    TweenUtil.Update(scroll * scrollSensibility, ref yAxis);
+            //    TweenUtil.Update(scroll * scrollSensibility, ref zAxis);
+            //}
 
-            currentOffset = new Vector3(
-                xAxis.value * nearOffset.x + (1 - xAxis.value) * farOffset.x,
-                yAxis.value * nearOffset.y + (1 - yAxis.value) * farOffset.y,
-                zAxis.value * nearOffset.z + (1 - zAxis.value) * farOffset.z
-                );
+            //currentOffset = new Vector3(
+            //    xAxis.value * nearOffset.x + (1 - xAxis.value) * farOffset.x,
+            //    yAxis.value * nearOffset.y + (1 - yAxis.value) * farOffset.y,
+            //    zAxis.value * nearOffset.z + (1 - zAxis.value) * farOffset.z
+            //    );
 
             this.transform.position = player.transform.position + rotationOffset * new Vector3(0, currentOffset.y, currentOffset.z) + player.transform.right * currentOffset.x;
             this.transform.LookAt(player.transform);
-            Vector3 tr = this.transform.position;
-            tr = new Vector3(tr.x, cone.transform.position.y, tr.z);
-            cone.transform.LookAt(tr); 
         }
 
         public void SavePosition() => savedPosition = currentOffset;

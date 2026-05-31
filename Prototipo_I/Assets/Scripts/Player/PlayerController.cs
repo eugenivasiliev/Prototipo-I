@@ -10,23 +10,34 @@ using Utils;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Singleton<PlayerController>
     {
         [Header("Attack")]
         [SerializeField] private GameObject projectilePrefab;
         [SerializeField] private KeyCode attackKey;
         [SerializeField, Range(0, 3)] private float attackCooldown = 0.6f;
         [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
+        [SerializeField] private GameObject attackCone;
+        [SerializeField] private bool defaultArmed = false;
         private float currentCooldown = 0.0f;
+        private bool isArmed = false;
 
         [Header("Movement")]
         [SerializeField] private float speed = 35f;        
         [SerializeField] private float gravity = 9.80665f;
         [SerializeField] private Animator anim;
+        [SerializeField] private Vector3 targetForward;
+        [SerializeField] private float rotationSpeed;
+
+        [Header("Idle")]
+        [SerializeField, Range(0, 60)] private float minIdleChangeSeconds;
+        [SerializeField, Range(0, 60)] private float maxIdleChangeSeconds;
+        private float randomIdleChangeSeconds = 0;
+        private float currentIdleChangeSeconds = 0;
 
         [Header("Transforms")]
         [SerializeField] private Transform modelTransform;
-        [SerializeField] public short InteractionRange { get { return 3; } }
+        [SerializeField, Range(0, 10)] public float InteractionRange = 3;
 
         [Header("VFX")]
         [SerializeField] private GameObject stunParticles;
@@ -60,13 +71,18 @@ namespace Player
 
         private void Start()
         {
+            InitSingleton();
+
             inputs.Player.Enable();
             inputs.Player.Move.performed += ctx => movementInput = ctx.ReadValue<Vector2>();
             inputs.Player.Move.canceled += ctx => movementInput = Vector2.zero;
-            //inputs.Player.Sprint.performed += ctx => isSprinting = true;
-            //inputs.Player.Sprint.canceled += ctx => isSprinting = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+
+            anim.SetBool("Is_Armed", defaultArmed);
+            attackCone.SetActive(defaultArmed);
+
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
 
         private void OnDisable()
@@ -102,8 +118,15 @@ namespace Player
             Vector3 totalMovement = horizontalMovement + new Vector3(0, velocity.y, 0);
             characterController.Move(totalMovement * Time.deltaTime);
 
-            if(movement.sqrMagnitude > 0)
-                modelTransform.LookAt(modelTransform.position + movement);
+            targetForward = movement;
+
+            if (movement.sqrMagnitude > 0)
+            {
+                float rotationAngle = Vector3.SignedAngle(modelTransform.forward, targetForward, Vector3.up);
+
+                modelTransform.rotation =
+                    Quaternion.AngleAxis(rotationAngle * Time.deltaTime * rotationSpeed, Vector3.up) * modelTransform.rotation;
+            }
 
             Animate(movementInput);
         }
@@ -121,59 +144,50 @@ namespace Player
         {
             if(movementInput.magnitude == 0)
             {
+                currentIdleChangeSeconds += Time.deltaTime;
+
+                anim.SetBool("Idle2", false);
+
+                if (randomIdleChangeSeconds == 0)
+                {
+                    randomIdleChangeSeconds = Random.Range(minIdleChangeSeconds, maxIdleChangeSeconds);
+                    currentIdleChangeSeconds = 0;
+                }
+
+                if (currentIdleChangeSeconds >= randomIdleChangeSeconds)
+                {
+                    randomIdleChangeSeconds = Random.Range(minIdleChangeSeconds, maxIdleChangeSeconds);
+                    currentIdleChangeSeconds = 0;
+                    anim.SetBool("Idle2", true);
+                }
+
                 if (curMovementType == MovementType.IDLE) return;
                 SetAnimation(MovementType.IDLE);
                 curMovementType = MovementType.IDLE;
-                AudioManager.Instance.StopLoop("Running");
+                AudioManager.Instance.StopSFXLoop("EvelynFootstep");
                 return;
             }
 
-            AudioManager.Instance.PlaySFXLoop("Running");
+            randomIdleChangeSeconds = 0;
 
-            if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
-            {
-                //Right-Left axis
-                if (movementInput.x > 0)
-                {
-                    if (curMovementType == MovementType.RIGHT) return;
-                    SetAnimation(MovementType.RIGHT);
-                    curMovementType = MovementType.RIGHT;
-                }
-                else
-                {
-                    if (curMovementType == MovementType.LEFT) return;
-                    SetAnimation(MovementType.LEFT);
-                    curMovementType = MovementType.LEFT;
-                }
-            } else
-            {
-                //Forward-Backward axis
-                if (movementInput.y > 0)
-                {
-                    if (curMovementType == MovementType.FORWARD) return;
-                    SetAnimation(MovementType.FORWARD);
-                    curMovementType = MovementType.FORWARD;
-                }
-                else
-                {
-                    if (curMovementType == MovementType.BACKWARD) return;
-                    SetAnimation(MovementType.BACKWARD);
-                    curMovementType = MovementType.BACKWARD;
-                }
-            }
+            AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
+
+            SetAnimation(MovementType.FORWARD);
         }
 
         private void SetAnimation(MovementType direction)
         {
-            anim.SetBool("Is_R_Front", false);
+            anim.SetBool("Is_Walking", false);
             anim.SetBool("Is_R_Backwards", false);
             anim.SetBool("Is_R_Right", false);
             anim.SetBool("Is_R_Left", false);
 
+            curMovementType = direction;
+
             switch (direction)
             {
                 case MovementType.FORWARD:
-                    anim.SetBool("Is_R_Front", true);
+                    anim.SetBool("Is_Walking", true);
                     break;
                 case MovementType.BACKWARD:
                     anim.SetBool("Is_R_Backwards", true);
@@ -189,12 +203,20 @@ namespace Player
             }
         }
 
+        public IEnumerator Harvest()
+        {
+            anim.SetBool("Is_Harvesting", true);
+            yield return new WaitForEndOfFrame();
+            anim.SetBool("Is_Harvesting", false);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
 
             closeEnemies.Add(other.gameObject);
         }
+        
 
         private void OnTriggerExit(Collider other)
         {
@@ -210,6 +232,9 @@ namespace Player
 
         private void AttackLoop()
         {
+            Vector3 projectedFwd = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
+            attackCone.transform.LookAt(attackCone.transform.position + projectedFwd);
+
             if (currentCooldown < attackCooldown) currentCooldown += Time.deltaTime;
 
             gunRecharge.fillAmount = currentCooldown / attackCooldown;
@@ -229,7 +254,11 @@ namespace Player
 
             for(int i = 0; i < closeEnemies.Count; ++i)
             {
-                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, modelTransform.forward) > attackAngle / 2.0f)
+                Vector3 enemyFwd = closeEnemies[i].transform.position - modelTransform.position;
+                enemyFwd.y = 0;
+                Vector3 attackFwd = attackCone.transform.forward;
+                attackFwd.y = 0;
+                if (Vector3.Angle(enemyFwd, attackFwd) > attackAngle / 2.0f)
                     continue;
 
                 targetedEnemy = closeEnemies[i];
@@ -240,7 +269,7 @@ namespace Player
 
         void SpawnProjectile(float waitTime)
         {
-            AudioManager.Instance.PlaySFX("PlayerAttack");
+            AudioManager.Instance.PlaySFXEvent("EvelynShot");
             GameObject p = Instantiate(projectilePrefab, this.transform.position, this.transform.rotation);
             Projectile projectile = p.GetComponent<Projectile>();
             projectile.startPos = transform.position;
@@ -264,6 +293,14 @@ namespace Player
             yield return new WaitForSeconds(seconds);
 
             movementLocked = false;
+        }
+
+        private void ToggleCone(float t)
+        {
+            isArmed = !isArmed;
+            anim.SetBool("Is_Armed", isArmed);
+            attackCone.SetActive(isArmed);
+            DayNightCycle.Instance.SubscribeTimedEvent(ToggleCone, 1);
         }
     }
 }

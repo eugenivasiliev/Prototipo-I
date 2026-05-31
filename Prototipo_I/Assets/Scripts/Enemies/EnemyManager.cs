@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Farm;
 using Objectives;
+using UI;
+using UI.Minimap;
 using UnityEngine;
 using UnityEngine.Events;
 using Utils;
@@ -11,11 +13,11 @@ namespace Enemies
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Minimap minimap;
-        [SerializeField] private WaveDB waveDB;
 
         [SerializeField] private int currentBiomeIndex = 0;
         [SerializeField] private int currentPhaseIndex = 0;
         public int CurrentPhaseIndex { get { return currentPhaseIndex; } }
+        public int TotalWaves;
 
         [SerializeField] private bool isWaveActive = false;
         public bool IsWaveActive { get { return isWaveActive; } }
@@ -44,38 +46,36 @@ namespace Enemies
             Return.AddListener((float t) => { ReturnToSpawn(); });
 
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
-
-            foreach (SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
         }
 
         private bool AreEnemiesRemaining()
         {
             foreach (var enemy in allEnemies)
                 if (enemy != null) return true;
+            foreach (var zone in spawnZones)
+                if (zone.EnemiesPendingCount() > 0) return true;
             return false;
         }
 
         private void Update()
         {
-            if (!isWaveActive || AreEnemiesRemaining() || enemiesToSpawn.Count > 0) return;
+            if (!isWaveActive || AreEnemiesRemaining()) return;
 
             isWaveActive = false;
             currentPhaseIndex++;
-            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, waveDB.Waves.Count - 1);
+            currentPhaseIndex = (int)Mathf.Min(currentPhaseIndex, TotalWaves - 1);
 
             if (ObjectivesManager.Instance.TryGetObjective<WavesCompleted, int>(out List<WavesCompleted> objs))
                 foreach (var obj in objs)
                     obj.UpdateObjective(1);
 
-            foreach(SpawnZone zone in spawnZones)
-                zone.ShowIndicator(currentPhaseIndex);
+            minimap.ClearSpawnZones();
 
             DayNightCycle.Instance.PassTime();
             DayNightCycle.Instance.SubscribeTimedEvent(Spawn, 1);
         }
 
-        private void RegisterEnemy(EnemyAI enemy)
+        public void RegisterEnemy(EnemyAI enemy)
         {
             if (!allEnemies.Contains(enemy))
             {
@@ -83,9 +83,11 @@ namespace Enemies
                 EnemyAI.Blackboard enemyBB = this.bb;
                 enemyBB.spawnZones = this.spawnZones;
                 enemyBB.target = enemy.BB.target;
+                enemyBB.attackRange = enemy.BB.attackRange;
+                enemyBB.attackCooldown = enemy.BB.attackCooldown;
                 enemy.BB = enemyBB;
 
-                minimap.AddEnemy(enemy.gameObject);
+                minimap?.AddEnemy(enemy.gameObject);
             }
         }
 
@@ -103,35 +105,6 @@ namespace Enemies
             }
 
             allEnemies.Clear();
-
-            waveDB.ReadyNextWave(currentBiomeIndex, currentPhaseIndex);
-            enemiesToSpawn = waveDB.nextWave;
-
-            foreach (SpawnZone zone in spawnZones)
-                if (zone.ValidPhases.Contains(currentPhaseIndex))
-                {
-                    zone.HideIndicator();
-                    StartCoroutine(SpawnEnemyDelay(zone));
-                }
-        }
-
-        private IEnumerator SpawnEnemyDelay(SpawnZone zone)
-        {
-
-
-            while (enemiesToSpawn.Count > 0)
-            {
-                int enemyIndex = Random.Range(0, enemiesToSpawn.Count);
-                GameObject prefab = enemiesToSpawn[enemyIndex];
-                GameObject enemyInstance = Instantiate(prefab, zone.transform.position, Quaternion.identity, zone.transform);
-                EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
-
-                if (enemyAI != null) RegisterEnemy(enemyAI);
-
-                enemiesToSpawn.RemoveAt(enemyIndex);
-
-                yield return new WaitForSeconds(timeToSpawn);
-            }
         }
 
         public void ReturnToSpawn()

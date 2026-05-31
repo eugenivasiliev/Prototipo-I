@@ -25,6 +25,9 @@ namespace Enemies
             public PlayerController playerController;
             public List<SpawnZone> spawnZones;
             public Transform barricadeTransform;
+            public float attackCooldown;
+            public float curAttackCooldown;
+            public float attackRange;
         }
 
         public enum Target
@@ -42,6 +45,12 @@ namespace Enemies
             Return
         }
 
+        [Header("Audio")]
+        [SerializeField] protected string walkSound;
+        public string WalkSound { get => walkSound; }
+        [SerializeField] protected string attackSound;
+        public string AttackSound { get => attackSound; }
+
         [SerializeField] protected EnemyState enemyState;
 
         protected NavMeshAgent agent;
@@ -53,7 +62,8 @@ namespace Enemies
         protected int maxHealth;
         public int MaxHealth { get => maxHealth; set { } }
         [SerializeField] protected Canvas ui_health;
-
+        private Image ui_health_image;
+        private float barSpeed = 1f;
 
         [SerializeField] protected int damage;
         public int Damage => damage;
@@ -64,6 +74,10 @@ namespace Enemies
         [SerializeField] protected float speed;
         [SerializeField] protected float slowSpeed;
         private bool aboutToDie = false;
+        [SerializeField] private Renderer matHolder;
+        [SerializeField] private Material blinkMat;
+        [SerializeField] private Material originalMat;
+        [SerializeField] private float blinkTime;
         public int Difficulty => difficulty;
 
         [Serializable]
@@ -99,7 +113,11 @@ namespace Enemies
         [SerializeField] protected AnimationType animationType;
         [SerializeField] protected AlembicStreamPlayer alembicStreamPlayer;
         [SerializeField] protected Animator animator;
+        public Animator Animator { get => animator; }
         [SerializeField] protected bool isDying = false;
+        [SerializeField] protected AnimationClip deathAnim;
+        [SerializeField] protected GameObject deathPrefab;
+        [SerializeField] protected GameObject damageParticle;
 
 
         bool frozen = false;
@@ -124,6 +142,8 @@ namespace Enemies
             droppableLoot[0] = new DropRateObject(droppableLoot[0].gameObject, droppableLoot[0].rate / totalRate);
             for (int i = 1; i < droppableLoot.Count; ++i)
                 droppableLoot[i] = new DropRateObject(droppableLoot[i].gameObject, (droppableLoot[i - 1].rate + droppableLoot[i].rate) / totalRate);
+
+            ui_health_image = ui_health.gameObject.transform.GetChild(1).GetComponent<Image>();
         }
 
         protected virtual void Update()
@@ -134,27 +154,15 @@ namespace Enemies
             {
                 isDying = true;
 
-                if (animationType == AnimationType.ALEMBIC)
-                {
-                    /* 
-                     * TODO: Implement alembic in scene.
-                     * Alembic has issues with prefab instantiation, which means it cannot be used as the EnemyManager system stands now.
-                     * The fix is to implement enemy pooling instead of instantiation, but for time limitations this is kept out of the project for alpha.
-                     */
-                    //StartCoroutine(AlembicDeathAnim());
-
-                    AudioManager.Instance.PlaySFX("EnemyDeath");
-                    DropLoot();
-                    Destroy(gameObject);
-                }
-                else if (animationType == AnimationType.FBX)
-                    StartCoroutine(FBXDeathAnim());
+                Instantiate(deathPrefab, this.transform.position, this.transform.rotation);
+                Destroy(this.gameObject);
                 return;
             }
 
             enemyState.Behaviour();
 
-
+            if (ui_health_image.fillAmount > (this as IDamageable).HealthRatio)
+                ui_health_image.fillAmount = Mathf.MoveTowards(ui_health_image.fillAmount, (this as IDamageable).HealthRatio, barSpeed * Time.deltaTime);
         }
 
         /// <summary>
@@ -162,7 +170,6 @@ namespace Enemies
         /// </summary>
         protected IEnumerator AlembicDeathAnim()
         {
-            AudioManager.Instance.PlaySFX("EnemyDeath");
             while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
             {
                 alembicStreamPlayer.CurrentTime += Time.deltaTime;
@@ -174,10 +181,10 @@ namespace Enemies
 
         protected IEnumerator FBXDeathAnim()
         {
-            AudioManager.Instance.PlaySFX("EnemyDeath");
             animator.SetBool("IsDying", true);
-            while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
-                yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(deathAnim.length);
+            //while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
+            //    yield return new WaitForEndOfFrame();
 
             DropLoot();
             Destroy(gameObject);
@@ -199,18 +206,20 @@ namespace Enemies
                 {
                     GameObject loot = Instantiate(drop.gameObject, this.transform.position, Quaternion.identity);
                     TweenMovement lootMovement = loot.GetComponent<TweenMovement>();
-                    lootMovement.xAxis.startValue = this.transform.position.x;
+                    /*lootMovement.xAxis.startValue = this.transform.position.x;
                     lootMovement.xAxis.endValue = this.transform.position.x + dropSpot.x;
                     lootMovement.yAxis.startValue = this.transform.position.y;
                     lootMovement.yAxis.endValue = this.transform.position.y + dropHeight;
                     lootMovement.zAxis.startValue = this.transform.position.z;
-                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;
+                    lootMovement.zAxis.endValue = this.transform.position.z + dropSpot.y;*/
                     return;
                 }
         }
 
         public void SetState(State newState)
         {
+            if(enemyState != null) enemyState.OnExit();
+
             switch (newState)
             {
                 case State.Chase:
@@ -227,18 +236,23 @@ namespace Enemies
             }
             enemyState.Enemy = this;
             enemyState.BB = this.bb;
+
+            enemyState.OnEnter();
         }
 
         public void UpdateLife()
         {
-
             ui_health.gameObject.SetActive(true);
-            ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+            //ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+
+
+            StartCoroutine(TurnRed());
         }
 
         public void OnDamage()
         {
             UpdateLife();
+            Instantiate(damageParticle, this.transform.position, Quaternion.identity);
         }
 
         protected void SetSpeed(int i) {
@@ -270,6 +284,17 @@ namespace Enemies
             bb.target = Target.Barricade;
         }
 
+
+        IEnumerator TurnRed()
+        {
+            if (!matHolder) yield break;
+            matHolder.material = blinkMat;
+            yield return new WaitForSeconds(blinkTime);
+            matHolder.material = originalMat;
+        }
+
     }
 
-}
+
+
+    }

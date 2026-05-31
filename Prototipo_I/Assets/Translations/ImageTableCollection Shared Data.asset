@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: ImageTableCollection Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: ImageTableCollection
+  m_TableCollectionNameGuidString: e6f23eedf79a2c347a946d3096138ada
+  m_Entries:
+  - m_Id: 23265419264
+    m_Key: NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 233676873728
+    m_Key: Continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 459359789056
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 536337850368
+    m_Key: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556067856384
+    m_Key: Exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 722733582917632
+    m_Key: WaveStarted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 723065817931776
+    m_Key: WaveEnded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 788627004727296
+    m_Key: CreditsImg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793658475028480
+    m_Key: win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 793675554234368
+    m_Key: lose
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items:
+    - rid: 7015154165264155057
+    - rid: 7015154165264155058
+  m_KeyGenerator:
+    rid: 7015154165264155056
+  references:
+    version: 2
+    RefIds:
+    - rid: 7015154165264155056
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1777226913992
+    - rid: 7015154165264155057
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 23265419264
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        m_TypeString: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+    - rid: 7015154165264155058
+      type: {class: AssetTypeMetadata, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries:
+        - m_KeyId: 233676873728
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 459359789056
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 556067856384
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 536337850368
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 722733582917632
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 723065817931776
+          m_TableCodes:
+          - en
+          - ca
+          - es
+        - m_KeyId: 788627004727296
+          m_TableCodes:
+          - en
+          - es
+          - ca
+        - m_KeyId: 793675554234368
+          m_TableCodes:
+          - es
+          - ca
+          - en
+        - m_KeyId: 793658475028480
+          m_TableCodes:
+          - ca
+          - es
+          - en
+        m_TypeString: UnityEngine.Texture2D, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null

@@ -24,9 +24,11 @@ public class AfterWave : MonoBehaviour
         yield return new WaitForSeconds(waiting);
 
         if (i < messages.Length) { 
-            messages[i].SetActive(true);
-            plots[i].SetActive(true);
-            signals[i].SetActive(true);
+            if (messages[i] != null)
+                messages[i].SetActive(true);
+            if (plots[i] != null) 
+                plots[i].SetActive(true);
+            
             i++;            
         }
     }

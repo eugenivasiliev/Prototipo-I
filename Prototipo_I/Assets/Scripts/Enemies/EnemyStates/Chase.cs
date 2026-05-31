@@ -6,7 +6,6 @@ namespace Enemies
 {
     public class Chase : EnemyState
     {
-        private float distanceThreshold => 10.45f;
 
         public override void Behaviour()
         {
@@ -31,8 +30,7 @@ namespace Enemies
                         }
                         break;
                     case EnemyAI.Target.Home:
-                        //bb.targetTransform = bb.homeTransform;
-                        bb.targetTransform = Base.instance.transform;
+                        bb.targetTransform = bb.homeTransform;
                         float _minDistance = 5.0f;
 
                         foreach (var plot in bb.plots)
@@ -62,13 +60,17 @@ namespace Enemies
 
             if (enemy.BB.targetTransform == null) return;
 
-
             NavMeshPath path = new NavMeshPath();
             enemy.Agent.CalculatePath(enemy.BB.targetTransform.position, path);
             enemy.Agent.SetPath(path);
 
+            bb = enemy.BB;
+            bb.curAttackCooldown -= Time.deltaTime;
+            enemy.BB = bb;
+            if (enemy.BB.curAttackCooldown > 0) return;
+
             float distToTarget = Vector3.Distance(enemy.transform.position, enemy.BB.targetTransform.position);
-            if (distToTarget < distanceThreshold) enemy.SetState(EnemyAI.State.Attack);
+            if (distToTarget < bb.attackRange) enemy.SetState(EnemyAI.State.Attack);
 
         }
     }

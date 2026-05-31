@@ -15,17 +15,20 @@ namespace UI
 
         [SerializeField] protected Tween<float> tween;
 
-        protected bool isHidden = false;
-        void Start()
+        [SerializeField] protected bool isHidden = false;
+
+        [SerializeField] protected bool ignoreTimeScaling = false;
+
+        protected virtual void Start()
         {
             if (inputs == null) inputs = new InputSystem_Actions();
             inputs.Player.Enable();
-            inputs.Player.objectives_toggle.performed += Toggle;
+            inputs.Player.objectives_toggle.performed += ctx => { Toggle(); };
         }
 
         protected virtual void Update()
         {
-            TweenUtil.Update(Time.deltaTime, ref tween);
+            TweenUtil.Update((ignoreTimeScaling) ? Time.unscaledDeltaTime : Time.deltaTime, ref tween);
 
             Vector2 anchorMin = new Vector2(
                 (1 - tween.value) * hiddenPos.x + tween.value * visiblePos.x,
@@ -41,7 +44,7 @@ namespace UI
             panel.anchorMax = anchorMax;
         }
 
-        void Toggle(InputAction.CallbackContext ctx)
+        public void Toggle()
         {
             if (!isHidden)
                 tween.Reverse();

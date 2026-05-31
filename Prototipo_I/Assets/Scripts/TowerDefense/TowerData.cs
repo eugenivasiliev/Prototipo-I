@@ -12,6 +12,8 @@ namespace TowerDefense
         public GameObject[] stages;
 
         public int cost;
+        public int damage = 0;
+        public bool hasAOE = false;
 
         public string Id => throw new NotImplementedException();
 
@@ -21,10 +23,10 @@ namespace TowerDefense
 
         public enum TowerType : int
         {
-            ATTACK,
-            DEFENSE,
-            UTILITY,
-            COUNT
+            ATTACK = 0,
+            DEFENSE = 1,
+            UTILITY = 2,
+            COUNT = 3
         }
     }
 }

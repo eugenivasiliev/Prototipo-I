@@ -2,22 +2,23 @@ using UnityEngine;
 
 public class PlotInteracted : MonoBehaviour
 {
-    [SerializeField] GameObject[] plots;
+    [SerializeField] GameObject[] beams;
     [SerializeField] GameObject waitDialogue;
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject console;
+    [SerializeField] GameObject dullConsole;
 
-    // Update is called once per frame
     void Update()
     {
-        if (plots[0].activeSelf == false &&
-            plots[1].activeSelf == false &&
-            plots[2].activeSelf == false &&
-            plots[3].activeSelf == false) 
-        { 
-            waitDialogue.SetActive(true);
+        for (int i = 0; i < beams.Length; i++) {
+            if (beams[i].activeSelf == true) return;
         }
+
+            waitDialogue.SetActive(true);
+        if (console != null)
+            console.SetActive(true);
+        if (dullConsole != null) 
+            dullConsole.SetActive(true);
+
+        Destroy(this.gameObject);
     }
 }

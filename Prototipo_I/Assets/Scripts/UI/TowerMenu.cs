@@ -3,6 +3,8 @@ using Player;
 using TMPro;
 using TowerDefense;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utils;
 
@@ -12,11 +14,16 @@ namespace UI
     {
         [SerializeField] private GameObject towerMenuPanel;
         private GridLayoutGroup towerMenuGrid;
-        [SerializeField] private GameObject towerMenuIngredients;
         [SerializeField] private GameObject towerUI;
+        [SerializeField] private GameObject towerInactiveUI;
 
         [SerializeField] private PlayerController playerController;
         [SerializeField] private CameraControl cameraController;
+
+        [SerializeField] private SlidingPanelUI slidingPanel;
+
+        [SerializeField] private TMP_Text controllerText;
+        [SerializeField] private TMP_Text keyboardText;
 
         private bool isOpen = false;
         public bool IsOpen => isOpen;
@@ -25,17 +32,49 @@ namespace UI
 
         private float range;
 
+        private enum InputType
+
+        {
+            KEYBOARD,
+            CONTROLLER
+        }
+
+        private InputType inputType = InputType.KEYBOARD;
+
         private void Awake()
         {
-            towerMenuPanel.SetActive(false);
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
-            towerMenuIngredients.SetActive(false);
+        }
+
+        private void Update()
+        {
+            //keyboard keys & Mouse
+            if (Input.anyKey)
+                inputType = InputType.KEYBOARD;
+            //joystick
+            else if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                inputType = InputType.CONTROLLER;
+
+            controllerText.gameObject.SetActive(inputType == InputType.CONTROLLER);
+            keyboardText.gameObject.SetActive(inputType == InputType.KEYBOARD);
+        }
+
+        private int MinCost()
+        {
+            int minCost = int.MaxValue;
+            foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
+                if(minCost >= data.cost)
+                    minCost = data.cost;
+
+            Debug.Log(minCost);
+
+            return minCost;
         }
 
         private void LoadValidTowers()
         {
             foreach (Transform child in towerMenuGrid.transform) Destroy(child.gameObject);
-
+            bool isFirstButton = true;
             foreach (TowerData data in DBManager.Instance.TowerDB.filteredDatas[spotReference.TowerType])
             {
                 if (Inventory.Inventory.Instance.HasSeeds(data.cost))
@@ -43,10 +82,24 @@ namespace UI
                     GameObject instance = Instantiate(towerUI, towerMenuGrid.transform);
                     instance.GetComponent<Image>().sprite = data.uiSprite;
                     instance.GetComponent<Button>().onClick.AddListener(() => { spotReference.PlaceTower(data); });
-                    instance.GetComponentInChildren<TMP_Text>().text = data.cost.ToString();
 
                     TurretButton turretButton = instance.GetComponent<TurretButton>();
-                    turretButton.descriptionUI = towerMenuIngredients;
+                    turretButton.spotReference = spotReference;
+                    turretButton.range = data.range;
+                    turretButton.tm = this;
+                    turretButton.td = data;
+
+                    if (Gamepad.current != null && isFirstButton)
+                    {
+                        EventSystem.current.SetSelectedGameObject(instance);
+                        isFirstButton = false; 
+                    }
+                } else
+                {
+                    GameObject instance = Instantiate(towerInactiveUI, towerMenuGrid.transform);
+                    instance.GetComponent<Image>().sprite = data.uiSprite;
+
+                    TurretButton turretButton = instance.GetComponent<TurretButton>();
                     turretButton.spotReference = spotReference;
                     turretButton.range = data.range;
                     turretButton.tm = this;
@@ -55,28 +108,16 @@ namespace UI
             }
         }
 
-        public void LoadTowerDescription(TowerData td)
-        {
-            towerMenuIngredients.SetActive(true);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = td.Description;
-        }
-
-        public void EraseTowerDescription()
-        {
-            towerMenuIngredients.SetActive(false);
-            towerMenuIngredients.GetComponentInChildren<TMP_Text>().text = "";
-        }
-
         public void ToggleMenu()
         {
+            //if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
+
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
-            towerMenuPanel.SetActive(isOpen);
+            slidingPanel.Toggle();
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
-
-            EraseTowerDescription();
 
             if (isOpen) LoadValidTowers();
 
@@ -87,7 +128,7 @@ namespace UI
             } else
             {
                 cameraController.forcedTweenMovement = true;
-                cameraController.targetTweenPosition = cameraController.savedPosition;
+                cameraController.targetTweenPosition = cameraController.FarOffset;
             }
         }
 

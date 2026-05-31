@@ -4,6 +4,7 @@ using Audio;
 using Combat;
 using Inventory;
 using Objectives;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,6 +28,9 @@ namespace Farm
         public bool IsPlanted { get { return plant != null; } }
 
         [SerializeField] private int health;
+        [SerializeField] private GameObject contextCollider;
+        [SerializeField] private GameObject beam;
+        [SerializeField] private GameObject particles;
         public int Health { get => health; set => health = value; }
         public int MaxHealth { get => 100; set { } }
 
@@ -37,6 +41,9 @@ namespace Farm
         public GameObject harvestFeedback;
 
         [SerializeField] private Canvas healthHolder;
+
+        [Header("Loot")]
+        [SerializeField] protected GameObject seedLoot;
         private void Awake()
         {
             if (statusText != null)
@@ -47,18 +54,20 @@ namespace Farm
 
         public void Plant(PlantData data)
         {
-            AudioManager.Instance.PlaySFX("Plant");
+            AudioManager.Instance.PlaySFXEvent("PlantSeeds");
             
             plantData = data;
             plant = new Plant(data);
 
-            currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.Euler(-90, 0, 0), transform);
+            currentPlant = Instantiate(plantData.stages[0], transform.position, Quaternion.identity, transform);
 
             plant.OnStageChanged += OnPlantStageChanged;
 
             isFertilized = false;
 
             Instantiate(plantingFeedback, transform.position, Quaternion.identity, transform);
+
+            DayNightCycle.Instance.SubscribeTimedEvent(DropLootItem, 2 - DayNightCycle.Instance.DayTime);
         }
 
         private void OnPlantStageChanged(int currentStage)
@@ -67,7 +76,6 @@ namespace Farm
 
             if (currentPlant != null) { Destroy(currentPlant); }
 
-            AudioManager.Instance.PlaySFX("NextStage");
             GameObject prefab = plantData.stages[currentStage];
             currentPlant = Instantiate(prefab, transform.position, Quaternion.Euler(-90, 0, 0), transform);
 
@@ -87,6 +95,12 @@ namespace Farm
             this.Plant(DBManager.Instance.PlantDB["GasPlant"]);
             Inventory.Inventory.Instance.RemoveSeeds(1);
             plant.TryGrow(DayNightCycle.Instance.TotalTime);
+
+            contextCollider.SetActive(false);
+            beam.SetActive(false);
+            particles.SetActive(false);
+
+            StartCoroutine(PlayerController.Instance.Harvest());
         }
 
         public void FullGrow()
@@ -112,5 +126,12 @@ namespace Farm
         public void OnDamage() {}
 
         public bool ContextKeyActive() => !IsPlanted;
+
+        void DropLootItem(float t)
+        {
+            Instantiate(seedLoot, this.transform.position, Quaternion.identity);
+
+            DayNightCycle.Instance.SubscribeTimedEvent(DropLootItem, 2);
+        }
     }
 }
