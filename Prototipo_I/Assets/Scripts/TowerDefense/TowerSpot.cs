@@ -63,6 +63,7 @@ namespace TowerDefense
         
             Destroy(contextButton);
             Destroy(range);
+            Destroy(towerDecal);
             beam.SetActive(false);
             particles.SetActive(false);
         }
