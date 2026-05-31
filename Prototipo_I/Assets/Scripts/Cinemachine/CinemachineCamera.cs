@@ -41,6 +41,9 @@ public class CinemachineCamera : MonoBehaviour
                 currentTime = maxTime;
 
             csd.CameraPosition = currentTime / maxTime;
+
+            if (Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton7))
+                currentTime = maxTime;
         }
         else
         {
