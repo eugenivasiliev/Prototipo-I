@@ -23,8 +23,8 @@ public class FenceDissolver : MonoBehaviour
         for (int i = 0; i < fences.Length; i++)
             fences[i].GetComponent<DissolvingObject>().Dissolve();
 
-
-        waitDialogue.SetActive(true);
+        if(waitDialogue != null)
+            waitDialogue.SetActive(true);
         if (console != null)
             console.SetActive(true);
         if (dullConsole != null)
