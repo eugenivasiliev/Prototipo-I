@@ -26,13 +26,11 @@ namespace Utils
             if (Input.anyKey)
             {
                 wi = WhichInput.KEYBOARD;
-                Debug.Log("Keyboard!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
             //joystick
             else if (!Input.anyKey && (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
             {
                 wi = WhichInput.CONTROLLER;
-                Debug.Log("Controller!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             }
 
             
