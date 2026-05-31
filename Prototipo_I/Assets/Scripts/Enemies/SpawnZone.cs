@@ -90,7 +90,9 @@ namespace Enemies
         {
             while (phaseInfo[currentPhaseIndex].enemies.Count > 0)
             {
-                int enemyIndex = UnityEngine.Random.Range(0, phaseInfo[currentPhaseIndex].enemies.Count);
+                yield return new WaitForSeconds(phaseInfo[currentPhaseIndex].spawnDelay);
+
+                int enemyIndex = phaseInfo[currentPhaseIndex].enemies.Count - 1;
                 GameObject prefab = phaseInfo[currentPhaseIndex].enemies[enemyIndex];
                 GameObject enemyInstance = Instantiate(prefab, this.transform.position, Quaternion.identity, this.transform);
                 EnemyAI enemyAI = enemyInstance.GetComponent<EnemyAI>();
@@ -98,8 +100,6 @@ namespace Enemies
                 if (enemyAI != null) enemyManager.RegisterEnemy(enemyAI);
 
                 phaseInfo[currentPhaseIndex].enemies.RemoveAt(enemyIndex);
-
-                yield return new WaitForSeconds(phaseInfo[currentPhaseIndex].spawnDelay);
             }
         }
 
@@ -107,6 +107,14 @@ namespace Enemies
         {
             if(currentPhaseIndex == -1) return 0;
             return phaseInfo[currentPhaseIndex].enemies.Count;
+        }
+
+        public List<GameObject> EnemiesPendingList()
+        {
+            for (int i = 0; i < phaseInfo.Count; i++)
+                if (phaseInfo[i].phase == enemyManager.CurrentPhaseIndex)
+                    return phaseInfo[i].enemies;
+            return new List<GameObject>();
         }
     }
 }

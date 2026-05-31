@@ -203,77 +203,20 @@ MonoBehaviour:
   enemyIconPrefab: {fileID: 1373398211987467143, guid: 17a28825c493a464481692c833f3a7b9, type: 3}
   spawnZones: []
   spawnZoneIcon:
-    waningTween:
-      curve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      t: 0
-      duration: 0.5
-      value: 0
-      startValue: 0
-      endValue: 1
-      isActive: 1
-      isReversing: 0
-      isLooping: 1
-    scalingTween:
-      curve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      t: 0
-      duration: 0.5
-      value: {x: 0, y: 0, z: 0}
-      startValue: {x: 0, y: 0, z: 1}
-      endValue: {x: 1, y: 1, z: 1}
-      isActive: 1
-      isReversing: 0
-      isLooping: 1
-    image: {fileID: 0}
     reference: {fileID: 0}
     icon: {fileID: 0}
     rotating: 0
   spawnZoneIconPrefab: {fileID: 1373398211987467143, guid: b57c28a7a6735a24592f3a01243bc103, type: 3}
+  towerPlotIcons: []
+  towerPlotIconPrefab:
+  - {fileID: 1373398211987467143, guid: 2906d530ed19fd34db80878e763b872b, type: 3}
+  - {fileID: 1373398211987467143, guid: e52a004a42ddaa243891b6ba6cc7f8c7, type: 3}
+  - {fileID: 1373398211987467143, guid: 0a4ace1b65c0b274b8fe698ca4d89553, type: 3}
+  towerPlots: []
+  minXPosition: 0
+  maxXPosition: 0
+  minYPosition: 0
+  maxYPosition: 0
 --- !u!1 &5579200504486954180
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,8 +252,8 @@ RectTransform:
   - {fileID: 2159584680375326453}
   m_Father: {fileID: 4264905648444458349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.79, y: 0.69}
-  m_AnchorMax: {x: 0.96, y: 0.956}
+  m_AnchorMin: {x: 0.82652086, y: 0.7167778}
+  m_AnchorMax: {x: 1, y: 0.97670376}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -426,7 +369,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!114 &5387634898692419837
 MonoBehaviour:
@@ -500,10 +443,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4264905648444458349}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.8, y: 0.7}
-  m_AnchorMax: {x: 0.95, y: 0.95}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -168.5, y: -167}
+  m_SizeDelta: {x: 287, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3088163236517512058
 CanvasRenderer:

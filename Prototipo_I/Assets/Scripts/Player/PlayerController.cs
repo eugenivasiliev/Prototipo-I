@@ -173,38 +173,6 @@ namespace Player
             AudioManager.Instance.PlaySFXLoop("EvelynFootstep");
 
             SetAnimation(MovementType.FORWARD);
-
-            //if (Mathf.Abs(movementInput.x) > Mathf.Abs(movementInput.y))
-            //{
-            //    //Right-Left axis
-            //    if (movementInput.x > 0)
-            //    {
-            //        if (curMovementType == MovementType.RIGHT) return;
-            //        SetAnimation(MovementType.RIGHT);
-            //        curMovementType = MovementType.RIGHT;
-            //    }
-            //    else
-            //    {
-            //        if (curMovementType == MovementType.LEFT) return;
-            //        SetAnimation(MovementType.LEFT);
-            //        curMovementType = MovementType.LEFT;
-            //    }
-            //} else
-            //{
-            //    //Forward-Backward axis
-            //    if (movementInput.y > 0)
-            //    {
-            //        if (curMovementType == MovementType.FORWARD) return;
-            //        SetAnimation(MovementType.FORWARD);
-            //        curMovementType = MovementType.FORWARD;
-            //    }
-            //    else
-            //    {
-            //        if (curMovementType == MovementType.BACKWARD) return;
-            //        SetAnimation(MovementType.BACKWARD);
-            //        curMovementType = MovementType.BACKWARD;
-            //    }
-            //}
         }
 
         private void SetAnimation(MovementType direction)
@@ -235,21 +203,20 @@ namespace Player
             }
         }
 
+        public IEnumerator Harvest()
+        {
+            anim.SetBool("Is_Harvesting", true);
+            yield return new WaitForEndOfFrame();
+            anim.SetBool("Is_Harvesting", false);
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (!other.TryGetComponent<EnemyAI>(out EnemyAI enemyAI)) return;
 
             closeEnemies.Add(other.gameObject);
         }
-        private void OnTriggerStay(Collider other)
-        {
-            if (!other.TryGetComponent<LootSeed>(out LootSeed seed)) return;
-
-            seed.gameObject.GetComponent<Rigidbody>().mass = 0;
-            seed.gameObject.GetComponent<BoxCollider>().enabled = false;
-
-            seed.transform.position += (transform.position - seed.transform.position).normalized;
-        }
+        
 
         private void OnTriggerExit(Collider other)
         {
@@ -287,7 +254,11 @@ namespace Player
 
             for(int i = 0; i < closeEnemies.Count; ++i)
             {
-                if (Vector3.Angle(closeEnemies[i].transform.position - modelTransform.position, attackCone.transform.forward) > attackAngle / 2.0f)
+                Vector3 enemyFwd = closeEnemies[i].transform.position - modelTransform.position;
+                enemyFwd.y = 0;
+                Vector3 attackFwd = attackCone.transform.forward;
+                attackFwd.y = 0;
+                if (Vector3.Angle(enemyFwd, attackFwd) > attackAngle / 2.0f)
                     continue;
 
                 targetedEnemy = closeEnemies[i];

@@ -16,6 +16,9 @@ namespace UI
         [SerializeField] protected Tween<float> tween;
 
         [SerializeField] protected bool isHidden = false;
+
+        [SerializeField] protected bool ignoreTimeScaling = false;
+
         protected virtual void Start()
         {
             if (inputs == null) inputs = new InputSystem_Actions();
@@ -25,7 +28,7 @@ namespace UI
 
         protected virtual void Update()
         {
-            TweenUtil.Update(Time.deltaTime, ref tween);
+            TweenUtil.Update((ignoreTimeScaling) ? Time.unscaledDeltaTime : Time.deltaTime, ref tween);
 
             Vector2 anchorMin = new Vector2(
                 (1 - tween.value) * hiddenPos.x + tween.value * visiblePos.x,

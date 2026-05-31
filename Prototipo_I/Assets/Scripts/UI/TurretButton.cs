@@ -2,11 +2,12 @@ using TMPro;
 using TowerDefense;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.Localization.Settings;
 
 namespace UI
 {
-    public class TurretButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler
+    public class TurretButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, ISelectHandler, IDeselectHandler
     {
         public TowerSpot spotReference;
         public float range;
@@ -25,6 +26,19 @@ namespace UI
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            if (Gamepad.current != null)
+                return;
+
+            ResetRange();
+            this.GetComponent<RectTransform>().position -= Vector3.up * verticalOffset;
+            descriptionUI.SetActive(false);
+            cost.SetActive(false);
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            if (Gamepad.current == null)
+                return;
             ResetRange();
             this.GetComponent<RectTransform>().position -= Vector3.up * verticalOffset;
             descriptionUI.SetActive(false);
@@ -33,6 +47,9 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (Gamepad.current != null)
+                return;
+
             spotReference.SetRange(td.range);
             spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
@@ -51,6 +68,33 @@ namespace UI
             this.GetComponent<RectTransform>().position += Vector3.up * verticalOffset;
             descriptionUI.GetComponent<RectTransform>().position = 
                 this.GetComponent<RectTransform>().position + Vector3.up * descriptionVerticalOffset;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            if (Gamepad.current == null)
+                return;
+
+            spotReference.SetRange(td.range);
+            spotReference.SetDecal(td.Name + "Decal");
+            spotReference.ShowRange(true);
+
+            descriptionUI.SetActive(true);
+            cost.SetActive(true);
+
+            string localizedString = LocalizationSettings.StringDatabase.GetLocalizedString("LocalizarionTableCollection", td.Name);
+
+            descriptionText.text = localizedString;
+
+
+            costText.text = td.cost.ToString();
+            damageText.text = td.damage.ToString();
+            rangeText.text = td.range.ToString();
+            this.GetComponent<RectTransform>().position += Vector3.up * verticalOffset;
+            descriptionUI.GetComponent<RectTransform>().position =
+                this.GetComponent<RectTransform>().position + Vector3.up * descriptionVerticalOffset;
+
+            
         }
 
         private void OnDisable()

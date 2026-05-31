@@ -11,6 +11,7 @@ namespace UI
     {
         [SerializeField] private GameObject pauseMenuPanel;
         [SerializeField] private PlayerController playerController;
+        [SerializeField] private List<GameObject> subPanels;
 
         private bool isPaused = false;
 
@@ -41,6 +42,7 @@ namespace UI
             pauseMenuPanel.SetActive(isPaused);
             Time.timeScale = (isPaused) ? 0f : 1f;
             playerController.MovementLocked = isPaused;
+            if (!isPaused) foreach(GameObject panel in subPanels) panel.SetActive(false);
         }
 
         public void Resume()
