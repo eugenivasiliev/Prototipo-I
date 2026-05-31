@@ -9,15 +9,16 @@ public class PlotInteracted : MonoBehaviour
 
     void Update()
     {
-        if (beams[0].activeSelf == false &&
-            beams[1].activeSelf == false &&
-            beams[2].activeSelf == false)
-        { 
-            waitDialogue.SetActive(true);
-            console.SetActive(true);
-            dullConsole.SetActive(false);
-
-            Destroy(this);
+        for (int i = 0; i < beams.Length; i++) {
+            if (beams[i].activeSelf == true) return;
         }
+
+            waitDialogue.SetActive(true);
+        if (console != null)
+            console.SetActive(true);
+        if (dullConsole != null) 
+            dullConsole.SetActive(true);
+
+        Destroy(this.gameObject);
     }
 }

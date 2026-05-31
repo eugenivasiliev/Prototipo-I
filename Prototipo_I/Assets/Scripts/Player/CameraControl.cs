@@ -27,6 +27,8 @@ namespace Player
 
         [Header("Settings")]
         [SerializeField] private float cameraSensibility = 7.5f;
+        [SerializeField] private float mouseCameraSensibility = 0.2f;
+        [SerializeField] private float controllerCameraSensibility = 1.2f;
         [SerializeField] private float scrollSensibility = 20.0f;
 
         override protected void Start()
@@ -74,6 +76,12 @@ namespace Player
             }
 
             if (player.MovementLocked) return;
+
+            if (inputs.Player.Look.activeControl?.device is Mouse)
+                cameraSensibility = mouseCameraSensibility;
+            else if (inputs.Player.Look.activeControl?.device is Gamepad)
+                    cameraSensibility = controllerCameraSensibility;
+
 
             float mouseX = lookInput.x * cameraSensibility;
             Quaternion q = Quaternion.AngleAxis(mouseX, Vector3.up);
