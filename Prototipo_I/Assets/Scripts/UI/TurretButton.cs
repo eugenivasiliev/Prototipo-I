@@ -37,6 +37,8 @@ namespace UI
 
         public void OnDeselect(BaseEventData eventData)
         {
+            if (Gamepad.current == null)
+                return;
             ResetRange();
             this.GetComponent<RectTransform>().position -= Vector3.up * verticalOffset;
             descriptionUI.SetActive(false);
@@ -70,6 +72,9 @@ namespace UI
 
         public void OnSelect(BaseEventData eventData)
         {
+            if (Gamepad.current == null)
+                return;
+
             spotReference.SetRange(td.range);
             spotReference.SetDecal(td.Name + "Decal");
             spotReference.ShowRange(true);
