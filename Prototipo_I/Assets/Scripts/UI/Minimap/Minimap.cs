@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TowerDefense;
 using UnityEngine;
 using UnityEngine.UI;
 using Utils;
@@ -28,11 +29,21 @@ namespace UI.Minimap
         [SerializeField] private MinimapIcon spawnZoneIcon;
         [SerializeField] private GameObject spawnZoneIconPrefab;
 
+        [SerializeField] private List<MinimapIcon> towerPlotIcons;
+        [SerializeField] private List<GameObject> towerPlotIconPrefab;
+        [SerializeField] private List<TowerSpot> towerPlots;
+
         [Header("Borders")]
         [SerializeField, Range(0, 1)] private float minXPosition;
         [SerializeField, Range(0, 1)] private float maxXPosition;
         [SerializeField, Range(0, 1)] private float minYPosition;
         [SerializeField, Range(0, 1)] private float maxYPosition;
+
+        private void Start()
+        {
+            foreach (TowerSpot plot in towerPlots)
+                towerPlotIcons.Add(new MinimapIcon(plot.transform, Instantiate(towerPlotIconPrefab[(int)plot.TowerType], minimapPanel).GetComponent<RectTransform>(), false));
+        }
 
         void Update()
         {
@@ -53,11 +64,14 @@ namespace UI.Minimap
 
             foreach(MinimapIcon icon in spawnZones)
                 ClampedPlaceInMap(icon);
+
+            foreach (MinimapIcon icon in towerPlotIcons)
+                PlaceInMap(icon);
         }
 
         public void AddEnemy(GameObject enemy)
         {
-            enemies.Add(new MinimapIcon(enemy.transform, Instantiate(enemyIconPrefab, minimapPanel).GetComponent<RectTransform>(), true));
+            enemies.Add(new MinimapIcon(enemy.transform, Instantiate(enemyIconPrefab, minimapPanel).GetComponent<RectTransform>(), false));
         }
 
         public void AddSpawnZone(GameObject spawnZone)
@@ -78,23 +92,26 @@ namespace UI.Minimap
         {
             icon.icon.anchorMin = WorldToNormalMapPoint(icon.reference.position);
             icon.icon.anchorMax = icon.icon.anchorMin;
-            icon.icon.gameObject.SetActive(
+            icon.icon.gameObject.SetActive((
                 !(icon.icon.anchorMin.x < 0 || icon.icon.anchorMin.x > 1 ||
-                icon.icon.anchorMin.y < 0 || icon.icon.anchorMin.y > 1));
+                icon.icon.anchorMin.y < 0 || icon.icon.anchorMin.y > 1)) &&
+                icon.reference.gameObject.activeSelf);
             if (icon.rotating)
                 icon.icon.eulerAngles = Vector3.zero - icon.reference.eulerAngles.y * Vector3.forward;
         }
         private void ClampedPlaceInMap(MinimapIcon icon)
         {
+            icon.icon.gameObject.SetActive(icon.reference.gameObject.activeSelf);
             icon.icon.anchorMin = Utils.Utils.Clamp(
                 WorldToNormalMapPoint(icon.reference.position),
                 minXPosition, maxXPosition,
                 minYPosition, maxYPosition
                 );
             icon.icon.anchorMax = icon.icon.anchorMin;
-            icon.icon.gameObject.SetActive(
+            icon.icon.gameObject.SetActive((
                 !(icon.icon.anchorMin.x < 0 || icon.icon.anchorMin.x > 1 ||
-                icon.icon.anchorMin.y < 0 || icon.icon.anchorMin.y > 1));
+                icon.icon.anchorMin.y < 0 || icon.icon.anchorMin.y > 1)) &&
+                icon.reference.gameObject.activeSelf);
             if (icon.rotating)
                 icon.icon.eulerAngles = Vector3.zero - icon.reference.eulerAngles.y * Vector3.forward;
         }
