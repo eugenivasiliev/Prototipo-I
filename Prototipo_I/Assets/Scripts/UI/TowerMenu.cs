@@ -20,6 +20,8 @@ namespace UI
         [SerializeField] private PlayerController playerController;
         [SerializeField] private CameraControl cameraController;
 
+        [SerializeField] private SlidingPanelUI slidingPanel;
+
         private bool isOpen = false;
         public bool IsOpen => isOpen;
 
@@ -29,7 +31,6 @@ namespace UI
 
         private void Awake()
         {
-            towerMenuPanel.SetActive(false);
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
         }
 
@@ -89,7 +90,7 @@ namespace UI
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
-            towerMenuPanel.SetActive(isOpen);
+            slidingPanel.Toggle();
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
 
