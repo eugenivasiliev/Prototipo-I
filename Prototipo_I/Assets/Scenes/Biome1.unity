@@ -12691,7 +12691,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 171256934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12758,17 +12758,17 @@ MonoBehaviour:
   enemyManager: {fileID: 1522150990}
   enemyCounterList:
   - prefab: {fileID: 4590688058275222406, guid: 6c8758f58f78e1741971cff136a4f648, type: 3}
-    amount: 0
+    amount: 1
     name: Holeigan
     sprite: {fileID: 21300000, guid: 56b621d40f32e4e4b8d6b16efbeba1f7, type: 3}
     material: {fileID: 2100000, guid: af23a066c7a9f4748a7cf3baeb3debcf, type: 2}
   - prefab: {fileID: 7114638766383851020, guid: be7afdf5a5bf11a4baa01719554f87d4, type: 3}
-    amount: 0
+    amount: 1
     name: Ladywool
     sprite: {fileID: 21300000, guid: c8dd0ff2969ce2247b7929991fff3521, type: 3}
     material: {fileID: 2100000, guid: a51fad9cef372fa4d94d3d646e97eab2, type: 2}
   - prefab: {fileID: 4590688058275222406, guid: 8b0e2a2872483044b954eb5a8b92cca8, type: 3}
-    amount: 0
+    amount: 1
     name: Octobear
     sprite: {fileID: 21300000, guid: a9969fe587b59b44aa94249bc6eb304a, type: 3}
     material: {fileID: 2100000, guid: d3d185649da13f642a39c926b6c2e0f1, type: 2}
@@ -30910,18 +30910,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1776336939}
     m_Modifications:
-    - target: {fileID: 3113629271152502078, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
-      propertyPath: m_CellSize.x
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 3113629271152502078, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
-      propertyPath: m_CellSize.y
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 3113629271152502078, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
-      propertyPath: m_ChildAlignment
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3534744497507965779, guid: a502e45736fb70447b43a3ef59c874fe, type: 3}
       propertyPath: cameraController
       value: 

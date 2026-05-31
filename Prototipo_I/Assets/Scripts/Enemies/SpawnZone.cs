@@ -112,7 +112,7 @@ namespace Enemies
         public List<GameObject> EnemiesPendingList()
         {
             for (int i = 0; i < phaseInfo.Count; i++)
-                if (phaseInfo[i].phase == currentPhaseIndex)
+                if (phaseInfo[i].phase == enemyManager.CurrentPhaseIndex)
                     return phaseInfo[i].enemies;
             return new List<GameObject>();
         }

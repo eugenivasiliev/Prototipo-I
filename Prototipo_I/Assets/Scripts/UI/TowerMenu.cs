@@ -20,6 +20,11 @@ namespace UI
         [SerializeField] private PlayerController playerController;
         [SerializeField] private CameraControl cameraController;
 
+        [SerializeField] private SlidingPanelUI slidingPanel;
+
+        [SerializeField] private TMP_Text controllerText;
+        [SerializeField] private TMP_Text keyboardText;
+
         private bool isOpen = false;
         public bool IsOpen => isOpen;
 
@@ -27,10 +32,31 @@ namespace UI
 
         private float range;
 
+        private enum InputType
+
+        {
+            KEYBOARD,
+            CONTROLLER
+        }
+
+        private InputType inputType = InputType.KEYBOARD;
+
         private void Awake()
         {
-            towerMenuPanel.SetActive(false);
             towerMenuGrid = towerMenuPanel.GetComponentInChildren<GridLayoutGroup>();
+        }
+
+        private void Update()
+        {
+            //keyboard keys & Mouse
+            if (Input.anyKey)
+                inputType = InputType.KEYBOARD;
+            //joystick
+            else if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                inputType = InputType.CONTROLLER;
+
+            controllerText.gameObject.SetActive(inputType == InputType.CONTROLLER);
+            keyboardText.gameObject.SetActive(inputType == InputType.KEYBOARD);
         }
 
         private int MinCost()
@@ -89,7 +115,7 @@ namespace UI
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
             Cursor.visible = isOpen;
-            towerMenuPanel.SetActive(isOpen);
+            slidingPanel.Toggle();
             Time.timeScale = (isOpen) ? 0f : 1f;
             playerController.MovementLocked = isOpen;
 
