@@ -127,6 +127,7 @@ namespace UI
                 cameraController.SavePosition();
             } else
             {
+                EventSystem.current.SetSelectedGameObject(this.gameObject);
                 cameraController.forcedTweenMovement = true;
                 cameraController.targetTweenPosition = cameraController.FarOffset;
             }
