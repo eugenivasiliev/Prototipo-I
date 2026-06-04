@@ -107,10 +107,7 @@ namespace TowerDefense
                 Destroy(towerDecal);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            //if (other.tag == "Player") ShowRange(true);
-        }
+        
         private void OnTriggerExit(Collider other)
         {
             if (other.tag == "Player") ShowRange(false);
