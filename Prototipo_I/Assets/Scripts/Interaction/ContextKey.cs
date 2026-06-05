@@ -17,7 +17,7 @@ namespace Utils
             CONTROLLER
         }
 
-        private WhichInput wi = WhichInput.KEYBOARD;
+        private WhichInput input = WhichInput.KEYBOARD;
 
 
         private void Update()
@@ -25,12 +25,12 @@ namespace Utils
             //keyboard keys & Mouse
             if (Input.anyKey)
             {
-                wi = WhichInput.KEYBOARD;
+                input = WhichInput.KEYBOARD;
             }
             //joystick
             else if (!Input.anyKey && (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0))
             {
-                wi = WhichInput.CONTROLLER;
+                input = WhichInput.CONTROLLER;
             }
 
             
@@ -40,7 +40,7 @@ namespace Utils
         {
             if (contexted.GetComponent<IContexted>().ContextKeyActive() && other.tag == "Player")
             {
-                switch (wi)
+                switch (input)
                 {
                     case WhichInput.CONTROLLER:
                         controllerKey.SetActive(true);

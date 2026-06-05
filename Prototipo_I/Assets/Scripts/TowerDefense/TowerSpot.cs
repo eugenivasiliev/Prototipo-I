@@ -92,7 +92,8 @@ namespace TowerDefense
 
         public void SetRange(float dist)
         {
-            range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
+            if (range != null)
+                range.transform.localScale = new Vector3(dist * 2, dist * 2, dist * 2);
         }
 
         public void SetDecal(string decalName) => towerDecalName = decalName;
