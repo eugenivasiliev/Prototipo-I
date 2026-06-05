@@ -19,7 +19,7 @@ namespace Player
         [SerializeField, Range(0, 180)] private float attackAngle = 30f; //In degrees
         [SerializeField] private GameObject attackCone;
         [SerializeField] private bool defaultArmed = false;
-        private float currentCooldown = 0.0f;
+        private float currentCooldown = 0.0f; 
         private bool isArmed = false;
 
         [Header("Movement")]
@@ -278,10 +278,7 @@ namespace Player
 
         public void Stun(float seconds)
         {
-            //TODO: Add proper VFX/SFX
-
-            //Instantiate(stunParticles, transform.position, Quaternion.identity, transform);
-            //AudioManager.instance.PlaySFX("Stun");
+            
 
             StartCoroutine(StunCorroutine(seconds));
         }

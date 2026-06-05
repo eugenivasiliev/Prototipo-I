@@ -134,7 +134,7 @@ namespace Enemies
             SetState(State.Chase);
             enemyState.Enemy = this;
 
-            //Make drop rates easily transitable later
+            
             float totalRate = 0;
             foreach (DropRateObject drop in droppableLoot)
                 totalRate += drop.rate;
@@ -165,9 +165,7 @@ namespace Enemies
                 ui_health_image.fillAmount = Mathf.MoveTowards(ui_health_image.fillAmount, (this as IDamageable).HealthRatio, barSpeed * Time.deltaTime);
         }
 
-        /// <summary>
-        /// Kept unimplemented because of Alembic's issues with prefab instantiation
-        /// </summary>
+        
         protected IEnumerator AlembicDeathAnim()
         {
             while (alembicStreamPlayer.CurrentTime <= alembicStreamPlayer.EndTime - 0.05f)
@@ -183,8 +181,7 @@ namespace Enemies
         {
             animator.SetBool("IsDying", true);
             yield return new WaitForSeconds(deathAnim.length);
-            //while ((animator.GetCurrentAnimatorStateInfo(0).normalizedTime) % 1 < 0.99f)
-            //    yield return new WaitForEndOfFrame();
+            
 
             DropLoot();
             Destroy(gameObject);
@@ -243,7 +240,7 @@ namespace Enemies
         public void UpdateLife()
         {
             ui_health.gameObject.SetActive(true);
-            //ui_health.gameObject.transform.GetChild(1).GetComponent<Image>().fillAmount = (this as IDamageable).HealthRatio;
+            
 
 
             StartCoroutine(TurnRed());

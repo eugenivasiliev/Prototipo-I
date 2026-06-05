@@ -52,7 +52,7 @@ namespace Player
         {
             if (forcedTweenMovement)
             {
-                Debug.Log("moving");
+                
 
                 float direction = Mathf.Sign(currentOffset.y - targetTweenPosition.y);
 

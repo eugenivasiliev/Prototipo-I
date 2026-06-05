@@ -25,7 +25,7 @@ namespace TowerDefense
             foreach (var towerDecal in towerDecals)
             {
                 TowerDecals.Add(towerDecal.name, towerDecal);
-                Debug.Log(towerDecal.name);
+                
             }
         }
     }

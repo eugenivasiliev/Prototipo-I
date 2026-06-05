@@ -42,10 +42,10 @@ public class EnemyCounterList : MonoBehaviour
 
         foreach(SpawnZone zone in enemyManager.spawnZones)
         {
-            Debug.Log(zone.name);
+            
             foreach(GameObject enemy in zone.EnemiesPendingList())
             {
-                Debug.Log(enemy.name);
+                
                 if(enemyCounterInstances.ContainsKey(enemy))
                 {
                     EnemyCounterInfo info = enemyCounterInstances[enemy].GetComponent<EnemyCounter>().Info;

@@ -66,7 +66,7 @@ namespace UI
                 if(minCost >= data.cost)
                     minCost = data.cost;
 
-            Debug.Log(minCost);
+            
 
             return minCost;
         }
@@ -110,7 +110,7 @@ namespace UI
 
         public void ToggleMenu()
         {
-            //if (!isOpen && !Inventory.Inventory.Instance.HasSeeds(MinCost())) return;
+            
 
             isOpen = !isOpen;
             Cursor.lockState = (isOpen) ? CursorLockMode.None : CursorLockMode.Locked;
