@@ -232,6 +232,7 @@ namespace Player
 
         private void AttackLoop()
         {
+            if (Camera.main == null) return;
             Vector3 projectedFwd = new Vector3(Camera.main.transform.forward.x, 0, Camera.main.transform.forward.z);
             attackCone.transform.LookAt(attackCone.transform.position + projectedFwd);
 
