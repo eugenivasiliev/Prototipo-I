@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+namespace Utils { 
+
 public class AfterWave : MonoBehaviour
 {
 
@@ -32,4 +34,7 @@ public class AfterWave : MonoBehaviour
             i++;            
         }
     }
+}
+
+
 }

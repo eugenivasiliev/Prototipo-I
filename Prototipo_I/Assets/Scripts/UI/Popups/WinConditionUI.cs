@@ -4,10 +4,11 @@ using Utils;
 
 namespace GameMode
 {
-    public class LossConditionUI : MonoBehaviour
+    public class WinConditionUI : MonoBehaviour
     {
         [SerializeField] private Tween<float> popupTween;
-        private float waitTime = 2.5f;
+        [SerializeField] private string nextScene;
+        [SerializeField] private float waitTime = 2.5f;
         void Start()
         {
             popupTween.SetActive(true);
@@ -18,12 +19,12 @@ namespace GameMode
         {
             if (TweenUtil.Update(Time.deltaTime, ref popupTween))
                 this.transform.localScale = popupTween.value * Vector3.one;
+            
         }
-
         public IEnumerator Leave()
         {
             yield return new WaitForSeconds(waitTime);
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(nextScene);
         }
     }
 }

@@ -37,8 +37,6 @@ namespace Farm
 
         public GameObject plantingFeedback;
         public GameObject ripeFeedback;
-        private GameObject ripeParticles;
-        public GameObject harvestFeedback;
 
         [SerializeField] private Canvas healthHolder;
 
@@ -112,7 +110,6 @@ namespace Farm
 
             OnPlantStageChanged(plant.CurrentStage - 1);
 
-            ripeParticles = Instantiate(ripeFeedback, transform.position, Quaternion.identity, transform);
         }
         public void OnInteract() { }
 
