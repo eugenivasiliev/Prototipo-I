@@ -8,7 +8,7 @@ namespace GameMode
     {
         [SerializeField] private Tween<float> popupTween;
         [SerializeField] private string nextScene;
-        private float waitTime = 2.5f;
+        [SerializeField] private float waitTime = 2.5f;
         void Start()
         {
             popupTween.SetActive(true);

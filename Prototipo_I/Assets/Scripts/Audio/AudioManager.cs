@@ -23,7 +23,7 @@ namespace Audio
 
         private Dictionary<string, float> soundCooldowns = new Dictionary<string, float>();
         private Dictionary<string, EventInstance> loopingSources = new Dictionary<string, EventInstance>();
-        private float cooldownTime = 0.15f;
+        [SerializeField] private float cooldownTime = 0.15f;
         private void Awake()
         {
             InitSingleton();

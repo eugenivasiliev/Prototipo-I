@@ -7,7 +7,7 @@ namespace GameMode
     public class LossConditionUI : MonoBehaviour
     {
         [SerializeField] private Tween<float> popupTween;
-        private float waitTime = 2.5f;
+        [SerializeField] private float waitTime = 2.5f;
         void Start()
         {
             popupTween.SetActive(true);
